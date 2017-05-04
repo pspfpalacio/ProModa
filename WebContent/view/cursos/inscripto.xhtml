@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Cursos</title>
+		<script type="text/javascript" src="//resources.mlstatic.com/mptools/render.js"></script>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menu.xhtml" />
+				<h3 align="left" style="color: black;">Listado de cursos a los cuales se encuentra inscripto</h3>	
+				
+				<p:dataTable id="contenedorCurso" widgetVar="cursoBusqueda" var="curso" style="width:100%;"
+				value="#{beanCursoAlum.listaCursos}" paginator="true" rows="30" resizableColumns="true"
+				filteredValue="#{beanCursoAlum.filteredCursos}"	emptyMessage="No existen Cursos Inscriptos" sortMode="multiple">
+					<f:facet name="header">
+						<p:outputLabel value="Cursos Inscriptos" />
+					</f:facet>
+					
+					<p:column headerText="Generar Pago" style="text-align: center; width:200px;">
+					    <p:commandButton icon="ui-icon-cart" action="#{beanPagoAlum.goRealizaPago(beanCursoAlum.usuario, curso)}" />
+					</p:column>					
+					
+					<p:column headerText="Nombre" filterBy="#{curso.nombre}"
+					filterStyle="display:none;">
+						<h:outputText value="#{curso.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Fecha Fin de Cursado" filterBy="#{curso.matricula.fechaFinCursado}"
+					filterStyle="display:none;">
+						<h:outputText value="#{curso.matricula.fechaFinCursado}" >
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Ver Matricula" style="text-align: center; width:120px;" exportable="false">
+						<p:commandButton icon="ui-icon-comment" title="Ver Matricula" update=":formulario:outputPanel"
+						action="#{beanCursoAlum.verMatricula(curso)}" oncomplete="PF('dialogo').show()" />
+					</p:column>
+					
+					<p:column headerText="Ver Cuotas" style="text-align: center; width:120px;" exportable="false">
+						<p:commandButton icon="ui-icon-comment" title="Ver Cuotas" update=":formulario:outputPanelCuota"
+						action="#{beanCursoAlum.verCuotas(curso)}" oncomplete="PF('dialogoCuota').show()" />
+					</p:column>
+				</p:dataTable>	
+				<p:dialog header="Matrícula" widgetVar="dialogo"
+					id="dialogo" modal="true" closeOnEscape="true">
+					<p:outputPanel id="outputPanel">
+		    			<p:panelGrid columns="4" style="width:100%;">
+		    				<f:facet name="header">
+		    					<p:outputLabel value="MATRICULA" />
+		    				</f:facet>
+		    				
+		    				<p:outputLabel value="Pago realizado: " />
+		    				<h:inputText value="SI" rendered="#{beanCursoAlum.matriculaAlumno.pago}" disabled="true" />
+		    				<h:inputText value="NO" rendered="#{!beanCursoAlum.matriculaAlumno.pago}" disabled="true" />
+		    				
+		    				<p:outputLabel value="Fecha de Pago: " />
+		    				<h:inputText value="#{beanCursoAlum.pagosMatricula.fecha}" disabled="true" >
+		    					<f:convertDateTime pattern="dd/MM/yyyy"/>
+		    				</h:inputText>
+		    				
+		    				<p:outputLabel value="Monto: " />
+		    				<h:inputText value="#{beanCursoAlum.pagosMatricula.monto}" disabled="true" >
+		    					<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+		    				</h:inputText>
+		    			</p:panelGrid>
+					</p:outputPanel>
+				</p:dialog>
+			
+				<p:dialog header="Cuotas" widgetVar="dialogoCuota"
+					id="dialogoCuota" modal="true" closeOnEscape="true">
+					<p:outputPanel id="outputPanelCuota">
+		    			<p:panelGrid columns="4" style="width:100%;">
+		    				<f:facet name="header">
+		    					<p:outputLabel value="CUOTAS" />
+		    				</f:facet>
+		    				<p:dataTable id="tablaCuotas" var="cuota" value="#{beanCursoAlum.listaCuotas}" paginator="true" 
+					    	widgetVar="cuotaBusqueda" filteredValue="#{beanCursoAlum.filteredCuotas}">
+					    		<f:facet name="header">
+									<p:outputLabel value="Cuotas" />
+									<p:spacer width="20" />
+									<p:outputPanel style="float:right;">
+										<p:inputText id="globalFilter" onkeyup="PF('cuotaBusqueda').filter()" placeholder="Buscar"/>
+									</p:outputPanel> 
+								</f:facet>		
+											    	
+					    		<!--  <p:column headerText="Generar Pago" style="text-align: center; width:200px;">  -->					    			
+									<!-- <p:commandLink value="Pagar" ajax="false" action="#{beanCursoAlum.generarPagoCuota(cuota)}"  target="_blank"/> -->
+									<!-- <a href="#{beanCursoAlum.checkoutURL}" name="MP-Checkout" class="blue-l-arall-rn" target="_blank">Pagar</a>  -->
+								<!--  </p:column> -->  
+					    	
+							    <p:column headerText="Cuota" style="width:25%;">
+							        <h:outputText value="#{cuota.detalle}" />
+							    </p:column>
+							 
+							    <p:column headerText="Monto" style="width:10%;">
+							        <h:outputText value="#{cuota.monto}" >
+							        	<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+							        </h:outputText>
+							    </p:column>
+							    
+							    <p:column headerText="Primer Vencimiento" style="width:20%;">
+							        <h:outputText value="#{cuota.fechaVencimiento}">
+							        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+							        </h:outputText>
+							    </p:column>
+								
+								<p:column headerText="Segundo Vencimiento" style="width:20%;">
+							        <h:outputText value="#{cuota.segundoVencimiento}">
+							        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+							        </h:outputText>
+							    </p:column>
+							 
+							    <p:column headerText="Paga" style="width:10%;">
+							        <h:outputText value="#{cuota.paga == true? 'SI' : 'NO'}" />
+							    </p:column>
+							 
+							    <p:column headerText="Fecha Pago" style="width:20%;">
+							    	<h:outputText value="#{cuota.fechaPago}" >
+							    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+							    	</h:outputText>
+							    </p:column>
+							    
+							    <p:column headerText="Monto Pago" style="width:10%;">
+							    	<h:outputText value="#{cuota.montoPago}" >
+							    		<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+							    	</h:outputText>
+							    </p:column>
+							</p:dataTable>
+		    			</p:panelGrid>
+					</p:outputPanel>
+				</p:dialog>
+				</p:panel> 
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+	
+</html>

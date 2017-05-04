@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Pagos online</title>
+			</h:head>
+	<h:body>
+	  	<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+				<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<h3 align="center">PAGOS GENERADOS ONLINE</h3>
+				<p:separator />
+		    	<p:dataTable id="contenedorPagos" widgetVar="pagoBusqueda" var="pago" value="#{beanPago.listaRegistroOnlines}" paginator="true" 
+		    	resizableColumns="true" rows="20" style="width:100%;" emptyMessage="No existen pagos generados de forma online." sortMode="multiple">			    	
+			    	<f:facet name="header"> 
+			            <h:outputText value="Pagos Web Generados" />		
+			            <p:outputPanel style="float:right;">
+							<p:inputText id="globalFilter" onkeyup="PF('pagoBusqueda').filter()" placeholder="Buscar"/>
+						</p:outputPanel>  
+			        </f:facet>			    
+				 
+				    <p:column headerText="Alumno" sortBy="#{pago.alumno.nombreCompleto}" style="width:250px;"
+				    filterBy="#{pago.alumno.nombreCompleto}" filterStyle="display:none;">
+				        <h:outputText value="#{pago.alumno.nombreCompleto}" />
+				    </p:column>		
+				    
+				    <p:column headerText="Monto" style="width:80px;">
+				        <h:outputText value="#{pago.monto}" />
+				    </p:column>				    		    
+				    
+				    <p:column headerText="Fecha y Hora" style="width:150px;" sortBy="#{pago.fecha}">
+				        <h:outputText value="#{pago.fecha}" >
+				        	<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+				        </h:outputText>
+				    </p:column>
+				    
+				    <p:column headerText="Detalle" >
+				        <h:outputText value="#{pago.detalle}" />
+				    </p:column>		    
+				</p:dataTable>			   				
+				</p:panel> 
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

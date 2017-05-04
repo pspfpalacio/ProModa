@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	
+	<context:annotation-config />
+	<context:component-scan base-package="promoda.dao.impl" />
+	<bean id="BeanAlumnoDAO" class="promoda.dao.impl.DAOAlumnoImpl" />
+	<bean id="BeanAsistenciaDAO" class="promoda.dao.impl.DAOAsistenciaImpl" />
+	<bean id="BeanCajaDAO" class="promoda.dao.impl.DAOCajaImpl" />
+	<bean id="BeanCuotaImpagaDAO" class="promoda.dao.impl.DAOCuotaImpagaImpl" />
+	<bean id="BeanCuotaDAO" class="promoda.dao.impl.DAOCuotaImpl" />
+	<bean id="BeanCursoDAO" class="promoda.dao.impl.DAOCursoImpl" />
+	<bean id="BeanDomicilioDAO" class="promoda.dao.impl.DAODomicilioImpl" />
+	<bean id="BeanGastoDAO" class="promoda.dao.impl.DAOGastoImpl" />
+	<bean id="BeanInscripcionDiaDAO" class="promoda.dao.impl.DAOInscripcionDiaImpl" />
+	<bean id="BeanInscripcionDAO" class="promoda.dao.impl.DAOInscripcionImpl" />
+	<bean id="BeanInscripcionMotivoDAO" class="promoda.dao.impl.DAOInscripcionMotivoImpl" />
+	<bean id="BeanLocalidadDAO" class="promoda.dao.impl.DAOLocalidadImpl" />
+	<bean id="BeanMateriaDAO" class="promoda.dao.impl.DAOMateriaImpl" />
+	<bean id="BeanMateriasProfesorDAO" class="promoda.dao.impl.DAOMateriasProfesorImpl" />
+	<bean id="BeanMatriculaAlmunoDAO" class="promoda.dao.impl.DAOMatriculaAlumnoImpl" />
+	<bean id="BeanMatriculaImpagaDAO" class="promoda.dao.impl.DAOMatriculaImpagaImpl" />
+	<bean id="BeanMotivoDAO" class="promoda.dao.impl.DAOMotivoImpl" />
+	<bean id="BeanMatriculaDAO" class="promoda.dao.impl.DAOMatriculaImpl" />
+	<bean id="BeanPagosCuotaDAO" class="promoda.dao.impl.DAOPagosCuotaImpl" />
+	<bean id="BeanPagosMatriculaDAO" class="promoda.dao.impl.DAOPagosMatriculaImpl" />
+	<bean id="BeanParametroDAO" class="promoda.dao.impl.DAOParametroImpl" />
+	<bean id="BeanPlanPagoDAO" class="promoda.dao.impl.DAOPlanPagoImpl" />
+	<bean id="BeanProfesorDAO" class="promoda.dao.impl.DAOProfesorImpl" />
+	<bean id="BeanProvinciaDAO" class="promoda.dao.impl.DAOProvinciaImpl" />
+	<bean id="BeanRecursoDAO" class="promoda.dao.impl.DAORecursoImpl" />
+	<bean id="BeanRecursoAlumnoDAO" class="promoda.dao.impl.DAORecursoAlumnoImpl" />
+	<bean id="BeanRegistroOnlineDAO" class="promoda.dao.impl.DAORegistroOnlineImpl" />
+	<bean id="BeanRoleDAO" class="promoda.dao.impl.DAORoleImpl" />
+	<bean id="BeanRolesVistaDAO" class="promoda.dao.impl.DAORolesVistaImpl" />
+	<bean id="BeanUsuarioDAO" class="promoda.dao.impl.DAOUsuarioImpl" />
+	<bean id="BeanVistaDAO" class="promoda.dao.impl.DAOVistaImpl" />
+
+</beans>

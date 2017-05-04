@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">      
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<title>Calificaciones</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+							<p:growl id="messages" showDetail="false" />
+							<ui:include src="/includes/menubar.xhtml" />
+							<br/>
+			    			<p:panelGrid id="grid" columns="6" style="width:100%;">
+			    				<f:facet name="header">
+			    					<h2><h:outputText value="#{beanRecurso.headerText}" /></h2>
+			    				</f:facet>
+			    				
+			    				<p:outputLabel value="Curso " />
+					    		<h:inputText value="#{beanRecurso.curso.nombre}" disabled="true" />    				
+			    				
+			    				<p:outputLabel value="Materia " />
+					    		<h:inputText value="#{beanRecurso.materia.nombre}" disabled="true" />		    					
+			    				
+			    				<p:outputLabel value="Recurso " />
+					    		<h:inputText value="#{beanRecurso.recurso.descripcion}" disabled="true" />			    				   				
+			   				</p:panelGrid>
+			   				<p:outputPanel style="float:right;">							
+								<h:commandLink >
+									<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+									<p:dataExporter type="pdf" target="tablaCalificaciones" fileName="Calificaciones" preProcessor="#{beanRecurso.preProcessCalificacionesPDF}"/>
+								</h:commandLink>
+							</p:outputPanel>
+					    	<p:dataTable id="tablaCalificaciones" var="recursoAlumno" value="#{beanRecurso.listaRecursoAlumnos}" editable="true" 
+					    	widgetVar="cellRecursoAlumno" editMode="cell" scrollRows="50" resizableColumns="true" scrollable="true" scrollHeight="600" 
+					    	emptyMessage="No existen Alumnos inscriptos" style="width:100%;margin-bottom:20px" 
+					    	paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+								<f:facet name="header">									
+									<p:outputLabel value="Calificaciones" />
+								</f:facet>
+								
+								<p:ajax event="cellEdit" listener="#{beanRecurso.onRowEdit(recursoAlumno)}" update=":formulario:tablaCalificaciones" />
+								
+								<p:column headerText="Alumno" >
+									<h:outputText value="#{recursoAlumno.alumno.nombreCompleto}" />
+								</p:column>						
+								
+								<p:column headerText="Calificación" style="text-align:center;">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{recursoAlumno.calificacion}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputMask id="calificacionInput" value="#{recursoAlumno.calificacion}" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>	
+							</p:dataTable>	
+							<p:panelGrid columns="1" style="width:100%;">
+								<f:facet name="header">
+									<p:commandButton icon="ui-icon-disk" value="Guardar Cambios" action="#{beanRecurso.calificar()}" update="panel" />
+									<p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="Volver" action="#{beanRecurso.volver()}"  />
+								</f:facet>
+							</p:panelGrid>
+		   				</p:panel>
+			    	</h:form>
+			    </div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>

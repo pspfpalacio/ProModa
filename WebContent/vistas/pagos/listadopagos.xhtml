@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<script type="text/javascript">
+			 PrimeFaces.locales['tr'] = {
+					       closeText: 'Cerrar',
+					       prevText: 'Anterior',
+					       nextText: 'Siguiente',
+					       currentText: 'Hoy',
+					       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+					           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+					       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+					           'Jul','Ago','Sep','Oct','Nov','Dic'],
+					       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+					       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					       weekHeader: 'Hf',
+					       firstDay: 1,
+					       isRTL: false,
+					       showMonthAfterYear: false,
+					       yearSuffix: '',
+					       month: 'Mes',
+					       week: 'Semana',
+					       day: 'Día',
+					       allDayText : 'Todos los días'
+    				};
+			</script>
+		<title>Pagos</title>
+			</h:head>
+	<h:body>
+	  	<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+				<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<h3 align="center">PAGOS</h3>
+		    	<p:panelGrid columns="7" cellpadding="5" style="width:100%;">
+		    		<f:facet name="header">
+		    			<h:outputText value="Lista de Pagos" />
+		    		</f:facet>
+		    		<p:outputLabel value="Tipo de Pago: " />
+					<p:selectOneRadio id="console" value="#{beanPago.tipoListado}" listener="#{beanPago.onChangeRadio()}" update="panel">
+			            <f:selectItem itemLabel="Matriculas" itemValue="M" />
+			            <f:selectItem itemLabel="Cuotas" itemValue="C"/>
+			        </p:selectOneRadio>
+			        <p:outputLabel value="Alumno: " />
+					<p:column>
+			    		<p:selectOneMenu value="#{beanPago.idAlumno}" filter="true" filterMatchMode="contains" style="width:250px;">
+	    					<p:ajax event="change" listener="#{beanPago.onChangeAlumnoLista()}" update="panel" />
+	    					<f:selectItem itemLabel="Todos" itemValue="0"/>
+	    					<f:selectItems value="#{beanPago.listaAlumnos}" var="alumno" itemLabel="#{alumno.nombreCompleto}" 
+	    					itemValue="#{alumno.id}"/>
+	    				</p:selectOneMenu>	
+					</p:column>
+					<p:column style="margin-left:30px;">
+						<p:outputLabel value="Desde: " />
+						<p:calendar value="#{beanPago.fechaInicio}" pattern="dd/MM/yyyy" locale="tr"/>
+					</p:column>
+					<p:column style="margin-left:30px;">
+						<p:outputLabel value="Hasta: " style="margin-left:30px;"/>
+						<p:calendar value="#{beanPago.fechaFin}" pattern="dd/MM/yyyy" locale="tr"/>
+					</p:column>
+					<p:commandButton icon="ui-icon-search" action="#{beanPago.buscarListados()}" update="panel"/>
+				</p:panelGrid>
+				<h5 style="color:white;">(*)Seleccione opciones para listar los pagos de matrículas o cuotas</h5>
+			    <p:outputPanel style="float:right;" rendered="#{beanPago.siListaMatriculas}">							
+					<h:commandLink >
+						<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+						<p:dataExporter type="pdf" target="contenedorMatriculas" fileName="PagosMatriculas" preProcessor="#{beanPago.preProcessPDFMatricula}"/>
+					</h:commandLink>
+				</p:outputPanel>
+		    	<p:dataTable id="contenedorMatriculas" var="pm" value="#{beanPago.listaPagoMatricula}" paginator="true" resizableColumns="true" rows="20" 
+		    	rendered="#{beanPago.siListaMatriculas}" style="width:100%;" emptyMessage="No existen pagos de matrículas realizados">			    	
+			    	<f:facet name="header"> 
+			            <h:outputText value="Pagos de Matriculas" />		 
+			        </f:facet>
+		    	
+				    <p:column headerText="Curso">
+				        <h:outputText value="#{pm.matricula.curso.nombre}" />
+				    </p:column>
+				 
+				    <p:column headerText="Alumno">
+				        <h:outputText value="#{pm.alumno.nombreCompleto}" />
+				    </p:column>
+				    
+				    <p:column headerText="Fecha">
+				        <h:outputText value="#{pm.fecha}"> 
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+				    </p:column>
+				 
+				    <p:column headerText="Monto">
+				        <h:outputText value="#{pm.monto}" >
+							<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+						</h:outputText>
+				    </p:column>
+				 
+				    <p:column headerText="Concepto">
+				    	<h:outputText value="#{pm.concepto}" />
+				    </p:column>
+				    
+				    <p:column headerText="Usuario Alta">
+				    	<h:outputText value="#{pm.usuario1.nombreCompleto}" />
+				    </p:column>	
+				    
+				    <p:column headerText="Ver Pago" style="width:125px;text-align:center;" exportable="false">
+						<p:commandButton icon="ui-icon-newwin"  disabled="#{!pm.enabled}" oncomplete="PF('dialogoMovimiento').show()"
+						action="#{beanPago.verPagoMatricula(pm)}" update=":formulario:outputPanel"/>
+					</p:column>					    
+				</p:dataTable>
+				
+			    <p:outputPanel style="float:right;" rendered="#{beanPago.siListaCuotas}" >							
+					<h:commandLink >
+						<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+						<p:dataExporter type="pdf" target="contenedorCuotas" fileName="PagosCuotas" preProcessor="#{beanPago.preProcessPDFCuotas}"/>
+					</h:commandLink>
+				</p:outputPanel>
+		    	<p:dataTable id="contenedorCuotas" var="pc" value="#{beanPago.listaPagosCuota}" paginator="true" resizableColumns="true" rows="20" 
+		    	rendered="#{beanPago.siListaCuotas}" style="width:100%;" emptyMessage="No existen pagos de cuotas realizados">			    	
+			    	<f:facet name="header"> 
+			            <h:outputText value="Pagos de Cuotas" />			 
+			        </f:facet>
+		    	
+				    <p:column headerText="Curso">
+				        <h:outputText value="#{pc.cuota.curso.nombre}" />
+				    </p:column>
+				    					 
+				    <p:column headerText="Alumno">
+				        <h:outputText value="#{pc.alumno.nombreCompleto}" />
+				    </p:column>
+				    
+				    <p:column headerText="Fecha">
+				        <h:outputText value="#{pc.fecha}"> <f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+				    </p:column>
+				 
+				    <p:column headerText="Monto">
+				        <h:outputText value="#{pc.monto}" >
+							<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+						</h:outputText>
+				    </p:column>
+				 
+				    <p:column headerText="Concepto">
+				    	<h:outputText value="#{pc.concepto}" />
+				    </p:column>
+				    
+				    <p:column headerText="Usuario Alta">
+				    	<h:outputText value="#{pc.usuario1.nombreCompleto}" />
+				    </p:column>		
+				    
+				    <p:column headerText="Ver Pago" style="width:125px;text-align:center;" exportable="false">
+						<p:commandButton icon="ui-icon-newwin"  disabled="#{!pc.enabled}" oncomplete="PF('dialogoMovimiento').show()"
+						action="#{beanPago.verPagoCuota(pc)}" update=":formulario:outputPanel"/>
+					</p:column>					    
+				</p:dataTable>	
+				<p:dialog header="#{beanPago.pagoReporte.encabezado}" widgetVar="dialogoMovimiento"
+					id="dialogo" modal="true">
+					<p:outputPanel id="outputPanel">
+		    			<p:panelGrid columns="4" style="width:100%;">
+		    				<f:facet name="header">
+		    					<p:outputLabel value="#{beanPago.pagoReporte.encabezado}" />
+		    					<p:spacer width="20" />
+								<p:outputPanel style="float:right;">							
+									<h:commandLink action="#{beanPago.generarReporte()}" target="_blank" >
+										<p:graphicImage value="../../images/pdf-icon.png" width="20" />
+									</h:commandLink>
+								</p:outputPanel>
+		    				</f:facet>
+		    				
+		    				<p:outputLabel value="Fecha: " />
+		    				<h:inputText value="#{beanPago.pagoReporte.fechaString}" disabled="true" />
+		    				
+		    				<p:outputLabel value="Alumno: " />
+		    				<h:inputText value="#{beanPago.pagoReporte.alumno}" disabled="true" />
+		    				
+		    				<p:outputLabel value="Curso: " />
+		    				<h:inputText value="#{beanPago.pagoReporte.curso}" disabled="true" />
+		    				
+		    				<p:outputLabel value="Concepto: " />
+		    				<h:inputText value="#{beanPago.pagoReporte.concepto}" disabled="true" />
+		    				
+		    				<p:outputLabel value="Monto: " />
+		    				<h:inputText value="#{beanPago.pagoReporte.montoString}" disabled="true" >
+								<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+							</h:inputText>
+		    			</p:panelGrid>
+					</p:outputPanel>
+				</p:dialog>		
+				</p:panel> 
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

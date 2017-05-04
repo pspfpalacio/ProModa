@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<script type="text/javascript">
+				 PrimeFaces.locales['tr'] = {
+						       closeText: 'Cerrar',
+						       prevText: 'Anterior',
+						       nextText: 'Siguiente',
+						       currentText: 'Hoy',
+						       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+						           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+						       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+						           'Jul','Ago','Sep','Oct','Nov','Dic'],
+						       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+						       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       weekHeader: 'Hf',
+						       firstDay: 1,
+						       isRTL: false,
+						       showMonthAfterYear: false,
+						       yearSuffix: '',
+						       month: 'Mes',
+						       week: 'Semana',
+						       day: 'Día',
+						       allDayText : 'Todos los días'
+	    				};
+				</script>
+				<title>Pagos</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+							<p:growl id="messages" autoUpdate="true" showDetail="false" />
+							<ui:include src="/includes/menubar.xhtml" />
+							<h3 align="center">PAGOS DE DEUDA</h3>							
+							<p:panelGrid columns="2" cellpadding="5" style="width:100%;">		
+					    		<f:facet name="header">
+					    			<h:outputText value="Pagos de Deuda" />					    			
+					    		</f:facet>								
+					    		<p:outputLabel value="Alumno: " />
+					    		<p:selectOneMenu value="#{beanPago.idAlumno}" filter="true" filterMatchMode="contains" style="width:250px;">
+			    					<p:ajax event="change" listener="#{beanPago.onChangeAlumnoDeuda()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione Alumno" itemValue="0"/>
+			    					<f:selectItems value="#{beanPago.listaAlumnos}" var="alumno" itemLabel="#{alumno.nombreCompleto}" 
+			    					itemValue="#{alumno.id}"/>
+			    				</p:selectOneMenu>		
+					    	</p:panelGrid>
+					    	<p:panelGrid columns="1" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.poseeDeuda}"> 
+						    	<p:dataTable id="tablaMatriculas" var="matriculaI" value="#{beanPago.listaMatriculasImpagas}"  
+							    	widgetVar="matriculaBusqueda" scrollRows="5" resizableColumns="true" scrollable="true" scrollHeight="100" 
+							    	emptyMessage="No existen Matriculas Impagas" style="width:100%;margin-bottom:20px" >
+							    	<f:facet name="header">
+							    		<h:outputText value="Matriculas Impagas" />
+							    	</f:facet>
+							    	
+								    <p:column headerText="Curso" >
+								        <h:outputText value="#{matriculaI.curso.nombre}" />
+								    </p:column>
+								    
+								    <p:column headerText="Fecha de Inscripción" >
+								        <h:outputText value="#{matriculaI.matriculaAlumno.fechaAlta}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+								    
+								    <p:column headerText="Fecha de Baja al Curso" >
+								        <h:outputText value="#{matriculaI.fechaAlta}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+								    
+								    <p:column headerText="Fecha Finalización de Curso" >
+								        <h:outputText value="#{matriculaI.matricula.fechaFinCursado}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+								 
+								    <p:column headerText="Monto" >
+								        <h:outputText value="#{matriculaI.monto}" >
+								        	<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+								        </h:outputText>
+								    </p:column>	
+								    
+								    <p:column style="width:40px;">
+								    	<p:commandButton icon="ui-icon-cart" action="#{beanPago.onSelectMatricula(matriculaI)}" update=":formulario:panel" />
+								    </p:column>							    
+								</p:dataTable>
+								<p:dataTable id="tablaCuotas" var="cuotaI" value="#{beanPago.listaCuotasImpagas}"  
+							    	widgetVar="cuotaBusqueda" scrollRows="5" resizableColumns="true" scrollable="true" scrollHeight="100" 
+							    	emptyMessage="No existen Cuotas Impagas" style="width:100%;margin-bottom:20px" >
+							    	<f:facet name="header">
+							    		<h:outputText value="Cuotas Impagas" />
+							    	</f:facet>
+							    	
+							    	<p:column headerText="Detalle">
+								        <h:outputText value="#{cuotaI.cuota.detalle}" />
+								    </p:column>
+								    
+								    <p:column headerText="Fecha Primer Venc.">
+								        <h:outputText value="#{cuotaI.cuota.fechaVencimiento}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+								    
+								    <p:column headerText="Fecha Primer Venc.">
+								        <h:outputText value="#{cuotaI.cuota.segundoVencimiento}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+							    	
+								    <p:column headerText="Curso">
+								        <h:outputText value="#{cuotaI.curso.nombre}" />
+								    </p:column>
+								    
+								    <p:column headerText="Fecha de Inscripción">
+								        <h:outputText value="#{cuotaI.matriculaAlumno.fechaAlta}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+								    
+								    <p:column headerText="Fecha de Baja al Curso" >
+								        <h:outputText value="#{cuotaI.fechaAlta}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+								    
+								    <p:column headerText="Fecha Finalización de Curso">
+								        <h:outputText value="#{cuotaI.matricula.fechaFinCursado}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+								 
+								    <p:column headerText="Monto">
+								        <h:outputText value="#{cuotaI.monto}" >
+								        	<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+								        </h:outputText>
+								    </p:column>		
+								    
+								    <p:column style="width:40px;">
+								    	<p:commandButton icon="ui-icon-cart" action="#{beanPago.onSelectCuota(cuotaI)}" update=":formulario:panel" />
+								    </p:column>					    
+								</p:dataTable>
+					    	</p:panelGrid>
+					    	
+					    	<p:panelGrid columns="2" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.pagoMat}" > 
+					    		<f:facet name="header">
+					    			<h:outputText value="Pago de Matrícula"/>
+							    </f:facet>		
+							    
+								<p:outputLabel value="Curso: " />
+					    		<p:outputLabel value="#{beanPago.matriculaImpaga.curso.nombre}" />
+					    		
+					    		<p:outputLabel value="Fecha de Inscripción: " />
+					    		<p:outputLabel value="#{beanPago.matriculaImpaga.matriculaAlumno.fechaAlta}" >
+					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
+					    		</p:outputLabel>
+					    		
+					    		<p:outputLabel value="Fecha de Baja al Curso: " />
+					    		<p:outputLabel value="#{beanPago.matriculaImpaga.fechaAlta}" >
+					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
+					    		</p:outputLabel>
+					    		
+					    		<p:outputLabel value="Fecha Finalización de Curso: " />
+					    		<p:outputLabel value="#{beanPago.matriculaImpaga.matricula.fechaFinCursado}" >
+					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
+					    		</p:outputLabel>		    
+							    
+					    		<p:outputLabel value="Costo de matricula: $ " />
+					    		<p:outputLabel value="#{beanPago.matriculaImpaga.matricula.costo}">
+					    			<f:convertNumber pattern="$###,##0.00"/>
+					    		</p:outputLabel>					    		
+					    		
+								<p:outputLabel value="Fecha de pago: " />
+    							<p:calendar value="#{beanPago.fecha}" pattern="dd/MM/yyyy" locale="tr"/>    							
+    							
+    							<p:outputLabel value="Monto de Pago: $" />
+	    						<h:inputText value="#{beanPago.montoImp}" style="width:80px;" />
+	    						
+	    						<p:outputLabel value="Concepto: "/>
+								<p:inputTextarea value="#{beanPago.concepto}" maxlength="299" 
+								disabled="#{beanPago.siMatPagada}" style="width:85%;" rows="1"/>
+    							
+    							<f:facet name="footer">
+					                <p:commandButton value="Pagar Matrícula" update="panel" action="#{beanPago.pagoMatriculaImpaga()}"
+ 									onclick="return confirm('ESTA SEGURO QUE DESEA PAGAR LA MATRICULA?')" />
+ 									<p:commandButton value="Cancelar" update="panel" action="#{beanPago.cancelarMatriculaImpaga()}"
+ 									onclick="return confirm('ESTA SEGURO QUE DESEA CANCELAR EL PAGO DE LA MATRICULA')" />
+		    					</f:facet>
+    						</p:panelGrid>
+    										    						    	
+					    	<p:panelGrid columns="4" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.pagoCuota}" > 
+					    		<f:facet name="header">
+					    			<h:outputText value="Pago de Cuota"/>
+							    </f:facet>
+							    
+							    <p:outputLabel value="Curso: " />
+					    		<p:outputLabel value="#{beanPago.cuotaImpaga.curso.nombre}" />
+					    		
+					    		<p:outputLabel value="Fecha de Inscripción: " />
+					    		<p:outputLabel value="#{beanPago.cuotaImpaga.matriculaAlumno.fechaAlta}" >
+					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
+					    		</p:outputLabel>
+					    		
+					    		<p:outputLabel value="Fecha de Baja al Curso: " />
+					    		<p:outputLabel value="#{beanPago.cuotaImpaga.fechaAlta}" >
+					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
+					    		</p:outputLabel>
+					    		
+					    		<p:outputLabel value="Fecha Finalización de Curso: " />
+					    		<p:outputLabel value="#{beanPago.cuotaImpaga.matricula.fechaFinCursado}" >
+					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
+					    		</p:outputLabel>
+					    		
+					    		<p:outputLabel value="Detalle: " />
+					    		<p:outputLabel value="#{beanPago.cuotaImpaga.cuota.detalle}" />
+					    		
+					    		<p:outputLabel value="Primer Vencimiento: " />
+					    		<p:outputLabel value="#{beanPago.cuotaImpaga.cuota.fechaVencimiento}" >
+					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
+					    		</p:outputLabel>
+					    		
+					    		<p:outputLabel value="Segundo Vencimiento: " />
+					    		<p:outputLabel value="#{beanPago.cuotaImpaga.cuota.segundoVencimiento}" >
+					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
+					    		</p:outputLabel>
+					    		
+					    		<p:outputLabel value="Monto de Cuota: " />
+					    		<p:outputLabel value="#{beanPago.cuotaImpaga.cuota.monto}" >
+					    			<f:convertNumber pattern="$###,##0.00" maxFractionDigits="2"/>
+					    		</p:outputLabel>
+					    		
+					    		<p:outputLabel value="Fecha de Pago: " />
+								<p:calendar value="#{beanPago.fecha}" pattern="dd/MM/yyyy" locale="tr"/>
+								
+								<p:outputLabel value="Monto de Pago: $" />
+	    						<h:inputText value="#{beanPago.montoImp}" style="width:80px;" />							    
+						    	
+								<f:facet name="footer">
+					                <p:commandButton value="Pagar Cuota" update="panel" action="#{beanPago.pagoCuotaImpaga()}"
+ 									onclick="return confirm('ESTA SEGURO QUE DESEA PAGAR LA CUOTA?')" />
+ 									<p:commandButton value="Cancelar" update="panel" action="#{beanPago.cancelarCuotaImpaga()}"
+ 									onclick="return confirm('ESTA SEGURO QUE DESEA CANCELAR EL PAGO DE LA CUOTA')" />
+		    					</f:facet>
+							</p:panelGrid>
+						</p:panel>
+					</h:form>
+				</div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Inicio</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<div>
+				<img alt="HEADER" src="images/banner_up.jpg" width="100%" align="middle"/>
+			</div>
+		<h:form onkeypress="return event.keyCode != 13">
+			<p:panel style="background-image: url(images/principal.jpg);min-height:1200px;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menu.xhtml"></ui:include>
+				<br/>
+				<h3 align="left" style="color: white;">Algunos de nuestros cursos que estan por comenzar</h3>
+				<p:dataTable id="contenedorCurso" widgetVar="cursoBusqueda" var="curso" style="width:100%;"
+				value="#{beanCursoAlum.getListaPorInscripcion()}" resizableColumns="true"
+				emptyMessage="No existen Cursos por Comenzar" sortMode="multiple">
+					<f:facet name="header">
+						<p:outputLabel value="Listado de Cursos por Comenzar" />
+					</f:facet>
+					
+					<p:column headerText="Nombre" >
+						<h:outputText value="#{curso.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Fecha de inicio de inscripción" >
+						<h:outputText value="#{curso.matricula.fechaAlta}" >
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Fecha de inicio de cursado" >
+						<h:outputText value="#{curso.matricula.fechaInicio}" >
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Duración en Meses" style="text-align: center; width:150px;" >					
+						<h:outputText value="#{curso.duracionMeses}" />
+					</p:column>
+				</p:dataTable>	
+	    	</p:panel>
+		</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

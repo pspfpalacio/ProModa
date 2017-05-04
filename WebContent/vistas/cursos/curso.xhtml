@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<script type="text/javascript">
+			 PrimeFaces.locales['tr'] = {
+					       closeText: 'Cerrar',
+					       prevText: 'Anterior',
+					       nextText: 'Siguiente',
+					       currentText: 'Hoy',
+					       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+					           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+					       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+					           'Jul','Ago','Sep','Oct','Nov','Dic'],
+					       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+					       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					       weekHeader: 'Hf',
+					       firstDay: 1,
+					       isRTL: false,
+					       showMonthAfterYear: false,
+					       yearSuffix: '',
+					       month: 'Mes',
+					       week: 'Semana',
+					       day: 'Día',
+					       allDayText : 'Todos los días'
+    				};
+			</script>
+		<title>Curso</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<br/>
+    			<p:panelGrid columns="4" style="width:100%;">
+    				<f:facet name="header">
+    					<h1><h:outputText value="#{beanCurso.headerText}" /></h1>
+    				</f:facet>
+    				
+    				<p:outputLabel value="Nombre: " />
+    				<p:inputText value="#{beanCurso.curso.nombre}" />    				
+    				
+    				<p:outputLabel value="Cantidad de Horas de Dictado: " />
+    				<p:inputMask mask="9?999" value="#{beanCurso.curso.cantHoras}"/>
+    				    				
+    				<p:outputLabel value="Costo de Curso: " />
+    				<p:column>
+    					<h:outputText value="$" />
+    					<p:inputText value="#{beanCurso.curso.costoCurso}" style="width:186px;">
+    						<f:convertNumber pattern="#,##0.00" maxFractionDigits="2"/>
+    					</p:inputText>
+    				</p:column>
+    				
+    				<p:outputLabel value="Costo de Matricula: " />
+    				<p:column>
+    					<h:outputText value="$" />
+    					<p:inputText value="#{beanCurso.curso.costoMatricula}" style="width:186px;" disabled="#{!beanCurso.nuevo}">
+    						<f:convertNumber pattern="#,##0.00" maxFractionDigits="2"/>
+    					</p:inputText>
+    				</p:column>
+    				
+    				<p:outputLabel value="Dias de cursado: " rendered="false" />
+    				<p:inputText value="#{beanCurso.curso.diasCursado}" rendered="false" />
+    				
+    				<p:outputLabel value="Duracion en Meses: " />
+    				<p:inputMask mask="9?999" value="#{beanCurso.curso.duracionMeses}" />
+    				
+    				<p:outputLabel value="Fecha finalización: " rendered="false"/>
+    				<p:calendar value="#{beanCurso.matricula.fechaFinalizacion}" pattern="dd/MM/yyyy" 
+    				rendered="false" locale="tr"/>
+    			</p:panelGrid>
+    			<p:panelGrid columns="1" style="width:100%;">	
+   					<f:facet name="header">
+   						<p:commandButton value="Guardar" update="messages" action="#{beanCurso.guardar()}"
+   						onclick="return confirm('GUARDAR CURSO?')"/>
+   						<p:commandButton value="Cancelar" onclick="return confirm('CANCELAR CURSO Y VOLVER?')"
+   						action="#{beanCurso.goCursos(beanCurso.usuario)}"/>
+   					</f:facet>	
+   				
+   				</p:panelGrid>
+   				</p:panel>
+	    	</h:form>
+	    </div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

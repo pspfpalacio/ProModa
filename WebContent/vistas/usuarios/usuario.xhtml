@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Usuario</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<br/>
+    			<p:panelGrid columns="4" style="width:100%;">
+    				<f:facet name="header">
+    					<h1><h:outputText value="#{beanUsuario.headerText}" /></h1>
+    				</f:facet>
+    				
+    				<p:outputLabel value="Apellido: " />
+    				<p:inputText value="#{beanUsuario.usuario.apellido}" />
+    				
+    				<p:outputLabel value="Nombres: " />
+    				<p:inputText value="#{beanUsuario.usuario.nombre}" />
+    				
+    				<p:outputLabel value="Username: " />
+    				<p:inputText value="#{beanUsuario.usuario.username}" />
+    				
+    				<p:outputLabel value="E-mail: " />
+    				<p:inputText value="#{beanUsuario.usuario.email}" />
+    				
+    				<p:outputLabel value="Contraseña: " />
+    				<p:password id="pass" value="#{beanUsuario.pass}" >
+						<p:ajax event="keyup" update="texto, guardar" listener="#{beanUsuario.handleKeyEvent()}"/>
+					</p:password>
+    				
+    				<p:outputLabel value="Repita Contraseña: " />
+    				<p:column>
+    					<p:password id="confirmPass" value="#{beanUsuario.repeatPass}">
+				    		<p:ajax event="keyup" update="texto, guardar" listener="#{beanUsuario.handleKeyEvent()}"/>
+				    	</p:password>
+				    	<h:outputText id="texto" value="#{beanUsuario.texto}"  />
+    				</p:column>
+    				
+    				<p:outputLabel value="Rol: " />
+    				<p:selectOneMenu value="#{beanUsuario.idRol}" required="true" label="ROL">
+    					<f:selectItem itemLabel="Seleccione Rol" itemValue="0"/>
+    					<f:selectItems value="#{beanUsuario.listaRoles}" var="rol" itemLabel="#{rol.nombre}" 
+    					itemValue="#{rol.id}"/>
+    				</p:selectOneMenu>
+    			</p:panelGrid>
+    			<p:panelGrid columns="2" style="width:100%;">
+   					<f:facet name="header">
+   						<p:commandButton id="guardar" value="Guardar" update="messages" action="#{beanUsuario.guardar()}"
+   						disabled="#{beanUsuario.checkPass}" onclick="return confirm('GUARDAR USUARIO?')"/>
+   						<p:commandButton value="Cancelar" onclick="return confirm('CANCELAR USUARIO Y VOLVER?')"
+   						action="#{beanUsuario.goUsuarios(beanUsuario.user)}" process="@this"/>
+   					</f:facet>	
+   				</p:panelGrid>   				
+   				</p:panel>
+	    	</h:form>
+	    </div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

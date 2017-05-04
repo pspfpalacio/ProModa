@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Pagos no realizados</title>
+			</h:head>
+	<h:body>
+	  	<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+				<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<h3 align="center">PAGOS NO REALIZADOS</h3>
+				<p:separator />
+		    	<p:dataTable id="contenedorMatriculas" widgetVar="matriculaBusqueda" var="matricula" value="#{beanPago.listaMatriculaAlumno}" paginator="true" 
+		    	filteredValue="#{beanPago.filteredMatriculaAlumno}" resizableColumns="true" rows="20" style="width:100%;" emptyMessage="No existen deudas de pagos de matrículas." sortMode="multiple">			    	
+			    	<f:facet name="header"> 
+			            <h:outputText value="Pagos No Realizados de Matriculas" />		
+			            <p:outputPanel style="float:right;">
+							<p:inputText id="globalFilter" onkeyup="PF('matriculaBusqueda').filter()" placeholder="Buscar"/>
+						</p:outputPanel>
+						<p:outputPanel style="float:right;">							
+							<h:commandLink action="#{beanPago.reporteDeudaMatricula()}" target="_blank" >
+								<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+							</h:commandLink>
+						</p:outputPanel>  
+			        </f:facet>			    
+				 
+				    <p:column headerText="Alumno" sortBy="#{matricula.alumno.nombreCompleto}"
+				    filterBy="#{matricula.alumno.nombreCompleto}" filterStyle="display:none;">
+				        <h:outputText value="#{matricula.alumno.nombreCompleto}" />
+				        <p:rowToggler />
+				    </p:column>
+				    
+				    <p:column headerText="Curso" sortBy="#{matricula.curso.nombre}"
+				    filterBy="#{matricula.curso.nombre}" filterStyle="display:none;">
+				        <h:outputText value="#{matricula.curso.nombre}" />
+				    </p:column>
+				    
+				    <p:column headerText="Fecha de Inscripción" style="width:180px;" sortBy="#{matricula.fechaAlta}">
+				        <h:outputText value="#{matricula.fechaAlta}"> 
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+				    </p:column>
+				 
+				    <p:column headerText="Monto Deuda" style="width:150px;">
+				        <h:outputText value="#{matricula.matricula.costo}" >
+							<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+						</h:outputText>
+				    </p:column>
+				    <p:rowExpansion>
+				    	<p:panel style="width:80%;">
+				    		<f:facet name="header">
+				    			<p:outputLabel value="CONTACTO" />
+				    		</f:facet>
+				    		<p:outputLabel value="Tel. Cel: " />				    		
+				    		<p:outputLabel value="#{matricula.alumno.telefonoCel}" />
+				    		<br/>
+				    		<p:outputLabel value="Tel. Fijo: " />				    		
+				    		<p:outputLabel value="#{matricula.alumno.telefonoFijo}" />
+				    		<br/>
+				    		<p:outputLabel value="Email: " />				    		
+				    		<p:outputLabel value="#{matricula.alumno.email}" />
+				    	</p:panel>
+				    </p:rowExpansion>			    
+				</p:dataTable>
+				<p:separator />
+			    <p:dataTable id="contenedorCuotas" widgetVar="cuotaBusqueda" var="cuota" value="#{beanPago.listaCuota}" paginator="true" resizableColumns="true" rows="20" 
+		    	filteredValue="#{beanPago.filteredCuota}" style="width:100%;" emptyMessage="No existen deudas de pagos de cuotas." sortMode="multiple">			    	
+			    	<f:facet name="header"> 
+			            <h:outputText value="Pagos No Realizados de Cuotas" />	
+			            <p:outputPanel style="float:right;">
+							<p:inputText id="globalFilter" onkeyup="PF('cuotaBusqueda').filter()" placeholder="Buscar"/>
+						</p:outputPanel> 	
+						<p:outputPanel style="float:right;">							
+							<h:commandLink action="#{beanPago.reporteDeudaCuota()}" target="_blank" >
+								<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+							</h:commandLink>
+						</p:outputPanel>  	 
+			        </f:facet>
+				    
+				    <p:column headerText="Alumno" sortBy="#{cuota.alumno.nombreCompleto}"
+				    filterBy="#{cuota.alumno.nombreCompleto}" filterStyle="display:none;">
+				        <h:outputText value="#{cuota.alumno.nombreCompleto}" />
+				        <p:rowToggler />
+				    </p:column>
+		    	
+				    <p:column headerText="Curso" sortBy="#{cuota.curso.nombre}"
+				    filterBy="#{cuota.curso.nombre}" filterStyle="display:none;">
+				        <h:outputText value="#{cuota.curso.nombre}" />
+				    </p:column>			    
+				    
+				    <p:column headerText="Detalle" style="width:60px;">
+				        <h:outputText value="#{cuota.detalle}" />
+				    </p:column>
+				    
+				    <p:column headerText="Monto" style="width:80px;">
+				        <h:outputText value="#{cuota.monto}" >
+				        	<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+				        </h:outputText>
+				    </p:column>
+				    
+				    <p:column headerText="Primer Vencimiento" style="width:180px;" sortBy="#{cuota.fechaVencimiento}">
+				        <h:outputText value="#{cuota.fechaVencimiento}">
+				        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+				        </h:outputText>
+				    </p:column>
+					
+					<p:column headerText="Segundo Vencimiento" style="width:180px;" sortBy="#{cuota.segundoVencimiento}">
+				        <h:outputText value="#{cuota.segundoVencimiento}">
+				        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+				        </h:outputText>
+				    </p:column>			
+				    
+				    <p:rowExpansion>
+				    	<p:panel style="width:80%;">
+				    		<f:facet name="header">
+				    			<p:outputLabel value="CONTACTO" />
+				    		</f:facet>
+				    		<p:outputLabel value="Tel. Cel: " />				    		
+				    		<p:outputLabel value="#{cuota.alumno.telefonoCel}" />
+				    		<br/>
+				    		<p:outputLabel value="Tel. Fijo: " />				    		
+				    		<p:outputLabel value="#{cuota.alumno.telefonoFijo}" />
+				    		<br/>
+				    		<p:outputLabel value="Email: " />				    		
+				    		<p:outputLabel value="#{cuota.alumno.email}" />
+				    	</p:panel>
+				    </p:rowExpansion>	    
+				</p:dataTable>					
+				</p:panel> 
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

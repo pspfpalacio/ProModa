@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Inicio</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<div>
+				<img alt="HEADER" src="images/banner_up.jpg" width="100%" style="background-position: 0px 0px;" align="middle"/>
+			</div>
+		<h:form onkeypress="return event.keyCode != 13">
+			<p:panel style="background-image: url(images/principal.jpg);min-height:1200px;border:none;">				
+				<ui:include src="/includes/menubar.xhtml"></ui:include>
+				<p:growl id="messages" autoUpdate="true" showDetail="false" />
+				<br/>
+		    	<h1 align="center">  <p:outputLabel value="Bienvenido al Sistema de Gestión #{beanLogueo.usuario.nombreCompleto}"/> </h1> 
+		    	<h2>  </h2>
+	    	</p:panel>
+		</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

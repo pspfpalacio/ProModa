@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<script type="text/javascript">
+				 PrimeFaces.locales['tr'] = {
+						       closeText: 'Cerrar',
+						       prevText: 'Anterior',
+						       nextText: 'Siguiente',
+						       currentText: 'Hoy',
+						       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+						           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+						       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+						           'Jul','Ago','Sep','Oct','Nov','Dic'],
+						       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+						       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       weekHeader: 'Hf',
+						       firstDay: 1,
+						       isRTL: false,
+						       showMonthAfterYear: false,
+						       yearSuffix: '',
+						       month: 'Mes',
+						       week: 'Semana',
+						       day: 'Día',
+						       allDayText : 'Todos los días'
+	    				};
+				</script>
+				<title>Pagos</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+							<p:growl id="messages" autoUpdate="true" showDetail="false" />
+							<ui:include src="/includes/menubar.xhtml" />
+							<p:commandButton icon="ui-icon-extlink" value="Parámetros" title="Parámetros de cuotas" oncomplete="PF('dialogo').show()" 
+							update=":formulario:outputPanel" />
+							<h3 align="center">PAGOS</h3>							
+							<p:panelGrid columns="2" cellpadding="5" style="width:100%;">		
+					    		<f:facet name="header">
+					    			<h:outputText value="Pagos" />					    			
+					    		</f:facet>								
+					    		<p:outputLabel value="Alumno: " />
+					    		<p:selectOneMenu value="#{beanPago.idAlumno}" filter="true" filterMatchMode="contains" style="width:250px;">
+			    					<p:ajax event="change" listener="#{beanPago.onChangeAlumno()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione Alumno" itemValue="0"/>
+			    					<f:selectItems value="#{beanPago.listaAlumnos}" var="alumno" itemLabel="#{alumno.nombreCompleto}" 
+			    					itemValue="#{alumno.id}"/>
+			    				</p:selectOneMenu>		
+			    				<p:outputLabel value="Curso: " />
+					    		<p:selectOneMenu value="#{beanPago.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;" disabled="#{beanPago.siCursos}">
+			    					<p:ajax event="change" listener="#{beanPago.onChangeCurso()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione curso" itemValue="0"/>
+			    					<f:selectItems value="#{beanPago.listaCurso}" var="curso" itemLabel="#{curso.nombre}"
+			    					itemValue="#{curso.id}"/>
+			    				</p:selectOneMenu>
+					    	</p:panelGrid>
+					    	<p:panelGrid columns="3" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.siMatAlumno}"> 
+						    	<f:facet name="header">
+							        <p:row>
+							            <p:column colspan="4">Datos de Matricula</p:column>
+							        </p:row>
+							    </f:facet>	
+							    				    		
+					    		<p:column>
+					    			<p:outputLabel value="Costo de matricula: $ #{beanPago.matalumno.matricula.costo}" />
+					    		</p:column>
+					    		<p:column>
+									<p:outputLabel value="Fecha: " />
+    								<p:calendar value="#{beanPago.fecha}" pattern="dd/MM/yyyy" disabled="#{beanPago.siMatPagada}" locale="tr"/>
+    							</p:column>
+    							<p:column>
+    								<p:outputLabel value="Monto de Pago: $" />
+	    							<h:inputText id="monto" value="#{beanPago.pagosmatricula.monto}" style="width:80px;" required="true" disabled="#{beanPago.siMatPagada}">
+				    					<f:convertNumber maxFractionDigits="2" pattern="#,##0.00"/>
+				    				</h:inputText>
+    							</p:column>
+    						</p:panelGrid>    						
+    						<p:panelGrid columns="1" cellpadding="5" style="width:100%;" rendered="#{beanPago.siMatAlumno}" >
+    							<p:column>
+   									<p:outputLabel value="Concepto: "/>
+   									<p:inputText value="#{beanPago.concepto}" maxlength="299"  
+   									disabled="#{beanPago.siMatPagada}" style="width:85%;"/>
+    							</p:column>
+    							
+	    						<f:facet name="footer">
+							        <p:commandButton value="Pagar" update="messages" action="#{beanPago.pagoMatricula()}"
+   												onclick="return confirm('PAGAR MATRICULA?')" disabled="#{beanPago.siMatPagada}"/>
+   									<p:commandButton value="Baja" update="messages" action="#{beanPago.bajaMatricula()}"
+   												onclick="return confirm('BAJA DE PAGO?')" disabled="#{!beanPago.siMatPagada}"/>
+		    					</f:facet>
+					    	</p:panelGrid>
+					    	
+					    	<p:panelGrid columns="1" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.siCuotas}" > 
+					    		<f:facet name="header">
+							        <p:row>
+							            <p:column colspan="4">Cuotas Vigentes</p:column>
+							        </p:row>
+							    </f:facet>
+						    	<p:dataTable id="tablaCuotas" var="cuota" value="#{beanPago.listaCuota}" paginator="true" 
+						    	selection="#{beanPago.selectedCuota}" rowKey="#{cuota.id}">
+						    	
+						    		<p:column headerText="Baja" style="text-align: center; width:70px;" id="act_desact" exportable="false">						
+										<p:row rendered="#{cuota.paga}">
+											<h:commandLink id="desactivar" title="Desactivar" disabled="#{!cuota.paga}"
+												onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA EL PAGO DE CUOTA?')"
+												action="#{beanPago.bajaCuota(cuota)}">
+											 	<h:graphicImage value="/images/activo.ico" width="20" title="baja" /> 
+											</h:commandLink>
+										</p:row>						
+										<p:row rendered="#{!cuota.paga}">
+											<h:graphicImage value="/images/desactivo.ico" width="20" title="Alta" />
+										</p:row>
+									</p:column>
+						    	
+								    <p:column headerText="Detalle" style="width:25%;">
+								        <h:outputText value="#{cuota.detalle}" />
+								    </p:column>
+								 
+								    <p:column headerText="Monto" style="width:10%;">
+								        <h:outputText value="#{cuota.monto}" >
+								        	<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+								        </h:outputText>
+								    </p:column>
+								    
+								    <p:column headerText="Primer Vencimiento" style="width:20%;">
+								        <h:outputText value="#{cuota.fechaVencimiento}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+									
+									<p:column headerText="Segundo Vencimiento" style="width:20%;">
+								        <h:outputText value="#{cuota.segundoVencimiento}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+								 
+								    <p:column headerText="Pagada" style="width:10%;">
+								        <h:outputText value="#{cuota.paga == true? 'SI' : 'NO'}" />
+								    </p:column>
+								 
+								    <p:column headerText="Fecha Pago" style="width:20%;">
+								    	<p:calendar value="#{cuota.fechaPago}" pattern="dd/MM/yyyy" disabled="#{cuota.paga}" locale="tr">											
+											<p:ajax event="blur" listener="#{beanPago.onChangeFechaPago(cuota)}" update="montoCuota" /> 
+								    	</p:calendar>
+								    </p:column>
+								    
+								    <p:column headerText="Monto Pago" style="width:10%;">		    
+								   		<h:inputText id="montoCuota" value="#{cuota.montoPago}" style="width:60px;" disabled="#{cuota.paga}">
+				    						<f:convertNumber maxFractionDigits="2" pattern="###,##0.00"/>
+				    					</h:inputText>
+								    </p:column>
+								    
+								    <p:column headerText="Selec." selectionMode="multiple" style="width:5%;text-align:center" exportable="false"/>
+								    
+								</p:dataTable>
+								<f:facet name="footer">
+					                <p:commandButton value="Pagar Cuotas" update="messages" action="#{beanPago.pagoCuotas()}"
+ 												onclick="return confirm('Pagar Cuotas?')" />
+ 									<h:commandLink style="float:right;">
+										<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+										<p:dataExporter type="pdf" target="tablaCuotas" fileName="PagosCuotas" preProcessor="#{beanPago.preProcessPDFCuotas}"/>
+									</h:commandLink>
+		    					</f:facet>
+							</p:panelGrid>
+							<p:dialog header="Parámetro de cuotas" widgetVar="dialogo"
+								id="dialogo" modal="true" closeOnEscape="true" width="700">
+								<p:outputPanel id="outputPanel">
+									<p:panelGrid columns="2" style="width:100%;">	
+				    					<p:outputLabel value="Días de primer vencimiento de cuota: (días)" />
+				    					<p:inputText value="#{beanPago.parametro.diasPrimerVencimiento}" />
+				    					
+				    					<p:outputLabel value="Días de segundo vencimiento de cuota: (días)" />
+				    					<p:inputText value="#{beanPago.parametro.diasSegundoVencimiento}" />
+				    					
+				    					<p:outputLabel value="Porcentaje de primer vencimiento de cuota: (%)" />
+				    					<p:inputText value="#{beanPago.parametro.porcentajePrimerVencimiento}" />
+				    					
+				    					<p:outputLabel value="Porcentaje de segundo vencimiento de cuota: (%)" />
+				    					<p:inputText value="#{beanPago.parametro.porcentajeSegundoVencimiento}" />
+				    					
+				    					<p:outputLabel value="Cliente ID (MP): " />
+				    					<p:inputText value="#{beanPago.parametro.usuarioMp}" />
+				    					
+				    					<p:outputLabel value="Cliente Secret (MP): " />
+				    					<p:inputText value="#{beanPago.parametro.passwordMp}" />
+				    				</p:panelGrid>
+				    				<p:panelGrid columns="1" style="width:100%;">
+				    					<h5>
+				    						Los cambios realizados sobre los parametros de las cuotas se verán aplicados únicamente 
+				    						en las nuevas inscripciones o nuevas cuotas que se den de alta. En las cuotas ya registradas 
+				    						no se verán los cambios registrados.
+				    					</h5>
+				    				</p:panelGrid>
+				    				<p:panelGrid columns="2" style="width:100%;">
+				    					<f:facet name="header">
+				    						<p:commandButton value="Guardar" action="#{beanPago.guardarParametro()}" oncomplete="PF('dialogo').hide()"/>
+				    						<p:commandButton value="Cerrar" onclick="PF('dialogo').hide()"/>
+				    					</f:facet>				    					
+				    				</p:panelGrid>
+								</p:outputPanel>
+							</p:dialog>
+						</p:panel>
+					</h:form>
+				</div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>

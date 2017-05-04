@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<script type="text/javascript">
+			 PrimeFaces.locales['tr'] = {
+					       closeText: 'Cerrar',
+					       prevText: 'Anterior',
+					       nextText: 'Siguiente',
+					       currentText: 'Hoy',
+					       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+					           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+					       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+					           'Jul','Ago','Sep','Oct','Nov','Dic'],
+					       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+					       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					       weekHeader: 'Hf',
+					       firstDay: 1,
+					       isRTL: false,
+					       showMonthAfterYear: false,
+					       yearSuffix: '',
+					       month: 'Mes',
+					       week: 'Semana',
+					       day: 'Día',
+					       allDayText : 'Todos los días'
+    				};
+			</script>
+		<title>Inscripcion</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" autoUpdate="true" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<p:commandButton icon="ui-icon-extlink" value="Deudas Anteriores" title="Deudas Anteriores" oncomplete="PF('dialogo').show()" 
+				update=":formulario:outputPanel" rendered="#{beanInscripcion.deuda}"/>
+				<br/>
+    			<p:panelGrid columns="4" style="width:100%;">
+    				<f:facet name="header">
+    					<h2><h:outputText value="Solicitud de Matricula - Inscripción" /></h2>
+    				</f:facet>
+    				
+    				<p:outputLabel value="Fecha: " />
+    				<p:calendar value="#{beanInscripcion.inscripcion.fecha}" pattern="dd/MM/yyyy" locale="tr"/>
+    				
+    				<p:outputLabel value="Curso: " />
+    				<p:selectOneMenu value="#{beanInscripcion.idCurso}" filter="true" filterMatchMode="contains"
+    				style="width:250px;">
+    					<p:ajax event="change" listener="#{beanInscripcion.onChangeCurso()}" 
+    					update="plan_pago, monto, costo_curso, costo_cuota" />
+    					<f:selectItem itemLabel="Seleccione curso" itemValue="0"/>
+    					<f:selectItems value="#{beanInscripcion.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+    					itemValue="#{curso.id}"/>
+    				</p:selectOneMenu>
+    			</p:panelGrid>
+    			<p:panelGrid columns="4" style="width:100%;">
+    				<f:facet name="header">
+    					<h:outputText value="Datos Personales" />
+    				</f:facet>
+    			    
+    			    <p:outputLabel value="DNI: " />
+    				<p:inputText value="#{beanInscripcion.dni}" label="DNI">
+    					<p:ajax event="blur" listener="#{beanInscripcion.getPorDni()}" update="panel"/>
+    				</p:inputText>
+    				
+    				<p:outputLabel value="Fecha de Nacimiento:" />
+    				<p:calendar value="#{beanInscripcion.alumno.fechaNacimiento}" pattern="dd/MM/yyyy" 
+    				navigator="true" mindate="01/01/1900" locale="tr"/>
+    			    
+    				<p:outputLabel value="Apellido: " />
+    				<p:inputText value="#{beanInscripcion.alumno.apellido}" />    	
+    				
+    				<p:outputLabel value="Nombre: " />
+    				<p:inputText value="#{beanInscripcion.alumno.nombres}" /> 			
+    			</p:panelGrid>
+    			<p:panelGrid columns="4" style="width:100%;">	
+    				<f:facet name="header">
+    					<h:outputText value="Domicilio" />
+    				</f:facet>
+    				
+    				<p:outputLabel value="Provincia: " />
+    				<p:selectOneMenu value="#{beanInscripcion.idProvincia}" filter="true" label="PROVINCIA">
+    					<p:ajax event="change" listener="#{beanInscripcion.onChangeProvincia()}" update="localidad" />
+    					<f:selectItem itemLabel="Seleccione provincia" itemValue="0"/>
+    					<f:selectItems value="#{beanInscripcion.listaProvincias}" var="prov" itemLabel="#{prov.nombre}" 
+    					itemValue="#{prov.id}"/>
+    				</p:selectOneMenu>
+    				
+    				<p:outputLabel value="Localidad: " />
+    				<p:selectOneMenu id="localidad" value="#{beanInscripcion.idLocalidad}" filter="true" 
+    				label="LOCALIDAD">
+    					<f:selectItem itemLabel="Seleccione localidad" itemValue="0"/>
+    					<f:selectItems value="#{beanInscripcion.listaLocalidades}" var="loc" itemLabel="#{loc.nombre}" 
+    					itemValue="#{loc.id}"/>
+    				</p:selectOneMenu>
+    				
+    				<p:outputLabel value="Cod. Postal: " />
+    				<p:inputText value="#{beanInscripcion.domicilio.codigoPostal}" label="COD.POSTAL"/>
+    				
+    				<p:outputLabel value="Calle: " />
+    				<p:inputText value="#{beanInscripcion.domicilio.calle}" label="CALLE"/>
+    				
+    				<p:outputLabel value="Nro: " />
+    				<p:inputText value="#{beanInscripcion.domicilio.numero}" label="NUMERO"/>
+    				
+    				<p:outputLabel value="Piso: " />
+    				<p:inputText value="#{beanInscripcion.domicilio.piso}" />
+    				
+    				<p:outputLabel value="Departamento: " />
+    				<p:inputText value="#{beanInscripcion.domicilio.departamento}" />
+    				
+    				<p:outputLabel value="E-mail: " />
+    				<p:inputText value="#{beanInscripcion.alumno.email}" />
+    				
+    				<p:outputLabel value="Tel. Cel.: " />
+    				<p:inputText value="#{beanInscripcion.alumno.telefonoCel}" />
+    				
+    				<p:outputLabel value="Tel. Fijo: " />
+    				<p:inputText value="#{beanInscripcion.alumno.telefonoFijo}" />
+    			</p:panelGrid>
+    			<p:panelGrid columns="2" style="width:100%;" >
+	    			<f:facet name="header">
+	    				<h:outputText value="Plan de Pago" />
+	    			</f:facet>
+	    		
+	    			<p:outputLabel value="Por defecto: " style="width:80px;" />
+	    			<p:selectBooleanCheckbox value="#{beanInscripcion.porDefecto}">
+			            <p:ajax update="plan_pago, monto, cantidad, descuento" />
+			        </p:selectBooleanCheckbox>
+    			</p:panelGrid>
+    			<p:panelGrid id="plan_pago" columns="2" style="width:100%;">	
+    				<p:outputLabel value="Descuento: " />
+    				<p:column>
+    					<p:outputLabel value="%" />
+	    				<p:inputText id="descuentoM" value="#{beanInscripcion.descuentoMatricula}" 
+	    				disabled="#{beanInscripcion.porDefecto}" style="width:70px;">
+	    					<p:ajax event="blur" listener="#{beanInscripcion.onBlurDescuentoMatricula()}" update="monto" />
+	    				</p:inputText>
+    				</p:column>
+    				
+    				<p:outputLabel value="Monto Matricula: " />
+	    			<h:inputText id="monto" value="#{beanInscripcion.montoMatricula}" disabled="true" style="width:80px;">
+	    				<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+	    			</h:inputText>	    					
+    				
+    				<p:outputLabel value="Cant. Cuotas: " />
+    				<p:column>
+    					<p:inputText id="cantidad" mask="9?9" value="#{beanInscripcion.cantCuotas}" 
+    					disabled="#{beanInscripcion.porDefecto}" style="width:86px;" >
+    						<p:ajax event="blur" listener="#{beanInscripcion.onBlurDescuentoCurso()}" update="costo_curso, costo_cuota" />
+    					</p:inputText>
+    					
+    					<p:outputLabel value=" Primer Vencimieto: " />
+    					<p:calendar value="#{beanInscripcion.primerVencimiento}" pattern="dd/MM/yyyy" locale="tr"/>
+    				</p:column>    				
+    				
+    				<p:outputLabel value="Descuento: " />
+    				<p:column>
+    					<p:outputLabel value="%" />
+	    				<p:inputText id="descuento" value="#{beanInscripcion.descuentoCurso}" 
+	    				disabled="#{beanInscripcion.porDefecto}" style="width:70px;">
+	    					<p:ajax event="blur" listener="#{beanInscripcion.onBlurDescuentoCurso()}" update="costo_curso, costo_cuota" />
+	    				</p:inputText>
+	    			</p:column>
+    				
+    				<p:outputLabel value="Costo Total de Curso: " />
+    				<h:inputText id="costo_curso" value="#{beanInscripcion.montoCurso}" disabled="true" style="width:80px;">
+	    				<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+	    			</h:inputText>	    			
+    				
+    				<p:outputLabel value="Monto de Cuota: " />
+    				<h:inputText id="costo_cuota" value="#{beanInscripcion.montoCuota}" disabled="true" style="width:80px;">
+	    				<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+	    			</h:inputText>
+	    								
+					<p:outputLabel value="Dias preferidos de cursado: " />
+					<p:column>
+						 <p:selectManyCheckbox id="dias" value="#{beanInscripcion.selectedDias}" filter="true">
+							<f:selectItem itemLabel="LUNES" itemValue="LUNES"/>
+							<f:selectItem itemLabel="MARTES" itemValue="MARTES"/>
+							<f:selectItem itemLabel="MIERCOLES" itemValue="MIERCOLES"/>
+							<f:selectItem itemLabel="JUEVES" itemValue="JUEVES"/>
+							<f:selectItem itemLabel="VIERNES" itemValue="VIERNES"/>
+							<f:selectItem itemLabel="SABADOS" itemValue="SABADOS"/>
+							<f:selectItem itemLabel="DOMINGOS" itemValue="DOMINGOS"/>
+						 </p:selectManyCheckbox>						
+					</p:column>
+					<p:outputLabel value="Horario preferido de cursado: " />
+    				<p:column>						
+    					<p:outputLabel value="Entre: " />
+    					<p:calendar value="#{beanInscripcion.inscripcion.horaCursado1}" pattern="HH:mm" timeOnly="true" style="width:40px;" locale="tr"/>
+    					<p:outputLabel value=" y " />
+    					<p:calendar value="#{beanInscripcion.inscripcion.horaCursado2}" pattern="HH:mm" timeOnly="true" style="width:40px;" locale="tr"/>
+    				</p:column>
+    				<p:outputLabel value="Como se enteró del Curso? " />
+    				<p:selectManyCheckbox value="#{beanInscripcion.selectedMotivos}" layout="grid" columns="3">
+				        <f:selectItems value="#{beanInscripcion.listaMotivos}" var="motivo" itemLabel="#{motivo.motivo}" itemValue="#{motivo.id}" />
+				    </p:selectManyCheckbox>
+    			</p:panelGrid>
+    			<p:panelGrid style="width:100%;" columns="2">	
+   					<f:facet name="header">
+   						<p:commandButton value="Guardar" update="messages" action="#{beanInscripcion.guardar()}"
+   						onclick="return confirm('GUARDAR INSCRIPCION?')" />
+   						<p:commandButton value="Cancelar" onclick="return confirm('CANCELAR INSCRIPCION?')" 
+   						action="#{beanInscripcion.cancelar()}" process="@this"/>
+   					</f:facet>	
+   				
+   				</p:panelGrid>
+   				<p:dialog header="Deudas Anteriores" widgetVar="dialogo"
+					id="dialogo" modal="true" closeOnEscape="true" width="90%">
+					<p:outputPanel id="outputPanel">
+						<p:panelGrid columns="2" style="width:100%;">	
+	    					<p:outputLabel value="Apellido y Nombre: " />
+	    					<p:outputLabel value="#{beanInscripcion.alumno.nombreCompleto} " />	    					
+	    					
+	    					<p:outputLabel value="D.N.I.:" />
+	    					<p:outputLabel value="#{beanInscripcion.alumno.dni}" />
+	    				</p:panelGrid>
+	    				<p:panelGrid columns="1" style="width:100%;">
+	    					<p:dataTable id="tablaMatriculas" var="matriculaI" value="#{beanInscripcion.listaMatriculasImpagas}"  
+						    	widgetVar="matriculaBusqueda" scrollRows="5" resizableColumns="true" scrollable="true" scrollHeight="100" 
+						    	emptyMessage="No existen Matriculas Impagas" style="width:100%;margin-bottom:20px" >
+						    	<f:facet name="header">
+						    		<h:outputText value="Matriculas Impagas" />
+						    	</f:facet>
+						    	
+							    <p:column headerText="Curso" style="width:25%;">
+							        <h:outputText value="#{matriculaI.curso.nombre}" />
+							    </p:column>
+							    
+							    <p:column headerText="Fecha de Inscripción" style="width:20%;">
+							        <h:outputText value="#{matriculaI.matriculaAlumno.fechaAlta}">
+							        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+							        </h:outputText>
+							    </p:column>
+							    
+							    <p:column headerText="Fecha de Baja al Curso" style="width:20%;">
+							        <h:outputText value="#{matriculaI.fechaAlta}">
+							        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+							        </h:outputText>
+							    </p:column>
+							    
+							    <p:column headerText="Fecha Finalización de Curso" style="width:20%;">
+							        <h:outputText value="#{matriculaI.matricula.fechaFinCursado}">
+							        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+							        </h:outputText>
+							    </p:column>
+							 
+							    <p:column headerText="Monto" style="width:10%;">
+							        <h:outputText value="#{matriculaI.monto}" >
+							        	<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+							        </h:outputText>
+							    </p:column>							    
+							</p:dataTable>
+							<p:dataTable id="tablaCuotas" var="cuotaI" value="#{beanInscripcion.listaCuotasImpagas}"  
+						    	widgetVar="cuotaBusqueda" scrollRows="5" resizableColumns="true" scrollable="true" scrollHeight="100" 
+						    	emptyMessage="No existen Cuotas Impagas" style="width:100%;margin-bottom:20px" >
+						    	<f:facet name="header">
+						    		<h:outputText value="Cuotas Impagas" />
+						    	</f:facet>
+						    	
+						    	<p:column headerText="Detalle">
+							        <h:outputText value="#{cuotaI.cuota.detalle}" />
+							    </p:column>
+							    
+							    <p:column headerText="Fecha Primer Venc.">
+							        <h:outputText value="#{cuotaI.cuota.fechaVencimiento}">
+							        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+							        </h:outputText>
+							    </p:column>
+							    
+							    <p:column headerText="Fecha Segundo Venc.">
+							        <h:outputText value="#{cuotaI.cuota.segundoVencimiento}">
+							        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+							        </h:outputText>
+							    </p:column>
+						    	
+							    <p:column headerText="Curso">
+							        <h:outputText value="#{cuotaI.curso.nombre}" />
+							    </p:column>
+							    
+							    <p:column headerText="Fecha de Inscripción" >
+							        <h:outputText value="#{cuotaI.matriculaAlumno.fechaAlta}">
+							        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+							        </h:outputText>
+							    </p:column>
+							    
+							    <p:column headerText="Fecha de Baja al Curso" >
+							        <h:outputText value="#{cuotaI.fechaAlta}">
+							        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+							        </h:outputText>
+							    </p:column>
+							    
+							    <p:column headerText="Fecha Finalización de Curso" >
+							        <h:outputText value="#{cuotaI.matricula.fechaFinCursado}">
+							        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+							        </h:outputText>
+							    </p:column>
+							 
+							    <p:column headerText="Monto" >
+							        <h:outputText value="#{cuotaI.monto}" >
+							        	<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+							        </h:outputText>
+							    </p:column>							    
+							</p:dataTable>
+	    				</p:panelGrid>
+					</p:outputPanel>
+				</p:dialog>
+   				</p:panel>
+	    	</h:form>
+	    </div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

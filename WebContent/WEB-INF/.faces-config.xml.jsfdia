@@ -1,0 +1,1841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="33,24,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#index.xhtml:0" NAME="item"
+   PATH="/index.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#alumnos#alumnos.xhtml"
+  PATH="/vistas/alumnos/alumnos.xhtml" SHAPE="280,24,50,137" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#alumnos#alumnos.xhtml:0" NAME="item"
+   PATH="/vistas/alumnos/alumnos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumno::#vistas#alumnos#alumno.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumno.xhtml"
+    TARGET="rules:#vistas#alumnos#alumno.xhtml" TITLE="alumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output1"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output2" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output3" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output4" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output5"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output6" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output8" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output9" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output10" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output11"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output12" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output13" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output14"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output16" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output17" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output18" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output20"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#alumnos#alumno.xhtml"
+  PATH="/vistas/alumnos/alumno.xhtml" SHAPE="656,72,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#alumnos#alumno.xhtml:0" NAME="item"
+   PATH="/vistas/alumnos/alumno.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="alumno::#vistas#alumnos#alumno.xhtml"
+    NAME="output1" PATH="/vistas/alumnos/alumno.xhtml"
+    TARGET="rules:#vistas#alumnos#alumno.xhtml" TITLE="alumno" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#cursos#cursos.xhtml"
+  PATH="/vistas/cursos/cursos.xhtml" SHAPE="408,400,50,329" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#cursos#cursos.xhtml:0" NAME="item"
+   PATH="/vistas/cursos/cursos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="curso::#vistas#cursos#curso.xhtml"
+    NAME="output1" PATH="/vistas/cursos/curso.xhtml"
+    TARGET="rules:#vistas#cursos#curso.xhtml" TITLE="curso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output2" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="matriculas::#vistas#matriculas#matriculas.xhtml" NAME="output3"
+    PATH="/vistas/matriculas/matriculas.xhtml"
+    TARGET="rules:#vistas#matriculas#matriculas.xhtml"
+    TITLE="matriculas" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output4" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output5" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output6"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output7" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output8" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output9" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output10" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output11" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output12"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output13" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output14" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output15"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output16" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output17" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output18" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output19" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output20"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#cursos#curso.xhtml"
+  PATH="/vistas/cursos/curso.xhtml" SHAPE="672,304,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#cursos#curso.xhtml:0" NAME="item"
+   PATH="/vistas/cursos/curso.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="curso::#vistas#cursos#curso.xhtml"
+    NAME="output1" PATH="/vistas/cursos/curso.xhtml"
+    TARGET="rules:#vistas#cursos#curso.xhtml" TITLE="curso" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#materias#materias.xhtml"
+  PATH="/vistas/materias/materias.xhtml" SHAPE="176,616,50,297" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#materias#materias.xhtml:0" NAME="item"
+   PATH="/vistas/materias/materias.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output1" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materia::#vistas#materias#materia.xhtml"
+    NAME="output2" PATH="/vistas/materias/materia.xhtml"
+    TARGET="rules:#vistas#materias#materia.xhtml" TITLE="materia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output3" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output4" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output5"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output6" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output8" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output9" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output10" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output11"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output12" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output13" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output14"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output16" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output17" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output18" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#materias#materia.xhtml"
+  PATH="/vistas/materias/materia.xhtml" SHAPE="696,560,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#materias#materia.xhtml:0" NAME="item"
+   PATH="/vistas/materias/materia.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materia::#vistas#materias#materia.xhtml"
+    NAME="output1" PATH="/vistas/materias/materia.xhtml"
+    TARGET="rules:#vistas#materias#materia.xhtml" TITLE="materia" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#matriculas#matriculas.xhtml"
+  PATH="/vistas/matriculas/matriculas.xhtml" SHAPE="672,400,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#matriculas#matriculas.xhtml:0"
+   NAME="item" PATH="/vistas/matriculas/matriculas.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="matriculas::#vistas#matriculas#matriculas.xhtml" NAME="output1"
+    PATH="/vistas/matriculas/matriculas.xhtml"
+    TARGET="rules:#vistas#matriculas#matriculas.xhtml"
+    TITLE="matriculas" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#profesores#profesores.xhtml"
+  PATH="/vistas/profesores/profesores.xhtml" SHAPE="400,888,50,297" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#profesores#profesores.xhtml:0"
+   NAME="item" PATH="/vistas/profesores/profesores.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output1"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="profesor::#vistas#profesores#profesor.xhtml"
+    NAME="output2" PATH="/vistas/profesores/profesor.xhtml"
+    TARGET="rules:#vistas#profesores#profesor.xhtml" TITLE="profesor" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output3" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output4" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output5" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output6" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output8" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output9" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output10" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output11"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output12" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output13" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output14"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output16" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output17" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output18" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#profesores#profesor.xhtml"
+  PATH="/vistas/profesores/profesor.xhtml" SHAPE="720,816,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#profesores#profesor.xhtml:0"
+   NAME="item" PATH="/vistas/profesores/profesor.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="profesor::#vistas#profesores#profesor.xhtml"
+    NAME="output1" PATH="/vistas/profesores/profesor.xhtml"
+    TARGET="rules:#vistas#profesores#profesor.xhtml" TITLE="profesor" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#usuarios#usuarios.xhtml"
+  PATH="/vistas/usuarios/usuarios.xhtml" SHAPE="192,1168,50,233" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#usuarios#usuarios.xhtml:0" NAME="item"
+   PATH="/vistas/usuarios/usuarios.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output1" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuario::#vistas#usuarios#usuario.xhtml"
+    NAME="output2" PATH="/vistas/usuarios/usuario.xhtml"
+    TARGET="rules:#vistas#usuarios#usuario.xhtml" TITLE="usuario" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output3" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output4" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output5" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output6"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output8" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output9" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output10" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output11"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output12" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output13" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output14"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output16" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output17" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output18" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#usuarios#usuario.xhtml"
+  PATH="/vistas/usuarios/usuario.xhtml" SHAPE="736,1056,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#usuarios#usuario.xhtml:0" NAME="item"
+   PATH="/vistas/usuarios/usuario.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuario::#vistas#usuarios#usuario.xhtml"
+    NAME="output1" PATH="/vistas/usuarios/usuario.xhtml"
+    TARGET="rules:#vistas#usuarios#usuario.xhtml" TITLE="usuario" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#inscripciones#inscripcion.xhtml"
+  PATH="/vistas/inscripciones/inscripcion.xhtml" SHAPE="456,1400,50,297" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#inscripciones#inscripcion.xhtml:0"
+   NAME="item" PATH="/vistas/inscripciones/inscripcion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcioncomprob::#vistas#inscripciones#inscripcioncomprob.xhtml"
+    NAME="output11"
+    PATH="/vistas/inscripciones/inscripcioncomprob.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcioncomprob.xhtml"
+    TITLE="inscripcioncomprob" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output12" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output13" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output14"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output16" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output17" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output18" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#inscripciones#inscripciones.xhtml"
+  PATH="/vistas/inscripciones/inscripciones.xhtml"
+  SHAPE="192,1720,50,297" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#inscripciones#inscripciones.xhtml:0"
+   NAME="item" PATH="/vistas/inscripciones/inscripciones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#asistencias#asistencias.xhtml"
+  PATH="/vistas/asistencias/asistencias.xhtml" SHAPE="448,2072,50,297" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#asistencias#asistencias.xhtml:0"
+   NAME="item" PATH="/vistas/asistencias/asistencias.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#pagos#pagos.xhtml"
+  PATH="/vistas/pagos/pagos.xhtml" SHAPE="432,2656,50,297" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#pagos#pagos.xhtml:0" NAME="item"
+   PATH="/vistas/pagos/pagos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#pagos#listadopagos.xhtml"
+  PATH="/vistas/pagos/listadopagos.xhtml" SHAPE="200,2376,50,297" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#pagos#listadopagos.xhtml:0"
+   NAME="item" PATH="/vistas/pagos/listadopagos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output1" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output2" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output3" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output4" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output6"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output7" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output8" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output9" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output10"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#vistas#inscripciones#inscripcioncomprob.xhtml"
+  PATH="/vistas/inscripciones/inscripcioncomprob.xhtml"
+  SHAPE="752,1368,50,217" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#vistas#inscripciones#inscripcioncomprob.xhtml:0"
+   NAME="item" PATH="/vistas/inscripciones/inscripcioncomprob.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcioncomprob::#vistas#inscripciones#inscripcioncomprob.xhtml"
+    NAME="output11"
+    PATH="/vistas/inscripciones/inscripcioncomprob.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcioncomprob.xhtml"
+    TITLE="inscripcioncomprob" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output14" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output15" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output16"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#caja#caja.xhtml"
+  PATH="/vistas/caja/caja.xhtml" SHAPE="192,3544,50,297" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#caja#caja.xhtml:0" NAME="item"
+   PATH="/vistas/caja/caja.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#inicio.xhtml" PATH="/inicio.xhtml"
+  SHAPE="1056,72,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#inicio.xhtml:0" NAME="item"
+   PATH="/inicio.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="inicio::#inicio.xhtml" NAME="output"
+    PATH="/inicio.xhtml" TARGET="rules:#inicio.xhtml" TITLE="inicio" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inscripto::#view#cursos#inscripto.xhtml"
+    NAME="output1" PATH="/view/cursos/inscripto.xhtml"
+    TARGET="rules:#view#cursos#inscripto.xhtml" TITLE="inscripto" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistenciaAlumno::#view#asistencias#asistencia.xhtml"
+    NAME="output2" PATH="/view/asistencias/asistencia.xhtml"
+    TARGET="rules:#view#asistencias#asistencia.xhtml"
+    TITLE="asistenciaAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="realizarpago::#view#pagos#realizarpago.xhtml" NAME="output3"
+    PATH="/view/pagos/realizarpago.xhtml"
+    TARGET="rules:#view#pagos#realizarpago.xhtml" TITLE="realizarpago" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#view#cursos#inscripto.xhtml"
+  PATH="/view/cursos/inscripto.xhtml" SHAPE="1328,80,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#view#cursos#inscripto.xhtml:0" NAME="item"
+   PATH="/view/cursos/inscripto.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="inscripto::#view#cursos#inscripto.xhtml"
+    NAME="output" PATH="/view/cursos/inscripto.xhtml"
+    TARGET="rules:#view#cursos#inscripto.xhtml" TITLE="inscripto" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inicio::#inicio.xhtml" NAME="output1"
+    PATH="/inicio.xhtml" TARGET="rules:#inicio.xhtml" TITLE="inicio" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistenciaAlumno::#view#asistencias#asistencia.xhtml"
+    NAME="output2" PATH="/view/asistencias/asistencia.xhtml"
+    TARGET="rules:#view#asistencias#asistencia.xhtml"
+    TITLE="asistenciaAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="realizarpago::#view#pagos#realizarpago.xhtml" NAME="output3"
+    PATH="/view/pagos/realizarpago.xhtml"
+    TARGET="rules:#view#pagos#realizarpago.xhtml" TITLE="realizarpago" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#asistencias#asistencia.xhtml"
+  PATH="/vistas/asistencias/asistencia.xhtml" SHAPE="448,3192,50,313" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#asistencias#asistencia.xhtml:0"
+   NAME="item" PATH="/vistas/asistencias/asistencia.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#pagos#pagosadeuda.xhtml"
+  PATH="/vistas/pagos/pagosadeuda.xhtml" SHAPE="184,2968,50,281" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#pagos#pagosadeuda.xhtml:0" NAME="item"
+   PATH="/vistas/pagos/pagosadeuda.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output17"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#view#asistencias#asistencia.xhtml"
+  PATH="/view/asistencias/asistencia.xhtml" SHAPE="1316,236,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#view#asistencias#asistencia.xhtml:0"
+   NAME="item" PATH="/view/asistencias/asistencia.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="asistenciaAlumno::#view#asistencias#asistencia.xhtml"
+    NAME="output" PATH="/view/asistencias/asistencia.xhtml"
+    TARGET="rules:#view#asistencias#asistencia.xhtml"
+    TITLE="asistenciaAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inicio::#inicio.xhtml" NAME="output1"
+    PATH="/inicio.xhtml" TARGET="rules:#inicio.xhtml" TITLE="inicio" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inscripto::#view#cursos#inscripto.xhtml"
+    NAME="output2" PATH="/view/cursos/inscripto.xhtml"
+    TARGET="rules:#view#cursos#inscripto.xhtml" TITLE="inscripto" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="realizarpago::#view#pagos#realizarpago.xhtml" NAME="output3"
+    PATH="/view/pagos/realizarpago.xhtml"
+    TARGET="rules:#view#pagos#realizarpago.xhtml" TITLE="realizarpago" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#view#pagos#realizarpago.xhtml"
+  PATH="/view/pagos/realizarpago.xhtml" SHAPE="1064,288,50,25" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#view#pagos#realizarpago.xhtml:0" NAME="item"
+   PATH="/view/pagos/realizarpago.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="realizarpago::#view#pagos#realizarpago.xhtml" NAME="output"
+    PATH="/view/pagos/realizarpago.xhtml"
+    TARGET="rules:#view#pagos#realizarpago.xhtml" TITLE="realizarpago" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inicio::#inicio.xhtml" NAME="output1"
+    PATH="/inicio.xhtml" TARGET="rules:#inicio.xhtml" TITLE="inicio" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inscripto::#view#cursos#inscripto.xhtml"
+    NAME="output2" PATH="/view/cursos/inscripto.xhtml"
+    TARGET="rules:#view#cursos#inscripto.xhtml" TITLE="inscripto" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistenciaAlumno::#view#asistencias#asistencia.xhtml"
+    NAME="output3" PATH="/view/asistencias/asistencia.xhtml"
+    TARGET="rules:#view#asistencias#asistencia.xhtml"
+    TITLE="asistenciaAlumno" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#recursos#recursos.xhtml"
+  PATH="/vistas/recursos/recursos.xhtml" SHAPE="456,3568,50,313" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#recursos#recursos.xhtml:0" NAME="item"
+   PATH="/vistas/recursos/recursos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificaciones::#vistas#recursos#calificaciones.xhtml"
+    NAME="output15" PATH="/vistas/recursos/calificaciones.xhtml"
+    TARGET="rules:#vistas#recursos#calificaciones.xhtml"
+    TITLE="calificaciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output16" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output17" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output18" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#recursos#calificaciones.xhtml"
+  PATH="/vistas/recursos/calificaciones.xhtml" SHAPE="1176,3552,50,281" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#recursos#calificaciones.xhtml:0"
+   NAME="item" PATH="/vistas/recursos/calificaciones.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#recursos#recurso.xhtml"
+  PATH="/vistas/recursos/recurso.xhtml" SHAPE="816,3560,50,281" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#recursos#recurso.xhtml:0" NAME="item"
+   PATH="/vistas/recursos/recurso.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#inscripciones#inscriptos.xhtml"
+  PATH="/vistas/inscripciones/inscriptos.xhtml" SHAPE="944,1736,50,281" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#inscripciones#inscriptos.xhtml:0"
+   NAME="item" PATH="/vistas/inscripciones/inscriptos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#pagos#pagosporvencer.xhtml"
+  PATH="/vistas/pagos/pagosporvencer.xhtml" SHAPE="764,2398,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#pagos#pagosporvencer.xhtml:0"
+   NAME="item" PATH="/vistas/pagos/pagosporvencer.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#pagos#pagosonline.xhtml"
+  PATH="/vistas/pagos/pagosonline.xhtml" SHAPE="1143,2391,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#pagos#pagosonline.xhtml:0" NAME="item"
+   PATH="/vistas/pagos/pagosonline.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<title>Recursos</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+							<p:growl id="messages" showDetail="false" />
+							<ui:include src="/includes/menubar.xhtml" />
+							<br/>
+			    			<p:panelGrid id="grid" columns="6" style="width:100%;">
+			    				<f:facet name="header">
+			    					<h2><h:outputText value="#{beanRecurso.headerText}" /></h2>
+			    				</f:facet>
+			    				
+			    				<p:outputLabel value="Curso " />
+					    		<p:selectOneMenu value="#{beanRecurso.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;">
+			    					<p:ajax event="change" listener="#{beanRecurso.onChangeCurso()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione curso" itemValue="0"/>
+			    					<f:selectItems value="#{beanRecurso.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+			    					itemValue="#{curso.id}"/>
+			    				</p:selectOneMenu>	    				
+			    				
+			    				<p:outputLabel value="Materia " />
+					    		<p:selectOneMenu value="#{beanRecurso.idMateria}" filter="true" filterMatchMode="contains" style="width:250px;">			    					
+			    					<f:selectItem itemLabel="Seleccione materia" itemValue="0"/>
+			    					<f:selectItems value="#{beanRecurso.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+			    					itemValue="#{materia.id}"/>
+			    				</p:selectOneMenu>	
+			    				
+			    				<p:outputLabel value="Estado " />
+			    				<p:selectOneMenu value="#{beanRecurso.idEstado}" style="width:250px;">
+			    					<f:selectItem itemLabel="Todos" itemValue="0"/>
+			    					<f:selectItem itemLabel="Vigentes" itemValue="1"/>
+			    					<f:selectItem itemLabel="Históricos" itemValue="2"/>
+			    				</p:selectOneMenu>	
+			    				
+			   					<f:facet name="footer">
+			   						<p:commandButton icon="ui-icon-search" value="Buscar" action="#{beanRecurso.listar()}" update="panel" />
+			   					</f:facet>   				
+			   				</p:panelGrid>
+			   				<p:outputPanel style="float:right;">							
+								<h:commandLink >
+									<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+									<p:dataExporter type="pdf" target="contenedorRecursos" fileName="Recursos" preProcessor="#{beanRecurso.preProcessPDF}"/>
+								</h:commandLink>
+							</p:outputPanel>
+			   				<p:dataTable id="contenedorRecursos" widgetVar="recursoBusqueda" var="recurso" style="width:100%;"
+							value="#{beanRecurso.listaRecursos}" paginator="true" rows="20" resizableColumns="true"
+							emptyMessage="No existen Recursos">
+								<f:facet name="header">
+									<p:outputLabel value="Recursos" />
+									<p:spacer width="20" />
+									<p:outputPanel style="float:right;">
+										<p:inputText id="globalFilter" onkeyup="PF('recursoBusqueda').filter()" placeholder="Buscar"/>
+									</p:outputPanel> 
+									<p:outputPanel style="float:right;" rendered="false">							
+										<h:commandLink action="#{beanRecurso.generarReporte()}" target="_blank" >
+											<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+										</h:commandLink>
+									</p:outputPanel>
+								</f:facet>
+								
+								<p:column headerText="Baja" style="text-align: center; width:60px;" id="act_desact" exportable="false">						
+									<p:row rendered="#{recurso.estado}">
+										<h:commandLink id="desactivar" title="Desactivar"
+											onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA EL RECURSO?')"
+											action="#{beanRecurso.baja(recurso)}">
+										 	<h:graphicImage value="/images/activo.ico" width="20" title="baja" /> 
+										</h:commandLink>
+									</p:row>						
+									<p:row rendered="#{!recurso.estado}">
+										<h:graphicImage value="/images/desactivo.ico" width="20" title="Alta" />										
+									</p:row>
+								</p:column>
+								
+								<p:column headerText="Descripción" >
+									<h:outputText value="#{recurso.descripcion}" />
+								</p:column>
+								
+								<p:column headerText="Fecha de Entrega" style="text-align: center; width:150px;" >					
+									<h:outputText value="#{recurso.fechaEntrega}" >
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="Calificar" style="text-align: center; width:120px;" exportable="false">
+									<p:commandButton icon="ui-icon-clipboard" title="Calificar" 
+									action="#{beanRecurso.goCalificar(recurso, 'recursos')}" />
+								</p:column>
+							</p:dataTable>	
+		   				</p:panel>
+			    	</h:form>
+			    </div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>

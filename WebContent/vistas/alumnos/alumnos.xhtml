@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Alumnos</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<h3 align="center" >ALUMNOS</h3>
+		    	<p:panelGrid columns="5" cellpadding="5" style="width:80%;" rendered="false">
+		    		<f:facet name="header">
+		    			<h:outputText value="Filtros" />
+		    		</f:facet>
+					<p:commandButton icon="ui-icon-search"  />
+				</p:panelGrid>
+				<p:outputPanel style="float:right;">							
+					<h:commandLink >
+						<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+						<p:dataExporter type="pdf" target="contenedorAlumno" fileName="Alumnos" preProcessor="#{beanAlumno.preProcessPDF}"/>
+					</h:commandLink>
+				</p:outputPanel>
+				<p:dataTable id="contenedorAlumno" widgetVar="alumnoBusqueda" var="alumno" style="width:100%;"
+				value="#{beanAlumno.listaAlumnos}" paginator="true" rows="20" resizableColumns="true"
+				filteredValue="#{beanAlumno.filteredAlumnos}"	emptyMessage="No existen Alumnos" sortMode="multiple">
+					<f:facet name="header">
+						<p:commandButton value="Nuevo" action="#{beanAlumno.goAlumnoNuevo()}"/>
+						<p:outputLabel value="Alumno" />
+						<p:spacer width="20" />
+						<p:outputPanel style="float:right;">
+							<p:inputText id="globalFilter" onkeyup="PF('alumnoBusqueda').filter()" placeholder="Buscar"/>
+						</p:outputPanel> 
+						<p:outputPanel style="float:right;" rendered="false">							
+							<h:commandLink action="#{beanAlumno.generarReporte()}" target="_blank" >
+								<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+							</h:commandLink>
+						</p:outputPanel>
+					</f:facet>
+					
+					<p:column headerText="Baja" style="text-align: center; width:70px;" id="act_desact" exportable="false">						
+						<p:row rendered="#{alumno.enabled}">
+							<h:commandLink id="desactivar" title="Desactivar"
+								onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA EL ALUMNO?')"
+								action="#{beanAlumno.baja(alumno)}">
+							 	<h:graphicImage value="/images/activo.ico" width="20" title="baja" /> 
+							</h:commandLink>
+						</p:row>						
+						<p:row rendered="#{!alumno.enabled}">
+							<h:commandLink id="activar" title="Activar"
+								onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE ALTA EL ALUMNO?')"
+								action="#{beanAlumno.alta(alumno)}">
+								<h:graphicImage value="/images/desactivo.ico" width="20" title="Alta" />
+							</h:commandLink>
+						</p:row>
+					</p:column>
+					
+					<p:column headerText="ID" style="width:30px;" filterBy="#{alumno.id}"
+					filterStyle="display:none;">
+						<h:outputText value="#{alumno.id}" />
+					</p:column>
+					
+					<p:column headerText="DNI" style="width:80px;" filterBy="#{alumno.dni}"
+					filterStyle="display:none;">
+						<p:commandLink value="#{alumno.dni}" title="Modificar" 
+						action="#{beanAlumno.goAlumnoEditar(alumno)}" />
+					</p:column>
+											
+					<p:column headerText="Apellido y Nombre" style="width:100px;" filterBy="#{alumno.nombreCompleto}"
+					filterStyle="display:none;">					
+						<h:outputText value="#{alumno.nombreCompleto}" />
+					</p:column>					
+					
+					<p:column headerText="Telefono/Cel" filterBy="#{alumno.telefonoCel}"
+					filterStyle="display:none;">
+						<h:outputText value="#{alumno.telefonoCel}" />
+					</p:column>
+					
+					<p:column headerText="Correo" filterBy="#{alumno.email}"
+					filterStyle="display:none;">
+						<h:outputText value="#{alumno.email}" />
+					</p:column>
+					
+					<p:column headerText="Domicilio" >
+						<h:outputText value="#{alumno.domicilio.calle} #{alumno.domicilio.numero}" />
+					</p:column>
+					
+					<p:column headerText="Localidad" >
+						<h:outputText value="#{alumno.domicilio.localidade.nombre}" />
+					</p:column>				
+					
+					<p:column headerText="Fecha de Nacimiento">
+						<h:outputText value="#{alumno.fechaNacimiento}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>	
+				</p:panel> 
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="ProModa">
+		<class>promoda.model.Alumno</class>
+		<class>promoda.model.Asistencia</class>
+		<class>promoda.model.Caja</class>
+		<class>promoda.model.Cuota</class>
+		<class>promoda.model.CuotaImpaga</class>
+		<class>promoda.model.Curso</class>
+		<class>promoda.model.Domicilio</class>
+		<class>promoda.model.Gasto</class>
+		<class>promoda.model.InscripcionDia</class>
+		<class>promoda.model.Inscripcione</class>
+		<class>promoda.model.InscripcionMotivo</class>
+		<class>promoda.model.Localidade</class>
+		<class>promoda.model.Materia</class>
+		<class>promoda.model.MateriasProfesor</class>
+		<class>promoda.model.Matricula</class>
+		<class>promoda.model.MatriculaAlumno</class>
+		<class>promoda.model.MatriculaImpaga</class>
+		<class>promoda.model.Motivo</class>
+		<class>promoda.model.PagosCuota</class>
+		<class>promoda.model.PagosMatricula</class>
+		<class>promoda.model.Parametro</class>
+		<class>promoda.model.PlanPago</class>
+		<class>promoda.model.Profesore</class>
+		<class>promoda.model.Provincia</class>
+		<class>promoda.model.Recurso</class>
+		<class>promoda.model.RecursoAlumno</class>
+		<class>promoda.model.RegistroOnline</class>
+		<class>promoda.model.Role</class>
+		<class>promoda.model.RolesVista</class>
+		<class>promoda.model.Usuario</class>
+		<class>promoda.model.Vista</class>
+		<properties>
+			<property name="javax.persistence.jdbc.password" value="37zoBUsupo" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/promodadb_prod" />
+			<property name="javax.persistence.logging.level" value="ALL" />
+		</properties>
+	</persistence-unit>
+</persistence>

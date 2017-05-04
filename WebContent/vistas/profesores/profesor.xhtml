@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<script type="text/javascript">
+			 PrimeFaces.locales['tr'] = {
+					       closeText: 'Cerrar',
+					       prevText: 'Anterior',
+					       nextText: 'Siguiente',
+					       currentText: 'Hoy',
+					       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+					           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+					       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+					           'Jul','Ago','Sep','Oct','Nov','Dic'],
+					       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+					       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					       weekHeader: 'Hf',
+					       firstDay: 1,
+					       isRTL: false,
+					       showMonthAfterYear: false,
+					       yearSuffix: '',
+					       month: 'Mes',
+					       week: 'Semana',
+					       day: 'Día',
+					       allDayText : 'Todos los días'
+    				};
+			</script>
+		<title>Profesor</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<br/>
+    			<p:panelGrid columns="4" style="width:100%;">
+    				<f:facet name="header">
+    					<h1><h:outputText value="#{beanProfesor.headerText}" /></h1>
+    				</f:facet>
+    				
+    				<p:outputLabel value="DNI: " />
+    				<p:inputText value="#{beanProfesor.profesore.dni}" required="true" label="DNI" disabled="#{beanProfesor.editar}">
+    					<p:ajax event="blur" listener="#{beanProfesor.getPorDni(beanProfesor.profesore.dni)}" update="panel" />
+    				</p:inputText>
+    				
+    				<p:outputLabel value="Apellido: " />
+    				<p:inputText value="#{beanProfesor.profesore.apellido}" label="APELLIDO" required="true" />
+    				
+    				<p:outputLabel value="Nombres: " />
+    				<p:inputText value="#{beanProfesor.profesore.nombre}" label="NOMBRES" />
+    				
+    				<p:outputLabel value="Fecha de Nacimiento:" />
+    				<p:calendar value="#{beanProfesor.profesore.fechaNacimiento}" pattern="dd/MM/yyyy" navigator="true" mindate="01/01/1900" locale="tr"/>
+    				
+    				<p:outputLabel value="Provincia: " />
+    				<p:selectOneMenu value="#{beanProfesor.idProvincia}" filter="true" required="true" label="PROVINCIA">
+    					<p:ajax event="change" listener="#{beanProfesor.onChangeProvincia()}" update="localidad" />
+    					<f:selectItem itemLabel="Seleccione Provincia" itemValue="0"/>
+    					<f:selectItems value="#{beanProfesor.listaProvincias}" var="prov" itemLabel="#{prov.nombre}" 
+    					itemValue="#{prov.id}"/>
+    				</p:selectOneMenu>
+    				
+    				<p:outputLabel value="Localidad: " />
+    				<p:selectOneMenu id="localidad" value="#{beanProfesor.idLocalidad}" filter="true" required="true" 
+    				label="LOCALIDAD">
+    					<f:selectItem itemLabel="Seleccione Localidad" itemValue="0"/>
+    					<f:selectItems value="#{beanProfesor.listaLocalidades}" var="loc" itemLabel="#{loc.nombre}" 
+    					itemValue="#{loc.id}"/>
+    				</p:selectOneMenu>
+    				
+    				<p:outputLabel value="Cod. Postal: " />
+    				<p:inputText value="#{beanProfesor.domicilio.codigoPostal}" label="COD.POSTAL"/>
+    				
+    				<p:outputLabel value="Calle: " />
+    				<p:inputText value="#{beanProfesor.domicilio.calle}" required="true" label="CALLE"/>
+    				
+    				<p:outputLabel value="Nro: " />
+    				<p:inputText value="#{beanProfesor.domicilio.numero}" required="true" label="NUMERO"/>
+    				
+    				<p:outputLabel value="Piso: " />
+    				<p:inputText value="#{beanProfesor.domicilio.piso}" />
+    				
+    				<p:outputLabel value="Departamento: " />
+    				<p:inputText value="#{beanProfesor.domicilio.departamento}" />
+    				
+    				<p:outputLabel value="E-mail: " />
+    				<p:inputText value="#{beanProfesor.profesore.email}" />
+    				
+    				<p:outputLabel value="Tel. Cel.: " />
+    				<p:inputText value="#{beanProfesor.profesore.telefonoCel}" />
+    				
+    				<p:outputLabel value="Tel. Fijo: " />
+    				<p:inputText value="#{beanProfesor.profesore.telefonoFijo}" />
+    			</p:panelGrid>
+    			<p:panelGrid columns="1" style="width:100%;">
+   					<f:facet name="header">
+   						<p:commandButton value="Guardar" update="messages" action="#{beanProfesor.guardar()}"
+   						onclick="return confirm('GUARDAR PROFESOR?')"/>
+   						<p:commandButton value="Cancelar" oncomplete="return confirm('CANCELAR PROFESOR Y VOLVER?')"
+   						action="#{beanProfesor.goProfesores(beanProfesor.usuario)}" process="@this"/>
+   					</f:facet>   				
+   				</p:panelGrid>
+   				</p:panel>
+	    	</h:form>
+	    </div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

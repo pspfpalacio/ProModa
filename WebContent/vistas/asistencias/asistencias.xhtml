@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">  
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<script type="text/javascript">
+				 PrimeFaces.locales['tr'] = {
+						       closeText: 'Cerrar',
+						       prevText: 'Anterior',
+						       nextText: 'Siguiente',
+						       currentText: 'Hoy',
+						       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+						           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+						       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+						           'Jul','Ago','Sep','Oct','Nov','Dic'],
+						       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+						       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       weekHeader: 'Hf',
+						       firstDay: 1,
+						       isRTL: false,
+						       showMonthAfterYear: false,
+						       yearSuffix: '',
+						       month: 'Mes',
+						       week: 'Semana',
+						       day: 'Día',
+						       allDayText : 'Todos los días'
+	    				};
+				</script>
+				<title>Asistencias</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+							<p:growl id="messages" showDetail="false" />
+							<ui:include src="/includes/menubar.xhtml" />
+							<h3 align="center" >ASISTENCIAS</h3>	
+					    	<p:panelGrid columns="2" cellpadding="5" style="width:100%;">		
+					    		<f:facet name="header">
+					    			<h:outputText value="Asistencias" />
+					    		</f:facet>			    	
+					    		<p:outputLabel value="Seleccione Curso" />
+					    		<p:selectOneMenu value="#{beanAsistencia.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;">
+			    					<p:ajax event="change" listener="#{beanAsistencia.onChangeCurso()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione curso" itemValue="0"/>
+			    					<f:selectItems value="#{beanAsistencia.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+			    					itemValue="#{curso.id}"/>
+			    				</p:selectOneMenu>		
+			    				<p:outputLabel value="Seleccione Materia" />
+					    		<p:selectOneMenu value="#{beanAsistencia.idMateria}" filter="true" filterMatchMode="contains" style="width:250px;">
+			    					<p:ajax event="change" listener="#{beanAsistencia.onChangeMateria()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione materia" itemValue="0"/>
+			    					<f:selectItems value="#{beanAsistencia.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+			    					itemValue="#{materia.id}"/>
+			    				</p:selectOneMenu>					    		
+					    	</p:panelGrid>
+					    	<p:panelGrid columns="2" cellpadding="5" style="width:100%;" rendered="#{beanAsistencia.idMateria != 0}">					    		
+					    		<p:outputLabel value="Seleccione Clase" />
+					    		<p:selectOneMenu value="#{beanAsistencia.idClase}" filter="true" filterMatchMode="contains" style="width:250px;">
+			    					<p:ajax event="change" listener="#{beanAsistencia.onChangeClase()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione clase" itemValue="0"/>
+			    					<f:selectItems value="#{beanAsistencia.listaClases}" var="clase" itemLabel="#{clase.nombre}"
+			    					itemValue="#{clase.id}"/>
+			    				</p:selectOneMenu>
+					    	</p:panelGrid>
+					    	
+					    	<p:panelGrid columns="2" cellpadding="5" style="width:100%;" rendered="#{beanAsistencia.idClase != 0}">
+					    		<f:facet name="header">Actualización masiva</f:facet>
+					    		<p:outputLabel value="Fecha: "/>
+					    		<p:calendar value="#{beanAsistencia.fecha}" locale="tr" pattern="dd/MM/yyyy"/>
+					    		<p:outputLabel value="Asistencia: " />
+					    		<p:selectOneMenu value="#{beanAsistencia.asistenciaMasiva}" >
+					    			<f:selectItem itemLabel="-" itemValue="-"/>
+					    			<f:selectItem itemLabel="P" itemValue="P"/>
+					    			<f:selectItem itemLabel="A" itemValue="A"/>
+					    		</p:selectOneMenu>
+					    		<f:facet name="footer">
+					    			<p:commandButton value="Actualizar" icon="ui-icon-refresh" action="#{beanAsistencia.actualizacionMasiva()}" update="panel"/>
+					    		</f:facet>
+					    	</p:panelGrid>
+					    	
+					    	<p:outputPanel style="float:right;">							
+								<h:commandLink >
+									<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+									<p:dataExporter type="pdf" target="tablaAsistencia" fileName="Asistencias" preProcessor="#{reporte.preProcessPDFAsist}"/>
+								</h:commandLink>
+							</p:outputPanel>
+							
+					    	<p:dataTable id="tablaAsistencia" var="asistencia" value="#{beanAsistencia.listaAsistencias}" editable="true" widgetVar="cellAsistencia"
+					    	editMode="cell" scrollRows="50" resizableColumns="true" scrollable="true" scrollHeight="600" emptyMessage="No existen Alumnos inscriptos" 
+					    	style="width:100%;margin-bottom:20px" rendered="#{beanAsistencia.idClase != 0}" selection="#{beanAsistencia.selectionAsistencias}" rowKey="#{asistencia.alumno.id}"
+					    	paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+						       <f:facet name="header">
+						           <h:outputText value="Asistencias" />
+						       </f:facet>
+						 	   
+						 	   <p:ajax event="cellEdit" listener="#{beanAsistencia.onRowEdit(asistencia)}" update=":formulario:tablaAsistencia" />
+						 	   
+						 	   <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+						 		
+						       <p:column headerText="Alumno">
+						       		<h:outputText value="#{asistencia.alumno.nombreCompleto}" />
+						       </p:column>
+						       
+						       <p:column headerText="DNI">
+						       		<h:outputText value="#{asistencia.alumno.dni}" />
+						       </p:column>
+						       
+						       <!-- 
+						       <p:column headerText="Fecha" style="text-align:center;">
+						       		<p:cellEditor>
+						       			<f:facet name="output">
+						       				<h:outputText value="#{asistencia.fechaAlta}" >
+								       			<f:convertDateTime pattern="dd/MM/yyyy"/>
+								       		</h:outputText>
+						       			</f:facet>
+						       			<f:facet name="input">
+						       				<p:calendar value="#{asistencia.fechaAlta}" pattern="dd/MM/yyyy"/>
+						       			</f:facet>
+						       		</p:cellEditor>						       		
+						       </p:column>
+						        -->
+						 	   <p:column headerText="Fecha" style="text-align:center;">
+					       			<p:calendar value="#{asistencia.fechaAlta}" pattern="dd/MM/yyyy" locale="tr">
+					       				<f:convertDateTime pattern="dd/MM/yyyy" />
+					       			</p:calendar>	       		
+						       </p:column>
+						 		
+						       <p:column headerText="Asistencia" style="text-align:center;">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{asistencia.presente}" style="text-transform:uppercase;"/>
+										</f:facet>
+										<f:facet name="input">
+											<p:inputMask id="asistenciaInput" mask="a" value="#{asistencia.presente}" 
+											style="text-transform:uppercase;width:30px;"/>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>				       
+						    </p:dataTable>
+						  	<p:panelGrid columns="1" style="width:100%;" rendered="#{beanAsistencia.idClase != 0}">
+						  		<f:facet name="header">
+						  			<p:commandButton value="Guardar Cambios" onclick="return confirm('DESEA CONFIRMAR LAS ASISTENCIAS?')" 
+						  			action="#{beanAsistencia.guardarCambios()}" update="panel, messages" />
+						  		</f:facet>
+						  	</p:panelGrid>
+				    	</p:panel>
+				    </h:form>
+				</div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>

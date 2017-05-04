@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Profesores</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<h3 align="center">PROFESORES</h3>
+		    	<p:panelGrid columns="5" cellpadding="5" style="width:80%;" rendered="false">
+		    		<f:facet name="header">
+		    			<h:outputText value="Filtros" />
+		    		</f:facet>
+					<p:commandButton icon="ui-icon-search"  />
+				</p:panelGrid>
+				<p:outputPanel style="float:right;">							
+					<h:commandLink >
+						<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+						<p:dataExporter type="pdf" target="contenedorProfesor" fileName="Profesores" preProcessor="#{beanProfesor.preProcessPDF}"/>
+					</h:commandLink>
+				</p:outputPanel>
+				<p:dataTable id="contenedorProfesor" widgetVar="profesorBusqueda" var="profesor" style="width:100%;"
+				value="#{beanProfesor.listaProfesores}" paginator="true" rows="20" resizableColumns="true"
+				filteredValue="#{beanProfesor.filteredProfesores}"	emptyMessage="No existen Profesores" sortMode="multiple">
+					<f:facet name="header">
+						<p:commandButton value="Nuevo" action="#{beanProfesor.goNuevo()}"/>
+						<p:outputLabel value="Profesor" />
+						<p:spacer width="20" />
+						<p:outputPanel style="float:right;">
+							<p:inputText id="globalFilter" onkeyup="PF('profesorBusqueda').filter()" placeholder="Buscar"/>
+						</p:outputPanel> 
+						<p:outputPanel style="float:right;" rendered="false">							
+							<h:commandLink action="#{beanProfesor.generarReporte()}" target="_blank" >
+								<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+							</h:commandLink>
+						</p:outputPanel>
+					</f:facet>
+					
+					<p:column headerText="Baja" style="text-align: center; width:70px;" id="act_desact" exportable="false">						
+						<p:row rendered="#{profesor.enabled}">
+							<h:commandLink id="desactivar" title="Desactivar"
+								onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA EL PROFESOR?')"
+								action="#{beanProfesor.baja(profesor)}">
+							 	<h:graphicImage value="/images/activo.ico" width="20" title="baja" /> 
+							</h:commandLink>
+						</p:row>						
+						<p:row rendered="#{!profesor.enabled}">
+							<h:commandLink id="activar" title="Activar"
+								onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE ALTA EL PROFESOR?')"
+								action="#{beanProfesor.alta(profesor)}">
+								<h:graphicImage value="/images/desactivo.ico" width="20" title="Alta" />
+							</h:commandLink>
+						</p:row>
+					</p:column>
+					
+					<p:column headerText="DNI" style="width:80px;" filterBy="#{profesor.dni}"
+					filterStyle="display:none;">
+						<p:commandLink value="#{profesor.dni}" title="Modificar" 
+						action="#{beanProfesor.goEditar(profesor)}" />
+					</p:column>
+											
+					<p:column headerText="Apellido y Nombre" style="width:100px;" filterBy="#{profesor.nombreCompleto}"
+					filterStyle="display:none;">					
+						<h:outputText value="#{profesor.nombreCompleto}" />
+					</p:column>					
+					
+					<p:column headerText="Telefono/Cel" filterBy="#{profesor.telefonoCel}"
+					filterStyle="display:none;">
+						<h:outputText value="#{profesor.telefonoCel}" />
+					</p:column>
+					
+					<p:column headerText="Correo" filterBy="#{profesor.email}"
+					filterStyle="display:none;">
+						<h:outputText value="#{profesor.email}" />
+					</p:column>
+					
+					<p:column headerText="Domicilio" >
+						<h:outputText value="#{profesor.domicilio.calle} #{profesor.domicilio.numero}" />
+					</p:column>
+					
+					<p:column headerText="Localidad" >
+						<h:outputText value="#{profesor.domicilio.localidade.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Fecha de Nacimiento">
+						<h:outputText value="#{profesor.fechaNacimiento}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>	
+				</p:panel> 
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

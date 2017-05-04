@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<script type="text/javascript">
+				 PrimeFaces.locales['tr'] = {
+						       closeText: 'Cerrar',
+						       prevText: 'Anterior',
+						       nextText: 'Siguiente',
+						       currentText: 'Hoy',
+						       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+						           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+						       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+						           'Jul','Ago','Sep','Oct','Nov','Dic'],
+						       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+						       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       weekHeader: 'Hf',
+						       firstDay: 1,
+						       isRTL: false,
+						       showMonthAfterYear: false,
+						       yearSuffix: '',
+						       month: 'Mes',
+						       week: 'Semana',
+						       day: 'Día',
+						       allDayText : 'Todos los días'
+	    				};
+				</script>
+				<title>Caja</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+						<p:growl id="messages" showDetail="false" />
+						<ui:include src="/includes/menubar.xhtml" />
+						<h3 align="center">CAJA</h3>
+				    	<p:panelGrid columns="7" cellpadding="7" style="width:80%;" >
+				    		<f:facet name="header">
+				    			<h:outputText value="Caja" />
+				    		</f:facet>
+				    		<p:outputLabel value="Tipo de Movimiento: " />
+				    		<p:selectOneMenu value="#{beanCaja.tipoFiltro}" filter="true" >
+				    			<f:selectItem itemLabel="Todos" itemValue=""/>
+				    			<f:selectItem itemLabel="PAGO MATRICULA" itemValue="Pago Matricula"/>
+				    			<f:selectItem itemLabel="PAGO CUOTA" itemValue="Pago Cuota"/>
+				    			<f:selectItem itemLabel="ENTRADA" itemValue="Entrada"/>
+				    			<f:selectItem itemLabel="SALIDA" itemValue="Salida"/>
+				    		</p:selectOneMenu>
+				    		<p:outputLabel value="Fecha desde: " />
+				    		<p:calendar value="#{beanCaja.fechaDesde}" pattern="dd/MM/yyyy" locale="tr"/>
+				    		<p:outputLabel value="Hasta: " />
+				    		<p:calendar value="#{beanCaja.fechaHasta}" pattern="dd/MM/yyyy" locale="tr"/>
+							<p:commandButton icon="ui-icon-search" action="#{beanCaja.buscar()}" update="contenedorCaja" />
+						</p:panelGrid>
+						<p:outputPanel style="float:right;">							
+							<h:commandLink >
+								<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+								<p:dataExporter type="pdf" target="contenedorCaja" fileName="cajas" preProcessor="#{beanCaja.preProcessPDF}"/>
+							</h:commandLink>
+						</p:outputPanel>
+						<p:dataTable id="contenedorCaja" widgetVar="cajaBusqueda" var="caja" style="width:100%;"
+						value="#{beanCaja.listaCajas}" paginator="true" rows="20" resizableColumns="true" 
+						emptyMessage="No existen Movimientos" sortMode="multiple">
+							<f:facet name="header">
+								<p:commandButton value="Nuevo Movimiento" action="#{beanCaja.goNuevo()}" 
+								oncomplete="PF('dialogo').show()" update=":formulario:outputPanel"/>
+								<p:outputLabel value="Movimientos de Caja" />
+								<p:spacer width="20" />
+								<p:outputPanel style="float:right;">
+									<p:inputText id="globalFilter" onkeyup="PF('cajaBusqueda').filter()" placeholder="Buscar"/>
+								</p:outputPanel> 
+								<p:outputPanel style="float:right;" rendered="false">							
+									<h:commandLink action="#{beanCaja.generarReporte()}" target="_blank" >
+										<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+									</h:commandLink>
+								</p:outputPanel>
+							</f:facet>
+							
+							<p:column headerText="Fecha" style="width:90px;">
+								<h:outputText value="#{caja.fecha}" >
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Concepto" style="width:120px;"
+							filterBy="#{caja.nombreMovimiento}" filterStyle="display:none;">
+								<h:outputText value="#{caja.nombreMovimiento}" />
+							</p:column>
+							
+							<p:column headerText="Descripción">					
+								<h:outputText value="#{caja.concepto}" />
+							</p:column>
+													
+							<p:column headerText="Entrada" style="width:80px;">					
+								<h:outputText value="#{caja.entrada}" >
+									<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Salida" style="width:80px;">					
+								<h:outputText value="#{caja.salida}" >
+									<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Total" style="width:80px;">					
+								<h:outputText value="#{caja.total}" >
+									<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+						<p:dialog header="Movimiento de Caja" widgetVar="dialogo"
+							id="dialogo" modal="true" width="700">
+							<p:outputPanel id="outputPanel">
+								<p:panelGrid columns="2" style="width:100%;">	
+				    				<p:outputLabel value="Fecha: " />
+				    				<p:calendar value="#{beanCaja.fecha}" locale="tr"/>
+				    							    				
+				    				<p:outputLabel value="Tipo: " />
+				    				<p:selectOneMenu value="#{beanCaja.tipo}" >
+				    					<f:selectItem itemLabel="ENTRADA" itemValue="Entrada"/>
+				    					<f:selectItem itemLabel="SALIDA" itemValue="Salida"/>
+				    				</p:selectOneMenu>
+				    				
+				    				<p:outputLabel value="Descripción: " />
+				    				<p:inputTextarea value="#{beanCaja.descripcion}" />
+				    				
+				    				<p:outputLabel value="Monto: ($)" />
+									<p:inputText value="#{beanCaja.monto}" />
+				    			</p:panelGrid>
+				    			<p:panelGrid columns="2" style="width:100%;">
+				    				<f:facet name="header">
+				    					<p:commandButton value="Guardar" action="#{beanCaja.guardar()}" oncomplete="PF('dialogo').hide()" 
+				    					update="contenedorCaja" />
+				    					<p:commandButton value="Cerrar" onclick="PF('dialogo').hide()"/>
+				    				</f:facet>
+				    			</p:panelGrid>
+							</p:outputPanel>
+						</p:dialog>
+						</p:panel> 
+					</h:form>
+				</div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>

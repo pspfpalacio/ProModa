@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Inscriptos</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<h3 align="center">INSCRIPTOS</h3>
+		    	<p:panelGrid columns="2" cellpadding="5" style="width:80%;" >
+		    		<f:facet name="header">
+		    			<h:outputText value="Filtros" />
+		    		</f:facet>
+		    		<h:outputText value="Curso: " />
+		    		<p:selectOneMenu value="#{beanInscripcion.idCurso}" filter="true" filterMatchMode="contains"
+    				style="width:250px;">
+    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+    					<f:selectItems value="#{beanInscripcion.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+    					itemValue="#{curso.id}"/>
+    				</p:selectOneMenu>
+    				<f:facet name="footer">
+						<p:commandButton icon="ui-icon-search" value="Buscar" update="panel" action="#{beanInscripcion.filtroInscriptos()}"/>
+					</f:facet>
+				</p:panelGrid>
+				<p:dataTable id="contenedorInscriptos" widgetVar="inscriptoBusqueda" var="inscripto" style="width:100%;"
+				value="#{beanInscripcion.listaInscriptos}" paginator="true" rows="20" resizableColumns="true"
+				emptyMessage="No existen Inscriptos" sortMode="multiple">
+					<f:facet name="header">
+						<p:outputLabel value="Inscriptos" />
+						<p:spacer width="20" />
+						<p:outputPanel style="float:right;">
+							<p:inputText id="globalFilter" onkeyup="PF('inscriptoBusqueda').filter()" placeholder="Buscar"/>
+						</p:outputPanel> 
+						<p:outputPanel style="float:right;">	
+							<h:commandLink action="#{beanInscripcion.generarInscriptosXLS()}" >
+								<p:graphicImage value="../../images/xls-icon.ico" width="25" style="margin-right: 20px; float: left;" />
+							</h:commandLink>												
+							<h:commandLink action="#{beanInscripcion.generarInscriptosPDF()}" target="_blank" title="PDF Alumnos completos">
+								<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+							</h:commandLink>
+							<h:commandLink action="#{beanInscripcion.generarInscriptosSCPDF()}" target="_blank" title="PDF Alumnos sin contacto">
+								<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+							</h:commandLink>
+						</p:outputPanel>
+					</f:facet>
+											
+					<p:column headerText="DNI" filterBy="#{inscripto.dni}" sortBy="#{inscripto.dni}"
+					filterStyle="display:none;" style="text-align:center;">					
+						<h:outputText value="#{inscripto.dni}" />
+						<p:rowToggler/>
+					</p:column>
+					
+					<p:column headerText="Nombre y Apellido" filterBy="#{inscripto.nombreCompleto}"
+					filterStyle="display:none;" sortBy="#{inscripto.nombreCompleto}">					
+						<h:outputText value="#{inscripto.nombreCompleto}" />
+					</p:column>
+					
+					<p:column headerText="Fecha de Nacimiento" sortBy="#{inscripto.fechaNacimiento}">					
+						<h:outputText value="#{inscripto.fechaNacimiento}" />
+					</p:column>
+					
+					<p:rowExpansion>
+				    	<p:panel style="width:80%;">
+				    		<f:facet name="header">
+				    			<p:outputLabel value="CONTACTO" />
+				    		</f:facet>
+				    		<p:outputLabel value="Tel. Cel: " />				    		
+				    		<p:outputLabel value="#{inscripto.telefonoCel}" />
+				    		<br/>
+				    		<p:outputLabel value="Tel. Fijo: " />				    		
+				    		<p:outputLabel value="#{inscripto.telefonoFijo}" />
+				    		<br/>
+				    		<p:outputLabel value="Email: " />				    		
+				    		<p:outputLabel value="#{inscripto.email}" />
+				    	</p:panel>
+				    </p:rowExpansion>
+				</p:dataTable>				
+				</p:panel> 
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

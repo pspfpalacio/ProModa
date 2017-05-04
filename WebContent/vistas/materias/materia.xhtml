@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Materia</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<br/>
+    			<p:panelGrid columns="4" style="width:100%;">
+    				<f:facet name="header">
+    					<h1><h:outputText value="#{beanMateria.headerText}" /></h1>
+    				</f:facet>
+    				
+    				<p:outputLabel value="Curso: " />
+    				<p:selectOneMenu value="#{beanMateria.idCurso}" filter="true" filterMatchMode="contains"
+    				required="true" label="CURSO" style="width:200px;">
+    					<f:selectItem itemLabel="Seleccione curso" noSelectionOption="true"/>
+    					<f:selectItems value="#{beanMateria.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+    					itemValue="#{curso.id}"/>
+    				</p:selectOneMenu>
+    				
+    				<p:outputLabel value="Nombre: " />
+    				<p:inputText value="#{beanMateria.materia.nombre}" />    				
+    				
+    				<p:outputLabel value="Profesor titular: " />
+    				<p:selectOneMenu value="#{beanMateria.idTitular}" filter="true" filterMatchMode="contains"
+    				required="true" label="PROFESOR TITULAR" style="width:200px;">
+    					<f:selectItem itemLabel="Seleccione profesor" noSelectionOption="true"/>
+    					<f:selectItems value="#{beanMateria.listaProfesores}" var="profe" itemLabel="#{profe.nombreCompleto}" 
+    					itemValue="#{profe.id}"/>
+    				</p:selectOneMenu>
+    				
+    				<p:outputLabel value="Cant. de Clases: " />
+    				<p:inputMask mask="9?999" value="#{beanMateria.materia.cantClases}" 
+    				label="CANT. DE CLASES" required="true" />
+    				
+    				<p:outputLabel value="Profesor suplente: " />
+    				<p:selectOneMenu value="#{beanMateria.idSuplente}" filter="true" filterMatchMode="contains">
+    					<f:selectItem itemLabel="Seleccione profesor" />
+    					<f:selectItems value="#{beanMateria.listaProfesores}" var="profe" itemLabel="#{profe.nombreCompleto}" 
+    					itemValue="#{profe.id}"/>
+    				</p:selectOneMenu>
+    			</p:panelGrid>
+    			<p:panelGrid columns="1" style="width:100%">	
+   					<f:facet name="header">
+   						<p:commandButton value="Guardar" update="messages" action="#{beanMateria.guardar()}"
+   						onclick="return confirm('GUARDAR MATERIA?')"/>
+   						<p:commandButton value="Cancelar" onclick="return confirm('CANCELAR MATERIA Y VOLVER?')" 
+   						action="#{beanMateria.goMaterias(beanMateria.usuario)}"/>
+   					</f:facet>   				
+   				</p:panelGrid>
+   				</p:panel>
+	    	</h:form>
+	    </div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

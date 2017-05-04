@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<div>
+		<p:menubar style="border:none;align:left;">
+			<p:menuitem value="Inicio" icon="ui-icon-home" action="index" process="@this"/>	
+			
+			<p:submenu label="Inscripciones" icon="ui-icon-folder-collapsed">
+				<p:menuitem value="Inscripcion" icon="ui-icon-document" action="#{beanInscripcion.goInscripcion(beanLogueo.usuario)}" process="@this"/>
+				<p:menuitem value="Inscripciones" icon="ui-icon-folder-open" action="#{beanInscripcion.goInscripciones(beanLogueo.usuario)}" process="@this"/>
+				<p:menuitem value="Inscriptos" icon="ui-icon-clipboard" action="#{beanInscripcion.goInscriptos(beanLogueo.usuario)}" process="@this"/>		
+			</p:submenu>
+			
+			<p:submenu label="Asistencias" icon="ui-icon-clipboard">
+				<p:menuitem value="Registro" icon="ui-icon-clipboard" action="#{beanAsistencia.goAsistencias(beanLogueo.usuario)}" process="@this"/>
+				<p:menuitem value="Reportes" icon="ui-icon-clipboard" action="#{beanAsistencia.goAsistencia(beanLogueo.usuario)}" process="@this"/>
+			</p:submenu>
+			
+			
+			<p:submenu label="Pagos" icon="ui-icon-cart">
+				<p:menuitem value="Registro" icon="ui-icon-cart" process="@this" action="#{beanPago.goPago(beanLogueo.usuario)}"/>
+				<p:menuitem value="Registro de Deuda" icon="ui-icon-cart" process="@this" action="#{beanPago.goPagoDeuda(beanLogueo.usuario)}"/>
+				<p:menuitem value="Pagos No Realizados" icon="ui-icon-cart" process="@this" action="#{beanPago.goPagosNoRealizados(beanLogueo.usuario)}"/>
+				<p:menuitem value="Reportes" icon="ui-icon-cart" process="@this" action="#{beanPago.goListadoPago(beanLogueo.usuario)}"/>
+				<p:menuitem value="Pagos Gen. Online" icon="ui-icon-cart" process="@this" action="#{beanPago.goPagosRealizadosOnline(beanLogueo.usuario)}"/>
+			</p:submenu>
+					
+			<p:menuitem value="Alumnos" icon="ui-icon-person" process="@this" action="#{beanAlumno.goAlumnos(beanLogueo.usuario)}"/>
+			
+			<p:menuitem value="Profesores" icon="ui-icon-person" process="@this" action="#{beanProfesor.goProfesores(beanLogueo.usuario)}"/>
+			
+			<p:menuitem value="Cursos" icon="ui-icon-comment" process="@this" action="#{beanCurso.goCursos(beanLogueo.usuario)}" />
+			
+			<p:menuitem value="Materias" icon="ui-icon-note" process="@this" action="#{beanMateria.goMaterias(beanLogueo.usuario)}" />
+			
+			<p:submenu label="Recursos" icon="ui-icon-bookmark">
+				<p:menuitem value="Nuevo" icon="ui-icon-bookmark" action="#{beanRecurso.goRecurso(beanLogueo.usuario)}" process="@this"/>
+				<p:menuitem value="Listado" icon="ui-icon-bookmark" action="#{beanRecurso.goRecursos(beanLogueo.usuario)}" process="@this"/>
+			</p:submenu>
+			
+			<p:menuitem value="Usuarios" icon="ui-icon-person" process="@this" action="#{beanUsuario.goUsuarios(beanLogueo.usuario)}" />
+			
+			<p:menuitem value="Caja" icon="ui-icon-person" process="@this" action="#{beanCaja.goCaja(beanLogueo.usuario)}" />			
+			
+			<f:facet name="options">
+				<p:outputLabel value="#{beanLogueo.usuario.username}     " style="font-family:sans-serif;" />
+				<p:commandButton icon="ui-icon-gear" action="#{beanLogueo.setting()}"
+					oncomplete="PF('dialogUsuario').show();" update="panelUser" process="@this"/>
+				<p:commandButton id="ButtonLogout" action="#{beanLogueo.logout()}" 
+					value="Logout" icon="ui-icon-extlink" ajax="false" url="/login.xhtml"/>
+			</f:facet>
+		</p:menubar>
+		<p:clock pattern="dd/MM/yyyy - hh:mm:ss" />
+		<p:dialog header="Usuario" widgetVar="dialogUsuario" id="dialogU" modal="true">
+			<p:outputPanel id="panelUser">
+   				<p:panelGrid columns="2">	   				
+   					
+   					<h:outputLabel for="username" value="Username: " />
+   					<p:inputText id="username" value="#{beanLogueo.usuario.username}" />
+   					<h:outputLabel for="nombre" value="Nombres: " />
+   					<p:inputText id="nombre" value="#{beanLogueo.usuario.nombre}" />
+   					<h:outputLabel for="apellido" value="Apellido: " />
+   					<p:inputText id="apellido" value="#{beanLogueo.usuario.apellido}" />
+					<h:outputLabel value="Contraseña: " for="passNew"/>
+					<p:password id="passNew" value="#{beanLogueo.passNueva}" >
+						<p:ajax event="keyup" update="ok" listener="#{beanLogueo.handleKeyEvent()}"/>
+					</p:password>
+					<h:outputLabel value="Confirmar Contraseña: " for="confirmPassNew"/>
+					<p:column>
+						<p:password id="confirmPassNew" value="#{beanLogueo.confirmPass}" >
+				    		<p:ajax event="keyup" update="ok, guardarMenu" listener="#{beanLogueo.handleKeyEvent()}"/>
+				    	</p:password>
+				    	<h:outputText id="ok" value="#{beanLogueo.textOk}" />
+			    	</p:column>
+			    	<h:outputLabel for="rol" value="Rol: " />
+			    	<p:selectOneMenu id="rol" value="#{beanLogueo.idRol}"  
+			    		style="width:200px;" disabled="#{beanLogueo.idRol != 1}">
+			    		<f:selectItems value="#{beanLogueo.listaRoles}" var="rol" itemLabel="#{rol.nombre}"
+			    		itemValue="#{rol.id}"/>
+			    	</p:selectOneMenu>
+   					<p:commandButton id="guardarMenu" value="Guardar" disabled="#{!beanLogueo.checkButton}"
+   						oncomplete="PF('dialogUsuario').hide()" update="messages" action="#{beanLogueo.editarUsuario()}"/>
+   					<p:commandButton value="Cancelar"  
+   						oncomplete="PF('dialogUsuario').hide()" update="panelUser"/>
+   					
+   				</p:panelGrid>
+  				</p:outputPanel>
+		</p:dialog>
+		<p:idleMonitor onactive="PF('sessionTimeOutDialog').show()" timeout="3600000" process="@this"/>
+		<p:dialog header="Session Caducada!" widgetVar="sessionTimeOutDialog" modal="true" closable="false" 
+			width="400" visible="false">
+			
+			<h:outputText value="La sesión ha caducado, por favor, pulse sobre el siguiente botón para volver a acceder a la aplicación" />
+			<input id="confirmBackToLogin" type="button" value="Volver a acceder a la aplicación" 
+			onclick="window.location='#{facesContext.externalContext.requestContextPath}/login.xhtml';" />
+			
+		</p:dialog>
+	</div>
+	<script type="text/javascript">
+		  //<![CDATA[
+		  function logout(xhr, status, args) {
+		    setTimeout(function() {
+		      window.location = '/login.xhtml';
+		    }, 3600);
+		  }
+		//]]>
+	</script>
+	</ui:composition>
+</html>

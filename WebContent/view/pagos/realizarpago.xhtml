@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Realizar Pago</title>		
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form onkeypress="return event.keyCode != 13">
+				<p:panel style="border:none;">
+					<p:growl id="messages" showDetail="false" />
+					<ui:include src="/includes/menu.xhtml" />
+				</p:panel>
+			</h:form>
+			<h:form id="formulario" onkeypress="return event.keyCode != 13" target="_blank">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+					<h3 align="left" style="color: black;">Listado de cursos a los cuales se encuentra inscripto. 
+					Seleccione un curso para visualizar la matricula y las cuotas para generar el pago correpondiente.</h3>					
+					<p:panelGrid columns="2" cellpadding="5" style="width:100%;">		
+			    		<f:facet name="header">
+			    			<h:outputText value="Cursos a los cuales se encuentra inscripto" />
+			    		</f:facet>			    	
+			    		<p:outputLabel value="Cursos" />
+			    		<p:selectOneMenu value="#{beanPagoAlum.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;">
+	    					<p:ajax event="change" listener="#{beanPagoAlum.onChangeCurso()}" update="panel" />
+	    					<f:selectItem itemLabel="Seleccione un curso" itemValue="0"/>
+	    					<f:selectItems value="#{beanPagoAlum.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+	    					itemValue="#{curso.id}"/>
+	    				</p:selectOneMenu>				    		
+			    	</p:panelGrid>	
+			    	<p:panelGrid columns="2" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPagoAlum.panelMatricula}">
+			    		<f:facet name="header">					    	
+					        <h:outputText value="Datos de Matrícula" />
+					    </f:facet>					    					    			
+			    		
+			    		<p:outputLabel value="Costo de matricula (precio contado efectivo): " />
+			    		<p:outputLabel value="#{beanPagoAlum.matriculaAlumno.matricula.costo}" >
+			    			<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+			    		</p:outputLabel>
+	 				</p:panelGrid>
+	 				<p:panelGrid columns="1" style="width:100%;" rendered="#{beanPagoAlum.panelMatricula}">
+	 					<f:facet name="header">
+	 						<!-- <a href="#{beanPagoAlum.checkoutURL}" name="MP-Checkout" class="blue-l-arall-rn" target="_blank">Generar Pago de Matrícula con Mercado Pago</a> -->
+	 						<p:commandButton value="Generar Pago de Matrícula con Mercado Pago" action="#{beanPagoAlum.generarPagoMatricula()}" 
+	 						disabled="#{beanPagoAlum.matriculaAlumno.pago}" ajax="false"/>
+	 					</f:facet>
+	 				</p:panelGrid>
+	 				<p:panelGrid style="width:100%;" rendered="#{beanPagoAlum.panelMatricula}">
+	 					<p:outputLabel style="color:black;" value="(*) Recuerde que para comenzar el cursado necesita tener abonada al menos la matrícula. 
+	 					Si desea abonar la matrícula de forma online, tenga en cuenta que el monto se verá afectado por un aumento por costos de pago online. 
+	 					Dependiendo el tipo de pago seleccionado, el mismo puede tardar hasta 72 horas en acreditarse. Preste mucha atención al importe antes de confirmar el pago.-" />
+	 				</p:panelGrid>	 				
+	 				
+	 				<br/>	 				
+				    <p:dataTable id="tablaCuotas" var="cuota" value="#{beanPagoAlum.listaCuotas}" paginator="true" rows="12"
+				    	paginatorPosition="bottom" rendered="#{beanPagoAlum.verCuotas}" emptyMessage="No Existen Cuotas">
+				    	
+				    	<p:column headerText="Generar Pago" style="width:25%; text-align:center;">
+					        <p:commandButton icon="ui-icon-cart" update=":formulario:panel" action="#{beanPagoAlum.cargarCuota(cuota)}" disabled="#{cuota.paga}"/>
+					    </p:column>
+				    	
+				    	<p:column headerText="Detalle" style="width:25%;">
+					        <h:outputText value="#{cuota.detalle}" />
+					    </p:column>
+					    
+					    <p:column headerText="Monto" style="width:10%;">
+					        <h:outputText value="#{cuota.monto}" >
+					        	<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+					        </h:outputText>
+					    </p:column>
+					    
+					    <p:column headerText="Primer Vencimiento" style="width:20%;">
+					        <h:outputText value="#{cuota.fechaVencimiento}">
+					        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+					        </h:outputText>
+					    </p:column>
+						
+						<p:column headerText="Segundo Vencimiento" style="width:20%;">
+					        <h:outputText value="#{cuota.segundoVencimiento}">
+					        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+					        </h:outputText>
+					    </p:column>
+					 
+					    <p:column headerText="Pago Registrado" style="width:10%;">
+					        <h:outputText value="#{cuota.paga == true? 'SI' : 'NO'}" />
+					    </p:column>						    
+					</p:dataTable>
+					<p:commandButton value="Click aquí para realizar el Pago de más de una Cuota" action="#{beanPagoAlum.generarListadoMultiple()}" 
+					update="panel, :formulario:outputPanelCuota" oncomplete="PF('dialogoCuota').show()" rendered="#{beanPagoAlum.verCuotas}"/>
+					<p:panelGrid columns="4" style="width:100%; margin-top:10px;" rendered="#{beanPagoAlum.panelCuota}">
+			    		<f:facet name="header">					    	
+					        <h:outputText value="Datos de Cuota" />
+					    </f:facet>					    					    			
+			    		
+			    		<p:outputLabel value="Detalle: " />
+			    		<p:outputLabel value="#{beanPagoAlum.cuota.detalle}" />
+			    		
+			    		<p:outputLabel value="Monto (precio contado efectivo): " />
+			    		<p:outputLabel value="#{beanPagoAlum.cuota.monto}" >
+			    			<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+			    		</p:outputLabel>
+			    		
+			    		<p:outputLabel value="Primer Vencimiento: " />
+			    		<p:outputLabel value="#{beanPagoAlum.cuota.fechaVencimiento}" >
+			    			<f:convertDateTime pattern="dd/MM/yyyy"/>
+			    		</p:outputLabel>
+			    		
+			    		<p:outputLabel value="Segundo Vencimiento: " />
+			    		<p:outputLabel value="#{beanPagoAlum.cuota.segundoVencimiento}" >
+			    			<f:convertDateTime pattern="dd/MM/yyyy"/>
+			    		</p:outputLabel>
+	 				</p:panelGrid>
+	 				<p:panelGrid columns="1" style="width:100%;" rendered="#{beanPagoAlum.panelCuota}">
+	 					<f:facet name="header">
+	 						<p:commandButton value="Generar Pago de Cuota con Mercado Pago" action="#{beanPagoAlum.generarPagoCuota()}" ajax="false"/>
+	 					</f:facet>
+	 				</p:panelGrid>
+	 				<p:panelGrid style="width:100%;" rendered="#{beanPagoAlum.panelCuota}">
+	 					<p:outputLabel style="color:black;" value="(*)Recuerde que para continuar con el cursado necesita tener al dia el pago de las cuotas. 
+	 					Si desea abonar la cuota de forma online, tenga en cuenta que el monto se verá afectado por un aumento por costos de pago online. 
+	 					Dependiendo el tipo de pago seleccionado, el mismo puede tardar hasta 72 horas en acreditarse. Preste mucha atención al importe antes de confirmar el pago.-" />
+	 				</p:panelGrid>
+	 				<p:dialog header="Seleccione Cuotas" widgetVar="dialogoCuota"
+					id="dialogoCuota" modal="true" closeOnEscape="true">
+						<p:outputPanel id="outputPanelCuota">
+			    			<p:panelGrid columns="1" style="width:100%;">
+			    				<f:facet name="header">
+			    					<p:outputLabel value="SELECCIONE CUOTAS" />
+			    				</f:facet>
+			    				<p:dataTable id="tablaCuotasMultiple" var="cuota" value="#{beanPagoAlum.listaCuotasCheck}" paginator="true" rows="12" 
+						    	widgetVar="cuotaBusqueda" selection="#{beanPagoAlum.selectionCuotas}" rowKey="#{cuota.id}" emptyMessage="NO POSEE CUOTAS IMPAGAS">
+						    		<f:facet name="header">
+										<p:outputLabel value="Cuotas" />
+										<p:spacer width="20" />
+										<p:outputPanel style="float:right;">
+											<p:inputText id="globalFilter" onkeyup="PF('cuotaBusqueda').filter()" placeholder="Buscar"/>
+										</p:outputPanel> 
+									</f:facet>		
+												    	
+						    		<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+						    	
+								    <p:column headerText="Detalle" style="width:25%;">
+								        <h:outputText value="#{cuota.detalle}" />
+								    </p:column>
+								 
+								    <p:column headerText="Monto (Precio Contado)" style="width:10%;">
+								        <h:outputText value="#{cuota.monto}" >
+								        	<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+								        </h:outputText>
+								    </p:column>
+								    
+								    <p:column headerText="Primer Vencimiento" style="width:20%;">
+								        <h:outputText value="#{cuota.fechaVencimiento}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+									
+									<p:column headerText="Segundo Vencimiento" style="width:20%;">
+								        <h:outputText value="#{cuota.segundoVencimiento}">
+								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								        </h:outputText>
+								    </p:column>
+								</p:dataTable>								
+			    			</p:panelGrid>
+			    			<p:panelGrid columns="1" style="width:100%;">
+			    				<f:facet name="header">
+			    					<p:commandButton value="Generar Pago con Mercado Pago" action="#{beanPagoAlum.generarPagoMultiple()}" 
+								    rendered="#{beanPagoAlum.pagoMultiple}" update=":formulario:panel" ajax="false"/>
+			    				</f:facet>
+			    				<p:outputLabel value="(*)Recuerde que para continuar con el cursado necesita tener al dia el pago de las cuotas. 
+		 					Si desea abonar la cuota de forma online, tenga en cuenta que el monto se verá afectado por un aumento por costos de pago online. 
+		 					Dependiendo el tipo de pago seleccionado, el mismo puede tardar hasta 72 horas en acreditarse. Preste mucha atención al importe antes de confirmar el pago.-" />
+			    			</p:panelGrid>
+						</p:outputPanel>
+				</p:dialog>
+				</p:panel> 
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

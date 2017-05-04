@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Inscripcion</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" autoUpdate="true" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<br/>
+				<p:outputPanel style="float:right;">							
+					<h:commandLink action="#{beanInscripcion.generarReporte()}" target="_blank" >
+						<p:graphicImage value="../../images/pdf-icon.png" width="50" style="margin-right: 60px;" />
+					</h:commandLink>
+				</p:outputPanel>
+    			<p:panelGrid columns="4" style="width:100%;">
+    				<f:facet name="header">
+    					<h2><h:outputText value="Solicitud de Matricula - Inscripción" /></h2>
+    				</f:facet>
+    				
+    				<p:outputLabel value="Fecha: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.fechaString}" disabled="true" />
+    				
+    				<p:outputLabel value="Curso: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.curso}" disabled="true" />
+    			</p:panelGrid>
+    			<p:panelGrid columns="4" style="width:100%;">
+    				<f:facet name="header">
+    					<h:outputText value="Datos Personales" />
+    				</f:facet>
+    			    
+    			    <p:outputLabel value="DNI: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.dni}" disabled="true" />
+    				
+    				<p:outputLabel value="Fecha de Nacimiento:" />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.fechaNacimientoString}" disabled="true" />
+    			    
+    				<p:outputLabel value="Apellido: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.apellido}" disabled="true" />   	
+    				
+    				<p:outputLabel value="Nombre: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.nombre}" disabled="true" />			
+    			</p:panelGrid>
+    			<p:panelGrid columns="4" style="width:100%;">	
+    				<f:facet name="header">
+    					<h:outputText value="Domicilio" />
+    				</f:facet>
+    				
+    				<p:outputLabel value="Provincia: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.provincia}" disabled="true" />
+    				
+    				<p:outputLabel value="Localidad: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.localidad}" disabled="true" />
+    				
+    				<p:outputLabel value="Cod. Postal: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.cod_postal}" disabled="true" />
+    				
+    				<p:outputLabel value="Calle: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.calle}" disabled="true" />
+    				
+    				<p:outputLabel value="Número: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.numero}" disabled="true" />
+    				
+    				<p:outputLabel value="Piso: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.piso}" disabled="true" />
+    				
+    				<p:outputLabel value="Departamento: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.departamento}" disabled="true" />
+    				
+    				<p:outputLabel value="E-mail: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.email}" disabled="true" />
+    				
+    				<p:outputLabel value="Tel. Cel.: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.telcel}" disabled="true" />
+    				
+    				<p:outputLabel value="Tel. Fijo: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.telfijo}" disabled="true" />
+    			</p:panelGrid>
+    			<p:panelGrid id="plan_pago" columns="2" style="width:100%;">
+    				<f:facet name="header">
+	    				<h:outputText value="Plan de Pago" />
+	    			</f:facet>
+	    			    				
+    				<p:outputLabel value="Monto de Matricula: " />
+    				<h:inputText value="$ #{beanInscripcion.inscripcionReporte.matriculaString}" disabled="true" />
+    				
+					<p:outputLabel value="Cant. Cuotas: " />
+					<p:column>
+						<h:inputText value="#{beanInscripcion.inscripcionReporte.cant_cuotas}" disabled="true" />
+						
+    					<p:outputLabel value=" Primer Vencimieto: " />
+						<h:inputText value="#{beanInscripcion.inscripcionReporte.primerVencimientoString}" disabled="true" />
+					</p:column>
+    				
+    				<p:outputLabel value="Costo Total del Curso: " />
+    				<h:inputText value="$ #{beanInscripcion.inscripcionReporte.costoCursoString}" disabled="true" />
+    				
+    				<p:outputLabel value="Monto de Cuota: " />
+    				<h:inputText value="$ #{beanInscripcion.inscripcionReporte.costoCuotaString}" disabled="true" />
+    				
+					<p:outputLabel value="Días preferidos de cursado: " />
+    				<h:inputTextarea value="#{beanInscripcion.inscripcionReporte.dias}" disabled="true" rows="1" style="width:700px;"/>
+					
+    				<p:outputLabel value="Horario preferido de cursado: " />
+    				<h:inputText value="#{beanInscripcion.inscripcionReporte.horarioString}" disabled="true" />
+    			</p:panelGrid>
+    			<p:panelGrid style="width:100%;" columns="1">	
+   					<f:facet name="header">
+   						<p:commandButton value="Volver" action="#{beanInscripcion.cancelar()}" process="@this"/>
+   					</f:facet>   				
+   				</p:panelGrid>
+   				</p:panel>
+	    	</h:form>
+	    </div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

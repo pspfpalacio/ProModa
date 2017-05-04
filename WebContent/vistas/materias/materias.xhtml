@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Materias</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<h3 align="center">MATERIAS</h3>
+		    	<p:panelGrid columns="5" cellpadding="5" style="width:80%;" rendered="false">
+		    		<f:facet name="header">
+		    			<h:outputText value="Filtros" />
+		    		</f:facet>
+					<p:commandButton icon="ui-icon-search"  />
+				</p:panelGrid>
+				<p:outputPanel style="float:right;">							
+					<h:commandLink >
+						<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+						<p:dataExporter type="pdf" target="contenedorMateria" fileName="Materias" preProcessor="#{beanMateria.preProcessPDF}"/>
+					</h:commandLink>
+				</p:outputPanel>
+				<p:dataTable id="contenedorMateria" widgetVar="materiaBusqueda" var="materia" style="width:100%;"
+				value="#{beanMateria.listaMaterias}" paginator="true" rows="20" resizableColumns="true"
+				filteredValue="#{beanMateria.filteredMaterias}"	emptyMessage="No existen Materias" sortMode="multiple">
+					<f:facet name="header">
+						<p:commandButton value="Nueva" action="#{beanMateria.goNuevo()}"/>
+						<p:outputLabel value="Materias" />
+						<p:spacer width="20" />
+						<p:outputPanel style="float:right;">
+							<p:inputText id="globalFilter" onkeyup="PF('materiaBusqueda').filter()" placeholder="Buscar"/>
+						</p:outputPanel> 
+						<p:outputPanel style="float:right;" rendered="false">							
+							<h:commandLink action="#{beanMateria.generarReporte()}" target="_blank" >
+								<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+							</h:commandLink>
+						</p:outputPanel>
+					</f:facet>
+					
+					<p:column headerText="Baja" style="text-align: center; width:60px;" id="act_desact" exportable="false">						
+						<p:row rendered="#{materia.enabled}">
+							<h:commandLink id="desactivar" title="Desactivar"
+								onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA LA MATERIA?')"
+								action="#{beanMateria.baja(materia)}">
+							 	<h:graphicImage value="/images/activo.ico" width="20" title="baja" /> 
+							</h:commandLink>
+						</p:row>						
+						<p:row rendered="#{!materia.enabled}">
+							<h:commandLink id="activar" title="Activar"
+								onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE ALTA LA MATERIA?')"
+								action="#{beanMateria.alta(materia)}">
+								<h:graphicImage value="/images/desactivo.ico" width="20" title="Alta" />
+							</h:commandLink>
+						</p:row>
+					</p:column>
+					
+					<p:column headerText="Nombre" >
+						<p:commandLink value="#{materia.nombre}" title="Modificar" 
+						action="#{beanMateria.goEditar(materia)}" />
+					</p:column>
+											
+					<p:column headerText="Curso" filterBy="#{materia.curso.nombre}"
+					filterStyle="display:none;">					
+						<h:outputText value="#{materia.curso.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Prof. Titular" filterBy="#{materia.profesore2.nombreCompleto}"
+					filterStyle="display:none;">					
+						<h:outputText value="#{materia.profesore2.nombreCompleto}" />
+					</p:column>
+					
+					<p:column headerText="Fecha de alta" style="width:120px;">
+						<h:outputText value="#{materia.fechaAlta}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>	
+				</p:panel> 
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>
