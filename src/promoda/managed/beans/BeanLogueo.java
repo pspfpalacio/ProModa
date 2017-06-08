@@ -202,6 +202,7 @@ public class BeanLogueo implements Serializable {
 		String retorno = "";
 		if (usuario.getId() != 0) {
 			Role rol = usuario.getRole();
+			
 			if (rol.getId() == 1) {
 				admin = true;
 				alum = false;
@@ -209,6 +210,7 @@ public class BeanLogueo implements Serializable {
 				welcomeFile = "index.xhtml";
 				retorno = "index.xhtml";
 			}
+			
 			if (rol.getId() == 2) {
 				admin = false;
 				alum = true;
@@ -216,12 +218,14 @@ public class BeanLogueo implements Serializable {
 				welcomeFile = "inicio.xhtml";
 				retorno = "inicio.xhtml";
 			}
+			
 			if (rol.getId() == 3) {
 				admin = false;
 				alum = false;
 				prof = true;
 				retorno = "";
 			}
+			
 			listaRoles = new ArrayList<Role>();
 			listaRoles = roleDAO.getLista();
 			logeado = true;
