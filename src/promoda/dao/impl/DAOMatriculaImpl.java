@@ -43,6 +43,7 @@ public class DAOMatriculaImpl implements Serializable, DAOMatricula {
 			return matricula.getId();
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			return 0;
 		}
 	}
@@ -50,13 +51,15 @@ public class DAOMatriculaImpl implements Serializable, DAOMatricula {
 	public int update(Matricula matricula) {
 		try {
 			inicializar();
-			Query locQuery = em.createQuery("UPDATE Matricula m SET m.costo = :pCosto, m.curso = :pCurso, m.enabled = :pEnabled, "
-					+ "m.fechaAlta = :pFechaAlta, m.fechaBaja = :pFechaBaja, m.fechaFinalizacion = :pFechaFinalizacion, "
-					+ "m.fechaFinCursado = :pFechaFinCursado, m.fechaInicio = :pFechaInicio, m.fechaMod = :pFechaMod, "
-					+ "m.usuario1 = :pUsuario1, m.usuario2 = :pUsuario2, m.usuario3 = :pUsuario3 "
+			Query locQuery = em.createQuery("UPDATE Matricula m SET m.costo = :pCosto, m.costoCurso = :pCostoCurso, m.curso = :pCurso, "
+					+ "m.descripcion = :pDescripcion, m.enabled = :pEnabled, m.fechaAlta = :pFechaAlta, m.fechaBaja = :pFechaBaja, "
+					+ "m.fechaFinalizacion = :pFechaFinalizacion, m.fechaFinCursado = :pFechaFinCursado, m.fechaInicio = :pFechaInicio, "
+					+ "m.fechaMod = :pFechaMod, m.usuario1 = :pUsuario1, m.usuario2 = :pUsuario2, m.usuario3 = :pUsuario3 "
 					+ "WHERE m.id = :pId", Matricula.class);
 			locQuery.setParameter("pCosto", matricula.getCosto());
+			locQuery.setParameter("pCostoCurso", matricula.getCostoCurso());
 			locQuery.setParameter("pCurso", matricula.getCurso());
+			locQuery.setParameter("pDescripcion", matricula.getDescripcion());
 			locQuery.setParameter("pEnabled", matricula.getEnabled());
 			locQuery.setParameter("pFechaAlta", matricula.getFechaAlta());
 			locQuery.setParameter("pFechaBaja", matricula.getFechaBaja());
@@ -75,6 +78,7 @@ public class DAOMatriculaImpl implements Serializable, DAOMatricula {
 			return matricula.getId();
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			return 0;
 		}
 	}

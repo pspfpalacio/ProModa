@@ -76,20 +76,6 @@
 					<p:column headerText="Duración en Meses" style="text-align: center; width:150px;" >					
 						<h:outputText value="#{curso.duracionMeses}" />
 					</p:column>
-											
-					<p:column headerText="Costo de Curso" style="text-align: right;width:150px;" >	
-						<h:outputText value="$" />				
-						<h:outputText value="#{curso.costoCurso}" >
-							<f:convertNumber pattern="#,##0.00"/>
-						</h:outputText>
-					</p:column>
-					
-					<p:column headerText="Costo de Matricula" style="text-align: right;width:150px;" >
-						<h:outputText value="$" />					
-						<h:outputText value="#{curso.costoMatricula}" >
-							<f:convertNumber pattern="#,##0.00"/>
-						</h:outputText>
-					</p:column>
 					
 					<p:column headerText="Ver Matricula" style="text-align: center; width:120px;" exportable="false">
 						<p:commandButton icon="ui-icon-comment" title="Ver Matricula" 

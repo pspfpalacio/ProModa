@@ -46,18 +46,33 @@
 				<p:growl id="messages" showDetail="false" />
 				<ui:include src="/includes/menubar.xhtml" />
 				<br/>
-    			<p:panelGrid id="grid" columns="4" style="width:100%;">
+				<p:panelGrid columns="1" style="width:100%;">
     				<f:facet name="header">
     					<h1><h:outputText value="#{beanMatricula.headerText}" /></h1>
     				</f:facet>
-    				
-    				<p:outputLabel value="Curso: " />
-    				<h:inputTextarea value="#{beanMatricula.curso.nombre}" disabled="true" rows="1" style="width:100%;"/>    				
+    			</p:panelGrid>
+    			
+				<p:panelGrid columns="1" style="width:100%;">
+					<f:facet name="header">
+						<h3><p:outputLabel value="Curso: " />
+    					<h:inputTextarea value="#{beanMatricula.curso.nombre}" disabled="true" rows="1" style="width:100%;"/></h3>
+					</f:facet>
+				</p:panelGrid>
+					 
+    			<p:panelGrid id="grid" columns="4" style="width:100%;">   				   				   				
     				
     				<p:outputLabel value="Costo: " />
     				<p:column>
     					<h:outputText value="$" />
     					<p:inputText mask="9?999" value="#{beanMatricula.matricula.costo}" >
+    						<f:convertNumber pattern="#,##0.00"/>
+    					</p:inputText>
+    				</p:column>
+    				
+    				<p:outputLabel value="Costo curso: " />
+    				<p:column>
+    					<h:outputText value="$" />
+    					<p:inputText mask="9?999" value="#{beanMatricula.matricula.costoCurso}" >
     						<f:convertNumber pattern="#,##0.00"/>
     					</p:inputText>
     				</p:column>
@@ -109,9 +124,21 @@
 						</p:row>
 					</p:column>
 					
-					<p:column headerText="Costo" style="width:80px;">
-						<p:commandLink value="$ #{matricula.costo}" title="Modificar" disabled="#{!matricula.enabled}"
+					<p:column headerText="ID" style="width:20px;">
+						<p:commandLink value="#{matricula.id}" title="Modificar" disabled="#{!matricula.enabled}"
 						action="#{beanMatricula.editar(matricula)}" update=":formulario:panel"/>
+					</p:column>
+					
+					<p:column headerText="Costo" style="width:80px;">
+						<h:outputText value="#{matricula.costo}" >
+							<f:convertNumber pattern="$###,##0.00"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Costo curso" style="width:80px;">
+						<h:outputText value="#{matricula.costo}" >
+							<f:convertNumber pattern="$###,##0.00"/>
+						</h:outputText>
 					</p:column>
 					
 					<p:column headerText="Fecha Inicio Insc." style="width:100px;" >					

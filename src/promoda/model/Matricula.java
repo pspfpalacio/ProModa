@@ -23,6 +23,11 @@ public class Matricula implements Serializable {
 	private int id;
 
 	private float costo;
+	
+	@Column(name="costo_curso")
+	private float costoCurso;
+	
+	private String descripcion;
 
 	private boolean enabled;
 
@@ -119,6 +124,22 @@ public class Matricula implements Serializable {
 
 	public void setCosto(float costo) {
 		this.costo = costo;
+	}
+	
+	public float getCostoCurso() {
+		return this.costoCurso;
+	}
+
+	public void setCostoCurso(float costoCurso) {
+		this.costoCurso = costoCurso;
+	}
+	
+	public String getDescripcion() {
+		return this.descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public boolean getEnabled() {

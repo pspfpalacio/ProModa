@@ -255,8 +255,10 @@ public class BeanLogueo implements Serializable {
 		url.append(host);
 		url.append(":");
 		url.append(port);
-		url.append("/login.xhtml");
-		// //System.out.println(url.toString());
+		//Beta
+		url.append("/ProModa/login.xhtml");
+		//Produccion
+//		url.append("/login.xhtml");
 		String urlFinal = url.toString();
 		FacesContext contexto = FacesContext.getCurrentInstance();
 		try {

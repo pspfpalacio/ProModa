@@ -60,8 +60,16 @@
     				<p:selectOneMenu value="#{beanInscripcion.idCurso}" filter="true" filterMatchMode="contains"
     				style="width:250px;">
     					<p:ajax event="change" listener="#{beanInscripcion.onChangeCurso()}" 
-    					update="plan_pago, monto, costo_curso, costo_cuota" />
+    					update="plan_pago, monto, costo_curso, costo_cuota, matricula" />
     					<f:selectItem itemLabel="Seleccione curso" itemValue="0"/>
+    					<f:selectItems value="#{beanInscripcion.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+    					itemValue="#{curso.id}"/>
+    				</p:selectOneMenu>
+    				
+    				<p:outputLabel value="Matrícula: " />
+    				<p:selectOneMenu id="matricula" value="#{beanInscripcion.idCurso}" filter="true" filterMatchMode="contains"
+    				style="width:250px;">
+    					<f:selectItem itemLabel="Seleccione matrícula" itemValue="0"/>
     					<f:selectItems value="#{beanInscripcion.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
     					itemValue="#{curso.id}"/>
     				</p:selectOneMenu>

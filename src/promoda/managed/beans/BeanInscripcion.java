@@ -147,6 +147,7 @@ public class BeanInscripcion implements Serializable {
 	private List<Motivo> listaMotivos;
 	private List<CuotaImpaga> listaCuotasImpagas;
 	private List<MatriculaImpaga> listaMatriculasImpagas;
+	private List<Matricula> listaMatriculas;
 	private List<String> selectedMotivos; 
 	private List<String> selectedDias;
 	private Inscripcione inscripcion;
@@ -163,6 +164,7 @@ public class BeanInscripcion implements Serializable {
 	private int idCurso;
 	private int idProvincia;
 	private int idLocalidad;
+	private int idMatricula;
 	private int cantCuotas;
 	private int descuentoCurso;
 	private int descuentoMatricula;
@@ -425,6 +427,14 @@ public class BeanInscripcion implements Serializable {
 		this.listaMatriculasImpagas = listaMatriculasImpagas;
 	}
 
+	public List<Matricula> getListaMatriculas() {
+		return listaMatriculas;
+	}
+
+	public void setListaMatriculas(List<Matricula> listaMatriculas) {
+		this.listaMatriculas = listaMatriculas;
+	}
+
 	public List<String> getSelectedMotivos() {
 		return selectedMotivos;
 	}
@@ -551,6 +561,14 @@ public class BeanInscripcion implements Serializable {
 
 	public void setIdLocalidad(int idLocalidad) {
 		this.idLocalidad = idLocalidad;
+	}
+
+	public int getIdMatricula() {
+		return idMatricula;
+	}
+
+	public void setIdMatricula(int idMatricula) {
+		this.idMatricula = idMatricula;
 	}
 
 	public int getCantCuotas() {
@@ -709,6 +727,7 @@ public class BeanInscripcion implements Serializable {
 		montoCuota = 0;
 		montoMatricula = 0;
 		dni = 0;
+		idMatricula = 0;
 		porDefecto = true;
 		deuda = false;
 		inscripcion = new Inscripcione();
@@ -720,11 +739,8 @@ public class BeanInscripcion implements Serializable {
 		listaMotivos = new ArrayList<Motivo>();
 		selectedMotivos = new ArrayList<String>();
 		selectedDias = new ArrayList<String>();
-		listaCursos = cursoDAO.getListaMatVig(new Date());
-//		for (Curso cur : listaCursos) {
-//			System.out.println(cur.getNombre());
-//			System.out.println(cur.getMatricula().getFechaAlta());
-//		}
+		listaMatriculas = new ArrayList<Matricula>();
+		listaCursos = cursoDAO.getLista(true);
 		listaProvincias = provinciaDAO.getLista();
 		listaMotivos = motivoDAO.getLista();
 		return "inscripcion";
@@ -819,11 +835,30 @@ public class BeanInscripcion implements Serializable {
 		if (idCurso != 0) {
 			curso = new Curso();
 			curso = cursoDAO.get(idCurso);
-			matricula = curso.getMatricula();
-			montoCurso = curso.getCostoCurso();
-			montoMatricula = matricula.getCosto();
-			cantCuotas = 0 + curso.getDuracionMeses();
-			montoCuota = montoCurso / cantCuotas;
+			idMatricula = 0;
+			listaMatriculas = matriculaDAO.getLista(true, curso);
+		}
+	}
+	
+	public void onChangeMatricula() {
+		matricula = new Matricula();
+		if (idMatricula != 0) {
+			try {
+				matricula = matriculaDAO.get(idMatricula);
+				if (matricula.getId() != 0) {
+					montoCurso = matricula.getCostoCurso();
+					montoMatricula = matricula.getCosto();
+					cantCuotas = 0 + curso.getDuracionMeses();
+					montoCuota = montoCurso / cantCuotas;
+				} else {
+					FacesContext.getCurrentInstance().addMessage(null, 
+							new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL OBTENER LOS DATOS DE LA MATRICULA.", null));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				FacesContext.getCurrentInstance().addMessage(null, 
+						new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL OBTENER LOS DATOS DE LA MATRICULA. Error: " + e.getMessage(), null));
+			}						
 		}
 	}
 	

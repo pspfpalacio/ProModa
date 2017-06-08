@@ -3,6 +3,7 @@ package promoda.managed.beans;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -197,95 +198,56 @@ public class BeanMatricula implements Serializable {
 	
 	public void guardar() {
 		FacesMessage msg = null;
-		if (matricula.getFechaAlta() != null && matricula.getFechaFinalizacion() != null 
-				&& matricula.getFechaInicio() != null && matricula.getFechaFinCursado() != null) {
-			if (matricula.getId() != 0) {
-				matricula.setFechaMod(new Date());
-				matricula.setUsuario3(usuario);
-				int idMatricula = matriculaDAO.update(matricula);
-				if (idMatricula != 0) {
-					matricula.setId(idMatricula);
-					listaMatricula = new ArrayList<Matricula>();
-					listaMatricula = matriculaDAO.getListaDesc(curso);
-					if (idMatricula == curso.getMatricula().getId()) {
-						curso.setMatricula(matricula);
-						curso.setCostoMatricula(matricula.getCosto());
-						int updtCurso = cursoDAO.update(curso);
-						if (updtCurso != 0) {
-							matricula = new Matricula();
-							msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "SE REGISTRO LA MATRICULA COMO VIGENTE", null);
-						} else {
-							msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL "
-									+ "REGISTRAR LA MATRICULA COMO VIGENTE", null);
-						}
-					} else {
+		try {
+			if (matricula.getFechaAlta() != null && matricula.getFechaFinalizacion() != null 
+					&& matricula.getFechaInicio() != null && matricula.getFechaFinCursado() != null) {
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				String fecha_inicio = dateFormat.format(matricula.getFechaInicio());
+				String fecha_fin = dateFormat.format(matricula.getFechaFinCursado());
+				
+				if (matricula.getId() != 0) {				
+					String descripcion = Integer.toString(matricula.getId()) + " - (" + fecha_inicio + " - " + fecha_fin + ")";
+					matricula.setFechaMod(new Date());
+					matricula.setUsuario3(usuario);
+					matricula.setDescripcion(descripcion);
+					int idMatricula = matriculaDAO.update(matricula);
+					
+					if (idMatricula != 0) {
+						listaMatricula = new ArrayList<Matricula>();
+						listaMatricula = matriculaDAO.getListaDesc(curso);
 						matricula = new Matricula();
-						msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "SE REGISTRO LA MATRICULA CON EXITO", null);
+						msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "SE REGISTRO LA MATRICULA EXITOSAMENTE.", null);						
+					} else {
+						msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REGISTRAR LA MATRICULA.", null);
 					}
 				} else {
-					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REGISTRAR LA MATRICULA", null);
-				}
-			} else {
-				boolean valido = true;
-				if (curso.getMatricula() != null) {
-					valido = false;
-//					Matricula matriVigente = curso.getMatricula();
-//					List<MatriculaAlumno> listaMatAlum = matriculaAlumnoDAO.getLista(curso, matriVigente, false);
-//					if (!listaMatAlum.isEmpty()) {
-//						valido = false;
-//					}
-//					List<Cuota> listCuot = cuotaDAO.getLista(curso, matriVigente, false);
-//					if (!listCuot.isEmpty()) {
-//						valido = false;
-//					}
-				}
-				if (valido) {
-					List<Matricula> lista = matriculaDAO.getLista(curso);
-					if (!lista.isEmpty()) {
-						for (Matricula matri : lista) {
-							matri.setEnabled(false);
-							matriculaDAO.update(matri);
-						}			
-					}
-					Matricula matriVigente = curso.getMatricula();
-					List<MatriculaAlumno> listaMatAlum = matriculaAlumnoDAO.getLista(curso, matriVigente, false);
-					if (!listaMatAlum.isEmpty()) {
-						for (MatriculaAlumno matriculaAlumno : listaMatAlum) {
-							matriculaAlumno.setEnabled(false);
-							matriculaAlumnoDAO.update(matriculaAlumno);
-						}
-					}
 					matricula.setCurso(curso);
 					matricula.setEnabled(true);
 					matricula.setFechaMod(new Date());
 					matricula.setUsuario1(usuario);
 					int idMatricula = matriculaDAO.insertar(matricula);
-					if (idMatricula != 0) {
-						matricula.setId(idMatricula);
+					String descripcion = Integer.toString(idMatricula) + " - (" + fecha_inicio + " - " + fecha_fin + ")";
+					matricula.setId(idMatricula);
+					matricula.setDescripcion(descripcion);
+					int updtMatricula = matriculaDAO.update(matricula);
+					
+					if (idMatricula != 0 && updtMatricula != 0) {
 						listaMatricula = new ArrayList<Matricula>();
 						listaMatricula = matriculaDAO.getListaDesc(curso);
-						curso.setMatricula(matricula);
-						curso.setCostoMatricula(matricula.getCosto());
-						int updtCurso = cursoDAO.update(curso);
-						if (updtCurso != 0) {
-							matricula = new Matricula();
-							msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "SE REGISTRO LA MATRICULA COMO VIGENTE", null);
-						} else {
-							msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL "
-									+ "REGISTRAR LA MATRICULA COMO VIGENTE", null);
-						}
+						matricula = new Matricula();
+						msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "SE REGISTRO LA MATRICULA EXITOSAMENTE.", null);						
 					} else {
-						msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REGISTRAR LA MATRICULA", null);
-					}
-				} else {
-					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "NO SE PUEDE REGISTRAR LA NUEVA MATRICULA! "
-							+ "EXISTEN MATRICULAS VIGENTES EN EL CURSO, REALICE LA BAJA DE LA MISMA!", null);
-				}			
+						msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REGISTRAR LA MATRICULA.", null);
+					}		
+				}
+			} else {
+				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "NO SE PUEDE REGISTRAR LA NUEVA MATRICULA! "
+						+ "TODOS LOS CAMPOS SON OBLIGATORIOS.", null);
 			}
-		} else {
-			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "NO SE PUEDE REGISTRAR LA NUEVA MATRICULA! "
-					+ "TODOS LOS CAMPOS SON OBLIGATORIOS!", null);
-		}		
+		} catch (Exception e) {
+			e.printStackTrace(); 
+			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REGISTRAR LA MATRICULA. Error: " + e.getMessage(), null);
+		}				
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 	
