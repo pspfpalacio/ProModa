@@ -237,25 +237,49 @@ public class BeanUsuario implements Serializable {
 		String retorno = "";	
 		Usuario userIngresa = usuarioDAO.get(usuario.getUsername());
 		System.out.println(userIngresa.getId());
-		System.out.println(user.getId());
-		if (userIngresa.getId() != 0 && userIngresa.getId() != user.getId()) {
-			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "YA EXISTEN USUARIO CON ESE USERNAME! MODIFÍQUELO!", null);
+		System.out.println(user.getId());		
+		if (usuario.getId() != 0) {
+			if (!repeatPass.isEmpty()) {
+				Helper helper = new Helper();
+				String password = helper.EncodePassword(repeatPass);
+				usuario.setPassword(password);
+			}
+			String nombreCompleto = usuario.getApellido() + ", " + usuario.getNombre();
+			Role rol = new Role();
+			rol.setId(idRol);
+			usuario.setNombreCompleto(nombreCompleto);
+			usuario.setRole(rol);
+			usuario.setUsuario3(usuario);
+			usuario.setFechaMod(new Date());
+			int updateUsuario = usuarioDAO.update(usuario);
+			if (updateUsuario != 0) {
+				listaUsuarios = new ArrayList<Usuario>();
+				filteredUsuarios = new ArrayList<Usuario>();
+				listaUsuarios = usuarioDAO.getLista();
+				filteredUsuarios = listaUsuarios;
+				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "USUARIO REGISTRADO!", null);
+				retorno = "usuarios";
+			} else {
+				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REGISTRAR EL USUARIO, "
+						+ "INTENTELO NUEVAMENTE!", null);
+			}
 		} else {
-			if (usuario.getId() != 0) {
-				if (!repeatPass.isEmpty()) {
-					Helper helper = new Helper();
-					String password = helper.EncodePassword(repeatPass);
-					usuario.setPassword(password);
-				}
+			if (pass.isEmpty()) {
+				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "LA CONTRASEÑA ES OBLIGATORIA", null);
+			} else {
+				Helper helper = new Helper();
+				String password = helper.EncodePassword(repeatPass);
 				String nombreCompleto = usuario.getApellido() + ", " + usuario.getNombre();
 				Role rol = new Role();
 				rol.setId(idRol);
+				usuario.setPassword(password);
 				usuario.setNombreCompleto(nombreCompleto);
 				usuario.setRole(rol);
-				usuario.setUsuario3(usuario);
-				usuario.setFechaMod(new Date());
-				int updateUsuario = usuarioDAO.update(usuario);
-				if (updateUsuario != 0) {
+				usuario.setUsuario1(user);
+				usuario.setEnabled(true);
+				usuario.setFechaAlta(new Date());
+				int idUsuario = usuarioDAO.insertar(usuario);
+				if (idUsuario != 0) {
 					listaUsuarios = new ArrayList<Usuario>();
 					filteredUsuarios = new ArrayList<Usuario>();
 					listaUsuarios = usuarioDAO.getLista();
@@ -266,36 +290,8 @@ public class BeanUsuario implements Serializable {
 					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REGISTRAR EL USUARIO, "
 							+ "INTENTELO NUEVAMENTE!", null);
 				}
-			} else {
-				if (pass.isEmpty()) {
-					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "LA CONTRASEÑA ES OBLIGATORIA", null);
-				} else {
-					Helper helper = new Helper();
-					String password = helper.EncodePassword(repeatPass);
-					String nombreCompleto = usuario.getApellido() + ", " + usuario.getNombre();
-					Role rol = new Role();
-					rol.setId(idRol);
-					usuario.setPassword(password);
-					usuario.setNombreCompleto(nombreCompleto);
-					usuario.setRole(rol);
-					usuario.setUsuario1(user);
-					usuario.setEnabled(true);
-					usuario.setFechaAlta(new Date());
-					int idUsuario = usuarioDAO.insertar(usuario);
-					if (idUsuario != 0) {
-						listaUsuarios = new ArrayList<Usuario>();
-						filteredUsuarios = new ArrayList<Usuario>();
-						listaUsuarios = usuarioDAO.getLista();
-						filteredUsuarios = listaUsuarios;
-						msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "USUARIO REGISTRADO!", null);
-						retorno = "usuarios";
-					} else {
-						msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REGISTRAR EL USUARIO, "
-								+ "INTENTELO NUEVAMENTE!", null);
-					}
-				}
 			}
-		}
+		}		
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		return retorno;
 	}
