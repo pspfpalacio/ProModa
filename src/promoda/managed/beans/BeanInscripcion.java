@@ -832,6 +832,10 @@ public class BeanInscripcion implements Serializable {
 	
 	public void onChangeCurso() {
 		matricula = new Matricula();
+		montoCurso = 0;
+		montoMatricula = 0;
+		cantCuotas = 0;
+		montoCuota = 0;
 		if (idCurso != 0) {
 			curso = new Curso();
 			curso = cursoDAO.get(idCurso);
@@ -842,6 +846,10 @@ public class BeanInscripcion implements Serializable {
 	
 	public void onChangeMatricula() {
 		matricula = new Matricula();
+		montoCurso = 0;
+		montoMatricula = 0;
+		cantCuotas = 0;
+		montoCuota = 0;
 		if (idMatricula != 0) {
 			try {
 				matricula = matriculaDAO.get(idMatricula);
@@ -1355,7 +1363,7 @@ public class BeanInscripcion implements Serializable {
 			} else {
 				existeEmail = false;
 			}
-			if (inscripcion.getFecha() != null && idCurso != 0 && dni != 0 && alumno.getFechaNacimiento() != null && primerVencimiento != null
+			if (inscripcion.getFecha() != null && idCurso != 0 && idMatricula != 0 && dni != 0 && alumno.getFechaNacimiento() != null && primerVencimiento != null
 					&& (!alumno.getApellido().isEmpty() || alumno.getApellido() != "") && (!alumno.getNombres().isEmpty() || alumno.getNombres() != "") 
 					&& idProvincia != 0 && idLocalidad != 0	&& (!domicilio.getCodigoPostal().isEmpty() || domicilio.getCodigoPostal() != "") 
 					&& (!domicilio.getCalle().isEmpty() || domicilio.getCalle() != "") && (!domicilio.getNumero().isEmpty() || domicilio.getNumero() != "")
@@ -1599,6 +1607,9 @@ public class BeanInscripcion implements Serializable {
 				}
 				if (idCurso == 0) {
 					mensaje = mensaje + " CURSO!";
+				}
+				if (idMatricula == 0) {
+					mensaje = mensaje + " MATRICULA!";
 				}
 				if (dni == 0) {
 					mensaje = mensaje + " DNI DE ALUMNO!";

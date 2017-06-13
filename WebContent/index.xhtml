@@ -24,8 +24,9 @@
 				<ui:include src="/includes/menubar.xhtml"></ui:include>
 				<p:growl id="messages" autoUpdate="true" showDetail="false" />
 				<br/>
-		    	<h1 align="center">  <p:outputLabel value="Bienvenido al Sistema de Gestión #{beanLogueo.usuario.nombreCompleto}"/> </h1> 
+		    	<h1 align="center">  <p:outputLabel value="Bienvenido al Sistema de Gestión #{beanLogueo.usuario.nombreCompleto}"/> </h1>		    	
 		    	<h2>  </h2>
+		    	<p:commandButton value="Proceso matriculas" action="#{beanLogueo.procesoMatricula()}" ajax="false" rendered="#{beanLogueo.usuario.id == 1}"/>
 	    	</p:panel>
 		</h:form>
 		</div>

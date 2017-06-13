@@ -2,6 +2,7 @@ package promoda.managed.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,9 +17,11 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 import promoda.clases.Helper;
+import promoda.dao.DAOMatricula;
 import promoda.dao.DAORole;
 import promoda.dao.DAORolesVista;
 import promoda.dao.DAOUsuario;
+import promoda.model.Matricula;
 import promoda.model.Role;
 import promoda.model.Usuario;
 
@@ -496,6 +499,42 @@ public class BeanLogueo implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	@ManagedProperty(value = "#{BeanMatriculaDAO}")
+	private DAOMatricula matriculaDAO;
+	
+	public DAOMatricula getMatriculaDAO() {
+		return matriculaDAO;
+	}
+
+	public void setMatriculaDAO(DAOMatricula matriculaDAO) {
+		this.matriculaDAO = matriculaDAO;
+	}
+
+	public void procesoMatricula() {
+		try {
+			List<Matricula> listaMatriculas = matriculaDAO.getLista();
+			for (Matricula matricula : listaMatriculas) {
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				String fecha_inicio = "";
+				if (matricula.getFechaInicio() != null) {
+					fecha_inicio = dateFormat.format(matricula.getFechaInicio());
+				}
+				String fecha_fin = "";
+				if (matricula.getFechaFinCursado() != null) {
+					fecha_fin = dateFormat.format(matricula.getFechaFinCursado());
+				}
+				String descripcion = Integer.toString(matricula.getId()) + " - (" + fecha_inicio + " - " + fecha_fin + ")";
+				System.out.println("Descripción: " + descripcion);
+				matricula.setDescripcion(descripcion);
+				int updtMatricula = matriculaDAO.update(matricula);
+				System.out.println("Update: " + updtMatricula);
+			}
+			System.out.println("Finalizó");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
