@@ -528,7 +528,10 @@ public class BeanLogueo implements Serializable {
 				}
 				String descripcion = Integer.toString(matricula.getId()) + " - (" + fecha_inicio + " - " + fecha_fin + ")";
 				System.out.println("Descripción: " + descripcion);
+				float costoCurso = matricula.getCurso().getCostoCurso();
+				System.out.println("Costo curso: " + costoCurso);
 				matricula.setDescripcion(descripcion);
+				matricula.setCostoCurso(costoCurso);
 				int updtMatricula = matriculaDAO.update(matricula);
 				System.out.println("Update: " + updtMatricula);
 			}

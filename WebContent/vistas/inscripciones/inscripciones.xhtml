@@ -46,16 +46,22 @@
 				<p:growl id="messages" showDetail="false" />
 				<ui:include src="/includes/menubar.xhtml" />
 				<h3 align="center">INSCRIPCIONES</h3>
-		    	<p:panelGrid columns="2" cellpadding="5" style="width:80%;" >
+		    	<p:panelGrid columns="4" cellpadding="5" style="width:100%;" >
 		    		<f:facet name="header">
 		    			<h:outputText value="Filtros" />
 		    		</f:facet>
 		    		<h:outputText value="Curso: " />
-		    		<p:selectOneMenu value="#{beanInscripcion.idCurso}" filter="true" filterMatchMode="contains"
-    				style="width:250px;">
-    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+		    		<p:selectOneMenu value="#{beanInscripcion.idCurso}" filter="true" filterMatchMode="contains">
+		    			<p:ajax event="change" listener="#{beanInscripcion.onChangeCurso()}" update="matriculas" />
+    					<f:selectItem itemLabel="TODOS" itemValue="0"/>
     					<f:selectItems value="#{beanInscripcion.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
     					itemValue="#{curso.id}"/>
+    				</p:selectOneMenu>
+    				<h:outputText value="Matrícula: " />
+		    		<p:selectOneMenu id="matriculas" value="#{beanInscripcion.idMatricula}" filter="true" filterMatchMode="contains">
+    					<f:selectItem itemLabel="TODAS" itemValue="0"/>
+    					<f:selectItems value="#{beanInscripcion.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
+    					itemValue="#{mat.id}"/>
     				</p:selectOneMenu>
     				<f:facet name="footer">
 						<p:commandButton icon="ui-icon-search" value="Buscar" update="panel" action="#{beanInscripcion.filtroInscripciones()}"/>
@@ -142,7 +148,7 @@
 				<p:dialog header="Solicitud de Matrícula - Inscripción" widgetVar="dialogoMovimiento"
 					id="dialogo" modal="true" closeOnEscape="true" responsive="true">
 					<p:outputPanel id="outputPanel">
-		    			<p:panelGrid columns="4" style="width:100%;">
+		    			<p:panelGrid columns="6" style="width:100%;">
 		    				<f:facet name="header">
 		    					<p:outputLabel value="INSCRIPCIÓN" />
 		    					<p:spacer width="20" />
@@ -157,7 +163,10 @@
 		    				<h:inputText value="#{beanInscripcion.inscripcionReporte.fechaString}" disabled="true" />
 		    				
 		    				<p:outputLabel value="Curso: " />
-		    				<h:inputText value="#{beanInscripcion.inscripcionReporte.curso}" disabled="true" />
+		    				<h:inputText value="#{beanInscripcion.inscripcionReporte.curso}" disabled="true" size="60"/>
+		    				
+		    				<p:outputLabel value="Matrícula: " />
+		    				<h:inputText value="#{beanInscripcion.inscripcionReporte.matriculaDesc}" disabled="true" />
 		    			</p:panelGrid>
 		    			<p:panelGrid columns="4" style="width:100%;">
 		    				<f:facet name="header">

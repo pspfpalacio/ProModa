@@ -11,6 +11,7 @@ public class InscripcionReporte {
 	
 	private Date fecha;
 	private String curso;
+	private String matriculaDesc;
 	private String dni;
 	private Date fecha_nacimiento;
 	private String nombre;
@@ -46,6 +47,12 @@ public class InscripcionReporte {
 	}
 	public void setCurso(String curso) {
 		this.curso = curso;
+	}
+	public String getMatriculaDesc() {
+		return matriculaDesc;
+	}
+	public void setMatriculaDesc(String matriculaDesc) {
+		this.matriculaDesc = matriculaDesc;
 	}
 	public String getDni() {
 		return dni;

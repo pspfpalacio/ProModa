@@ -3,6 +3,8 @@ package promoda.managed.beans;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -69,6 +71,7 @@ public class BeanAsistencia implements Serializable {
 	private List<Materia> listaMaterias;
 	private List<Curso> listaCursos;
 	private List<Clase> listaClases;
+	private List<Matricula> listaMatriculas;
 	private List<AsistenciaReporte> listaAsistenciaReporte;
 	private List<AsistenciaReporte> listaAsistenciaPlanilla;
 	private List<AsistenciaReporte> selectionAsistenciaPlanilla;
@@ -83,6 +86,7 @@ public class BeanAsistencia implements Serializable {
 	private int idCurso;
 	private int idMateria;
 	private int idClase;
+	private int idMatricula;
 	private int cantClases;
 	private int clasesDesde;
 	private int clasesHasta;
@@ -175,6 +179,14 @@ public class BeanAsistencia implements Serializable {
 
 	public void setListaClases(List<Clase> listaClases) {
 		this.listaClases = listaClases;
+	}
+
+	public List<Matricula> getListaMatriculas() {
+		return listaMatriculas;
+	}
+
+	public void setListaMatriculas(List<Matricula> listaMatriculas) {
+		this.listaMatriculas = listaMatriculas;
 	}
 
 	public List<AsistenciaReporte> getListaAsistenciaReporte() {
@@ -292,6 +304,14 @@ public class BeanAsistencia implements Serializable {
 		this.idClase = idClase;
 	}
 
+	public int getIdMatricula() {
+		return idMatricula;
+	}
+
+	public void setIdMatricula(int idMatricula) {
+		this.idMatricula = idMatricula;
+	}
+
 	public int getCantClases() {
 		return cantClases;
 	}
@@ -339,14 +359,16 @@ public class BeanAsistencia implements Serializable {
 		matricula = new Matricula();
 		usuario = user;
 		listaCursos = new ArrayList<Curso>();
+		listaMatriculas = new ArrayList<Matricula>();
 		listaMaterias = new ArrayList<Materia>();
 		listaClases = new ArrayList<Clase>();
 		listaAsistencias = new ArrayList<Asistencia>();
 		selectionAsistencias = new ArrayList<Asistencia>();
-		listaCursos = cursoDAO.getListaMatVig();
+		listaCursos = cursoDAO.getLista(true);
 		idCurso = 0;
 		idMateria = 0;
 		idClase = 0;
+		idMatricula = 0;
 		fecha = new Date();
 		return "asistencias";
 	}
@@ -380,6 +402,7 @@ public class BeanAsistencia implements Serializable {
 	
 	public void onChangeCurso() {
 		listaMaterias = new ArrayList<Materia>();
+		listaMatriculas = new ArrayList<Matricula>();
 		curso = new Curso();
 		materia = new Materia();
 		matricula = new Matricula();
@@ -387,11 +410,30 @@ public class BeanAsistencia implements Serializable {
 		reporte = false;
 		idMateria = 0;
 		idClase = 0;
+		idMatricula = 0;
 		cantClases = 0;
 		clasesDesde = 0;
 		clasesHasta = 0;
 		if (idCurso != 0) {
 			curso = cursoDAO.get(idCurso);
+			listaMatriculas = matriculaDAO.getLista(true, curso);
+//			listaMaterias = materiaDAO.getLista(true, curso);
+		}
+	}
+	
+	public void onChangeMatricula() {
+		listaMaterias = new ArrayList<Materia>();		
+		materia = new Materia();
+		matricula = new Matricula();
+		intervalo = false;
+		reporte = false;
+		idMateria = 0;
+		idClase = 0;		
+		cantClases = 0;
+		clasesDesde = 0;
+		clasesHasta = 0;
+		if (idMatricula != 0) {
+			matricula = matriculaDAO.get(idMatricula);			
 			listaMaterias = materiaDAO.getLista(true, curso);
 		}
 	}
@@ -399,7 +441,6 @@ public class BeanAsistencia implements Serializable {
 	public void onChangeMateria() {
 		listaClases = new ArrayList<Clase>();
 		materia = new Materia();
-		matricula = new Matricula();
 		idClase = 0;
 		if (idMateria != 0) {
 			materia = materiaDAO.get(idMateria);
@@ -540,14 +581,13 @@ public class BeanAsistencia implements Serializable {
 	
 	public void onChangeClase() {
 		listaAsistencias = new ArrayList<Asistencia>();
+		List<Asistencia> listaA = new ArrayList<Asistencia>();
 		selectionAsistencias = new ArrayList<Asistencia>();
-		matricula = new Matricula();
 		asistenciaMasiva = "-";
 		if (idClase != 0) {			
-			int idMatri = curso.getMatricula().getId();
-			matricula = matriculaDAO.get(idMatri);
-			listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia, idClase);
-			if (listaAsistencias.isEmpty()) {
+			matricula = matriculaDAO.get(idMatricula);
+			listaA = asistenciaDAO.getLista(curso, matricula, materia, idClase);
+			if (listaA.isEmpty()) {
 				List<Inscripcione> listaInscripciones = inscripcionDAO.getLista(true, curso, matricula);
 				for (Inscripcione inscripcione : listaInscripciones) {
 					Asistencia asistencia = new Asistencia();
@@ -557,11 +597,11 @@ public class BeanAsistencia implements Serializable {
 						asistencia.setAlumno(alum);
 						asistencia.setNroClase(idClase);
 						asistencia.setNombreClase("Clase " + idClase);
-						listaAsistencias.add(asistencia);
+						listaA.add(asistencia);
 					}					
 				}
 			} else {
-				List<Asistencia> listAux = listaAsistencias;
+				List<Asistencia> listAux = listaA;
 				List<Inscripcione> listaInscripciones = inscripcionDAO.getLista(true, curso, matricula);				
 				for (Inscripcione inscripcione : listaInscripciones) {
 					Asistencia asist = new Asistencia();
@@ -579,15 +619,31 @@ public class BeanAsistencia implements Serializable {
 							asist.setAlumno(alum);
 							asist.setNroClase(idClase);
 							asist.setNombreClase("Clase " + idClase);
-							listaAsistencias.add(asist);
+							listaA.add(asist);
 						}
 					}					
 				}
-				for (Asistencia asistencia : listaAsistencias) {
+				for (Asistencia asistencia : listaA) {
 					fecha = asistencia.getFechaAlta();
 				}
 			}
 		}
+//		Collections.sort(listA, new Comparator(){
+//			@Override
+//			public int compare(Object p1, Object p2) {
+//				// TODO Auto-generated method stub
+//				return ((Ganancia) p2).getFecha()
+//						.compareTo(((Ganancia) p1).getFecha());
+//			}
+//		});
+		
+		Collections.sort(listaA, new Comparator<Asistencia>() {
+			   public int compare(Asistencia obj1, Asistencia obj2) {
+			      return obj1.getAlumno().getNombreCompleto().compareTo(obj2.getAlumno().getNombreCompleto());
+			   }
+		});
+		
+		listaAsistencias = listaA;		
 	}
 	
 	public void onRowEdit(Asistencia asistencia) {

@@ -183,7 +183,7 @@ public class BeanMatricula implements Serializable {
 		matricula = new Matricula();
 		usuario = new Usuario();
 		curso = cur;
-		matricula.setCosto(cur.getCostoMatricula());
+//		matricula.setCosto(cur.getCostoMatricula());
 		usuario = user;
 		listaMatricula = new ArrayList<Matricula>();
 		filteredMatricula = new ArrayList<Matricula>();

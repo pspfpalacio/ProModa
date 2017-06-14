@@ -36,7 +36,7 @@
 					       allDayText : 'Todos los días'
     				};
 			</script>
-		<title>Inscripcion</title>
+		<title>Editar inscripcion</title>
 	</h:head>
 	<h:body>
 		<div class="wrapper">
@@ -45,37 +45,22 @@
 				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
 				<p:growl id="messages" autoUpdate="true" showDetail="false" />
 				<ui:include src="/includes/menubar.xhtml" />
-				<p:commandButton icon="ui-icon-extlink" value="Deudas Anteriores" title="Deudas Anteriores" oncomplete="PF('dialogo').show()" 
-				update=":formulario:outputPanel" rendered="#{beanInscripcion.deuda}"/>
-				<br/>
 				
     			<p:panelGrid columns="6" style="width:100%;">
     				<f:facet name="header">
-    					<h2><h:outputText value="Solicitud de Matricula - Inscripción" /></h2>
+    					<h2><h:outputText value="Editar Inscripción" /></h2>
     				</f:facet>
     				
     				<p:outputLabel value="Fecha: " />
-    				<p:calendar value="#{beanInscripcion.inscripcion.fecha}" pattern="dd/MM/yyyy" locale="tr"/>
+    				<p:outputLabel value="#{beanInscripcion.inscripcion.fecha}">
+    					<f:convertDateTime pattern="dd/MM/yyyy" locale="tr"/>
+    				</p:outputLabel>    				
     				
     				<p:outputLabel value="Curso: " />
-    				<p:selectOneMenu value="#{beanInscripcion.idCurso}" filter="true" filterMatchMode="contains"
-    				style="width:250px;">
-    					<p:ajax event="change" listener="#{beanInscripcion.onChangeCurso()}" 
-    					update="plan_pago, monto, costo_curso, costo_cuota, matricula" />
-    					<f:selectItem itemLabel="Seleccione curso" itemValue="0"/>
-    					<f:selectItems value="#{beanInscripcion.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
-    					itemValue="#{curso.id}"/>
-    				</p:selectOneMenu>
+    				<p:outputLabel value="#{beanInscripcion.inscripcion.curso.nombre}" />
     				
     				<p:outputLabel value="Matrícula: " />
-    				<p:selectOneMenu id="matricula" value="#{beanInscripcion.idMatricula}" filter="true" filterMatchMode="contains"
-    				style="width:250px;">
-    					<p:ajax event="change" listener="#{beanInscripcion.onChangeMatricula()}" 
-    					update="plan_pago, monto, costo_curso, costo_cuota, matricula"/>
-    					<f:selectItem itemLabel="Seleccione matrícula" itemValue="0"/>
-    					<f:selectItems value="#{beanInscripcion.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
-    					itemValue="#{mat.id}"/>
-    				</p:selectOneMenu>
+    				<p:outputLabel value="#{beanInscripcion.inscripcion.matricula.descripcion}" />   				
     			</p:panelGrid>
     			
     			<p:panelGrid columns="4" style="width:100%;">
@@ -84,19 +69,18 @@
     				</f:facet>
     			    
     			    <p:outputLabel value="DNI: " />
-    				<p:inputText value="#{beanInscripcion.dni}" label="DNI">
-    					<p:ajax event="blur" listener="#{beanInscripcion.getPorDni()}" update="panel"/>
-    				</p:inputText>
+    			    <p:outputLabel value="#{beanInscripcion.inscripcion.dni}" />    				
     				
     				<p:outputLabel value="Fecha de Nacimiento:" />
-    				<p:calendar value="#{beanInscripcion.alumno.fechaNacimiento}" pattern="dd/MM/yyyy" 
-    				navigator="true" mindate="01/01/1900" locale="tr"/>
+    				<p:outputLabel value="#{beanInscripcion.alumno.fechaNacimiento}">
+    					<f:convertDateTime pattern="dd/MM/yyyy" locale="tr"/>
+    				</p:outputLabel>
     			    
     				<p:outputLabel value="Apellido: " />
-    				<p:inputText value="#{beanInscripcion.alumno.apellido}" />    	
+    				<p:outputLabel value="#{beanInscripcion.alumno.apellido}" />    	
     				
     				<p:outputLabel value="Nombre: " />
-    				<p:inputText value="#{beanInscripcion.alumno.nombres}" /> 			
+    				<p:outputLabel value="#{beanInscripcion.alumno.nombres}" /> 			
     			</p:panelGrid>
     			
     			<p:panelGrid columns="4" style="width:100%;">	
@@ -105,45 +89,37 @@
     				</f:facet>
     				
     				<p:outputLabel value="Provincia: " />
-    				<p:selectOneMenu value="#{beanInscripcion.idProvincia}" filter="true" label="PROVINCIA">
-    					<p:ajax event="change" listener="#{beanInscripcion.onChangeProvincia()}" update="localidad" />
-    					<f:selectItem itemLabel="Seleccione provincia" itemValue="0"/>
-    					<f:selectItems value="#{beanInscripcion.listaProvincias}" var="prov" itemLabel="#{prov.nombre}" 
-    					itemValue="#{prov.id}"/>
-    				</p:selectOneMenu>
+    				<p:outputLabel value="#{beanInscripcion.domicilio.localidade.provincia.nombre}" />    				
     				
     				<p:outputLabel value="Localidad: " />
-    				<p:selectOneMenu id="localidad" value="#{beanInscripcion.idLocalidad}" filter="true" 
-    				label="LOCALIDAD">
-    					<f:selectItem itemLabel="Seleccione localidad" itemValue="0"/>
-    					<f:selectItems value="#{beanInscripcion.listaLocalidades}" var="loc" itemLabel="#{loc.nombre}" 
-    					itemValue="#{loc.id}"/>
-    				</p:selectOneMenu>
+    				<p:outputLabel value="#{beanInscripcion.domicilio.localidade.nombre}" />    				
     				
     				<p:outputLabel value="Cod. Postal: " />
-    				<p:inputText value="#{beanInscripcion.domicilio.codigoPostal}" label="COD.POSTAL"/>
+    				<p:outputLabel value="#{beanInscripcion.domicilio.codigoPostal}" />
     				
     				<p:outputLabel value="Calle: " />
-    				<p:inputText value="#{beanInscripcion.domicilio.calle}" label="CALLE"/>
+    				<p:outputLabel value="#{beanInscripcion.domicilio.calle}" />
     				
     				<p:outputLabel value="Nro: " />
-    				<p:inputText value="#{beanInscripcion.domicilio.numero}" label="NUMERO"/>
+    				<p:outputLabel value="#{beanInscripcion.domicilio.numero}" />
     				
     				<p:outputLabel value="Piso: " />
-    				<p:inputText value="#{beanInscripcion.domicilio.piso}" />
+    				<p:outputLabel value="#{beanInscripcion.domicilio.piso}" />
     				
     				<p:outputLabel value="Departamento: " />
-    				<p:inputText value="#{beanInscripcion.domicilio.departamento}" />
+    				<p:outputLabel value="#{beanInscripcion.domicilio.departamento}" />
     				
     				<p:outputLabel value="E-mail: " />
-    				<p:inputText value="#{beanInscripcion.alumno.email}" />
+    				<p:outputLabel value="#{beanInscripcion.alumno.email}" />
     				
     				<p:outputLabel value="Tel. Cel.: " />
-    				<p:inputText value="#{beanInscripcion.alumno.telefonoCel}" />
+    				<p:outputLabel value="#{beanInscripcion.alumno.telefonoCel}" />
     				
     				<p:outputLabel value="Tel. Fijo: " />
-    				<p:inputText value="#{beanInscripcion.alumno.telefonoFijo}" />
+    				<p:outputLabel value="#{beanInscripcion.alumno.telefonoFijo}" />
     			</p:panelGrid>
+    			
+    			<!-- FALTA MODIFICAR PARA PODER EDITAR LOS VALORES -->
     			
     			<p:panelGrid columns="2" style="width:100%;" >
 	    			<f:facet name="header">
@@ -156,6 +132,10 @@
 			        </p:selectBooleanCheckbox>
     			</p:panelGrid>    			
     			<p:panelGrid id="plan_pago" columns="2" style="width:100%;">	
+    				<f:facet name="header">
+	    				<h:outputText value="Plan de Pago" />
+	    			</f:facet>
+	    			
     				<p:outputLabel value="Descuento: " />
     				<p:column>
     					<p:outputLabel value="%" />

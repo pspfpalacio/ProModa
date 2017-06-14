@@ -213,12 +213,10 @@ public class BeanCurso implements Serializable {
 	public String guardar() {
 		FacesMessage msg = null;
 		String retorno = "";
-		if ((!curso.getNombre().isEmpty() || curso.getNombre() != "") && curso.getCostoCurso() != 0 && curso.getCostoMatricula() != 0) {
-			if (curso.getId() != 0) {
-				float costoTotal = curso.getCostoCurso() + curso.getCostoMatricula();
+		if ((!curso.getNombre().isEmpty() || curso.getNombre() != "") && curso.getDuracionMeses() != 0) {
+			if (curso.getId() != 0) {				
 				curso.setFechaMod(new Date());
-				curso.setUsuario3(usuario);
-				curso.setCostoTotal(costoTotal);
+				curso.setUsuario3(usuario);				
 				int updateCur = cursoDAO.update(curso);
 				if (updateCur != 0) {
 					filteredCursos = new ArrayList<Curso>();
@@ -231,12 +229,10 @@ public class BeanCurso implements Serializable {
 					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REGISTRAR EL CURSO, "
 							+ "INTENTELO NUEVAMENTE", null);
 				}
-			} else {
-				float costoTotal = curso.getCostoCurso() + curso.getCostoMatricula();
+			} else {				
 				curso.setEnabled(true);
 				curso.setFechaAlta(new Date());
-				curso.setUsuario1(usuario);
-				curso.setCostoTotal(costoTotal);
+				curso.setUsuario1(usuario);				
 				int idCurso = cursoDAO.insertar(curso);
 				if (idCurso != 0) {
 					filteredCursos = new ArrayList<Curso>();

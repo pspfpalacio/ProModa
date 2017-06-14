@@ -750,7 +750,9 @@ public class BeanInscripcion implements Serializable {
 		usuario = new Usuario();
 		usuario = user;
 		idCurso = 0;
+		idMatricula = 0;
 		listaCursos = new ArrayList<Curso>();
+		listaMatriculas = new ArrayList<Matricula>();
 		listaInscripciones = new ArrayList<Inscripcione>();
 		filteredInscripciones = new ArrayList<Inscripcione>();
 		listaInscripciones = inscripcionDAO.getLista(true);
@@ -763,6 +765,7 @@ public class BeanInscripcion implements Serializable {
 		usuario = new Usuario();		
 		listaInscriptos = new ArrayList<Inscripto>();
 		listaCursos = new ArrayList<Curso>();
+		listaMatriculas = new ArrayList<Matricula>();
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 		List<Inscripcione> listInscrips = inscripcionDAO.getListaOrderByAlumno(true);
 		for (Inscripcione inscrip : listInscrips) {
@@ -779,6 +782,7 @@ public class BeanInscripcion implements Serializable {
 			}			
 		}
 		idCurso = 0;
+		idMatricula = 0;
 		usuario = user;
 		listaCursos = cursoDAO.getListaMatVig();
 		return "inscriptos";
@@ -836,6 +840,7 @@ public class BeanInscripcion implements Serializable {
 		montoMatricula = 0;
 		cantCuotas = 0;
 		montoCuota = 0;
+		listaMatriculas = new ArrayList<Matricula>();
 		if (idCurso != 0) {
 			curso = new Curso();
 			curso = cursoDAO.get(idCurso);
@@ -871,8 +876,8 @@ public class BeanInscripcion implements Serializable {
 	}
 	
 	public void onBlurDescuentoCurso() {
-		float monto = (curso.getCostoCurso() * descuentoCurso) / 100;
-		float montoC = curso.getCostoCurso();
+		float monto = (matricula.getCostoCurso() * descuentoCurso) / 100;
+		float montoC = matricula.getCostoCurso();
 		montoC = montoC - monto;
 		montoCurso = montoC;
 		if(cantCuotas == 0) {
@@ -1067,6 +1072,7 @@ public class BeanInscripcion implements Serializable {
 		float cstoCurso = planP.getCantCuotas() * planP.getMontoCuota();
 		inscripcionReporte.setCosto_curso(cstoCurso);
 		inscripcionReporte.setCurso(inscri.getCurso().getNombre());
+		inscripcionReporte.setMatriculaDesc(inscri.getMatricula().getDescripcion());
 		inscripcionReporte.setFecha(inscri.getFecha());
 		inscripcionReporte.setHorario1(inscri.getHoraCursado1());
 		inscripcionReporte.setHorario2(inscri.getHoraCursado2());
@@ -1430,7 +1436,7 @@ public class BeanInscripcion implements Serializable {
 					}
 				}
 				cur = cursoDAO.get(idCurso);
-				Matricula matri = matriculaDAO.get(cur.getMatricula().getId());
+				Matricula matri = matriculaDAO.get(idMatricula);
 				MatriculaAlumno matriAlum = matriculaAlumnoDAO.get(alumno, cur, matri);
 				if (matriAlum.getId() == 0) {
 					inscripcion.setCurso(cur);
@@ -1581,6 +1587,7 @@ public class BeanInscripcion implements Serializable {
 						inscripcionReporte.setHorario1(inscripcion.getHoraCursado1());
 						inscripcionReporte.setHorario2(inscripcion.getHoraCursado2());
 						inscripcionReporte.setMatricula(montoMatricula);
+						inscripcionReporte.setMatriculaDesc(matri.getDescripcion());
 						String formatoPV = diasPrimerV + mesanio;
 						Date primerV = formato.parse(formatoPV);
 						inscripcionReporte.setPrimerVencimiento(primerV);
@@ -1673,7 +1680,23 @@ public class BeanInscripcion implements Serializable {
 	public void filtroInscriptos() {
 		listaInscriptos = new ArrayList<Inscripto>();
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-		if (idCurso != 0) {
+		if (idCurso == 0 && idMatricula == 0) {
+			List<Inscripcione> listInscrips = inscripcionDAO.getListaOrderByAlumno(true);
+			for (Inscripcione inscrip : listInscrips) {
+				Inscripto inscripto = new Inscripto();
+				Alumno alum = alumnoDAO.getPorDni(inscrip.getDni());
+				if (alum.getId() != 0) {
+					inscripto.setDni(inscrip.getDni());
+					inscripto.setEmail(alum.getEmail());
+					inscripto.setNombreCompleto(alum.getNombreCompleto());
+					inscripto.setTelefonoCel(alum.getTelefonoCel());
+					inscripto.setTelefonoFijo(alum.getTelefonoFijo());
+					inscripto.setFechaNacimiento(formatoFecha.format(alum.getFechaNacimiento()));
+					listaInscriptos.add(inscripto);
+				}				
+			}
+		}
+		if (idCurso != 0 && idMatricula == 0) {
 			Curso cur = cursoDAO.get(idCurso);
 			List<Inscripcione> listInscrips = inscripcionDAO.getListaOrderByAlumno(true, cur);
 			for (Inscripcione inscrip : listInscrips) {
@@ -1689,8 +1712,11 @@ public class BeanInscripcion implements Serializable {
 					listaInscriptos.add(inscripto);
 				}				
 			}
-		} else {
-			List<Inscripcione> listInscrips = inscripcionDAO.getListaOrderByAlumno(true);
+		}
+		if (idCurso != 0 && idMatricula != 0) {
+			Curso cur = cursoDAO.get(idCurso);
+			Matricula mat = matriculaDAO.get(idMatricula);
+			List<Inscripcione> listInscrips = inscripcionDAO.getListaOrderByAlumno(true, cur, mat);
 			for (Inscripcione inscrip : listInscrips) {
 				Inscripto inscripto = new Inscripto();
 				Alumno alum = alumnoDAO.getPorDni(inscrip.getDni());
@@ -1709,11 +1735,17 @@ public class BeanInscripcion implements Serializable {
 	
 	public void filtroInscripciones() {
 		listaInscripciones = new ArrayList<Inscripcione>();
-		if (idCurso != 0) {
+		if (idCurso == 0 && idMatricula == 0) {
+			listaInscripciones = inscripcionDAO.getLista(true);
+		}		
+		if (idCurso != 0 && idMatricula == 0) {
 			Curso cur = cursoDAO.get(idCurso);
 			listaInscripciones = inscripcionDAO.getListaOrderByFechaId(true, cur);
-		} else {
-			listaInscripciones = inscripcionDAO.getLista(true);
+		}
+		if (idCurso != 0 && idMatricula != 0) {
+			Curso cur = cursoDAO.get(idCurso);
+			Matricula mat = matriculaDAO.get(idMatricula);
+			listaInscripciones = inscripcionDAO.getListaOrderByFechaId(true, cur, mat);
 		}
 	}
 	

@@ -41,6 +41,8 @@ public interface DAOInscripcion {
 	
 	public List<Inscripcione> getListaOrderByFechaId(boolean estado, Curso curso);
 	
+	public List<Inscripcione> getListaOrderByFechaId(boolean estado, Curso curso, Matricula matricula);
+	
 	public List<Inscripcione> getListaOrderByAlumno(boolean estado, Curso curso);
 
 }

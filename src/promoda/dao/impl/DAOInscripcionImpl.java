@@ -238,6 +238,17 @@ public class DAOInscripcionImpl implements DAOInscripcion, Serializable {
 		return lista;
 	}
 	
+	public List<Inscripcione> getListaOrderByFechaId(boolean estado, Curso curso, Matricula matricula) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT i FROM Inscripcione i WHERE i.enabled = :pEstado "
+				+ "AND i.curso = :pCurso AND i.matricula = :pMatricula ORDER BY i.fecha DESC, i.id DESC", Inscripcione.class);
+		locQuery.setParameter("pEstado", estado);
+		locQuery.setParameter("pCurso", curso);
+		locQuery.setParameter("pMatricula", matricula);
+		List<Inscripcione> lista = locQuery.getResultList();
+		return lista;
+	}
+	
 	public List<Inscripcione> getListaOrderByAlumno(boolean estado, Curso curso) {
 		inicializar();
 		Query locQuery = em.createQuery("SELECT i FROM Inscripcione i WHERE i.enabled = :pEstado "

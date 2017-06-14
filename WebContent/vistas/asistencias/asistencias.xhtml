@@ -46,30 +46,37 @@
 							<p:growl id="messages" showDetail="false" />
 							<ui:include src="/includes/menubar.xhtml" />
 							<h3 align="center" >ASISTENCIAS</h3>	
-					    	<p:panelGrid columns="2" cellpadding="5" style="width:100%;">		
+					    	<p:panelGrid columns="4" cellpadding="5" style="width:100%;">		
 					    		<f:facet name="header">
 					    			<h:outputText value="Asistencias" />
 					    		</f:facet>			    	
-					    		<p:outputLabel value="Seleccione Curso" />
-					    		<p:selectOneMenu value="#{beanAsistencia.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;">
+					    		<p:outputLabel value="Curso" />
+					    		<p:selectOneMenu value="#{beanAsistencia.idCurso}" filter="true" filterMatchMode="contains" >
 			    					<p:ajax event="change" listener="#{beanAsistencia.onChangeCurso()}" update="panel" />
-			    					<f:selectItem itemLabel="Seleccione curso" itemValue="0"/>
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
 			    					<f:selectItems value="#{beanAsistencia.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
 			    					itemValue="#{curso.id}"/>
 			    				</p:selectOneMenu>		
-			    				<p:outputLabel value="Seleccione Materia" />
-					    		<p:selectOneMenu value="#{beanAsistencia.idMateria}" filter="true" filterMatchMode="contains" style="width:250px;">
+			    				<p:outputLabel value="Matrícula" />
+					    		<p:selectOneMenu value="#{beanAsistencia.idMatricula}" filter="true" filterMatchMode="contains" >
+			    					<p:ajax event="change" listener="#{beanAsistencia.onChangeMatricula()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanAsistencia.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
+			    					itemValue="#{mat.id}"/>
+			    				</p:selectOneMenu>	
+			    			</p:panelGrid>
+			    			<p:panelGrid columns="2" cellpadding="5" style="width:100%;">
+			    				<p:outputLabel value="Materia" />
+					    		<p:selectOneMenu value="#{beanAsistencia.idMateria}" filter="true" filterMatchMode="contains" >
 			    					<p:ajax event="change" listener="#{beanAsistencia.onChangeMateria()}" update="panel" />
-			    					<f:selectItem itemLabel="Seleccione materia" itemValue="0"/>
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
 			    					<f:selectItems value="#{beanAsistencia.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
 			    					itemValue="#{materia.id}"/>
-			    				</p:selectOneMenu>					    		
-					    	</p:panelGrid>
-					    	<p:panelGrid columns="2" cellpadding="5" style="width:100%;" rendered="#{beanAsistencia.idMateria != 0}">					    		
-					    		<p:outputLabel value="Seleccione Clase" />
-					    		<p:selectOneMenu value="#{beanAsistencia.idClase}" filter="true" filterMatchMode="contains" style="width:250px;">
+			    				</p:selectOneMenu>					    						    		
+					    		<p:outputLabel value="Clase" rendered="#{beanAsistencia.idMateria != 0}"/>
+					    		<p:selectOneMenu value="#{beanAsistencia.idClase}" filter="true" filterMatchMode="contains" rendered="#{beanAsistencia.idMateria != 0}">
 			    					<p:ajax event="change" listener="#{beanAsistencia.onChangeClase()}" update="panel" />
-			    					<f:selectItem itemLabel="Seleccione clase" itemValue="0"/>
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
 			    					<f:selectItems value="#{beanAsistencia.listaClases}" var="clase" itemLabel="#{clase.nombre}"
 			    					itemValue="#{clase.id}"/>
 			    				</p:selectOneMenu>
