@@ -90,6 +90,10 @@
 				    <p:column headerText="Curso">
 				        <h:outputText value="#{pm.matricula.curso.nombre}" />
 				    </p:column>
+				    
+				    <p:column headerText="Matrícula">
+				        <h:outputText value="#{pm.matricula.descripcion}" />
+				    </p:column>
 				 
 				    <p:column headerText="Alumno">
 				        <h:outputText value="#{pm.alumno.nombreCompleto}" />
@@ -136,7 +140,11 @@
 				    <p:column headerText="Curso">
 				        <h:outputText value="#{pc.cuota.curso.nombre}" />
 				    </p:column>
-				    					 
+				    
+				    <p:column headerText="Matrícula">
+				        <h:outputText value="#{pc.cuota.matricula.descripcion}" />
+				    </p:column>
+				    				    					 
 				    <p:column headerText="Alumno">
 				        <h:outputText value="#{pc.alumno.nombreCompleto}" />
 				    </p:column>
@@ -182,13 +190,16 @@
 		    				<h:inputText value="#{beanPago.pagoReporte.fechaString}" disabled="true" />
 		    				
 		    				<p:outputLabel value="Alumno: " />
-		    				<h:inputText value="#{beanPago.pagoReporte.alumno}" disabled="true" />
+		    				<h:inputText value="#{beanPago.pagoReporte.alumno}" disabled="true" size="40"/>
 		    				
 		    				<p:outputLabel value="Curso: " />
-		    				<h:inputText value="#{beanPago.pagoReporte.curso}" disabled="true" />
+		    				<h:inputText value="#{beanPago.pagoReporte.curso}" disabled="true" size="40"/>
+		    				
+		    				<p:outputLabel value="Matrícula: " />
+		    				<h:inputText value="#{beanPago.pagoReporte.matricula}" disabled="true" size="40"/>
 		    				
 		    				<p:outputLabel value="Concepto: " />
-		    				<h:inputText value="#{beanPago.pagoReporte.concepto}" disabled="true" />
+		    				<h:inputText value="#{beanPago.pagoReporte.concepto}" disabled="true" size="40"/>
 		    				
 		    				<p:outputLabel value="Monto: " />
 		    				<h:inputText value="#{beanPago.pagoReporte.montoString}" disabled="true" >

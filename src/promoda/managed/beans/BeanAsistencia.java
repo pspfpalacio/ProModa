@@ -493,9 +493,10 @@ public class BeanAsistencia implements Serializable {
 					}
 				}
 				
-				int idMatri = curso.getMatricula().getId();
-				matricula = matriculaDAO.get(idMatri);
+//				int idMatri = curso.getMatricula().getId();
+				matricula = matriculaDAO.get(idMatricula);
 				listaAsistenciaReporte = new ArrayList<AsistenciaReporte>();
+				List<AsistenciaReporte> listaAsistenciaR = new ArrayList<AsistenciaReporte>();
 				if (fechaDesde != null && fechaHasta != null) {
 					listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia, fechaDesde, fechaHasta);
 				} else {
@@ -542,7 +543,7 @@ public class BeanAsistencia implements Serializable {
 					}
 				}
 				int idAlumno = 0;
-				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");			
 				for (Asistencia asist : listaAsistencias) {
 					if (asist.getAlumno().getId() != idAlumno) {
 						String nombreAlumno = asist.getAlumno().getNombreCompleto();
@@ -568,10 +569,19 @@ public class BeanAsistencia implements Serializable {
 						asisteReporte.setIdAlumno(asist.getAlumno().getId());
 						asisteReporte.setAsistencias(mapAsistencia);
 						asisteReporte.setNombreCompleto(nombreAlumno);
-						listaAsistenciaReporte.add(asisteReporte);
+						listaAsistenciaR.add(asisteReporte);
 					}
 					idAlumno = asist.getAlumno().getId();
 				}
+				
+				Collections.sort(listaAsistenciaR, new Comparator<AsistenciaReporte>() {
+					   public int compare(AsistenciaReporte obj1, AsistenciaReporte obj2) {
+					      return obj1.getNombreCompleto().compareTo(obj2.getNombreCompleto());
+					   }
+				});
+				
+				listaAsistenciaReporte = listaAsistenciaR;
+				
 				if (fechaDesde == null && fechaHasta == null) {
 					listaAsistenciaPlanilla = listaAsistenciaReporte;
 				}

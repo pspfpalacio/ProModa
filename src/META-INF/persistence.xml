@@ -14,10 +14,13 @@
 		<class>promoda.model.InscripcionMotivo</class>
 		<class>promoda.model.Localidade</class>
 		<class>promoda.model.Materia</class>
+		<class>promoda.model.MateriasCalificacion</class>
 		<class>promoda.model.MateriasProfesor</class>
 		<class>promoda.model.Matricula</class>
 		<class>promoda.model.MatriculaAlumno</class>
 		<class>promoda.model.MatriculaImpaga</class>
+		<class>promoda.model.Mesa</class>
+		<class>promoda.model.MesasAlumno</class>
 		<class>promoda.model.Motivo</class>
 		<class>promoda.model.PagosCuota</class>
 		<class>promoda.model.PagosMatricula</class>

@@ -52,11 +52,12 @@ public class DAOMatriculaAlumnoImpl implements DAOMatriculaAlumno, Serializable 
 	public int update(MatriculaAlumno matriculaAlumno) {
 		try {
 			inicializar();
-			Query locQuery = em.createQuery("UPDATE MatriculaAlumno m SET m.alumno = :pAlumno, m.curso = :pCurso, m.eliminado = :pEliminado, "
-					+ "m.enabled = :pEnabled, m.fechaAlta = :pFechaAlta, m.fechaBaja = :pFechaBaja, m.fechaPago = :pFechaPago, "
-					+ "m.matricula = :pMatricula, m.montoPago = :pMontoPago, m.pago = :pPago, m.usuario1 = :pUsuario1, m.usuario2 = :pUsuario2 "
+			Query locQuery = em.createQuery("UPDATE MatriculaAlumno m SET m.alumno = :pAlumno, m.calificacion = :pCalificacion, m.curso = :pCurso, "
+					+ "m.eliminado = :pEliminado, m.enabled = :pEnabled, m.fechaAlta = :pFechaAlta, m.fechaBaja = :pFechaBaja, m.fechaPago = :pFechaPago, "
+					+ "m.matricula = :pMatricula, m.montoPago = :pMontoPago, m.state = :pState, m.pago = :pPago, m.usuario1 = :pUsuario1, m.usuario2 = :pUsuario2 "
 					+ "WHERE m.id = :pId", MatriculaAlumno.class);
 			locQuery.setParameter("pAlumno", matriculaAlumno.getAlumno());
+			locQuery.setParameter("pCalificacion", matriculaAlumno.getCalificacion());
 			locQuery.setParameter("pCurso", matriculaAlumno.getCurso());
 			locQuery.setParameter("pEliminado", matriculaAlumno.getEliminado());
 			locQuery.setParameter("pEnabled", matriculaAlumno.getEnabled());
@@ -65,6 +66,7 @@ public class DAOMatriculaAlumnoImpl implements DAOMatriculaAlumno, Serializable 
 			locQuery.setParameter("pFechaPago", matriculaAlumno.getFechaPago());
 			locQuery.setParameter("pMatricula", matriculaAlumno.getMatricula());
 			locQuery.setParameter("pMontoPago", matriculaAlumno.getMontoPago());
+			locQuery.setParameter("pState", matriculaAlumno.getState());
 			locQuery.setParameter("pPago", matriculaAlumno.getPago());
 			locQuery.setParameter("pUsuario1", matriculaAlumno.getUsuario1());
 			locQuery.setParameter("pUsuario2", matriculaAlumno.getUsuario2());
@@ -132,6 +134,29 @@ public class DAOMatriculaAlumnoImpl implements DAOMatriculaAlumno, Serializable 
         List<MatriculaAlumno> lista = locQuery.getResultList();
         return lista;
     }
+	
+	public List<MatriculaAlumno> getLista(Matricula matricula) {
+        inicializar();
+        Query locQuery = em.createQuery("SELECT m FROM MatriculaAlumno m "
+                + "WHERE m.matricula = :pMatricula AND m.eliminado = :pEliminado AND m.enabled = :pEnabled", Curso.class);
+        locQuery.setParameter("pMatricula", matricula);
+        locQuery.setParameter("pEliminado", false);
+        locQuery.setParameter("pEnabled", true);
+        List<MatriculaAlumno> lista = locQuery.getResultList();
+        return lista;
+    }
+	
+	public List<MatriculaAlumno> getListaOrderByAlumno(Matricula matricula) {
+        inicializar();
+        Query locQuery = em.createQuery("SELECT m FROM MatriculaAlumno m "
+                + "WHERE m.matricula = :pMatricula AND m.eliminado = :pEliminado AND m.enabled = :pEnabled "
+                + "ORDER BY m.alumno.nombreCompleto DESC", Curso.class);
+        locQuery.setParameter("pMatricula", matricula);
+        locQuery.setParameter("pEliminado", false);
+        locQuery.setParameter("pEnabled", true);
+        List<MatriculaAlumno> lista = locQuery.getResultList();
+        return lista;
+    }
 
 	public List<MatriculaAlumno> getLista(Alumno alumno, Curso curso) {
 		inicializar();
@@ -153,6 +178,29 @@ public class DAOMatriculaAlumnoImpl implements DAOMatriculaAlumno, Serializable 
         locQuery.setParameter("pEliminado", false);
         locQuery.setParameter("pEnabled", true);
         List<Curso> lista = locQuery.getResultList();
+        return lista;
+    }
+	
+	public List<Curso> getListaCursoDistinct(Alumno alumno) {
+        inicializar();
+        Query locQuery = em.createQuery("SELECT DISTINCT m.curso FROM MatriculaAlumno m "
+                + "WHERE m.alumno = :pAlumno AND m.eliminado = :pEliminado AND m.enabled = :pEnabled", Curso.class);
+        locQuery.setParameter("pAlumno", alumno);
+        locQuery.setParameter("pEliminado", false);
+        locQuery.setParameter("pEnabled", true);
+        List<Curso> lista = locQuery.getResultList();
+        return lista;
+    }
+	
+	public List<Matricula> getListaMatricula(Alumno alumno, Curso curso) {
+        inicializar();
+        Query locQuery = em.createQuery("SELECT DISTINCT m.matricula FROM MatriculaAlumno m WHERE m.alumno = :pAlumno "
+                + "AND m.curso = :pCurso AND m.eliminado = :pEliminado AND m.enabled = :pEnabled", Curso.class);
+        locQuery.setParameter("pAlumno", alumno);
+        locQuery.setParameter("pCurso", curso);
+        locQuery.setParameter("pEliminado", false);
+        locQuery.setParameter("pEnabled", true);
+        List<Matricula> lista = locQuery.getResultList();
         return lista;
     }
 	

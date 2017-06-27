@@ -21,9 +21,15 @@ public interface DAOMatriculaAlumno {
 	
 	public List<MatriculaAlumno> getLista(Alumno alumno);
 	
+	public List<MatriculaAlumno> getLista(Matricula matricula);
+	
 	public List<MatriculaAlumno> getLista(Alumno alumno, Curso curso);
 	
 	public List<Curso> getListaCurso(Alumno alumno);
+	
+	public List<Curso> getListaCursoDistinct(Alumno alumno);
+	
+	public List<Matricula> getListaMatricula(Alumno alumno, Curso curso);
 	
 	public List<MatriculaAlumno> getLista(Curso curso, Matricula matricula, boolean pago);
 	

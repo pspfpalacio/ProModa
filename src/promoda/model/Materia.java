@@ -73,6 +73,10 @@ public class Materia implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_usuario_mod")
 	private Usuario usuario3;
+	
+	//bi-directional many-to-one association to MateriasCalificacion
+	@OneToMany(mappedBy="materia")
+	private List<MateriasCalificacion> materiasCalificacions;
 
 	//bi-directional many-to-one association to MateriasProfesor
 	@OneToMany(mappedBy="materia")
@@ -85,6 +89,10 @@ public class Materia implements Serializable {
 	//bi-directional many-to-one association to Recurso
 	@OneToMany(mappedBy="materia")
 	private List<Recurso> recursos;
+	
+	//bi-directional many-to-one association to Mesa
+	@OneToMany(mappedBy="materia")
+	private List<Mesa> mesas;
 
 	public Materia() {
 	}
@@ -200,6 +208,28 @@ public class Materia implements Serializable {
 	public void setUsuario3(Usuario usuario3) {
 		this.usuario3 = usuario3;
 	}
+	
+	public List<MateriasCalificacion> getMateriasCalificacions() {
+		return this.materiasCalificacions;
+	}
+
+	public void setMateriasCalificacions(List<MateriasCalificacion> materiasCalificacions) {
+		this.materiasCalificacions = materiasCalificacions;
+	}
+
+	public MateriasCalificacion addMateriasCalificacion(MateriasCalificacion materiasCalificacion) {
+		getMateriasCalificacions().add(materiasCalificacion);
+		materiasCalificacion.setMateria(this);
+
+		return materiasCalificacion;
+	}
+
+	public MateriasCalificacion removeMateriasCalificacion(MateriasCalificacion materiasCalificacion) {
+		getMateriasCalificacions().remove(materiasCalificacion);
+		materiasCalificacion.setMateria(null);
+
+		return materiasCalificacion;
+	}
 
 	public List<MateriasProfesor> getMateriasProfesors() {
 		return this.materiasProfesors;
@@ -265,6 +295,28 @@ public class Materia implements Serializable {
 		recurso.setMateria(null);
 
 		return recurso;
+	}
+	
+	public List<Mesa> getMesas() {
+		return this.mesas;
+	}
+
+	public void setMesas(List<Mesa> mesas) {
+		this.mesas = mesas;
+	}
+
+	public Mesa addMesa(Mesa mesa) {
+		getMesas().add(mesa);
+		mesa.setMateria(this);
+
+		return mesa;
+	}
+
+	public Mesa removeMesa(Mesa mesa) {
+		getMesas().remove(mesa);
+		mesa.setMateria(null);
+
+		return mesa;
 	}
 
 }

@@ -62,6 +62,14 @@ public class Matricula implements Serializable {
 	//bi-directional many-to-one association to Curso
 	@OneToMany(mappedBy="matricula")
 	private List<Curso> cursos;
+	
+	//bi-directional many-to-one association to Inscripcione
+	@OneToMany(mappedBy="matricula")
+	private List<Inscripcione> inscripciones;
+	
+	//bi-directional many-to-one association to MateriasCalificacion
+	@OneToMany(mappedBy="matricula")
+	private List<MateriasCalificacion> materiasCalificacions;
 
 	//bi-directional many-to-one association to Curso
 	@ManyToOne
@@ -106,6 +114,10 @@ public class Matricula implements Serializable {
 	//bi-directional many-to-one association to Recurso
 	@OneToMany(mappedBy="matricula")
 	private List<Recurso> recursos;
+	
+	//bi-directional many-to-one association to Mesa
+	@OneToMany(mappedBy="matricula")
+	private List<Mesa> mesas;
 
 	public Matricula() {
 	}
@@ -240,6 +252,50 @@ public class Matricula implements Serializable {
 		curso.setMatricula(null);
 
 		return curso;
+	}
+	
+	public List<Inscripcione> getInscripciones() {
+		return this.inscripciones;
+	}
+
+	public void setInscripciones(List<Inscripcione> inscripciones) {
+		this.inscripciones = inscripciones;
+	}
+
+	public Inscripcione addInscripcione(Inscripcione inscripcione) {
+		getInscripciones().add(inscripcione);
+		inscripcione.setMatricula(this);
+
+		return inscripcione;
+	}
+
+	public Inscripcione removeInscripcione(Inscripcione inscripcione) {
+		getInscripciones().remove(inscripcione);
+		inscripcione.setMatricula(null);
+
+		return inscripcione;
+	}
+
+	public List<MateriasCalificacion> getMateriasCalificacions() {
+		return this.materiasCalificacions;
+	}
+
+	public void setMateriasCalificacions(List<MateriasCalificacion> materiasCalificacions) {
+		this.materiasCalificacions = materiasCalificacions;
+	}
+
+	public MateriasCalificacion addMateriasCalificacion(MateriasCalificacion materiasCalificacion) {
+		getMateriasCalificacions().add(materiasCalificacion);
+		materiasCalificacion.setMatricula(this);
+
+		return materiasCalificacion;
+	}
+
+	public MateriasCalificacion removeMateriasCalificacion(MateriasCalificacion materiasCalificacion) {
+		getMateriasCalificacions().remove(materiasCalificacion);
+		materiasCalificacion.setMatricula(null);
+
+		return materiasCalificacion;
 	}
 
 	public Curso getCurso() {
@@ -404,6 +460,28 @@ public class Matricula implements Serializable {
 		recurso.setMatricula(null);
 
 		return recurso;
+	}
+	
+	public List<Mesa> getMesas() {
+		return this.mesas;
+	}
+
+	public void setMesas(List<Mesa> mesas) {
+		this.mesas = mesas;
+	}
+
+	public Mesa addMesa(Mesa mesa) {
+		getMesas().add(mesa);
+		mesa.setMatricula(this);
+
+		return mesa;
+	}
+
+	public Mesa removeMesa(Mesa mesa) {
+		getMesas().remove(mesa);
+		mesa.setMatricula(null);
+
+		return mesa;
 	}
 
 }

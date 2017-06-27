@@ -91,6 +91,10 @@ public class Alumno implements Serializable {
 	//bi-directional many-to-one association to Cuota
 	@OneToMany(mappedBy="alumno")
 	private List<Cuota> cuotas;
+	
+	//bi-directional many-to-one association to MateriasCalificacion
+	@OneToMany(mappedBy="alumno")
+	private List<MateriasCalificacion> materiasCalificacions;
 
 	//bi-directional many-to-one association to PagosCuota
 	@OneToMany(mappedBy="alumno")
@@ -115,6 +119,10 @@ public class Alumno implements Serializable {
 	//bi-directional many-to-one association to RecursoAlumno
 	@OneToMany(mappedBy="alumno")
 	private List<RecursoAlumno> recursoAlumnos;
+	
+	//bi-directional many-to-one association to MesasAlumno
+	@OneToMany(mappedBy="alumno")
+	private List<MesasAlumno> mesasAlumnos;
 
 	public Alumno() {
 	}
@@ -314,6 +322,28 @@ public class Alumno implements Serializable {
 
 		return cuota;
 	}
+	
+	public List<MateriasCalificacion> getMateriasCalificacions() {
+		return this.materiasCalificacions;
+	}
+
+	public void setMateriasCalificacions(List<MateriasCalificacion> materiasCalificacions) {
+		this.materiasCalificacions = materiasCalificacions;
+	}
+
+	public MateriasCalificacion addMateriasCalificacion(MateriasCalificacion materiasCalificacion) {
+		getMateriasCalificacions().add(materiasCalificacion);
+		materiasCalificacion.setAlumno(this);
+
+		return materiasCalificacion;
+	}
+
+	public MateriasCalificacion removeMateriasCalificacion(MateriasCalificacion materiasCalificacion) {
+		getMateriasCalificacions().remove(materiasCalificacion);
+		materiasCalificacion.setAlumno(null);
+
+		return materiasCalificacion;
+	}
 
 	public List<PagosCuota> getPagosCuotas() {
 		return this.pagosCuotas;
@@ -445,6 +475,28 @@ public class Alumno implements Serializable {
 		recursoAlumno.setAlumno(null);
 
 		return recursoAlumno;
+	}
+	
+	public List<MesasAlumno> getMesasAlumnos() {
+		return this.mesasAlumnos;
+	}
+
+	public void setMesasAlumnos(List<MesasAlumno> mesasAlumnos) {
+		this.mesasAlumnos = mesasAlumnos;
+	}
+
+	public MesasAlumno addMesasAlumno(MesasAlumno mesasAlumno) {
+		getMesasAlumnos().add(mesasAlumno);
+		mesasAlumno.setAlumno(this);
+
+		return mesasAlumno;
+	}
+
+	public MesasAlumno removeMesasAlumno(MesasAlumno mesasAlumno) {
+		getMesasAlumnos().remove(mesasAlumno);
+		mesasAlumno.setAlumno(null);
+
+		return mesasAlumno;
 	}
 
 }

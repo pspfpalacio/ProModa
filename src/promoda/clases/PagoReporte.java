@@ -11,6 +11,7 @@ public class PagoReporte {
 	private String alumno;
 	private String curso;
 	private String concepto;
+	private String matricula;
 	private float monto;
 
 	public String getEncabezado() {
@@ -42,6 +43,12 @@ public class PagoReporte {
 	}
 	public void setConcepto(String concepto) {
 		this.concepto = concepto;
+	}
+	public String getMatricula() {
+		return matricula;
+	}
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 	public float getMonto() {
 		return monto;

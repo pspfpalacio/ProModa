@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<script type="text/javascript">
+				 PrimeFaces.locales['tr'] = {
+						       closeText: 'Cerrar',
+						       prevText: 'Anterior',
+						       nextText: 'Siguiente',
+						       currentText: 'Hoy',
+						       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+						           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+						       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+						           'Jul','Ago','Sep','Oct','Nov','Dic'],
+						       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+						       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       weekHeader: 'Hf',
+						       firstDay: 1,
+						       isRTL: false,
+						       showMonthAfterYear: false,
+						       yearSuffix: '',
+						       month: 'Mes',
+						       week: 'Semana',
+						       day: 'Día',
+						       allDayText : 'Todos los días'
+	    				};
+				</script>
+				<title>Calificar Alumnos</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+							<p:growl id="messages" showDetail="false" />
+							<ui:include src="/includes/menubar.xhtml" />
+							<h3 align="center">CALIFICAR ALUMNOS</h3>	
+							
+					    	<p:panelGrid columns="6" cellpadding="5" style="width:100%;">		
+					    		<f:facet name="header">
+					    			<h:outputText value="Seleccione opciones para buscar alumnos" />
+					    		</f:facet>			    	
+					    		<p:outputLabel value="Curso: " />
+					    		<p:selectOneMenu value="#{beanCalificarAlumno.idCurso}" filter="true" filterMatchMode="contains" >
+			    					<p:ajax event="change" listener="#{beanCalificarAlumno.onChangeCurso()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanCalificarAlumno.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+			    					itemValue="#{curso.id}"/>
+			    				</p:selectOneMenu>		
+			    				<p:outputLabel value="Matrícula: " />
+					    		<p:selectOneMenu value="#{beanCalificarAlumno.idMatricula}" filter="true" filterMatchMode="contains" >			  
+					    			<p:ajax event="change" listener="#{beanCalificarAlumno.onChangeMatricula()}" update="panel" />  					
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanCalificarAlumno.listaMatriculas}" var="matr" itemLabel="#{matr.descripcion}"
+			    					itemValue="#{matr.id}"/>
+			    				</p:selectOneMenu>
+			    				<p:outputLabel value="Materia: " />
+					    		<p:selectOneMenu value="#{beanCalificarAlumno.idMateria}" filter="true" filterMatchMode="contains" >			  
+					    			<p:ajax event="change" listener="#{beanCalificarAlumno.onChangeMateria()}" update="panel" />  					
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanCalificarAlumno.listaMaterias}" var="mat" itemLabel="#{mat.nombre}"
+			    					itemValue="#{mat.id}"/>
+			    				</p:selectOneMenu>		
+			    			</p:panelGrid>
+					    	
+					    	<p:panelGrid columns="2" cellpadding="5" style="width:100%;" rendered="#{beanCalificarAlumno.idMateria != 0}">
+					    		<f:facet name="header">Actualización masiva</f:facet>
+					    		<p:outputLabel value="Calificación: "/>
+					    		<p:inputText value="#{beanCalificarAlumno.calificacion}" />					    		
+					    		<p:outputLabel value="Estado: " />
+					    		<p:selectOneMenu value="#{beanCalificarAlumno.estado}" >
+					    			<f:selectItem itemLabel="Seleccione.." itemValue=""/>
+					    			<f:selectItem itemLabel="Promocionado" itemValue="Promocionado"/>
+					    			<f:selectItem itemLabel="Regular" itemValue="Regular"/>
+					    			<f:selectItem itemLabel="Libre" itemValue="Libre"/>
+					    		</p:selectOneMenu>
+					    		<f:facet name="footer">
+					    			<p:commandButton value="Actualizar" icon="ui-icon-refresh" action="#{beanCalificarAlumno.actualizacionMasiva()}" update="panel"/>
+					    		</f:facet>
+					    	</p:panelGrid>
+					    	
+					    	<p:outputPanel style="float:right;">							
+								<h:commandLink >
+									<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
+									<p:dataExporter type="pdf" target="tablaAsistencia" fileName="Asistencias" preProcessor="#{reporte.preProcessPDFAsist}"/>
+								</h:commandLink>
+							</p:outputPanel>
+							
+					    	<p:dataTable id="tablaCalifica" var="califica" value="#{beanCalificarAlumno.listaCalificaAlumno}" editable="true" widgetVar="cellCalifica"
+					    	editMode="cell" scrollRows="50" resizableColumns="true" scrollable="true" scrollHeight="600" emptyMessage="No existen Alumnos inscriptos" 
+					    	style="width:100%;margin-bottom:20px" rendered="#{beanCalificarAlumno.idMateria != 0}" selection="#{beanCalificarAlumno.selectionCalificaAlumno}" 
+					    	rowKey="#{califica.alumno.id}" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+						       <f:facet name="header">
+						           <h:outputText value="Calificaciones" />
+						       </f:facet>
+						 	   
+						 	   <p:ajax event="cellEdit" listener="#{beanCalificarAlumno.onRowEdit(califica)}" update=":formulario:tablaCalifica" />
+						 	   
+						 	   <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+						 		
+						       <p:column headerText="Alumno">
+						       		<h:outputText value="#{califica.alumno.nombreCompleto}" />
+						       </p:column>
+						       
+						       <p:column headerText="DNI">
+						       		<h:outputText value="#{califica.alumno.dni}" />
+						       </p:column>
+						 		
+						       <p:column headerText="Calificación" style="text-align:center;">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{califica.calificacion}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText id="calificaInput" value="#{califica.calificacion}"/>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>		
+								
+								<p:column headerText="Estado" style="text-align:center;">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{califica.estado}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:selectOneMenu id="stateInput" value="#{califica.estado}" >
+								    			<f:selectItem itemLabel="Seleccione.." itemValue=""/>
+								    			<f:selectItem itemLabel="Promocionado" itemValue="Promocionado"/>
+								    			<f:selectItem itemLabel="Regular" itemValue="Regular"/>
+								    			<f:selectItem itemLabel="Libre" itemValue="Libre"/>
+								    		</p:selectOneMenu>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>			       
+						    </p:dataTable>
+						  	<p:panelGrid columns="1" style="width:100%;" rendered="#{beanCalificarAlumno.idMateria != 0}">
+						  		<f:facet name="header">
+						  			<p:commandButton value="Guardar Cambios" action="#{beanCalificarAlumno.guardarCambios()}" onclick="return confirm('DESEA CONFIRMAR LAS CALIFICACIONES?')" 
+						  			update="panel, messages" />
+						  		</f:facet>
+						  	</p:panelGrid>
+				    	</p:panel>
+				    </h:form>
+				</div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>

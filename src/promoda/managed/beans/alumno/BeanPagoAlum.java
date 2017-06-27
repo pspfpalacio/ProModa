@@ -1,6 +1,7 @@
 package promoda.managed.beans.alumno;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.mercadopago.MP;
 
+import promoda.clases.MatriculaAlum;
 import promoda.dao.DAOCuota;
 import promoda.dao.DAOCurso;
 import promoda.dao.DAOMatricula;
@@ -70,6 +72,7 @@ public class BeanPagoAlum implements Serializable {
 	private List<Cuota> listaCuotas;
 	private List<Cuota> listaCuotasCheck;
 	private List<Cuota> selectionCuotas;
+	private List<MatriculaAlum> listaMatriculaAlums;
 	private Curso curso;
 	private Matricula matricula;
 	private Usuario usuario;
@@ -79,16 +82,20 @@ public class BeanPagoAlum implements Serializable {
 	private Cuota cuota;
 	private MP mercadoPago;
 	private Parametro parametro;
+	private MatriculaAlum matriculaAlum;
 	private String headerText;
 	private String accesToken;
 	private String checkoutURL;
 	private String preapprovalPaymentURL;
 	private String jsonId;
 	private int idCurso;
+	private int idMatricula;
 	private boolean verCuotas;
 	private boolean panelCuota;
 	private boolean panelMatricula;
 	private boolean pagoMultiple;
+	private boolean verPeriodo;
+	private boolean verPeriodos;
 
 	public DAOCurso getCursoDAO() {
 		return cursoDAO;
@@ -186,6 +193,14 @@ public class BeanPagoAlum implements Serializable {
 		this.selectionCuotas = selectionCuotas;
 	}
 
+	public List<MatriculaAlum> getListaMatriculaAlums() {
+		return listaMatriculaAlums;
+	}
+
+	public void setListaMatriculaAlums(List<MatriculaAlum> listaMatriculaAlums) {
+		this.listaMatriculaAlums = listaMatriculaAlums;
+	}
+
 	public Curso getCurso() {
 		return curso;
 	}
@@ -258,6 +273,14 @@ public class BeanPagoAlum implements Serializable {
 		this.parametro = parametro;
 	}
 
+	public MatriculaAlum getMatriculaAlum() {
+		return matriculaAlum;
+	}
+
+	public void setMatriculaAlum(MatriculaAlum matriculaAlum) {
+		this.matriculaAlum = matriculaAlum;
+	}
+
 	public String getHeaderText() {
 		return headerText;
 	}
@@ -306,6 +329,14 @@ public class BeanPagoAlum implements Serializable {
 		this.idCurso = idCurso;
 	}
 
+	public int getIdMatricula() {
+		return idMatricula;
+	}
+
+	public void setIdMatricula(int idMatricula) {
+		this.idMatricula = idMatricula;
+	}
+
 	public boolean isVerCuotas() {
 		return verCuotas;
 	}
@@ -338,8 +369,25 @@ public class BeanPagoAlum implements Serializable {
 		this.pagoMultiple = pagoMultiple;
 	}
 
+	public boolean isVerPeriodo() {
+		return verPeriodo;
+	}
+
+	public void setVerPeriodo(boolean verPeriodo) {
+		this.verPeriodo = verPeriodo;
+	}
+
+	public boolean isVerPeriodos() {
+		return verPeriodos;
+	}
+
+	public void setVerPeriodos(boolean verPeriodos) {
+		this.verPeriodos = verPeriodos;
+	}
+
 	public String goRealizarPago(Usuario user) {
 		try {
+			listaMatriculaAlums = new ArrayList<MatriculaAlum>();
 			listaCursos = new ArrayList<Curso>();
 			listaCuotas = new ArrayList<Cuota>();
 			listaCuotasCheck = new ArrayList<Cuota>();
@@ -354,10 +402,13 @@ public class BeanPagoAlum implements Serializable {
 			panelMatricula = false;
 			verCuotas = false;
 			pagoMultiple = false;
+			verPeriodo = false;
+			verPeriodos = false;
 			idCurso = 0;
+			idMatricula = 0;
 			usuario = user;
 			alumno = user.getAlumno();
-			listaCursos = matriculaAlumnoDAO.getListaCurso(alumno);				
+			listaCursos = matriculaAlumnoDAO.getListaCursoDistinct(alumno);				
 			return "realizarpago";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -369,6 +420,7 @@ public class BeanPagoAlum implements Serializable {
 	
 	public String goRealizaPago(Usuario user, Curso cur) {
 		try {
+			listaMatriculaAlums = new ArrayList<MatriculaAlum>();
 			listaCursos = new ArrayList<Curso>();
 			listaCuotas = new ArrayList<Cuota>();
 			listaCuotasCheck = new ArrayList<Cuota>();
@@ -383,22 +435,45 @@ public class BeanPagoAlum implements Serializable {
 			panelMatricula = false;
 			verCuotas = false;
 			pagoMultiple = false;
+			verPeriodo = false;
+			verPeriodos = false;
 			idCurso = 0;
+			idMatricula = 0;
 			usuario = user;
 			alumno = user.getAlumno();
-			listaCursos = matriculaAlumnoDAO.getListaCurso(alumno);		
+			listaCursos = matriculaAlumnoDAO.getListaCursoDistinct(alumno);		
 			
 			idCurso = cur.getId();
 			if (idCurso != 0) {
 				curso = cursoDAO.get(idCurso);
-				matricula = curso.getMatricula();
-				matriculaAlumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
-				if (matriculaAlumno.getId() != 0) {
-					panelMatricula = true;
-					listaCuotas = cuotaDAO.getLista(alumno, matricula, curso);
-					if(!listaCuotas.isEmpty()){
-	        			verCuotas = true;	        			
-	        		}
+				List<Matricula> listaMat = matriculaAlumnoDAO.getListaMatricula(alumno, curso);
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				if (listaMat.size() == 1) {					
+					for (Matricula mat : listaMat) {
+						matriculaAlum = new MatriculaAlum();						
+						String descripcion = dateFormat.format(mat.getFechaInicio()) + " - " + dateFormat.format(mat.getFechaFinCursado());
+						matriculaAlum.setId(mat.getId());
+						matriculaAlum.setDescripcion(descripcion);						
+					}
+					verPeriodo = true;
+					matricula = matriculaDAO.get(matriculaAlum.getId());
+					matriculaAlumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
+					if (matriculaAlumno.getId() != 0) {
+						panelMatricula = true;
+						listaCuotas = cuotaDAO.getLista(alumno, matricula, curso);
+						if(!listaCuotas.isEmpty()){
+		        			verCuotas = true;	        			
+		        		}
+					}
+				} else {
+					verPeriodos = true;
+					for (Matricula mat : listaMat) {
+						MatriculaAlum matrAlum = new MatriculaAlum();						
+						String descripcion = dateFormat.format(mat.getFechaInicio()) + " - " + dateFormat.format(mat.getFechaFinCursado());
+						matrAlum.setId(mat.getId());
+						matrAlum.setDescripcion(descripcion);
+						listaMatriculaAlums.add(matrAlum);
+					}
 				}
 			}
 			
@@ -413,6 +488,7 @@ public class BeanPagoAlum implements Serializable {
 	
 	public void onChangeCurso() {
 		try {
+			listaMatriculaAlums = new ArrayList<MatriculaAlum>();
 			listaCuotas = new ArrayList<Cuota>();
 			listaCuotasCheck = new ArrayList<Cuota>();
 			selectionCuotas = new ArrayList<Cuota>();
@@ -423,9 +499,62 @@ public class BeanPagoAlum implements Serializable {
 			panelMatricula = false;
 			verCuotas = false;
 			pagoMultiple = false;
-			if (idCurso != 0) {
+			verPeriodo = false;
+			verPeriodos = false;
+			idMatricula = 0;
+			if (idCurso != 0) {			
 				curso = cursoDAO.get(idCurso);
-				matricula = curso.getMatricula();
+				List<Matricula> listaMat = matriculaAlumnoDAO.getListaMatricula(alumno, curso);
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				if (listaMat.size() == 1) {					
+					for (Matricula mat : listaMat) {
+						matriculaAlum = new MatriculaAlum();						
+						String descripcion = dateFormat.format(mat.getFechaInicio()) + " - " + dateFormat.format(mat.getFechaFinCursado());
+						matriculaAlum.setId(mat.getId());
+						matriculaAlum.setDescripcion(descripcion);						
+					}
+					verPeriodo = true;
+					matricula = matriculaDAO.get(matriculaAlum.getId());
+					matriculaAlumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
+					if (matriculaAlumno.getId() != 0) {
+						panelMatricula = true;
+						listaCuotas = cuotaDAO.getLista(alumno, matricula, curso);
+						if(!listaCuotas.isEmpty()){
+		        			verCuotas = true;	        			
+		        		}
+					}
+				} else {
+					verPeriodos = true;
+					for (Matricula mat : listaMat) {
+						MatriculaAlum matrAlum = new MatriculaAlum();						
+						String descripcion = dateFormat.format(mat.getFechaInicio()) + " - " + dateFormat.format(mat.getFechaFinCursado());
+						matrAlum.setId(mat.getId());
+						matrAlum.setDescripcion(descripcion);
+						listaMatriculaAlums.add(matrAlum);
+					}
+				}				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurrió un error al generar los datos para el pago, "
+					+ "intenté nuevamente más tarde.", null));
+		}
+	}
+	
+	public void onChangeMatricula() {
+		try {
+			listaCuotas = new ArrayList<Cuota>();
+			listaCuotasCheck = new ArrayList<Cuota>();
+			selectionCuotas = new ArrayList<Cuota>();
+			matriculaAlumno = new MatriculaAlumno();
+			matricula = new Matricula();
+			cuota = new Cuota();
+			panelCuota = false;
+			panelMatricula = false;
+			verCuotas = false;
+			pagoMultiple = false;
+			if (idMatricula != 0) {
+				matricula = matriculaDAO.get(idMatricula);
 				matriculaAlumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
 				if (matriculaAlumno.getId() != 0) {
 					panelMatricula = true;
@@ -434,10 +563,11 @@ public class BeanPagoAlum implements Serializable {
 	        			verCuotas = true;	        			
 	        		}
 				}
-			}
+			}			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurrió un error al generar los datos para el pago, "
+					+ "intenté nuevamente más tarde.", null));
 		}
 	}
 	

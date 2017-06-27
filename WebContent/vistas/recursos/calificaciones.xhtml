@@ -22,19 +22,22 @@
 							<p:growl id="messages" showDetail="false" />
 							<ui:include src="/includes/menubar.xhtml" />
 							<br/>
-			    			<p:panelGrid id="grid" columns="6" style="width:100%;">
+			    			<p:panelGrid id="grid" columns="4" style="width:100%;">
 			    				<f:facet name="header">
 			    					<h2><h:outputText value="#{beanRecurso.headerText}" /></h2>
 			    				</f:facet>
 			    				
 			    				<p:outputLabel value="Curso " />
-					    		<h:inputText value="#{beanRecurso.curso.nombre}" disabled="true" />    				
+					    		<h:inputText value="#{beanRecurso.recurso.curso.nombre}" disabled="true" size="40"/>
+					    		
+					    		<p:outputLabel value="Matrícula " />
+					    		<h:inputText value="#{beanRecurso.recurso.matricula.descripcion}" disabled="true" size="40"/>    				
 			    				
 			    				<p:outputLabel value="Materia " />
-					    		<h:inputText value="#{beanRecurso.materia.nombre}" disabled="true" />		    					
+					    		<h:inputText value="#{beanRecurso.recurso.materia.nombre}" disabled="true" size="40"/>		    					
 			    				
 			    				<p:outputLabel value="Recurso " />
-					    		<h:inputText value="#{beanRecurso.recurso.descripcion}" disabled="true" />			    				   				
+					    		<h:inputText value="#{beanRecurso.recurso.descripcion}" disabled="true" size="40"/>			    				   				
 			   				</p:panelGrid>
 			   				<p:outputPanel style="float:right;">							
 								<h:commandLink >

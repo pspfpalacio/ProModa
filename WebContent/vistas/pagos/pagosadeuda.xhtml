@@ -45,7 +45,8 @@
 						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
 							<p:growl id="messages" autoUpdate="true" showDetail="false" />
 							<ui:include src="/includes/menubar.xhtml" />
-							<h3 align="center">PAGOS DE DEUDA</h3>							
+							<h3 align="center">PAGOS DE DEUDA</h3>	
+													
 							<p:panelGrid columns="2" cellpadding="5" style="width:100%;">		
 					    		<f:facet name="header">
 					    			<h:outputText value="Pagos de Deuda" />					    			
@@ -58,6 +59,7 @@
 			    					itemValue="#{alumno.id}"/>
 			    				</p:selectOneMenu>		
 					    	</p:panelGrid>
+					    	
 					    	<p:panelGrid columns="1" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.poseeDeuda}"> 
 						    	<p:dataTable id="tablaMatriculas" var="matriculaI" value="#{beanPago.listaMatriculasImpagas}"  
 							    	widgetVar="matriculaBusqueda" scrollRows="5" resizableColumns="true" scrollable="true" scrollHeight="100" 
@@ -68,6 +70,10 @@
 							    	
 								    <p:column headerText="Curso" >
 								        <h:outputText value="#{matriculaI.curso.nombre}" />
+								    </p:column>
+								    
+								    <p:column headerText="Matrícula" >
+								        <h:outputText value="#{matriculaI.matricula.descripcion}" />
 								    </p:column>
 								    
 								    <p:column headerText="Fecha de Inscripción" >
@@ -98,8 +104,9 @@
 								    	<p:commandButton icon="ui-icon-cart" action="#{beanPago.onSelectMatricula(matriculaI)}" update=":formulario:panel" />
 								    </p:column>							    
 								</p:dataTable>
+								
 								<p:dataTable id="tablaCuotas" var="cuotaI" value="#{beanPago.listaCuotasImpagas}"  
-							    	widgetVar="cuotaBusqueda" scrollRows="5" resizableColumns="true" scrollable="true" scrollHeight="100" 
+							    	widgetVar="cuotaBusqueda" scrollRows="5" resizableColumns="true" scrollable="true" scrollHeight="200" 
 							    	emptyMessage="No existen Cuotas Impagas" style="width:100%;margin-bottom:20px" >
 							    	<f:facet name="header">
 							    		<h:outputText value="Cuotas Impagas" />
@@ -123,6 +130,10 @@
 							    	
 								    <p:column headerText="Curso">
 								        <h:outputText value="#{cuotaI.curso.nombre}" />
+								    </p:column>
+								    
+								    <p:column headerText="Matrícula">
+								        <h:outputText value="#{cuotaI.matricula.descripcion}" />
 								    </p:column>
 								    
 								    <p:column headerText="Fecha de Inscripción">

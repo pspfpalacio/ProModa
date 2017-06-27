@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -69,6 +71,7 @@ public class BeanRecurso implements Serializable {
 	private List<RecursoAlumno> listaRecursoAlumnos;
 	private List<Curso> listaCursos;
 	private List<Materia> listaMaterias;
+	private List<Matricula> listaMatriculas;
 	private Recurso recurso;
 	private RecursoAlumno recursoAlumno;
 	private Usuario usuario;
@@ -83,6 +86,7 @@ public class BeanRecurso implements Serializable {
 	private int idMateria;
 	private int idEstado;
 	private int idRecurso;
+	private int idMatricula;
 	private boolean edit;
 
 	public DAORecurso getRecursoDAO() {
@@ -171,6 +175,14 @@ public class BeanRecurso implements Serializable {
 
 	public void setListaMaterias(List<Materia> listaMaterias) {
 		this.listaMaterias = listaMaterias;
+	}
+
+	public List<Matricula> getListaMatriculas() {
+		return listaMatriculas;
+	}
+
+	public void setListaMatriculas(List<Matricula> listaMatriculas) {
+		this.listaMatriculas = listaMatriculas;
 	}
 
 	public Recurso getRecurso() {
@@ -285,6 +297,14 @@ public class BeanRecurso implements Serializable {
 		this.idRecurso = idRecurso;
 	}
 
+	public int getIdMatricula() {
+		return idMatricula;
+	}
+
+	public void setIdMatricula(int idMatricula) {
+		this.idMatricula = idMatricula;
+	}
+
 	public boolean isEdit() {
 		return edit;
 	}
@@ -298,9 +318,12 @@ public class BeanRecurso implements Serializable {
 		listaCursos = new ArrayList<Curso>();
 		listaMaterias = new ArrayList<Materia>();
 		listaRecursos = new ArrayList<Recurso>();
+		listaMatriculas = new ArrayList<Matricula>();
 		usuario = new Usuario();
+		matricula = new Matricula();
 		idCurso = 0;
 		idMateria = 0;
+		idMatricula = 0;
 		descripcion = "";
 		fechaEntrega = null;
 		edit = false;
@@ -314,10 +337,14 @@ public class BeanRecurso implements Serializable {
 		listaCursos = new ArrayList<Curso>();
 		listaMaterias = new ArrayList<Materia>();
 		listaRecursos = new ArrayList<Recurso>();
+		listaMatriculas = new ArrayList<Matricula>();
 		usuario = new Usuario();
+		matricula = new Matricula();
+		curso = new Curso();
 		idCurso = 0;
 		idMateria = 0;
 		idEstado = 0;
+		idMatricula = 0;
 		usuario = user;
 		listaCursos = cursoDAO.getLista(true);
 		return "recursos";
@@ -326,6 +353,7 @@ public class BeanRecurso implements Serializable {
 	public String goCalificar(Recurso rec, String pag) {
 		try {
 			listaRecursoAlumnos = new ArrayList<RecursoAlumno>();
+			List<RecursoAlumno> listaRecursoA = new ArrayList<RecursoAlumno>();
 			recurso = new Recurso();
 			headerText = "Calificaciones";
 			recurso = rec;
@@ -347,8 +375,17 @@ public class BeanRecurso implements Serializable {
 						recAlumno.setRecurso(rec);
 						recAlumno.setAlumno(alumno);
 					}
-					listaRecursoAlumnos.add(recAlumno);
+					listaRecursoA.add(recAlumno);
 				}
+				
+				Collections.sort(listaRecursoA, new Comparator<RecursoAlumno>() {
+					   public int compare(RecursoAlumno obj1, RecursoAlumno obj2) {
+					      return obj1.getAlumno().getNombreCompleto().compareTo(obj2.getAlumno().getNombreCompleto());
+					   }
+				});
+				
+				listaRecursoAlumnos = listaRecursoA;
+				
 				pagina = pag;
 				return "calificaciones";
 			} else {
@@ -357,7 +394,7 @@ public class BeanRecurso implements Serializable {
 				return "";
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurrió un error, no se pudo cargar el formulario!", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return "";
@@ -365,20 +402,31 @@ public class BeanRecurso implements Serializable {
 	}
 	
 	public void onChangeCurso() {
+		listaMatriculas = new ArrayList<Matricula>();
 		listaMaterias = new ArrayList<Materia>();
-		listaRecursos = new ArrayList<Recurso>();
+		listaRecursos = new ArrayList<Recurso>();	
+		idMatricula = 0;
 		idMateria = 0;
 		idEstado = 0;	
 		edit = false;
-		if (idCurso != 0) {			
-			curso = new Curso();
+		matricula = new Matricula();
+		curso = new Curso();
+		if (idCurso != 0) {				
 			curso = cursoDAO.get(idCurso);
-			if (curso.getMatricula() != null) {
-				listaMaterias = materiaDAO.getLista(true, curso);
-			} else {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No es posible obtener las materias relacionadas, El curso no posee Matrícula Vigente!", null);
-				FacesContext.getCurrentInstance().addMessage(null, msg);
-			}
+			listaMatriculas = matriculaDAO.getLista(true, curso);
+		}
+	}
+	
+	public void onChangeMatricula() {
+		listaMaterias = new ArrayList<Materia>();
+		listaRecursos = new ArrayList<Recurso>();		
+		idMateria = 0;
+		idEstado = 0;
+		edit = false;
+		matricula = new Matricula();
+		if (idMatricula != 0) {
+			matricula = matriculaDAO.get(idMatricula);			
+			listaMaterias = materiaDAO.getLista(true, curso);			
 		}
 	}
 	
@@ -387,7 +435,7 @@ public class BeanRecurso implements Serializable {
 		edit = false;
 		if (idMateria != 0) {
 			materia = materiaDAO.get(idMateria);
-			matricula = matriculaDAO.get(curso.getMatricula().getId());
+			matricula = matriculaDAO.get(idMatricula);
 			listaRecursos = recursoDAO.getLista(materia, matricula);
 		}
 	}
@@ -411,6 +459,7 @@ public class BeanRecurso implements Serializable {
 		idRecurso = rec.getId();
 		idCurso = rec.getCurso().getId();
 		idMateria = rec.getMateria().getId();
+		idMatricula = rec.getMatricula().getId();
 		edit = true;
 		fechaEntrega = rec.getFechaEntrega();
 		descripcion = rec.getDescripcion();
@@ -419,31 +468,39 @@ public class BeanRecurso implements Serializable {
 	public void listar() {
 		FacesMessage msg = null;
 		listaRecursos = new ArrayList<Recurso>();
-		if (idCurso != 0 && idMateria != 0) {
-			curso = cursoDAO.get(idCurso);
-			materia = materiaDAO.get(idMateria);
-			matricula = curso.getMatricula();
+		try {
 			String message = "";
-			if (idEstado == 0) { //Todos
-				listaRecursos = recursoDAO.getLista(materia);
+			if (idCurso == 0 && idMatricula == 0 && idMateria == 0) { //Todos
+				listaRecursos = recursoDAO.getLista();
 				message = "Todos los Recursos";
 			}
-			if (idEstado == 1) { //Vigentes
-				listaRecursos = recursoDAO.getLista(materia, matricula);
-				message = "Recursos Vigentes";
+			if (idCurso != 0 && idMatricula == 0 && idMateria == 0) { //Curso
+				curso = cursoDAO.get(idCurso);
+				listaRecursos = recursoDAO.getLista(curso);
+				message = "Recursos de curso " + curso.getNombre();
 			}
-			if (idEstado == 2) { //Históricos
-				listaRecursos = recursoDAO.getListaHistoricos(materia, matricula);
-				message = "Recursos Históricos";
+			if (idCurso != 0 && idMatricula != 0 && idMateria == 0) { //Curso && Matricula
+				curso = cursoDAO.get(idCurso);
+				matricula = matriculaDAO.get(idMatricula);
+				listaRecursos = recursoDAO.getLista(curso, matricula);
+				message = "Recursos de curso " + curso.getNombre() + ", matricula " + matricula.getDescripcion();
 			}
+			if (idCurso != 0 && idMatricula != 0 && idMateria != 0) { //Curso && Matricula && Matricula
+				curso = cursoDAO.get(idCurso);
+				matricula = matriculaDAO.get(idMatricula);
+				materia = materiaDAO.get(idMateria);
+				listaRecursos = recursoDAO.getLista(curso, matricula, materia);
+				message = "Recursos de curso " + curso.getNombre() + ", matricula " + matricula.getDescripcion() + ", materia " + materia.getNombre();
+			}			
 			if (!listaRecursos.isEmpty()) {
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, message, null);
 			} else {
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "No existen Recursos "
 						+ "para los filtros seleccionados", null);
 			}
-		} else {
-			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe seleccionar un Curso y una Materia", null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LOS RECURSOS. Error: " + e.getMessage(), null);
 		}
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
@@ -508,11 +565,11 @@ public class BeanRecurso implements Serializable {
 	public void guardar() {
 		FacesMessage msg = null;
 		try {
-			if (idCurso != 0 && idMateria != 0 && fechaEntrega != null && !descripcion.isEmpty()) {
+			if (idCurso != 0 && idMateria != 0 && idMatricula != 0 && fechaEntrega != null && !descripcion.isEmpty()) {
 				Recurso rec = new Recurso();
 				curso = cursoDAO.get(idCurso);
 				materia = materiaDAO.get(idMateria);
-				matricula = matriculaDAO.get(curso.getMatricula().getId());
+				matricula = matriculaDAO.get(idMatricula);
 				rec.setCurso(curso);
 				rec.setDescripcion(descripcion);
 				rec.setEstado(true);
@@ -532,7 +589,7 @@ public class BeanRecurso implements Serializable {
 					FacesContext.getCurrentInstance().addMessage(null, msg);
 				}
 			} else {
-				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe seleccionar un Curso, una Materia, colocar una Descripción y una Fecha de Entrega!", null);
+				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe seleccionar un Curso, una Matrícula, una Materia, colocar una Descripción y una Fecha de Entrega!", null);
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 			}
 		} catch (Exception e) {
@@ -545,11 +602,11 @@ public class BeanRecurso implements Serializable {
 	public void editar() {
 		FacesMessage msg = null;
 		try {
-			if (idCurso != 0 && idMateria != 0 && fechaEntrega != null && !descripcion.isEmpty()) {
+			if (idCurso != 0 && idMateria != 0 && idMatricula != 0 && fechaEntrega != null && !descripcion.isEmpty()) {
 				Recurso rec = new Recurso();
 				curso = cursoDAO.get(idCurso);
 				materia = materiaDAO.get(idMateria);
-				matricula = matriculaDAO.get(curso.getMatricula().getId());
+				matricula = matriculaDAO.get(idMatricula);
 				rec.setId(idRecurso);
 				rec.setCurso(curso);
 				rec.setDescripcion(descripcion);

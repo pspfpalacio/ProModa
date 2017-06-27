@@ -77,6 +77,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#alumnos#alumnos.xhtml"
@@ -159,6 +164,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output20"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#alumnos#alumno.xhtml"
@@ -258,6 +268,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output20"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output21" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#cursos#curso.xhtml"
@@ -352,6 +367,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output20" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#materias#materia.xhtml"
@@ -460,6 +480,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output20" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#profesores#profesor.xhtml"
@@ -556,6 +581,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output20" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#usuarios#usuario.xhtml"
@@ -653,6 +683,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output20" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#inscripciones#inscripciones.xhtml"
@@ -733,6 +768,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#asistencias#asistencias.xhtml"
@@ -812,6 +852,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#pagos#pagos.xhtml"
@@ -891,6 +936,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#pagos#listadopagos.xhtml"
@@ -970,6 +1020,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM
@@ -1049,6 +1104,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output16"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output17" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#caja#caja.xhtml"
@@ -1128,6 +1188,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#inicio.xhtml" PATH="/inicio.xhtml"
@@ -1247,6 +1312,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#pagos#pagosadeuda.xhtml"
@@ -1318,9 +1388,19 @@
     TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
     TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
-    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output17"
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#view#asistencias#asistencia.xhtml"
@@ -1445,6 +1525,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output20" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#recursos#calificaciones.xhtml"
@@ -1507,23 +1592,28 @@
    <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
     NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
     TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificaciones::#vistas#recursos#calificaciones.xhtml"
+    NAME="output15" PATH="/vistas/recursos/calificaciones.xhtml"
+    TARGET="rules:#vistas#recursos#calificaciones.xhtml"
+    TITLE="calificaciones" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
-    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    NAME="output16" PATH="/vistas/recursos/recurso.xhtml"
     TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
     ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
-    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    NAME="output17" PATH="/vistas/inscripciones/inscriptos.xhtml"
     TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
     TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT
-    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
-    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
-    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
-    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#recursos#recurso.xhtml"
@@ -1603,6 +1693,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#inscripciones#inscriptos.xhtml"
@@ -1682,6 +1777,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#pagos#pagosporvencer.xhtml"
@@ -1761,6 +1861,11 @@
     ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
     PATH="/vistas/pagos/pagosonline.xhtml"
     TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#pagos#pagosonline.xhtml"
@@ -1836,6 +1941,94 @@
     NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
     TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
     TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
+    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
+    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#matriculas#calificarAlumnos.xhtml"
+  PATH="/vistas/matriculas/calificarAlumnos.xhtml" SHAPE="48,4024,50,25" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#matriculas#calificarAlumnos.xhtml:0"
+   NAME="item" PATH="/vistas/matriculas/calificarAlumnos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="alumnos::#vistas#alumnos#alumnos.xhtml"
+    NAME="output" PATH="/vistas/alumnos/alumnos.xhtml"
+    TARGET="rules:#vistas#alumnos#alumnos.xhtml" TITLE="alumnos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cursos::#vistas#cursos#cursos.xhtml"
+    NAME="output1" PATH="/vistas/cursos/cursos.xhtml"
+    TARGET="rules:#vistas#cursos#cursos.xhtml" TITLE="cursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output2"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="materias::#vistas#materias#materias.xhtml"
+    NAME="output3" PATH="/vistas/materias/materias.xhtml"
+    TARGET="rules:#vistas#materias#materias.xhtml" TITLE="materias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profesores::#vistas#profesores#profesores.xhtml" NAME="output4"
+    PATH="/vistas/profesores/profesores.xhtml"
+    TARGET="rules:#vistas#profesores#profesores.xhtml"
+    TITLE="profesores" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="usuarios::#vistas#usuarios#usuarios.xhtml"
+    NAME="output5" PATH="/vistas/usuarios/usuarios.xhtml"
+    TARGET="rules:#vistas#usuarios#usuarios.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripcion::#vistas#inscripciones#inscripcion.xhtml"
+    NAME="output6" PATH="/vistas/inscripciones/inscripcion.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripcion.xhtml"
+    TITLE="inscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscripciones::#vistas#inscripciones#inscripciones.xhtml"
+    NAME="output7" PATH="/vistas/inscripciones/inscripciones.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscripciones.xhtml"
+    TITLE="inscripciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencias::#vistas#asistencias#asistencias.xhtml"
+    NAME="output8" PATH="/vistas/asistencias/asistencias.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencias.xhtml"
+    TITLE="asistencias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pagos::#vistas#pagos#pagos.xhtml"
+    NAME="output9" PATH="/vistas/pagos/pagos.xhtml"
+    TARGET="rules:#vistas#pagos#pagos.xhtml" TITLE="pagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listadopagos::#vistas#pagos#listadopagos.xhtml" NAME="output10"
+    PATH="/vistas/pagos/listadopagos.xhtml"
+    TARGET="rules:#vistas#pagos#listadopagos.xhtml" TITLE="listadopagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="caja::#vistas#caja#caja.xhtml"
+    NAME="output11" PATH="/vistas/caja/caja.xhtml"
+    TARGET="rules:#vistas#caja#caja.xhtml" TITLE="caja" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistencia::#vistas#asistencias#asistencia.xhtml"
+    NAME="output12" PATH="/vistas/asistencias/asistencia.xhtml"
+    TARGET="rules:#vistas#asistencias#asistencia.xhtml"
+    TITLE="asistencia" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosadeuda::#vistas#pagos#pagosadeuda.xhtml" NAME="output13"
+    PATH="/vistas/pagos/pagosadeuda.xhtml"
+    TARGET="rules:#vistas#pagos#pagosadeuda.xhtml" TITLE="pagosadeuda" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recursos::#vistas#recursos#recursos.xhtml"
+    NAME="output14" PATH="/vistas/recursos/recursos.xhtml"
+    TARGET="rules:#vistas#recursos#recursos.xhtml" TITLE="recursos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="recurso::#vistas#recursos#recurso.xhtml"
+    NAME="output15" PATH="/vistas/recursos/recurso.xhtml"
+    TARGET="rules:#vistas#recursos#recurso.xhtml" TITLE="recurso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="inscriptos::#vistas#inscripciones#inscriptos.xhtml"
+    NAME="output16" PATH="/vistas/inscripciones/inscriptos.xhtml"
+    TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
+    TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output17" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
 </PROCESS>

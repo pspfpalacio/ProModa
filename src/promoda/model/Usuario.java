@@ -149,6 +149,18 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario3")
 	private List<Materia> materias3;
 	
+	//bi-directional many-to-one association to MateriasCalificacion
+	@OneToMany(mappedBy="usuario1")
+	private List<MateriasCalificacion> materiasCalificacions1;
+
+	//bi-directional many-to-one association to MateriasCalificacion
+	@OneToMany(mappedBy="usuario2")
+	private List<MateriasCalificacion> materiasCalificacions2;
+
+	//bi-directional many-to-one association to MateriasCalificacion
+	@OneToMany(mappedBy="usuario3")
+	private List<MateriasCalificacion> materiasCalificacions3;
+	
 	//bi-directional many-to-one association to MatriculaAlumno
 	@OneToMany(mappedBy="usuario1")
 	private List<MatriculaAlumno> matriculaAlumnos1;
@@ -251,6 +263,18 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario3")
 	private List<Usuario> usuarios3;
 	
+	//bi-directional many-to-one association to Mesa
+	@OneToMany(mappedBy="usuario1")
+	private List<Mesa> mesas1;
+
+	//bi-directional many-to-one association to Mesa
+	@OneToMany(mappedBy="usuario2")
+	private List<Mesa> mesas2;
+
+	//bi-directional many-to-one association to Mesa
+	@OneToMany(mappedBy="usuario3")
+	private List<Mesa> mesas3;
+	
 	//bi-directional many-to-one association to CuotaImpaga
 	@OneToMany(mappedBy="usuario")
 	private List<CuotaImpaga> cuotaImpagas;
@@ -274,6 +298,18 @@ public class Usuario implements Serializable {
 	//bi-directional many-to-one association to RecursoAlumno
 	@OneToMany(mappedBy="usuario")
 	private List<RecursoAlumno> recursoAlumnos;
+	
+	//bi-directional many-to-one association to MesasAlumno
+	@OneToMany(mappedBy="usuario1")
+	private List<MesasAlumno> mesasAlumnos1;
+
+	//bi-directional many-to-one association to MesasAlumno
+	@OneToMany(mappedBy="usuario2")
+	private List<MesasAlumno> mesasAlumnos2;
+
+	//bi-directional many-to-one association to MesasAlumno
+	@OneToMany(mappedBy="usuario3")
+	private List<MesasAlumno> mesasAlumnos3;
 
 	public Usuario() {
 	}
@@ -916,6 +952,72 @@ public class Usuario implements Serializable {
 		return materias3;
 	}
 	
+	public List<MateriasCalificacion> getMateriasCalificacions1() {
+		return this.materiasCalificacions1;
+	}
+
+	public void setMateriasCalificacions1(List<MateriasCalificacion> materiasCalificacions1) {
+		this.materiasCalificacions1 = materiasCalificacions1;
+	}
+
+	public MateriasCalificacion addMateriasCalificacions1(MateriasCalificacion materiasCalificacions1) {
+		getMateriasCalificacions1().add(materiasCalificacions1);
+		materiasCalificacions1.setUsuario1(this);
+
+		return materiasCalificacions1;
+	}
+
+	public MateriasCalificacion removeMateriasCalificacions1(MateriasCalificacion materiasCalificacions1) {
+		getMateriasCalificacions1().remove(materiasCalificacions1);
+		materiasCalificacions1.setUsuario1(null);
+
+		return materiasCalificacions1;
+	}
+
+	public List<MateriasCalificacion> getMateriasCalificacions2() {
+		return this.materiasCalificacions2;
+	}
+
+	public void setMateriasCalificacions2(List<MateriasCalificacion> materiasCalificacions2) {
+		this.materiasCalificacions2 = materiasCalificacions2;
+	}
+
+	public MateriasCalificacion addMateriasCalificacions2(MateriasCalificacion materiasCalificacions2) {
+		getMateriasCalificacions2().add(materiasCalificacions2);
+		materiasCalificacions2.setUsuario2(this);
+
+		return materiasCalificacions2;
+	}
+
+	public MateriasCalificacion removeMateriasCalificacions2(MateriasCalificacion materiasCalificacions2) {
+		getMateriasCalificacions2().remove(materiasCalificacions2);
+		materiasCalificacions2.setUsuario2(null);
+
+		return materiasCalificacions2;
+	}
+
+	public List<MateriasCalificacion> getMateriasCalificacions3() {
+		return this.materiasCalificacions3;
+	}
+
+	public void setMateriasCalificacions3(List<MateriasCalificacion> materiasCalificacions3) {
+		this.materiasCalificacions3 = materiasCalificacions3;
+	}
+
+	public MateriasCalificacion addMateriasCalificacions3(MateriasCalificacion materiasCalificacions3) {
+		getMateriasCalificacions3().add(materiasCalificacions3);
+		materiasCalificacions3.setUsuario3(this);
+
+		return materiasCalificacions3;
+	}
+
+	public MateriasCalificacion removeMateriasCalificacions3(MateriasCalificacion materiasCalificacions3) {
+		getMateriasCalificacions3().remove(materiasCalificacions3);
+		materiasCalificacions3.setUsuario3(null);
+
+		return materiasCalificacions3;
+	}
+	
 	public List<MatriculaAlumno> getMatriculaAlumnos1() {
 		return this.matriculaAlumnos1;
 	}
@@ -1360,6 +1462,72 @@ public class Usuario implements Serializable {
 		return usuarios3;
 	}
 	
+	public List<Mesa> getMesas1() {
+		return this.mesas1;
+	}
+
+	public void setMesas1(List<Mesa> mesas1) {
+		this.mesas1 = mesas1;
+	}
+
+	public Mesa addMesas1(Mesa mesas1) {
+		getMesas1().add(mesas1);
+		mesas1.setUsuario1(this);
+
+		return mesas1;
+	}
+
+	public Mesa removeMesas1(Mesa mesas1) {
+		getMesas1().remove(mesas1);
+		mesas1.setUsuario1(null);
+
+		return mesas1;
+	}
+
+	public List<Mesa> getMesas2() {
+		return this.mesas2;
+	}
+
+	public void setMesas2(List<Mesa> mesas2) {
+		this.mesas2 = mesas2;
+	}
+
+	public Mesa addMesas2(Mesa mesas2) {
+		getMesas2().add(mesas2);
+		mesas2.setUsuario2(this);
+
+		return mesas2;
+	}
+
+	public Mesa removeMesas2(Mesa mesas2) {
+		getMesas2().remove(mesas2);
+		mesas2.setUsuario2(null);
+
+		return mesas2;
+	}
+
+	public List<Mesa> getMesas3() {
+		return this.mesas3;
+	}
+
+	public void setMesas3(List<Mesa> mesas3) {
+		this.mesas3 = mesas3;
+	}
+
+	public Mesa addMesas3(Mesa mesas3) {
+		getMesas3().add(mesas3);
+		mesas3.setUsuario3(this);
+
+		return mesas3;
+	}
+
+	public Mesa removeMesas3(Mesa mesas3) {
+		getMesas3().remove(mesas3);
+		mesas3.setUsuario3(null);
+
+		return mesas3;
+	}
+	
 	public List<CuotaImpaga> getCuotaImpagas() {
 		return this.cuotaImpagas;
 	}
@@ -1490,6 +1658,72 @@ public class Usuario implements Serializable {
 		recursoAlumno.setUsuario(null);
 
 		return recursoAlumno;
+	}
+	
+	public List<MesasAlumno> getMesasAlumnos1() {
+		return this.mesasAlumnos1;
+	}
+
+	public void setMesasAlumnos1(List<MesasAlumno> mesasAlumnos1) {
+		this.mesasAlumnos1 = mesasAlumnos1;
+	}
+
+	public MesasAlumno addMesasAlumnos1(MesasAlumno mesasAlumnos1) {
+		getMesasAlumnos1().add(mesasAlumnos1);
+		mesasAlumnos1.setUsuario1(this);
+
+		return mesasAlumnos1;
+	}
+
+	public MesasAlumno removeMesasAlumnos1(MesasAlumno mesasAlumnos1) {
+		getMesasAlumnos1().remove(mesasAlumnos1);
+		mesasAlumnos1.setUsuario1(null);
+
+		return mesasAlumnos1;
+	}
+
+	public List<MesasAlumno> getMesasAlumnos2() {
+		return this.mesasAlumnos2;
+	}
+
+	public void setMesasAlumnos2(List<MesasAlumno> mesasAlumnos2) {
+		this.mesasAlumnos2 = mesasAlumnos2;
+	}
+
+	public MesasAlumno addMesasAlumnos2(MesasAlumno mesasAlumnos2) {
+		getMesasAlumnos2().add(mesasAlumnos2);
+		mesasAlumnos2.setUsuario2(this);
+
+		return mesasAlumnos2;
+	}
+
+	public MesasAlumno removeMesasAlumnos2(MesasAlumno mesasAlumnos2) {
+		getMesasAlumnos2().remove(mesasAlumnos2);
+		mesasAlumnos2.setUsuario2(null);
+
+		return mesasAlumnos2;
+	}
+
+	public List<MesasAlumno> getMesasAlumnos3() {
+		return this.mesasAlumnos3;
+	}
+
+	public void setMesasAlumnos3(List<MesasAlumno> mesasAlumnos3) {
+		this.mesasAlumnos3 = mesasAlumnos3;
+	}
+
+	public MesasAlumno addMesasAlumnos3(MesasAlumno mesasAlumnos3) {
+		getMesasAlumnos3().add(mesasAlumnos3);
+		mesasAlumnos3.setUsuario3(this);
+
+		return mesasAlumnos3;
+	}
+
+	public MesasAlumno removeMesasAlumnos3(MesasAlumno mesasAlumnos3) {
+		getMesasAlumnos3().remove(mesasAlumnos3);
+		mesasAlumnos3.setUsuario3(null);
+
+		return mesasAlumnos3;
 	}
 
 }

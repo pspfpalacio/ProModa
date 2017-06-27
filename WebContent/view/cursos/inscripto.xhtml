@@ -40,19 +40,12 @@
 						<h:outputText value="#{curso.nombre}" />
 					</p:column>
 					
-					<p:column headerText="Fecha Fin de Cursado" filterBy="#{curso.matricula.fechaFinCursado}"
-					filterStyle="display:none;">
-						<h:outputText value="#{curso.matricula.fechaFinCursado}" >
-							<f:convertDateTime pattern="dd/MM/yyyy"/>
-						</h:outputText>
-					</p:column>
-					
-					<p:column headerText="Ver Matricula" style="text-align: center; width:120px;" exportable="false">
+					<p:column headerText="Ver Matricula" style="text-align: center; width:120px;" exportable="false" rendered="false">
 						<p:commandButton icon="ui-icon-comment" title="Ver Matricula" update=":formulario:outputPanel"
 						action="#{beanCursoAlum.verMatricula(curso)}" oncomplete="PF('dialogo').show()" />
 					</p:column>
 					
-					<p:column headerText="Ver Cuotas" style="text-align: center; width:120px;" exportable="false">
+					<p:column headerText="Ver Cuotas" style="text-align: center; width:120px;" exportable="false" rendered="false">
 						<p:commandButton icon="ui-icon-comment" title="Ver Cuotas" update=":formulario:outputPanelCuota"
 						action="#{beanCursoAlum.verCuotas(curso)}" oncomplete="PF('dialogoCuota').show()" />
 					</p:column>

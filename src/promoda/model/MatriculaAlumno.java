@@ -21,6 +21,8 @@ public class MatriculaAlumno implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+	private float calificacion;
 
 	private boolean eliminado;
 	
@@ -42,6 +44,8 @@ public class MatriculaAlumno implements Serializable {
 	private float montoPago;
 
 	private boolean pago;
+	
+	private String state;
 	
 	//bi-directional many-to-one association to CuotaImpaga
 	@OneToMany(mappedBy="matriculaAlumno")
@@ -85,6 +89,14 @@ public class MatriculaAlumno implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public float getCalificacion() {
+		return this.calificacion;
+	}
+
+	public void setCalificacion(float calificacion) {
+		this.calificacion = calificacion;
 	}
 
 	public boolean getEliminado() {
@@ -141,6 +153,14 @@ public class MatriculaAlumno implements Serializable {
 
 	public void setPago(boolean pago) {
 		this.pago = pago;
+	}
+	
+	public String getState() {
+		return this.state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 	public List<CuotaImpaga> getCuotaImpagas() {

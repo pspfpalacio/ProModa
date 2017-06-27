@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<title>Mesas</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+							<p:growl id="messages" showDetail="false" />
+							<ui:include src="/includes/menubar.xhtml" />
+							<br/>
+							<h3 align="center">MESAS</h3>
+			    			<p:panelGrid id="grid" columns="6" style="width:100%;">
+			    				<f:facet name="header">
+			    					<h2><h:outputText value="Seleccione opciones para listar las mesas" /></h2>
+			    				</f:facet>
+			    				
+			    				<p:outputLabel value="Curso " />
+					    		<p:selectOneMenu value="#{beanMesa.idCurso}" filter="true" filterMatchMode="contains" >
+			    					<p:ajax event="change" listener="#{beanMesa.onChangeCurso()}" update="panel" />
+			    					<f:selectItem itemLabel="TODOS" itemValue="0"/>
+			    					<f:selectItems value="#{beanMesa.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+			    					itemValue="#{curso.id}"/>
+			    				</p:selectOneMenu>	    
+			    				
+			    				<p:outputLabel value="Matrícula " />
+					    		<p:selectOneMenu value="#{beanMesa.idMatricula}" filter="true" filterMatchMode="contains" >
+			    					<p:ajax event="change" listener="#{beanMesa.onChangeMatricula()}" update="panel" />
+			    					<f:selectItem itemLabel="TODAS" itemValue="0"/>
+			    					<f:selectItems value="#{beanMesa.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
+			    					itemValue="#{mat.id}"/>
+			    				</p:selectOneMenu>					
+			    				
+			    				<p:outputLabel value="Materia " />
+					    		<p:selectOneMenu value="#{beanRecurso.idMateria}" filter="true" filterMatchMode="contains" >			    					
+			    					<f:selectItem itemLabel="TODAS" itemValue="0"/>
+			    					<f:selectItems value="#{beanRecurso.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+			    					itemValue="#{materia.id}"/>
+			    				</p:selectOneMenu>
+			    				
+			   					<f:facet name="footer">
+			   						<p:commandButton icon="ui-icon-search" value="Buscar" action="#{beanMesa.buscar()}" update="panel" />
+			   					</f:facet>   				
+			   				</p:panelGrid>
+			   				
+			   				<p:dataTable id="contenedorMesas" widgetVar="mesaBusqueda" var="mesa" style="width:100%;"
+							value="#{beanMesa.listaMesas}" paginator="true" rows="20" resizableColumns="true"
+							emptyMessage="No existen Mesas">
+								<f:facet name="header">
+									<p:commandButton value="Nuevo" action="#{beanMesa.goNuevaMesa()}"/>
+									<p:outputLabel value="Mesas" />
+									<p:spacer width="20" />
+									<p:outputPanel style="float:right;">
+										<p:inputText id="globalFilter" onkeyup="PF('mesaBusqueda').filter()" placeholder="Buscar"/>
+									</p:outputPanel> 
+									<p:outputPanel style="float:right;" rendered="false">							
+										<h:commandLink target="_blank" >
+											<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+										</h:commandLink>
+									</p:outputPanel>
+								</f:facet>
+								
+								<p:column headerText="Mod." style="text-align: center; width:40px;" id="modificar">				
+									<p:commandLink title="Modificar" action="#{beanMesa.goEditarMesa(mesa)}">							
+										<h:graphicImage value="/images/edit.ico" width="20" id="edit" />
+									</p:commandLink>
+								</p:column>
+								
+								<p:column headerText="Baja" style="text-align: center; width:60px;" id="act_desact" exportable="false">						
+									<p:row rendered="#{mesa.enabled}">
+										<h:commandLink id="desactivar" title="Desactivar"
+											onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA LA MESA?')"
+											>
+										 	<h:graphicImage value="/images/activo.ico" width="20" title="baja" /> 
+										</h:commandLink>
+									</p:row>						
+									<p:row rendered="#{!mesa.enabled}">
+										<h:graphicImage value="/images/desactivo.ico" width="20" title="Alta" />										
+									</p:row>
+								</p:column>
+								
+								<p:column headerText="Curso" rendered="#{beanMesa.idCurso == 0}">
+									<h:outputText value="#{mesa.curso.nombre}" />
+								</p:column>
+								
+								<p:column headerText="Matricula" rendered="#{beanMesa.idMatricula == 0}">
+									<h:outputText value="#{mesa.matricula.descripcion}" />
+								</p:column>
+								
+								<p:column headerText="Materia" rendered="#{beanMesa.idMateria == 0}">
+									<h:outputText value="#{mesa.materia.nombre}" />
+								</p:column>
+								
+								<p:column headerText="Fecha y hora" >
+									<h:outputText value="#{mesa.fechaHoraMesa}" >
+										<f:convertDateTime pattern="dd/MM/yyyy - hh:mm"/>
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="Inicio Ins." >
+									<h:outputText value="#{mesa.fechaInicio}" >
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="Fin Ins." >
+									<h:outputText value="#{mesa.fechaFin}" >
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="Ver inscriptos" style="text-align: center; width:120px;" exportable="false">
+									<p:commandButton icon="ui-icon-clipboard" title="Incriptos" 
+									 />
+								</p:column>
+							</p:dataTable>	
+		   				</p:panel>
+			    	</h:form>
+			    </div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>

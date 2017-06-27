@@ -28,26 +28,27 @@
 			    				</f:facet>
 			    				
 			    				<p:outputLabel value="Curso " />
-					    		<p:selectOneMenu value="#{beanRecurso.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;">
+					    		<p:selectOneMenu value="#{beanRecurso.idCurso}" filter="true" filterMatchMode="contains" >
 			    					<p:ajax event="change" listener="#{beanRecurso.onChangeCurso()}" update="panel" />
-			    					<f:selectItem itemLabel="Seleccione curso" itemValue="0"/>
+			    					<f:selectItem itemLabel="TODOS" itemValue="0"/>
 			    					<f:selectItems value="#{beanRecurso.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
 			    					itemValue="#{curso.id}"/>
-			    				</p:selectOneMenu>	    				
+			    				</p:selectOneMenu>	    
+			    				
+			    				<p:outputLabel value="Matrícula " />
+					    		<p:selectOneMenu value="#{beanRecurso.idMatricula}" filter="true" filterMatchMode="contains" >
+			    					<p:ajax event="change" listener="#{beanRecurso.onChangeMatricula()}" update="panel" />
+			    					<f:selectItem itemLabel="TODAS" itemValue="0"/>
+			    					<f:selectItems value="#{beanRecurso.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
+			    					itemValue="#{mat.id}"/>
+			    				</p:selectOneMenu>					
 			    				
 			    				<p:outputLabel value="Materia " />
-					    		<p:selectOneMenu value="#{beanRecurso.idMateria}" filter="true" filterMatchMode="contains" style="width:250px;">			    					
-			    					<f:selectItem itemLabel="Seleccione materia" itemValue="0"/>
+					    		<p:selectOneMenu value="#{beanRecurso.idMateria}" filter="true" filterMatchMode="contains" >			    					
+			    					<f:selectItem itemLabel="TODAS" itemValue="0"/>
 			    					<f:selectItems value="#{beanRecurso.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
 			    					itemValue="#{materia.id}"/>
-			    				</p:selectOneMenu>	
-			    				
-			    				<p:outputLabel value="Estado " />
-			    				<p:selectOneMenu value="#{beanRecurso.idEstado}" style="width:250px;">
-			    					<f:selectItem itemLabel="Todos" itemValue="0"/>
-			    					<f:selectItem itemLabel="Vigentes" itemValue="1"/>
-			    					<f:selectItem itemLabel="Históricos" itemValue="2"/>
-			    				</p:selectOneMenu>	
+			    				</p:selectOneMenu>
 			    				
 			   					<f:facet name="footer">
 			   						<p:commandButton icon="ui-icon-search" value="Buscar" action="#{beanRecurso.listar()}" update="panel" />
@@ -86,6 +87,18 @@
 									<p:row rendered="#{!recurso.estado}">
 										<h:graphicImage value="/images/desactivo.ico" width="20" title="Alta" />										
 									</p:row>
+								</p:column>
+								
+								<p:column headerText="Curso" rendered="#{beanRecurso.idCurso == 0}">
+									<h:outputText value="#{recurso.curso.nombre}" />
+								</p:column>
+								
+								<p:column headerText="Matricula" rendered="#{beanRecurso.idMatricula == 0}">
+									<h:outputText value="#{recurso.matricula.descripcion}" />
+								</p:column>
+								
+								<p:column headerText="Materia" rendered="#{beanRecurso.idMateria == 0}">
+									<h:outputText value="#{recurso.materia.nombre}" />
 								</p:column>
 								
 								<p:column headerText="Descripción" >

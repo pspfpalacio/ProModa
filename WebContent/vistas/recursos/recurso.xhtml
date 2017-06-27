@@ -52,28 +52,37 @@
     				</f:facet>
     				
     				<p:outputLabel value="Curso " />
-		    		<p:selectOneMenu value="#{beanRecurso.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;"
+		    		<p:selectOneMenu value="#{beanRecurso.idCurso}" filter="true" filterMatchMode="contains" 
 		    		disabled="#{beanRecurso.edit}">
     					<p:ajax event="change" listener="#{beanRecurso.onChangeCurso()}" update="panel" />
-    					<f:selectItem itemLabel="Seleccione curso" itemValue="0"/>
+    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
     					<f:selectItems value="#{beanRecurso.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
     					itemValue="#{curso.id}"/>
+    				</p:selectOneMenu>
+    				
+    				<p:outputLabel value="Matrícula " />
+		    		<p:selectOneMenu value="#{beanRecurso.idMatricula}" filter="true" filterMatchMode="contains" 
+		    		disabled="#{beanRecurso.edit}">
+    					<p:ajax event="change" listener="#{beanRecurso.onChangeMatricula()}" update="panel" />
+    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+    					<f:selectItems value="#{beanRecurso.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
+    					itemValue="#{mat.id}"/>
     				</p:selectOneMenu>	    				
     				
     				<p:outputLabel value="Materia " />
-		    		<p:selectOneMenu value="#{beanRecurso.idMateria}" filter="true" filterMatchMode="contains" style="width:250px;"
+		    		<p:selectOneMenu value="#{beanRecurso.idMateria}" filter="true" filterMatchMode="contains" 
 		    		disabled="#{beanRecurso.edit}">			
 		    			<p:ajax event="change" listener="#{beanRecurso.onChangeMateria()}" update="panel" />    					
-    					<f:selectItem itemLabel="Seleccione materia" itemValue="0"/>
+    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
     					<f:selectItems value="#{beanRecurso.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
     					itemValue="#{materia.id}"/>
     				</p:selectOneMenu>	
     				
-    				<p:outputLabel value="Descripción: " />
-    				<p:inputTextarea value="#{beanRecurso.descripcion}" rows="1" />  
-    				
     				<p:outputLabel value="Fecha de Entrega: " />
-    				<p:calendar value="#{beanRecurso.fechaEntrega}" pattern="dd/MM/yyyy" locale="tr"/>    				
+    				<p:calendar value="#{beanRecurso.fechaEntrega}" pattern="dd/MM/yyyy" locale="tr"/>   
+    				
+    				<p:outputLabel value="Descripción: " />
+    				<p:inputTextarea value="#{beanRecurso.descripcion}" rows="1" />   				 				
     				
    					<f:facet name="footer">
    						<p:commandButton value="Guardar" update="panel" rendered="#{!beanRecurso.edit}"
@@ -132,7 +141,7 @@
 					
 					<p:column headerText="Calificar" style="text-align: center; width:120px;" exportable="false">
 						<p:commandButton icon="ui-icon-clipboard" title="Calificar" 
-						action="#{beanRecurso.goCalificar(recurso, 'recurso')}" />
+						action="#{beanRecurso.goCalificar(recurso, 'recurso')}" update=":formulario:panel"/>
 					</p:column>
 				</p:dataTable>	
    				</p:panel>

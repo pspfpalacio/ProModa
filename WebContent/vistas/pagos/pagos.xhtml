@@ -53,18 +53,25 @@
 					    			<h:outputText value="Pagos" />					    			
 					    		</f:facet>								
 					    		<p:outputLabel value="Alumno: " />
-					    		<p:selectOneMenu value="#{beanPago.idAlumno}" filter="true" filterMatchMode="contains" style="width:250px;">
+					    		<p:selectOneMenu value="#{beanPago.idAlumno}" filter="true" filterMatchMode="contains" >
 			    					<p:ajax event="change" listener="#{beanPago.onChangeAlumno()}" update="panel" />
-			    					<f:selectItem itemLabel="Seleccione Alumno" itemValue="0"/>
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
 			    					<f:selectItems value="#{beanPago.listaAlumnos}" var="alumno" itemLabel="#{alumno.nombreCompleto}" 
 			    					itemValue="#{alumno.id}"/>
 			    				</p:selectOneMenu>		
 			    				<p:outputLabel value="Curso: " />
-					    		<p:selectOneMenu value="#{beanPago.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;" disabled="#{beanPago.siCursos}">
+					    		<p:selectOneMenu value="#{beanPago.idCurso}" filter="true" filterMatchMode="contains" disabled="#{beanPago.siCursos}">
 			    					<p:ajax event="change" listener="#{beanPago.onChangeCurso()}" update="panel" />
-			    					<f:selectItem itemLabel="Seleccione curso" itemValue="0"/>
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
 			    					<f:selectItems value="#{beanPago.listaCurso}" var="curso" itemLabel="#{curso.nombre}"
 			    					itemValue="#{curso.id}"/>
+			    				</p:selectOneMenu>
+			    				<p:outputLabel value="Matricula: " />
+					    		<p:selectOneMenu value="#{beanPago.idMatricula}" filter="true" filterMatchMode="contains" disabled="#{beanPago.siCursos}">
+			    					<p:ajax event="change" listener="#{beanPago.onChangeMatricula()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanPago.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
+			    					itemValue="#{mat.id}"/>
 			    				</p:selectOneMenu>
 					    	</p:panelGrid>
 					    	<p:panelGrid columns="3" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.siMatAlumno}"> 

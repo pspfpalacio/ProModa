@@ -30,6 +30,13 @@
 				<p:menuitem value="Reportes" icon="ui-icon-cart" process="@this" action="#{beanPago.goListadoPago(beanLogueo.usuario)}"/>
 				<p:menuitem value="Pagos Gen. Online" icon="ui-icon-cart" process="@this" action="#{beanPago.goPagosRealizadosOnline(beanLogueo.usuario)}"/>
 			</p:submenu>
+			
+			<p:submenu label="Recursos" icon="ui-icon-bookmark">
+				<p:menuitem value="Nuevo" icon="ui-icon-bookmark" action="#{beanRecurso.goRecurso(beanLogueo.usuario)}" process="@this"/>
+				<p:menuitem value="Listado" icon="ui-icon-bookmark" action="#{beanRecurso.goRecursos(beanLogueo.usuario)}" process="@this"/>
+			</p:submenu>
+			
+			<p:menuitem value="Calificar Curso" icon="ui-icon-bookmark" process="@this" action="#{beanCalificarAlumno.goCalificarAlumnos(beanLogueo.usuario)}"/>
 					
 			<p:menuitem value="Alumnos" icon="ui-icon-person" process="@this" action="#{beanAlumno.goAlumnos(beanLogueo.usuario)}"/>
 			
@@ -38,11 +45,6 @@
 			<p:menuitem value="Cursos" icon="ui-icon-comment" process="@this" action="#{beanCurso.goCursos(beanLogueo.usuario)}" />
 			
 			<p:menuitem value="Materias" icon="ui-icon-note" process="@this" action="#{beanMateria.goMaterias(beanLogueo.usuario)}" />
-			
-			<p:submenu label="Recursos" icon="ui-icon-bookmark">
-				<p:menuitem value="Nuevo" icon="ui-icon-bookmark" action="#{beanRecurso.goRecurso(beanLogueo.usuario)}" process="@this"/>
-				<p:menuitem value="Listado" icon="ui-icon-bookmark" action="#{beanRecurso.goRecursos(beanLogueo.usuario)}" process="@this"/>
-			</p:submenu>
 			
 			<p:menuitem value="Usuarios" icon="ui-icon-person" process="@this" action="#{beanUsuario.goUsuarios(beanLogueo.usuario)}" />
 			

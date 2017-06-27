@@ -83,6 +83,10 @@ public class Curso implements Serializable {
 	//bi-directional many-to-one association to Materia
 	@OneToMany(mappedBy="curso")
 	private List<Materia> materias;
+	
+	//bi-directional many-to-one association to MateriasCalificacion
+	@OneToMany(mappedBy="curso")
+	private List<MateriasCalificacion> materiasCalificacions;
 
 	//bi-directional many-to-one association to Matricula
 	@OneToMany(mappedBy="curso")
@@ -99,6 +103,10 @@ public class Curso implements Serializable {
 	//bi-directional many-to-one association to Recurso
 	@OneToMany(mappedBy="curso")
 	private List<Recurso> recursos;
+	
+	//bi-directional many-to-one association to Mesa
+	@OneToMany(mappedBy="curso")
+	private List<Mesa> mesas;
 
 	public Curso() {
 	}
@@ -274,6 +282,28 @@ public class Curso implements Serializable {
 
 		return materia;
 	}
+	
+	public List<MateriasCalificacion> getMateriasCalificacions() {
+		return this.materiasCalificacions;
+	}
+
+	public void setMateriasCalificacions(List<MateriasCalificacion> materiasCalificacions) {
+		this.materiasCalificacions = materiasCalificacions;
+	}
+
+	public MateriasCalificacion addMateriasCalificacion(MateriasCalificacion materiasCalificacion) {
+		getMateriasCalificacions().add(materiasCalificacion);
+		materiasCalificacion.setCurso(this);
+
+		return materiasCalificacion;
+	}
+
+	public MateriasCalificacion removeMateriasCalificacion(MateriasCalificacion materiasCalificacion) {
+		getMateriasCalificacions().remove(materiasCalificacion);
+		materiasCalificacion.setCurso(null);
+
+		return materiasCalificacion;
+	}
 
 	public List<Matricula> getMatriculas() {
 		return this.matriculas;
@@ -361,6 +391,28 @@ public class Curso implements Serializable {
 		recurso.setCurso(null);
 
 		return recurso;
+	}
+	
+	public List<Mesa> getMesas() {
+		return this.mesas;
+	}
+
+	public void setMesas(List<Mesa> mesas) {
+		this.mesas = mesas;
+	}
+
+	public Mesa addMesa(Mesa mesa) {
+		getMesas().add(mesa);
+		mesa.setCurso(this);
+
+		return mesa;
+	}
+
+	public Mesa removeMesa(Mesa mesa) {
+		getMesas().remove(mesa);
+		mesa.setCurso(null);
+
+		return mesa;
 	}
 
 }

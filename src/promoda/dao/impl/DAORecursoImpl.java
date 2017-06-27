@@ -122,6 +122,29 @@ public class DAORecursoImpl implements DAORecurso, Serializable {
 		List<Recurso> lista = locQuery.getResultList();
 		return lista;
 	}
+	
+	public List<Recurso> getLista(Curso curso, Matricula matricula) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT r FROM Recurso r WHERE r.estado = :pEstado "
+				+ "AND r.curso = :pCurso AND r.matricula = :pMatricula", Recurso.class);
+		locQuery.setParameter("pEstado", true);
+		locQuery.setParameter("pCurso", curso);
+		locQuery.setParameter("pMatricula", matricula);
+		List<Recurso> lista = locQuery.getResultList();
+		return lista;
+	}
+	
+	public List<Recurso> getLista(Curso curso, Matricula matricula, Materia materia) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT r FROM Recurso r WHERE r.estado = :pEstado "
+				+ "AND r.curso = :pCurso AND r.matricula = :pMatricula AND r.materia = :pMateria", Recurso.class);
+		locQuery.setParameter("pEstado", true);
+		locQuery.setParameter("pCurso", curso);		
+		locQuery.setParameter("pMatricula", matricula);
+		locQuery.setParameter("pMateria", materia);
+		List<Recurso> lista = locQuery.getResultList();
+		return lista;
+	}
 
 	public List<Recurso> getLista(Matricula matricula) {
 		inicializar();

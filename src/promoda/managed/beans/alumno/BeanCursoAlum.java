@@ -309,7 +309,7 @@ public class BeanCursoAlum implements Serializable {
 //		parametro = parametroDAO.get(1);
 		listaCursos = new ArrayList<Curso>();
 		filteredCursos = new ArrayList<Curso>();
-		listaCursos = matriculaAlumnoDAO.getListaCurso(alumno);
+		listaCursos = matriculaAlumnoDAO.getListaCursoDistinct(alumno);
 		filteredCursos = listaCursos;
 //		try {
 //			mercadoPago = new MP(parametro.getUsuarioMp(), parametro.getPasswordMp());
