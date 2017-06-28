@@ -64,7 +64,10 @@
 				    		<p:calendar value="#{beanCaja.fechaHasta}" pattern="dd/MM/yyyy" locale="tr"/>
 							<p:commandButton icon="ui-icon-search" action="#{beanCaja.buscar()}" update="contenedorCaja" />
 						</p:panelGrid>
-						<p:outputPanel style="float:right;">							
+						<p:outputPanel style="float:right;">
+							<h:commandLink action="#{beanCaja.generarXLS()}" >
+										<p:graphicImage value="../../images/xls-icon.ico" width="25" style="margin-right: 30px; float: left;" />
+									</h:commandLink>								
 							<h:commandLink >
 								<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
 								<p:dataExporter type="pdf" target="contenedorCaja" fileName="cajas" preProcessor="#{beanCaja.preProcessPDF}"/>

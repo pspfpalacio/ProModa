@@ -15,10 +15,17 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 
+import promoda.clases.CajasMov;
 import promoda.clases.Helper;
+import promoda.dao.DAOCuota;
+import promoda.dao.DAOMatricula;
+import promoda.dao.DAOPagosCuota;
+import promoda.dao.DAOPagosMatricula;
 import promoda.dao.DAORole;
 import promoda.dao.DAORolesVista;
 import promoda.dao.DAOUsuario;
+import promoda.model.Cuota;
+import promoda.model.PagosCuota;
 import promoda.model.Role;
 import promoda.model.Usuario;
 
@@ -39,6 +46,18 @@ public class BeanLogueo implements Serializable {
 	
 	@ManagedProperty(value = "#{BeanRolesVistaDAO}")
 	private DAORolesVista roleVistaDAO;
+	
+	@ManagedProperty(value = "#{BeanMatriculaDAO}")
+    private DAOMatricula matriculaDAO;
+    
+    @ManagedProperty(value = "#{BeanCuotaDAO}")
+    private DAOCuota cuotaDAO;
+	
+	@ManagedProperty(value = "#{BeanPagosMatriculaDAO}")
+    private DAOPagosMatricula pagosMatriculaDAO;
+    
+    @ManagedProperty(value = "#{BeanPagosCuotaDAO}")
+    private DAOPagosCuota pagosCuotaDAO;
 	
 	private List<Role> listaRoles; 
 	private Usuario usuario;
@@ -77,6 +96,38 @@ public class BeanLogueo implements Serializable {
 
 	public void setRoleVistaDAO(DAORolesVista roleVistaDAO) {
 		this.roleVistaDAO = roleVistaDAO;
+	}
+
+	public DAOMatricula getMatriculaDAO() {
+		return matriculaDAO;
+	}
+
+	public void setMatriculaDAO(DAOMatricula matriculaDAO) {
+		this.matriculaDAO = matriculaDAO;
+	}
+
+	public DAOCuota getCuotaDAO() {
+		return cuotaDAO;
+	}
+
+	public void setCuotaDAO(DAOCuota cuotaDAO) {
+		this.cuotaDAO = cuotaDAO;
+	}
+
+	public DAOPagosMatricula getPagosMatriculaDAO() {
+		return pagosMatriculaDAO;
+	}
+
+	public void setPagosMatriculaDAO(DAOPagosMatricula pagosMatriculaDAO) {
+		this.pagosMatriculaDAO = pagosMatriculaDAO;
+	}
+
+	public DAOPagosCuota getPagosCuotaDAO() {
+		return pagosCuotaDAO;
+	}
+
+	public void setPagosCuotaDAO(DAOPagosCuota pagosCuotaDAO) {
+		this.pagosCuotaDAO = pagosCuotaDAO;
 	}
 
 	public List<Role> getListaRoles() {
@@ -492,6 +543,48 @@ public class BeanLogueo implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void actualizaPagosCuotas() {
+		try {			
+			List<PagosCuota> listaPagosCuota = pagosCuotaDAO.getLista(true);
+			System.out.println("listaPagosCuota size() " + listaPagosCuota.size());
+			for (PagosCuota pagosCuota : listaPagosCuota) {
+				CajasMov cajaMov = new CajasMov();
+				pagosCuota.setEnabled(false);
+				pagosCuota.setFechaBaja(new Date());
+				pagosCuota.setUsuario2(usuario);
+				int idPagoCuo = pagosCuotaDAO.update(pagosCuota);
+				int idMovCaja = cajaMov.eliminarMovimiento(idPagoCuo, "PagosCuota", usuario);
+				System.out.println("Pagos Cuota Id " + pagosCuota.getId());
+				System.out.println("Update pagos cuota " + idPagoCuo);
+				System.out.println("Movimiento caja " + idMovCaja);
+			}
+			System.out.println("Finalizo delete listaPagosCuota");
+			List<Cuota> listaCuotas = cuotaDAO.getLista(true, true);
+			System.out.println("listaCuotas size() " + listaCuotas.size());
+			for (Cuota cuota : listaCuotas) {
+				CajasMov cajaMov = new CajasMov();
+				PagosCuota pagoscuota = new PagosCuota();
+	    		pagoscuota.setAlumno(cuota.getAlumno());
+	    		pagoscuota.setCuota(cuota);
+	    		pagoscuota.setFecha(cuota.getFechaPago());
+	    		pagoscuota.setConcepto(cuota.getDetalle());
+	    		pagoscuota.setMonto(cuota.getMontoPago());
+	    		pagoscuota.setUsuario1(usuario);
+	    		pagoscuota.setFechaAlta(cuota.getFechaPago());
+	    		pagoscuota.setEnabled(true);
+	    		int idPagoCuot = pagosCuotaDAO.insertar(pagoscuota);
+	    		int idMovCaja = cajaMov.generarMovimiento(cuota.getFechaPago(), 1, cuota.getMontoPago(), idPagoCuot, "PagosCuota", "Pago Cuota", 
+	    				"Pago de " + cuota.getDetalle() + " de Curso " + cuota.getCurso().getNombre() + " de " + cuota.getAlumno().getNombreCompleto(), usuario);
+				System.out.println("Insert pagos cuota " + idPagoCuot);
+				System.out.println("Movimiento caja " + idMovCaja);
+			}
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Proceso finalizado", null));
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e.getMessage(), null));
 		}
 	}
 
