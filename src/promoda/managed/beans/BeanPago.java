@@ -885,7 +885,8 @@ public class BeanPago implements Serializable {
         		pagosmatricula.setEnabled(true);
         		pagosmatricula.setConcepto(concepto);
         		matalumno.setPago(true);
-        		matalumno.setFechaPago(fecha);    		
+        		matalumno.setFechaPago(fecha);    	
+        		matalumno.setMontoPago(pagosmatricula.getMonto());
         		controlMatAlumno = matriculaAlumnoDAO.update(matalumno);
         		controlPagoMatricula = pagosMatriculaDAO.insertar(pagosmatricula);
         		int idPagoMatricula = controlPagoMatricula;

@@ -29,6 +29,10 @@
 		    	
 		    	<p:commandButton value="Proceso Actualiza Pagos Cuotas" action="#{beanLogueo.actualizaPagosCuotas()}" rendered="#{beanLogueo.usuario.id == 1}"
 		    	update="messages" ajax="false" onclick="return confirm('ESTA SEGURO QUE DESEA EJECUTAR EL PROCESO?')"/>
+		    	
+		    	<p:commandButton value="Proceso Actualiza Pagos Matriculas" action="#{beanLogueo.actualizaPagosMatriculas()}" rendered="#{beanLogueo.usuario.id == 1}"
+		    	update="messages" ajax="false" onclick="return confirm('ESTA SEGURO QUE DESEA EJECUTAR EL PROCESO?')"/>
+		    	
 	    	</p:panel>
 		</h:form>
 		</div>

@@ -79,7 +79,7 @@
 							<f:facet name="header">
 								<p:commandButton value="Nuevo Movimiento" action="#{beanCaja.goNuevo()}" 
 								oncomplete="PF('dialogo').show()" update=":formulario:outputPanel"/>
-								<p:outputLabel value="Movimientos de Caja" />
+								<p:outputLabel value="Movimientos de Caja #{beanCaja.listaCajas.size()}" />
 								<p:spacer width="20" />
 								<p:outputPanel style="float:right;">
 									<p:inputText id="globalFilter" onkeyup="PF('cajaBusqueda').filter()" placeholder="Buscar"/>

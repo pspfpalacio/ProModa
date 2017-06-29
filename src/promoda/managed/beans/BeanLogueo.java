@@ -19,13 +19,16 @@ import promoda.clases.CajasMov;
 import promoda.clases.Helper;
 import promoda.dao.DAOCuota;
 import promoda.dao.DAOMatricula;
+import promoda.dao.DAOMatriculaAlumno;
 import promoda.dao.DAOPagosCuota;
 import promoda.dao.DAOPagosMatricula;
 import promoda.dao.DAORole;
 import promoda.dao.DAORolesVista;
 import promoda.dao.DAOUsuario;
 import promoda.model.Cuota;
+import promoda.model.MatriculaAlumno;
 import promoda.model.PagosCuota;
+import promoda.model.PagosMatricula;
 import promoda.model.Role;
 import promoda.model.Usuario;
 
@@ -49,6 +52,9 @@ public class BeanLogueo implements Serializable {
 	
 	@ManagedProperty(value = "#{BeanMatriculaDAO}")
     private DAOMatricula matriculaDAO;
+	
+	@ManagedProperty(value = "#{BeanMatriculaAlmunoDAO}")
+    private DAOMatriculaAlumno matriculaAlumnoDAO;
     
     @ManagedProperty(value = "#{BeanCuotaDAO}")
     private DAOCuota cuotaDAO;
@@ -104,6 +110,14 @@ public class BeanLogueo implements Serializable {
 
 	public void setMatriculaDAO(DAOMatricula matriculaDAO) {
 		this.matriculaDAO = matriculaDAO;
+	}
+
+	public DAOMatriculaAlumno getMatriculaAlumnoDAO() {
+		return matriculaAlumnoDAO;
+	}
+
+	public void setMatriculaAlumnoDAO(DAOMatriculaAlumno matriculaAlumnoDAO) {
+		this.matriculaAlumnoDAO = matriculaAlumnoDAO;
 	}
 
 	public DAOCuota getCuotaDAO() {
@@ -581,6 +595,63 @@ public class BeanLogueo implements Serializable {
 				System.out.println("Insert pagos cuota " + idPagoCuot);
 				System.out.println("Movimiento caja " + idMovCaja);
 			}
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Proceso finalizado", null));
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e.getMessage(), null));
+		}
+	}
+	
+	public void actualizaPagosMatriculas() {
+		try {
+			List<PagosMatricula> listaPagosMatriculas = pagosMatriculaDAO.getLista(true);
+			int size = listaPagosMatriculas.size();
+			System.out.println("listaPagosMatriculas size() " + size);
+			int c = 1;
+			for (PagosMatricula pagosMatricula : listaPagosMatriculas) {
+				CajasMov cajaMov = new CajasMov();
+				pagosMatricula.setEnabled(false);
+				pagosMatricula.setFechaBaja(new Date());
+				pagosMatricula.setUsuario2(usuario);
+				if (pagosMatricula.getAlumno() != null && pagosMatricula.getMatricula() != null) {
+					MatriculaAlumno matriculaAlumno = matriculaAlumnoDAO.get(pagosMatricula.getAlumno(), pagosMatricula.getMatricula().getCurso(), pagosMatricula.getMatricula());
+					matriculaAlumno.setMontoPago(pagosMatricula.getMonto());
+					int idMatAlum = matriculaAlumnoDAO.update(matriculaAlumno);
+					System.out.println("Update matricula alumno" + idMatAlum);
+				}				
+				int idPagoMatri = pagosMatriculaDAO.update(pagosMatricula);
+				int actualizoCaja = cajaMov.eliminarMovimiento(idPagoMatri, "PagosMatricula", usuario);
+				System.out.println("Pagos Matricula Id " + pagosMatricula.getId());				
+				System.out.println("Update pagos matricula " + idPagoMatri);
+				System.out.println("Actualizo caja " + actualizoCaja);
+				System.out.println("Movimiento " + c + " de " + size);
+				c++;
+			}
+			System.out.println("Finalizo delete listaPagosMatriculas");
+			List<MatriculaAlumno> listaMatriculaAlumnos = matriculaAlumnoDAO.getLista(true);
+			int sizeM = listaMatriculaAlumnos.size();
+			System.out.println("listaMatriculaAlumnos size() " + sizeM);
+			int cM = 1;
+			for (MatriculaAlumno matriculaAlumno : listaMatriculaAlumnos) {
+				CajasMov cajaMov = new CajasMov();
+				PagosMatricula pagosMatricula = new PagosMatricula();
+				pagosMatricula.setFecha(matriculaAlumno.getFechaPago());
+				pagosMatricula.setMatricula(matriculaAlumno.getMatricula());
+				pagosMatricula.setAlumno(matriculaAlumno.getAlumno());
+				pagosMatricula.setUsuario1(usuario);
+				pagosMatricula.setFechaAlta(new Date());
+				pagosMatricula.setEnabled(true);
+				pagosMatricula.setConcepto("");        		
+				pagosMatricula.setMonto(matriculaAlumno.getMontoPago());				
+				int idPagoMatricula = pagosMatriculaDAO.insertar(pagosMatricula);
+				int actualizoCaja = cajaMov.generarMovimiento(matriculaAlumno.getFechaPago(), 1, pagosMatricula.getMonto(), idPagoMatricula, "PagosMatricula", "Pago Matricula", 
+        				"Pago de Matrícula de Curso " + matriculaAlumno.getCurso().getNombre() + ", de " + matriculaAlumno.getAlumno().getNombreCompleto(), usuario);				
+				System.out.println("Insert pagos matricula " + idPagoMatricula);
+				System.out.println("Actualizo caja " + actualizoCaja);
+				System.out.println("Movimiento " + cM + " de " + sizeM);
+				cM++;
+			}
+			System.out.println("Finalizo insert listaMatriculaAlumnos");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Proceso finalizado", null));
 		} catch (Exception e) {
 			e.printStackTrace();
