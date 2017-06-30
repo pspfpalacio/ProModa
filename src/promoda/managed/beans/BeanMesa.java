@@ -2,6 +2,7 @@ package promoda.managed.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -14,10 +15,12 @@ import promoda.dao.DAOCurso;
 import promoda.dao.DAOMateria;
 import promoda.dao.DAOMatricula;
 import promoda.dao.DAOMesa;
+import promoda.dao.DAOMesaAlumno;
 import promoda.model.Curso;
 import promoda.model.Materia;
 import promoda.model.Matricula;
 import promoda.model.Mesa;
+import promoda.model.MesasAlumno;
 import promoda.model.Usuario;
 
 @ManagedBean
@@ -31,6 +34,9 @@ public class BeanMesa implements Serializable {
 	
 	@ManagedProperty(value = "#{BeanMesaDAO}")
 	private DAOMesa mesaDAO;
+	
+	@ManagedProperty(value = "#{BeanMesaAlumnoDAO}")
+	private DAOMesaAlumno mesaAlumnoDAO;
 	
 	@ManagedProperty(value = "#{BeanCursoDAO}")
 	private DAOCurso cursoDAO;
@@ -47,6 +53,7 @@ public class BeanMesa implements Serializable {
 	private List<Materia> listaMaterias;
 	private Usuario usuario;
 	private Mesa mesa;
+	private String headerText;
 	private int idCurso;
 	private int idMatricula;
 	private int idMateria;
@@ -56,6 +63,12 @@ public class BeanMesa implements Serializable {
 	}
 	public void setMesaDAO(DAOMesa mesaDAO) {
 		this.mesaDAO = mesaDAO;
+	}
+	public DAOMesaAlumno getMesaAlumnoDAO() {
+		return mesaAlumnoDAO;
+	}
+	public void setMesaAlumnoDAO(DAOMesaAlumno mesaAlumnoDAO) {
+		this.mesaAlumnoDAO = mesaAlumnoDAO;
 	}
 	public DAOCurso getCursoDAO() {
 		return cursoDAO;
@@ -111,6 +124,12 @@ public class BeanMesa implements Serializable {
 	public void setMesa(Mesa mesa) {
 		this.mesa = mesa;
 	}
+	public String getHeaderText() {
+		return headerText;
+	}
+	public void setHeaderText(String headerText) {
+		this.headerText = headerText;
+	}
 	public int getIdCurso() {
 		return idCurso;
 	}
@@ -158,6 +177,7 @@ public class BeanMesa implements Serializable {
 			listaMaterias = new ArrayList<Materia>();
 			listaMatriculas = new ArrayList<Matricula>();	
 			mesa = new Mesa();
+			headerText = "Nueva mesa";
 			idCurso = 0;
 			idMatricula = 0;
 			idMateria = 0;
@@ -178,10 +198,14 @@ public class BeanMesa implements Serializable {
 			listaMatriculas = new ArrayList<Matricula>();	
 			mesa = new Mesa();
 			mesa = me;
+			headerText = "Editar mesa";
 			idCurso = me.getCurso().getId();
 			idMatricula = me.getMatricula().getId();
 			idMateria = me.getMateria().getId();
 			listaCursos = cursoDAO.getLista(true);
+			Curso cur = cursoDAO.get(idCurso);
+			listaMatriculas = matriculaDAO.getLista(true, cur);
+			listaMaterias = materiaDAO.getLista(true, cur);
 			return "mesa";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -246,6 +270,84 @@ public class BeanMesa implements Serializable {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"Ocurrió un error a cargar las mesas! Error: " + e.getMessage(), null));
+		}
+	}
+	
+	public String guardar() {
+		try {
+			if (idCurso != 0 && idMatricula != 0 && idMateria != 0 && mesa.getFechaHoraMesa() != null && mesa.getFechaInicio() != null && mesa.getFechaFin() != null && mesa.getCosto() != 0) {
+				if (mesa.getId() != 0) {
+					mesa.setUsuario3(usuario);
+					mesa.setFechaMod(new Date());
+					if (mesaDAO.update(mesa) != 0) {
+						Curso cur = cursoDAO.get(idCurso);
+						Matricula matr = matriculaDAO.get(idMatricula);
+						Materia mat = materiaDAO.get(idMateria);
+						listaMesas = mesaDAO.getLista(cur, matr, mat);
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+								"Matrícula registrada con éxito.", null));
+						return "mesas";
+					} else {
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+								"Ocurrió un error al registrar la matrícula.", null));
+						return "";
+					}
+				} else {
+					Curso cur = cursoDAO.get(idCurso);
+					Matricula matr = matriculaDAO.get(idMatricula);
+					Materia mat = materiaDAO.get(idMateria);
+					mesa.setCurso(cur);
+					mesa.setMatricula(matr);
+					mesa.setMateria(mat);
+					mesa.setEnabled(true);
+					mesa.setFechaAlta(new Date());
+					mesa.setUsuario1(usuario);
+					if (mesaDAO.insertar(mesa) != 0) {
+						listaMesas = mesaDAO.getLista(cur, matr, mat);
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+								"Matrícula registrada con éxito.", null));
+						return "mesas";
+					} else {
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+								"Ocurrió un error al registrar la matrícula.", null));
+						return "";
+					}
+				}				
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+						"Error: Todos los campos son requeridos.", null));
+				return "";
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+					"Ocurrió un error al registrar la matrícula. Error: " + e.getMessage(), null));
+			return "";
+		}
+	}
+	
+	public void baja(Mesa me) {
+		try {
+			List<MesasAlumno> listaMesasAlumnos = mesaAlumnoDAO.getLista(true, me);
+			if (listaMesasAlumnos.isEmpty()) {
+				me.setEnabled(false);
+				me.setFechaBaja(new Date());
+				me.setUsuario2(usuario);
+				if (mesaDAO.update(me) != 0) {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+							"Se registró la baja de matrícula con éxito.", null));
+				} else {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+							"Ocurrió un error al registrar la baja.", null));
+				}
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+						"La mesa tiene alumnos inscriptos, realice la baja de estos primero.", null));
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+					"Ocurrió un error al registrar la baja. Error: " + e.getMessage(), null));
 		}
 	}
 

@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<script type="text/javascript">
+			 PrimeFaces.locales['tr'] = {
+					       closeText: 'Cerrar',
+					       prevText: 'Anterior',
+					       nextText: 'Siguiente',
+					       currentText: 'Hoy',
+					       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+					           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+					       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+					           'Jul','Ago','Sep','Oct','Nov','Dic'],
+					       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+					       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					       weekHeader: 'Hf',
+					       firstDay: 1,
+					       isRTL: false,
+					       showMonthAfterYear: false,
+					       yearSuffix: '',
+					       month: 'Mes',
+					       week: 'Semana',
+					       day: 'Día',
+					       allDayText : 'Todos los días'
+    				};
+			</script>
+		<title>Mesa</title>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menubar.xhtml" />
+				<br/>				
+				
+    			<p:panelGrid columns="4" style="width:100%;">
+    				<f:facet name="header">
+    					<h1><h:outputText value="#{beanMesa.headerText}" /></h1>
+    				</f:facet>
+    				
+    				<p:outputLabel value="Curso: " />
+		    		<p:selectOneMenu value="#{beanMesa.idCurso}" filter="true" filterMatchMode="contains" disabled="#{beanMesa.mesa.id != 0}">
+    					<p:ajax event="change" listener="#{beanMesa.onChangeCurso()}" update="panel" />
+    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+    					<f:selectItems value="#{beanMesa.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+    					itemValue="#{curso.id}"/>
+    				</p:selectOneMenu>	    
+    				
+    				<p:outputLabel value="Matrícula: " />
+		    		<p:selectOneMenu value="#{beanMesa.idMatricula}" filter="true" filterMatchMode="contains" disabled="#{beanMesa.mesa.id != 0}">
+    					<p:ajax event="change" listener="#{beanMesa.onChangeMatricula()}" update="panel" />
+    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+    					<f:selectItems value="#{beanMesa.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
+    					itemValue="#{mat.id}"/>
+    				</p:selectOneMenu>					
+    				
+    				<p:outputLabel value="Materia: " />
+		    		<p:selectOneMenu value="#{beanMesa.idMateria}" filter="true" filterMatchMode="contains" disabled="#{beanMesa.mesa.id != 0}">			    					
+    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+    					<f:selectItems value="#{beanMesa.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+    					itemValue="#{materia.id}"/>
+    				</p:selectOneMenu> 
+    				
+    				<p:outputLabel value="Fecha y hora:" />
+    				<p:calendar value="#{beanMesa.mesa.fechaHoraMesa}" pattern="dd/MM/yyyy HH:mm" locale="tr" />
+    				
+    				<p:outputLabel value="Inicio inscripción:" />
+    				<p:calendar value="#{beanMesa.mesa.fechaInicio}" pattern="dd/MM/yyyy" locale="tr" />
+    				
+    				<p:outputLabel value="Fin inscripción:" />
+    				<p:calendar value="#{beanMesa.mesa.fechaFin}" pattern="dd/MM/yyyy" locale="tr" /> 
+    				
+    				<p:outputLabel value="Costo: " />
+    				<p:inputText value="#{beanMesa.mesa.costo}" />   				
+    				
+    			</p:panelGrid>
+    			<p:panelGrid columns="2" style="width:100%;">
+   					<f:facet name="header">
+   						<p:commandButton id="button" value="Guardar" update="messages" action="#{beanMesa.guardar()}"
+   						onclick="return confirm('REGISTRAR MESA?')" />
+   						<p:commandButton value="Cancelar" onclick="return confirm('CANCELAR MESA Y VOLVER?')"
+   						action="#{beanMesa.goMesas(beanMesa.usuario)}" process="@this" ajax="false"/>
+   					</f:facet>   				
+   				</p:panelGrid>
+   				</p:panel>
+	    	</h:form>
+	    </div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

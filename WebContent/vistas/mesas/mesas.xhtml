@@ -45,9 +45,9 @@
 			    				</p:selectOneMenu>					
 			    				
 			    				<p:outputLabel value="Materia " />
-					    		<p:selectOneMenu value="#{beanRecurso.idMateria}" filter="true" filterMatchMode="contains" >			    					
+					    		<p:selectOneMenu value="#{beanMesa.idMateria}" filter="true" filterMatchMode="contains" >			    					
 			    					<f:selectItem itemLabel="TODAS" itemValue="0"/>
-			    					<f:selectItems value="#{beanRecurso.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+			    					<f:selectItems value="#{beanMesa.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
 			    					itemValue="#{materia.id}"/>
 			    				</p:selectOneMenu>
 			    				
@@ -60,8 +60,8 @@
 							value="#{beanMesa.listaMesas}" paginator="true" rows="20" resizableColumns="true"
 							emptyMessage="No existen Mesas">
 								<f:facet name="header">
-									<p:commandButton value="Nuevo" action="#{beanMesa.goNuevaMesa()}"/>
-									<p:outputLabel value="Mesas" />
+									<p:commandButton value="Nueva " action="#{beanMesa.goNuevaMesa()}"/>
+									<p:outputLabel value=" Mesas" />
 									<p:spacer width="20" />
 									<p:outputPanel style="float:right;">
 										<p:inputText id="globalFilter" onkeyup="PF('mesaBusqueda').filter()" placeholder="Buscar"/>
@@ -83,7 +83,7 @@
 									<p:row rendered="#{mesa.enabled}">
 										<h:commandLink id="desactivar" title="Desactivar"
 											onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA LA MESA?')"
-											>
+											action="#{beanMesa.baja(mesa)}">
 										 	<h:graphicImage value="/images/activo.ico" width="20" title="baja" /> 
 										</h:commandLink>
 									</p:row>						
@@ -106,19 +106,25 @@
 								
 								<p:column headerText="Fecha y hora" >
 									<h:outputText value="#{mesa.fechaHoraMesa}" >
-										<f:convertDateTime pattern="dd/MM/yyyy - hh:mm"/>
+										<f:convertDateTime pattern="dd/MM/yyyy - hh:mm" locale="tr"/>
 									</h:outputText>
 								</p:column>
 								
 								<p:column headerText="Inicio Ins." >
 									<h:outputText value="#{mesa.fechaInicio}" >
-										<f:convertDateTime pattern="dd/MM/yyyy"/>
+										<f:convertDateTime pattern="dd/MM/yyyy" locale="tr"/>
 									</h:outputText>
 								</p:column>
 								
 								<p:column headerText="Fin Ins." >
 									<h:outputText value="#{mesa.fechaFin}" >
-										<f:convertDateTime pattern="dd/MM/yyyy"/>
+										<f:convertDateTime pattern="dd/MM/yyyy" locale="tr"/>
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="Costo" >
+									<h:outputText value="#{mesa.costo}" >
+										<f:convertNumber pattern="$###,##0.00"/>
 									</h:outputText>
 								</p:column>
 								

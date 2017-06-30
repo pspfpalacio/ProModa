@@ -20,8 +20,7 @@
 			<p:submenu label="Asistencias" icon="ui-icon-clipboard">
 				<p:menuitem value="Registro" icon="ui-icon-clipboard" action="#{beanAsistencia.goAsistencias(beanLogueo.usuario)}" process="@this"/>
 				<p:menuitem value="Reportes" icon="ui-icon-clipboard" action="#{beanAsistencia.goAsistencia(beanLogueo.usuario)}" process="@this"/>
-			</p:submenu>
-			
+			</p:submenu>			
 			
 			<p:submenu label="Pagos" icon="ui-icon-cart">
 				<p:menuitem value="Registro" icon="ui-icon-cart" process="@this" action="#{beanPago.goPago(beanLogueo.usuario)}"/>
@@ -37,6 +36,10 @@
 			</p:submenu>
 			
 			<p:menuitem value="Calificar Curso" icon="ui-icon-bookmark" process="@this" action="#{beanCalificarAlumno.goCalificarAlumnos(beanLogueo.usuario)}"/>
+			
+			<p:submenu label="Mesas" icon="ui-icon-bookmark">
+				<p:menuitem value="Mesas" icon="ui-icon-bookmark" action="#{beanMesa.goMesas(beanLogueo.usuario)}" process="@this"/>
+			</p:submenu>
 					
 			<p:menuitem value="Alumnos" icon="ui-icon-person" process="@this" action="#{beanAlumno.goAlumnos(beanLogueo.usuario)}"/>
 			
