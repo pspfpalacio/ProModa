@@ -1654,14 +1654,10 @@
     TARGET="rules:#vistas#inscripciones#inscriptos.xhtml"
     TITLE="inscriptos" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
-    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output18"
-    PATH="/vistas/pagos/pagosonline.xhtml"
-    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT
-    ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
-    NAME="output19" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
-    TARGET="rules:#vistas#matriculas#calificarAlumnos.xhtml"
-    TITLE="calificarAlumnos" model-entity="JSFProcessItemOutput"/>
+    ID="pagosporvencer::#vistas#pagos#pagosporvencer.xhtml"
+    NAME="output18" PATH="/vistas/pagos/pagosporvencer.xhtml"
+    TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
+    TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
     ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
     NAME="output20" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
@@ -2195,6 +2191,11 @@
    <PROCESS-ITEM-OUTPUT ID="mesa::#vistas#mesas#mesa.xhtml"
     NAME="output21" PATH="/vistas/mesas/mesa.xhtml"
     TARGET="rules:#vistas#mesas#mesa.xhtml" TITLE="mesa" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="mesaInscripcion::#vistas#mesas#mesaInscripcion.xhtml"
+    NAME="output22" PATH="/vistas/mesas/mesaInscripcion.xhtml"
+    TARGET="rules:#vistas#mesas#mesaInscripcion.xhtml"
+    TITLE="mesaInscripcion" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#mesas#mesa.xhtml"
@@ -2207,6 +2208,20 @@
    <PROCESS-ITEM-OUTPUT ID="mesas::#vistas#mesas#mesas.xhtml"
     NAME="output1" PATH="/vistas/mesas/mesas.xhtml"
     TARGET="rules:#vistas#mesas#mesas.xhtml" TITLE="mesas" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#mesas#mesaInscripcion.xhtml"
+  PATH="/vistas/mesas/mesaInscripcion.xhtml" SHAPE="840,4176,50,25" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#mesas#mesaInscripcion.xhtml:0"
+   NAME="item" PATH="/vistas/mesas/mesaInscripcion.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="mesas::#vistas#mesas#mesas.xhtml"
+    NAME="output" PATH="/vistas/mesas/mesas.xhtml"
+    TARGET="rules:#vistas#mesas#mesas.xhtml" TITLE="mesas" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="mesaInscripcion::#vistas#mesas#mesaInscripcion.xhtml"
+    NAME="output1" PATH="/vistas/mesas/mesaInscripcion.xhtml"
+    TARGET="rules:#vistas#mesas#mesaInscripcion.xhtml"
+    TITLE="mesaInscripcion" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
 </PROCESS>

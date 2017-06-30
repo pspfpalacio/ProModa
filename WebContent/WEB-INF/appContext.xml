@@ -31,6 +31,7 @@
 	<bean id="BeanMatriculaDAO" class="promoda.dao.impl.DAOMatriculaImpl" />
 	<bean id="BeanPagosCuotaDAO" class="promoda.dao.impl.DAOPagosCuotaImpl" />
 	<bean id="BeanPagosMatriculaDAO" class="promoda.dao.impl.DAOPagosMatriculaImpl" />
+	<bean id="BeanPagosMesaDAO" class="promoda.dao.impl.DAOPagosMesaImpl" />
 	<bean id="BeanParametroDAO" class="promoda.dao.impl.DAOParametroImpl" />
 	<bean id="BeanPlanPagoDAO" class="promoda.dao.impl.DAOPlanPagoImpl" />
 	<bean id="BeanProfesorDAO" class="promoda.dao.impl.DAOProfesorImpl" />

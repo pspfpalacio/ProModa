@@ -24,6 +24,7 @@
 		<class>promoda.model.Motivo</class>
 		<class>promoda.model.PagosCuota</class>
 		<class>promoda.model.PagosMatricula</class>
+		<class>promoda.model.PagosMesa</class>
 		<class>promoda.model.Parametro</class>
 		<class>promoda.model.PlanPago</class>
 		<class>promoda.model.Profesore</class>

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +84,10 @@ public class Mesa implements Serializable {
 	//bi-directional many-to-one association to MesasAlumno
 	@OneToMany(mappedBy="mesa")
 	private List<MesasAlumno> mesasAlumnos;
+	
+	//bi-directional many-to-one association to PagosMesa
+	@OneToMany(mappedBy="mesa")
+	private List<PagosMesa> pagosMesas;
 
 	public Mesa() {
 	}
@@ -227,6 +232,39 @@ public class Mesa implements Serializable {
 		mesasAlumno.setMesa(null);
 
 		return mesasAlumno;
+	}
+	
+	public List<PagosMesa> getPagosMesas() {
+		return this.pagosMesas;
+	}
+
+	public void setPagosMesas(List<PagosMesa> pagosMesas) {
+		this.pagosMesas = pagosMesas;
+	}
+
+	public PagosMesa addPagosMesa(PagosMesa pagosMesa) {
+		getPagosMesas().add(pagosMesa);
+		pagosMesa.setMesa(this);
+
+		return pagosMesa;
+	}
+
+	public PagosMesa removePagosMesa(PagosMesa pagosMesa) {
+		getPagosMesas().remove(pagosMesa);
+		pagosMesa.setMesa(null);
+
+		return pagosMesa;
+	}
+	
+	public String getFechaHoraString() {		
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			String time = dateFormat.format(fechaHoraMesa);
+			return time;			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
 	}
 
 }

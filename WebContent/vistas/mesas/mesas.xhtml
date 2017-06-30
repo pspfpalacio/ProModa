@@ -56,6 +56,10 @@
 			   					</f:facet>   				
 			   				</p:panelGrid>
 			   				
+			   				<p:panelGrid columns="6" style="width:100%;">
+			   					<p:commandButton value="Inscribir alumnos" action="#{beanMesaAlumno.goMesaInscripcion(beanMesa.usuario)}" ajax="false" />
+			   				</p:panelGrid>
+			   				
 			   				<p:dataTable id="contenedorMesas" widgetVar="mesaBusqueda" var="mesa" style="width:100%;"
 							value="#{beanMesa.listaMesas}" paginator="true" rows="20" resizableColumns="true"
 							emptyMessage="No existen Mesas">

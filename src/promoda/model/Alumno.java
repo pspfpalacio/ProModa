@@ -123,6 +123,10 @@ public class Alumno implements Serializable {
 	//bi-directional many-to-one association to MesasAlumno
 	@OneToMany(mappedBy="alumno")
 	private List<MesasAlumno> mesasAlumnos;
+	
+	//bi-directional many-to-one association to PagosMesa
+	@OneToMany(mappedBy="alumno")
+	private List<PagosMesa> pagosMesas;
 
 	public Alumno() {
 	}
@@ -497,6 +501,28 @@ public class Alumno implements Serializable {
 		mesasAlumno.setAlumno(null);
 
 		return mesasAlumno;
+	}
+	
+	public List<PagosMesa> getPagosMesas() {
+		return this.pagosMesas;
+	}
+
+	public void setPagosMesas(List<PagosMesa> pagosMesas) {
+		this.pagosMesas = pagosMesas;
+	}
+
+	public PagosMesa addPagosMesa(PagosMesa pagosMesa) {
+		getPagosMesas().add(pagosMesa);
+		pagosMesa.setAlumno(this);
+
+		return pagosMesa;
+	}
+
+	public PagosMesa removePagosMesa(PagosMesa pagosMesa) {
+		getPagosMesas().remove(pagosMesa);
+		pagosMesa.setAlumno(null);
+
+		return pagosMesa;
 	}
 
 }

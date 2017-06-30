@@ -37,9 +37,7 @@
 			
 			<p:menuitem value="Calificar Curso" icon="ui-icon-bookmark" process="@this" action="#{beanCalificarAlumno.goCalificarAlumnos(beanLogueo.usuario)}"/>
 			
-			<p:submenu label="Mesas" icon="ui-icon-bookmark">
-				<p:menuitem value="Mesas" icon="ui-icon-bookmark" action="#{beanMesa.goMesas(beanLogueo.usuario)}" process="@this"/>
-			</p:submenu>
+			<p:menuitem value="Mesas" icon="ui-icon-bookmark" action="#{beanMesa.goMesas(beanLogueo.usuario)}" process="@this"/>			
 					
 			<p:menuitem value="Alumnos" icon="ui-icon-person" process="@this" action="#{beanAlumno.goAlumnos(beanLogueo.usuario)}"/>
 			

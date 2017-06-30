@@ -2693,6 +2693,11 @@
    <to-view-id>/vistas/mesas/mesa.xhtml</to-view-id>
    <redirect/>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>mesaInscripcion</from-outcome>
+   <to-view-id>/vistas/mesas/mesaInscripcion.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
  </navigation-rule>
  <navigation-rule>
   <from-view-id>/vistas/mesas/mesa.xhtml</from-view-id>
@@ -2704,6 +2709,19 @@
   <navigation-case>
    <from-outcome>mesas</from-outcome>
    <to-view-id>/vistas/mesas/mesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/vistas/mesas/mesaInscripcion.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>mesas</from-outcome>
+   <to-view-id>/vistas/mesas/mesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>mesaInscripcion</from-outcome>
+   <to-view-id>/vistas/mesas/mesaInscripcion.xhtml</to-view-id>
    <redirect/>
   </navigation-case>
  </navigation-rule>

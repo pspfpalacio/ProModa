@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<title>Inscripción a Mesas</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+							<p:growl id="messages" showDetail="false" />
+							<ui:include src="/includes/menubar.xhtml" />
+							<br/>
+			    			<p:panelGrid id="grid" columns="4" style="width:100%;">
+			    				<f:facet name="header">
+			    					<h:outputText value="Inscripción a mesas" />
+			    				</f:facet>
+			    				
+			    				<p:outputLabel value="Alumno: " />
+					    		<p:selectOneMenu value="#{beanMesaAlumno.idAlumno}" filter="true" filterMatchMode="contains" >
+			    					<p:ajax event="change" listener="#{beanMesaAlumno.onChangeAlumno()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanMesaAlumno.listaAlumnos}" var="alum" itemLabel="#{alum.nombreCompleto}"
+			    					itemValue="#{alum.id}"/>
+			    				</p:selectOneMenu>	
+			    				
+			    				<p:outputLabel value="Curso: " />
+					    		<p:selectOneMenu value="#{beanMesaAlumno.idCurso}" filter="true" filterMatchMode="contains" >
+			    					<p:ajax event="change" listener="#{beanMesaAlumno.onChangeCurso()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanMesaAlumno.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+			    					itemValue="#{curso.id}"/>
+			    				</p:selectOneMenu>	    
+			    				
+			    				<p:outputLabel value="Matrícula: " />
+					    		<p:selectOneMenu value="#{beanMesaAlumno.idMatricula}" filter="true" filterMatchMode="contains" >
+			    					<p:ajax event="change" listener="#{beanMesaAlumno.onChangeMatricula()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanMesaAlumno.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
+			    					itemValue="#{mat.id}"/>
+			    				</p:selectOneMenu>					
+			    				
+			    				<p:outputLabel value="Materia: " />
+					    		<p:selectOneMenu value="#{beanMesaAlumno.idMateria}" filter="true" filterMatchMode="contains" >
+					    			<p:ajax event="change" listener="#{beanMesaAlumno.onChangeMateria()}" update="panel" />				    					
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanMesaAlumno.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+			    					itemValue="#{materia.id}"/>
+			    				</p:selectOneMenu>
+			    				
+			    				<p:outputLabel value="Mesa: " />
+					    		<p:selectOneMenu value="#{beanMesaAlumno.idMesa}" filter="true" filterMatchMode="contains" >			
+					    			<p:ajax event="change" listener="#{beanMesaAlumno.onChangeMesa()}" update="panel" />		    					
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanMesaAlumno.listaMesas}" var="mesa" itemLabel="#{mesa.fechaHoraString}"
+			    					itemValue="#{mesa.id}"/>
+			    				</p:selectOneMenu>
+			    				
+			    				<p:outputLabel value="Cant. inscripciones: " />
+    							<p:inputText value="#{beanMesaAlumno.cantidad}" disabled="true"/>
+    							
+    							<p:outputLabel value="Costo: " />
+    							<p:inputText value="#{beanMesaAlumno.costo}" disabled="true"/>			    				   				
+			   				</p:panelGrid>	  
+			   				
+			   				<p:panelGrid columns="4" style="width:100%;">
+			    				<f:facet name="header">
+			    					<p:commandButton id="button" value="Guardar" update="messages" action="#{beanMesaAlumno.guardarInscripcion()}"
+			   						onclick="return confirm('REGISTRAR INSCRIPCIÓN A MESA?')" />
+			   						<p:commandButton value="Cancelar" onclick="return confirm('CANCELAR INSCRIPCIÓN Y VOLVER?')"
+			   						action="#{beanMesa.goMesas(beanMesa.usuario)}" process="@this" ajax="false"/>
+			    				</f:facet>
+			    			</p:panelGrid> 				
+			   				
+		   				</p:panel>
+			    	</h:form>
+			    </div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>
