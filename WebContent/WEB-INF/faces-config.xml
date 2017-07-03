@@ -1529,6 +1529,16 @@
    <to-view-id>/view/pagos/realizarpago.xhtml</to-view-id>
    <redirect/>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>mesasAlumno</from-outcome>
+   <to-view-id>/view/mesas/mesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>verMesas</from-outcome>
+   <to-view-id>/view/mesas/verMesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
  </navigation-rule>
  <navigation-rule>
   <from-view-id>/view/cursos/inscripto.xhtml</from-view-id>
@@ -1550,6 +1560,16 @@
   <navigation-case>
    <from-outcome>realizarpago</from-outcome>
    <to-view-id>/view/pagos/realizarpago.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>mesasAlumno</from-outcome>
+   <to-view-id>/view/mesas/mesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>verMesas</from-outcome>
+   <to-view-id>/view/mesas/verMesas.xhtml</to-view-id>
    <redirect/>
   </navigation-case>
  </navigation-rule>
@@ -1791,6 +1811,16 @@
    <to-view-id>/view/pagos/realizarpago.xhtml</to-view-id>
    <redirect/>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>mesasAlumno</from-outcome>
+   <to-view-id>/view/mesas/mesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>verMesas</from-outcome>
+   <to-view-id>/view/mesas/verMesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
  </navigation-rule>
  <navigation-rule>
   <from-view-id>/view/pagos/realizarpago.xhtml</from-view-id>
@@ -1812,6 +1842,16 @@
   <navigation-case>
    <from-outcome>asistenciaAlumno</from-outcome>
    <to-view-id>/view/asistencias/asistencia.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>mesasAlumno</from-outcome>
+   <to-view-id>/view/mesas/mesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>verMesas</from-outcome>
+   <to-view-id>/view/mesas/verMesas.xhtml</to-view-id>
    <redirect/>
   </navigation-case>
  </navigation-rule>
@@ -2698,6 +2738,11 @@
    <to-view-id>/vistas/mesas/mesaInscripcion.xhtml</to-view-id>
    <redirect/>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>mesaInscriptos</from-outcome>
+   <to-view-id>/vistas/mesas/mesaInscriptos.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
  </navigation-rule>
  <navigation-rule>
   <from-view-id>/vistas/mesas/mesa.xhtml</from-view-id>
@@ -2722,6 +2767,85 @@
   <navigation-case>
    <from-outcome>mesaInscripcion</from-outcome>
    <to-view-id>/vistas/mesas/mesaInscripcion.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/vistas/mesas/mesaInscriptos.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>mesas</from-outcome>
+   <to-view-id>/vistas/mesas/mesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>mesaInscriptos</from-outcome>
+   <to-view-id>/vistas/mesas/mesaInscriptos.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/view/mesas/mesas.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>inicio</from-outcome>
+   <to-view-id>/inicio.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>inscripto</from-outcome>
+   <to-view-id>/view/cursos/inscripto.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>asistenciaAlumno</from-outcome>
+   <to-view-id>/view/asistencias/asistencia.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>realizarpago</from-outcome>
+   <to-view-id>/view/pagos/realizarpago.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>mesasAlumno</from-outcome>
+   <to-view-id>/view/mesas/mesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>verMesas</from-outcome>
+   <to-view-id>/view/mesas/verMesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/view/mesas/verMesas.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>inicio</from-outcome>
+   <to-view-id>/inicio.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>inscripto</from-outcome>
+   <to-view-id>/view/cursos/inscripto.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>asistenciaAlumno</from-outcome>
+   <to-view-id>/view/asistencias/asistencia.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>realizarpago</from-outcome>
+   <to-view-id>/view/pagos/realizarpago.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>mesasAlumno</from-outcome>
+   <to-view-id>/view/mesas/mesas.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>verMesas</from-outcome>
+   <to-view-id>/view/mesas/verMesas.xhtml</to-view-id>
    <redirect/>
   </navigation-case>
  </navigation-rule>

@@ -27,7 +27,6 @@ import promoda.model.Matricula;
 import promoda.model.Mesa;
 import promoda.model.MesasAlumno;
 import promoda.model.PagosMesa;
-import promoda.model.RecursoAlumno;
 import promoda.model.Usuario;
 
 @ManagedBean
@@ -78,6 +77,7 @@ public class BeanMesaAlumno implements Serializable {
 	private int idMesa;
 	private int cantidad;
 	private float costo;
+	private boolean registrarPago;
 	
 	public DAOMesa getMesaDAO() {
 		return mesaDAO;
@@ -216,6 +216,12 @@ public class BeanMesaAlumno implements Serializable {
 	}
 	public void setCosto(float costo) {
 		this.costo = costo;
+	}	
+	public boolean isRegistrarPago() {
+		return registrarPago;
+	}
+	public void setRegistrarPago(boolean registrarPago) {
+		this.registrarPago = registrarPago;
 	}
 	
 	public String goMesaInscripcion(Usuario user) {
@@ -232,6 +238,7 @@ public class BeanMesaAlumno implements Serializable {
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
+			registrarPago = true;
 			usuario = new Usuario();
 			usuario = user;
 			listaAlumnos = alumnoDAO.getLista(true);
@@ -251,7 +258,7 @@ public class BeanMesaAlumno implements Serializable {
 			usuario = new Usuario();
 			mesa = me;
 			usuario = user;
-			listaMesasAlumnos = mesaAlumnoDAO.getLista(true, me);
+			listaMesasAlumnos = mesaAlumnoDAO.getListaOrderByAlumno(true, me);
 			return "mesaInscriptos";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -274,6 +281,7 @@ public class BeanMesaAlumno implements Serializable {
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
+			registrarPago = true;
 			if (idAlumno != 0) {
 				Alumno alum = alumnoDAO.get(idAlumno);
 				listaCursos = matriculaAlumnoDAO.getListaCurso(alum);
@@ -295,6 +303,7 @@ public class BeanMesaAlumno implements Serializable {
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
+			registrarPago = true;
 			if (idAlumno != 0 && idCurso != 0) {
 				Curso cur = cursoDAO.get(idCurso);
 				listaMatriculas = matriculaDAO.getLista(true, cur);
@@ -313,6 +322,7 @@ public class BeanMesaAlumno implements Serializable {
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
+			registrarPago = true;
 			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0) {				
 				Curso cur = cursoDAO.get(idCurso);
 				listaMaterias = materiaDAO.getLista(true, cur);
@@ -329,6 +339,7 @@ public class BeanMesaAlumno implements Serializable {
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
+			registrarPago = true;
 			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0) {				
 				Curso cur = cursoDAO.get(idCurso);
 				Matricula matr = matriculaDAO.get(idMatricula);
@@ -345,10 +356,13 @@ public class BeanMesaAlumno implements Serializable {
 		try {			
 			cantidad = 0;			
 			costo = 0;
+			registrarPago = true;
 			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0 && idMesa != 0) {				
+				Curso cur = cursoDAO.get(idCurso);
+				Materia mat = materiaDAO.get(idMateria);
 				Alumno alum = alumnoDAO.get(idAlumno);
 				Mesa me = mesaDAO.get(idMesa);
-				List<MesasAlumno> listaAux = mesaAlumnoDAO.getLista(true, alum, me);
+				List<MesasAlumno> listaAux = mesaAlumnoDAO.getLista(true, alum, cur, mat);
 				cantidad = listaAux.size() + 1;
 				if (cantidad > 3) {
 					costo = me.getCosto();
@@ -380,36 +394,54 @@ public class BeanMesaAlumno implements Serializable {
 				MesasAlumno mesaAlumno = new MesasAlumno();
 				Alumno alum = alumnoDAO.get(idAlumno);
 				Mesa me = mesaDAO.get(idMesa);
-				mesaAlumno.setAlumno(alum);
-				mesaAlumno.setAprobado(false);
-				mesaAlumno.setContador(cantidad);
-				mesaAlumno.setEnabled(true);
-				mesaAlumno.setFechaAlta(new Date());
-				mesaAlumno.setMesa(me);
-				mesaAlumno.setUsuario1(usuario);
-				if (mesaAlumnoDAO.insertar(mesaAlumno) != 0) {	
-					if (cantidad > 3) {
-						CajasMov cajaMov = new CajasMov();
-						PagosMesa pagoMesa = new PagosMesa();
-						pagoMesa.setAlumno(alum);
-						pagoMesa.setEnabled(true);
-						pagoMesa.setFecha(new Date());
-						pagoMesa.setFechaAlta(new Date());
-						pagoMesa.setMesa(me);
-						pagoMesa.setMonto(costo);
-						pagoMesa.setUsuario1(usuario);
-						int idPagoMesa = mesaPagoDAO.insertar(pagoMesa);
-						Curso cur = cursoDAO.get(idCurso);
-						Materia mat = materiaDAO.get(idMateria);
-						cajaMov.generarMovimiento(new Date(), 1, costo, idPagoMesa, "PagosMesa", "Pago Mesa", 
-		        				"Pago de Mesa de Curso " + cur.getNombre() + " de Materia " + mat.getNombre() + " de " + alum.getNombreCompleto(), usuario);
+				Curso cur = cursoDAO.get(idCurso);
+				Materia mat = materiaDAO.get(idMateria);
+				List<MesasAlumno> listAux = mesaAlumnoDAO.getLista(true, alum, me);
+				if (listAux.isEmpty()) {
+					mesaAlumno.setAlumno(alum);
+					mesaAlumno.setAprobado(false);
+					mesaAlumno.setContador(cantidad);
+					mesaAlumno.setCurso(cur);
+					mesaAlumno.setEnabled(true);
+					mesaAlumno.setFechaAlta(new Date());
+					mesaAlumno.setMateria(mat);
+					mesaAlumno.setMesa(me);
+					mesaAlumno.setUsuario1(usuario);
+					int idInsert = mesaAlumnoDAO.insertar(mesaAlumno); 
+					if (idInsert != 0) {	
+						if (cantidad > 3 && registrarPago) {
+							mesaAlumno.setId(idInsert);
+							CajasMov cajaMov = new CajasMov();
+							PagosMesa pagoMesa = mesaPagoDAO.get(me, alum);
+							if (pagoMesa.getId() != 0) {
+								pagoMesa.setMesasAlumno(mesaAlumno);
+								mesaPagoDAO.update(pagoMesa);
+							} else {
+								pagoMesa = new PagosMesa();
+								pagoMesa.setAlumno(alum);
+								pagoMesa.setEnabled(true);
+								pagoMesa.setFecha(new Date());
+								pagoMesa.setFechaAlta(new Date());
+								pagoMesa.setMesa(me);
+								pagoMesa.setMesasAlumno(mesaAlumno);
+								pagoMesa.setMonto(costo);
+								pagoMesa.setUsuario1(usuario);
+								int idPagoMesa = mesaPagoDAO.insertar(pagoMesa);
+								cajaMov.generarMovimiento(new Date(), 1, costo, idPagoMesa, "PagosMesa", "Pago Mesa", 
+				        				"Pago de Mesa de Curso " + cur.getNombre() + " de Materia " + mat.getNombre() + " de " + alum.getNombreCompleto(), usuario);
+							}							
+						}
+						return "mesas";
+					} else {
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+								"Ocurrió un error al registrar la mesa.", null));
+						return "";
 					}
-					return "mesas";
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-							"Ocurrió un error al registrar la mesa.", null));
+							"Ya existe una inscripción vigente de este alumno a esta mesa.", null));
 					return "";
-				}
+				}				
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 						"Todos los campos son obligatorios.", null));
@@ -425,7 +457,25 @@ public class BeanMesaAlumno implements Serializable {
 	
 	public void bajaInscripto(MesasAlumno mesaAlum) {
 		try {
-			
+			mesaAlum.setEnabled(false);
+			mesaAlum.setFechaBaja(new Date());
+			mesaAlum.setUsuario2(usuario);
+			if (mesaAlumnoDAO.update(mesaAlum) != 0) {
+				PagosMesa pagosMesa = mesaPagoDAO.get(mesaAlum);
+				if (pagosMesa.getId() != 0) {
+					CajasMov cajaMov = new CajasMov();
+					pagosMesa.setEnabled(false);
+					pagosMesa.setFechaBaja(new Date());
+					pagosMesa.setUsuario2(usuario);
+					int idPagoMesa = mesaPagoDAO.update(pagosMesa);
+					cajaMov.eliminarMovimiento(idPagoMesa, "PagosMesa", usuario);
+				}
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+						"BAJA REGISTRADA CON ÉXITO.", null));
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+						"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCIÓN.", null));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
@@ -433,26 +483,34 @@ public class BeanMesaAlumno implements Serializable {
 		}
 	}
 	
-//	public void calificarInscriptos() {
-//		FacesMessage msg = null;
-//		try {
-//			for (RecursoAlumno rAlumno : listaRecursoAlumnos) {
-//				if (rAlumno.getId() != 0) {
-//					rAlumno.setFechaAlta(new Date());
-//					rAlumno.setUsuario(usuario);
-//					recursoAlumnoDAO.update(rAlumno);
-//				} else {
-//					rAlumno.setFechaAlta(new Date());
-//					rAlumno.setUsuario(usuario);
-//					recursoAlumnoDAO.insertar(rAlumno);
-//				}
-//			}
-//			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cambios registrados con éxito!", null);
-//			FacesContext.getCurrentInstance().addMessage(null, msg);
-//		} catch (Exception e) {
-//			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ocurrió un error al registrar los cambios! Inténtelo nuevamente!", null);
-//			FacesContext.getCurrentInstance().addMessage(null, msg);
-//		}
-//	}
+	public void calificarInscriptos() {
+		try {
+			boolean flagUpdt = true;
+			for (MesasAlumno mAlumno : listaMesasAlumnos) {				
+				float calif = mAlumno.getCalificacion();
+				if (calif >= 6) {
+					mAlumno.setAprobado(true);
+				} else {
+					mAlumno.setAprobado(false);
+				}
+				mAlumno.setFechaMod(new Date());
+				mAlumno.setUsuario3(usuario);
+				if (mesaAlumnoDAO.update(mAlumno) == 0) {
+					flagUpdt = false;
+				}
+			}
+			if (flagUpdt) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+						"Cambios registrados con éxito!", null));
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+						"Ocurrió un error al registrar los cambios. Inténtelo nuevamente.", null));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+					"Ocurrió un error al registrar los cambios. Error: " + e.getMessage(), null));
+		}
+	}
 
 }

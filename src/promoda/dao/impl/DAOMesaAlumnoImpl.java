@@ -11,6 +11,8 @@ import javax.persistence.Query;
 
 import promoda.dao.DAOMesaAlumno;
 import promoda.model.Alumno;
+import promoda.model.Curso;
+import promoda.model.Materia;
 import promoda.model.Mesa;
 import promoda.model.MesasAlumno;
 
@@ -52,17 +54,20 @@ public class DAOMesaAlumnoImpl implements DAOMesaAlumno, Serializable {
 		try {
 			inicializar();
 			Query locQuery = em.createQuery("UPDATE MesasAlumno m SET m.alumno = :pAlumno, m.aprobado = :pAprobado, m.calificacion = :pCalificacion, "
-					+ "m.contador = :pContador, m.enabled = :pEnabled, m.fechaAlta = :pFechaAlta, m.fechaBaja = :pFechaBaja, "
-					+ "m.fechaMod = :pFechaMod, m.mesa = :pMesa, m.usuario1 = :pUsuarioAlta, m.usuario2 = :pUsuarioBaja, m.usuario3 = :pUsuarioMod "
+					+ "m.contador = :pContador, m.curso = :pCurso, m.enabled = :pEnabled, m.fechaAlta = :pFechaAlta, m.fechaBaja = :pFechaBaja, "
+					+ "m.fechaMod = :pFechaMod, m.materia = :pMateria, m.mesa = :pMesa, m.usuario1 = :pUsuarioAlta, m.usuario2 = :pUsuarioBaja, "
+					+ "m.usuario3 = :pUsuarioMod "
 					+ "WHERE m.id = :pId", MesasAlumno.class);
 			locQuery.setParameter("pAlumno", mesasAlumno.getAlumno());
 			locQuery.setParameter("pAprobado", mesasAlumno.getAprobado());
 			locQuery.setParameter("pCalificacion", mesasAlumno.getCalificacion());			
 			locQuery.setParameter("pContador", mesasAlumno.getContador());
+			locQuery.setParameter("pCurso", mesasAlumno.getCurso());
 			locQuery.setParameter("pEnabled", mesasAlumno.getEnabled());
 			locQuery.setParameter("pFechaAlta", mesasAlumno.getFechaAlta());
 			locQuery.setParameter("pFechaBaja", mesasAlumno.getFechaBaja());
 			locQuery.setParameter("pFechaMod", mesasAlumno.getFechaMod());
+			locQuery.setParameter("pMateria", mesasAlumno.getMateria());
 			locQuery.setParameter("pMesa", mesasAlumno.getMesa());
 			locQuery.setParameter("pUsuarioAlta", mesasAlumno.getUsuario1());
 			locQuery.setParameter("pUsuarioBaja", mesasAlumno.getUsuario2());
@@ -156,6 +161,29 @@ public class DAOMesaAlumnoImpl implements DAOMesaAlumno, Serializable {
 		Query locQuery = em.createQuery("SELECT m FROM MesasAlumno m WHERE m.alumno = :pAlumno AND m.enabled = :pEnabled "
 				+ "AND m.mesa = :pMesa", MesasAlumno.class);
 		locQuery.setParameter("pAlumno", alumno);
+		locQuery.setParameter("pEnabled", estado);
+		locQuery.setParameter("pMesa", mesa);
+		List<MesasAlumno> lista = locQuery.getResultList();
+		return lista;
+	}
+
+	public List<MesasAlumno> getLista(boolean estado, Alumno alumno, Curso curso,
+			Materia materia) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT m FROM MesasAlumno m WHERE m.alumno = :pAlumno AND m.curso = :pCurso "
+				+ "AND m.enabled = :pEnabled AND m.materia = :pMateria", MesasAlumno.class);
+		locQuery.setParameter("pAlumno", alumno);
+		locQuery.setParameter("pCurso", curso);
+		locQuery.setParameter("pEnabled", estado);
+		locQuery.setParameter("pMateria", materia);
+		List<MesasAlumno> lista = locQuery.getResultList();
+		return lista;
+	}
+	
+	public List<MesasAlumno> getListaOrderByAlumno(boolean estado, Mesa mesa) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT m FROM MesasAlumno m WHERE m.enabled = :pEnabled AND m.mesa = :pMesa "
+				+ "ORDER BY m.alumno.nombreCompleto DESC", MesasAlumno.class);
 		locQuery.setParameter("pEnabled", estado);
 		locQuery.setParameter("pMesa", mesa);
 		List<MesasAlumno> lista = locQuery.getResultList();

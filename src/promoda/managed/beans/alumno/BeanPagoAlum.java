@@ -411,7 +411,7 @@ public class BeanPagoAlum implements Serializable {
 			listaCursos = matriculaAlumnoDAO.getListaCursoDistinct(alumno);				
 			return "realizarpago";
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "NO ES POSIBLE CARGAR EL FORMULARIO", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return "";

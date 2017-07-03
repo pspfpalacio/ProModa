@@ -35,11 +35,15 @@ import promoda.dao.DAOAlumno;
 import promoda.dao.DAOCuota;
 import promoda.dao.DAOCuotaImpaga;
 import promoda.dao.DAOCurso;
+import promoda.dao.DAOMateria;
 import promoda.dao.DAOMatricula;
 import promoda.dao.DAOMatriculaAlumno;
 import promoda.dao.DAOMatriculaImpaga;
+import promoda.dao.DAOMesa;
+import promoda.dao.DAOMesaAlumno;
 import promoda.dao.DAOPagosCuota;
 import promoda.dao.DAOPagosMatricula;
+import promoda.dao.DAOPagosMesa;
 import promoda.dao.DAOParametro;
 import promoda.dao.DAOPlanPago;
 import promoda.dao.DAOResgistroOnline;
@@ -47,11 +51,15 @@ import promoda.model.Alumno;
 import promoda.model.Cuota;
 import promoda.model.CuotaImpaga;
 import promoda.model.Curso;
+import promoda.model.Materia;
 import promoda.model.Matricula;
 import promoda.model.MatriculaAlumno;
 import promoda.model.MatriculaImpaga;
+import promoda.model.Mesa;
+import promoda.model.MesasAlumno;
 import promoda.model.PagosCuota;
 import promoda.model.PagosMatricula;
+import promoda.model.PagosMesa;
 import promoda.model.Parametro;
 import promoda.model.RegistroOnline;
 import promoda.model.Usuario;
@@ -100,6 +108,18 @@ public class BeanPago implements Serializable {
 	
 	@ManagedProperty(value = "#{BeanRegistroOnlineDAO}")
 	private DAOResgistroOnline registroOnlineDAO;
+	
+	@ManagedProperty(value = "#{BeanMesaDAO}")
+	private DAOMesa mesaDAO;
+	
+	@ManagedProperty(value = "#{BeanMesaAlumnoDAO}")
+	private DAOMesaAlumno mesaAlumnoDAO;
+	
+	@ManagedProperty(value = "#{BeanPagosMesaDAO}")
+	private DAOPagosMesa pagoMesaDAO;
+	
+	@ManagedProperty(value = "#{BeanMateriaDAO}")
+	private DAOMateria materiaDAO;
  
     private List<Alumno> listaAlumnos;
     private List<MatriculaAlumno> listaMatriculaAlumno;
@@ -114,6 +134,8 @@ public class BeanPago implements Serializable {
     private List<MatriculaImpaga> listaMatriculasImpagas;
     private List<PagoOnline> listaRegistroOnlines;
     private List<Matricula> listaMatriculas;
+    private List<Materia> listaMaterias;
+    private List<Mesa> listaMesas;
     private Usuario usuario;
     private Alumno alumno;
     private Curso curso;
@@ -125,6 +147,7 @@ public class BeanPago implements Serializable {
     private Parametro parametro;
     private MatriculaImpaga matriculaImpaga;
     private CuotaImpaga cuotaImpaga;
+    private Mesa mesa;
     private Date fecha;
     private Date fechaInicio;
     private Date fechaFin;
@@ -135,6 +158,8 @@ public class BeanPago implements Serializable {
     private int controlPagoMatricula;
     private int controlCuota;
     private int controlPagoCuota;
+    private int idMateria;
+    private int idMesa;
     private boolean siCursos;
     private boolean siMatAlumno;
     private boolean siMatPagada;
@@ -145,6 +170,8 @@ public class BeanPago implements Serializable {
     private boolean poseeDeuda;
     private boolean pagoMat;
     private boolean pagoCuota;
+    private boolean pagoMesa;
+    private boolean mesaPaga;
     private String tipoListado;
     private String concepto;
     private float montoImp;
@@ -243,6 +270,38 @@ public class BeanPago implements Serializable {
 
 	public void setRegistroOnlineDAO(DAOResgistroOnline registroOnlineDAO) {
 		this.registroOnlineDAO = registroOnlineDAO;
+	}
+
+	public DAOMesa getMesaDAO() {
+		return mesaDAO;
+	}
+
+	public void setMesaDAO(DAOMesa mesaDAO) {
+		this.mesaDAO = mesaDAO;
+	}
+
+	public DAOMesaAlumno getMesaAlumnoDAO() {
+		return mesaAlumnoDAO;
+	}
+
+	public void setMesaAlumnoDAO(DAOMesaAlumno mesaAlumnoDAO) {
+		this.mesaAlumnoDAO = mesaAlumnoDAO;
+	}
+
+	public DAOPagosMesa getPagoMesaDAO() {
+		return pagoMesaDAO;
+	}
+
+	public void setPagoMesaDAO(DAOPagosMesa pagoMesaDAO) {
+		this.pagoMesaDAO = pagoMesaDAO;
+	}
+
+	public DAOMateria getMateriaDAO() {
+		return materiaDAO;
+	}
+
+	public void setMateriaDAO(DAOMateria materiaDAO) {
+		this.materiaDAO = materiaDAO;
 	}
 
 	public List<Alumno> getListaAlumnos() {
@@ -351,6 +410,22 @@ public class BeanPago implements Serializable {
 		this.listaMatriculas = listaMatriculas;
 	}
 
+	public List<Materia> getListaMaterias() {
+		return listaMaterias;
+	}
+
+	public void setListaMaterias(List<Materia> listaMaterias) {
+		this.listaMaterias = listaMaterias;
+	}
+
+	public List<Mesa> getListaMesas() {
+		return listaMesas;
+	}
+
+	public void setListaMesas(List<Mesa> listaMesas) {
+		this.listaMesas = listaMesas;
+	}
+
 	public Usuario getUsuario() {
         return usuario;
     }
@@ -433,6 +508,14 @@ public class BeanPago implements Serializable {
 
 	public void setCuotaImpaga(CuotaImpaga cuotaImpaga) {
 		this.cuotaImpaga = cuotaImpaga;
+	}
+
+	public Mesa getMesa() {
+		return mesa;
+	}
+
+	public void setMesa(Mesa mesa) {
+		this.mesa = mesa;
 	}
 
 	public void setMatalumno(MatriculaAlumno matalumno) {
@@ -520,6 +603,22 @@ public class BeanPago implements Serializable {
 		this.controlPagoCuota = controlPagoCuota;
 	}
 
+	public int getIdMateria() {
+		return idMateria;
+	}
+
+	public void setIdMateria(int idMateria) {
+		this.idMateria = idMateria;
+	}
+
+	public int getIdMesa() {
+		return idMesa;
+	}
+
+	public void setIdMesa(int idMesa) {
+		this.idMesa = idMesa;
+	}
+
 	public boolean isSiCursos() {
         return siCursos;
     }
@@ -600,6 +699,22 @@ public class BeanPago implements Serializable {
 		this.pagoCuota = pagoCuota;
 	}
 
+	public boolean isPagoMesa() {
+		return pagoMesa;
+	}
+
+	public void setPagoMesa(boolean pagoMesa) {
+		this.pagoMesa = pagoMesa;
+	}
+
+	public boolean isMesaPaga() {
+		return mesaPaga;
+	}
+
+	public void setMesaPaga(boolean mesaPaga) {
+		this.mesaPaga = mesaPaga;
+	}
+
 	public String getTipoListado() {
 		return tipoListado;
 	}
@@ -632,6 +747,13 @@ public class BeanPago implements Serializable {
         usuario = user;
         listaAlumnos = alumnoDAO.getLista(true);
         idAlumno = 0;
+        pagoMesa = false;
+        mesaPaga = false;
+        idMateria = 0;
+        idMesa = 0;
+        mesa = new Mesa();
+        listaMaterias = new ArrayList<Materia>();
+        listaMesas = new ArrayList<Mesa>();
         return "pagos";
     }
 	
@@ -722,13 +844,20 @@ public class BeanPago implements Serializable {
     	siMatAlumno = false;
     	siMatPagada = true;
     	siCuotas = false;
+    	pagoMesa = false;
+    	mesaPaga = false;
     	idCurso = 0;
-    	idMatricula = 0;
+    	idMatricula = 0;    	
+        idMateria = 0;
+        idMesa = 0;
+        mesa = new Mesa();
         alumno = new Alumno();
         alumno = alumnoDAO.get(idAlumno);        
         listaCuota = new ArrayList<Cuota>();
         listaMatriculas = new ArrayList<Matricula>();
-        listaCurso = new ArrayList<Curso>();
+        listaCurso = new ArrayList<Curso>();  
+        listaMaterias = new ArrayList<Materia>();
+        listaMesas = new ArrayList<Mesa>();
         if (alumno.getId() != 0) {
             listaCurso = matriculaAlumnoDAO.getListaCurso(alumno);
             if (listaCurso.size() > 0) {
@@ -766,7 +895,12 @@ public class BeanPago implements Serializable {
     	siMatAlumno = false;
     	siMatPagada = true;
     	siCuotas = false;
-    	idMatricula = 0;
+    	pagoMesa = false;
+    	mesaPaga = false;
+    	idMatricula = 0;    	
+        idMateria = 0;
+        idMesa = 0;
+        mesa = new Mesa();
     	alumno = new Alumno();
         alumno = alumnoDAO.get(idAlumno);
         curso = new Curso();
@@ -775,6 +909,8 @@ public class BeanPago implements Serializable {
         concepto = "";
         listaCuota = new ArrayList<Cuota>();
         listaMatriculas = new ArrayList<Matricula>();
+        listaMaterias = new ArrayList<Materia>();
+        listaMesas = new ArrayList<Mesa>();
         try {
         	if (idCurso != 0) {
         		curso = cursoDAO.get(idCurso);       
@@ -790,12 +926,20 @@ public class BeanPago implements Serializable {
     	siMatAlumno = false;
     	siMatPagada = true;
     	siCuotas = false;
+    	pagoMesa = true;
+    	mesaPaga = false;
+        idMateria = 0;
+        idMesa = 0;
+        mesa = new Mesa();
     	matricula = new Matricula();        
         matalumno = new MatriculaAlumno();
         concepto = "";
         listaCuota = new ArrayList<Cuota>();
+        listaMaterias = new ArrayList<Materia>();
+        listaMesas = new ArrayList<Mesa>();
     	try {    		
     		if (idMatricula != 0) {
+    			listaMaterias = materiaDAO.getLista(true, curso);
     			matricula = matriculaDAO.get(idMatricula);
     			if (alumno.getId() != 0 && curso.getId() != 0){
     	        	matalumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
@@ -823,6 +967,42 @@ public class BeanPago implements Serializable {
         	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LA MATRICULA", null));
     	}    	
     }
+    
+    public void onChangeMateria() {
+		try {			
+			listaMesas = new ArrayList<Mesa>();		
+			mesa = new Mesa();
+	    	mesaPaga = false;
+			idMesa = 0;
+			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0) {				
+				Curso cur = cursoDAO.get(idCurso);
+				Matricula matr = matriculaDAO.get(idMatricula);
+				Materia mat = materiaDAO.get(idMateria);
+				listaMesas = mesaDAO.getLista(cur, matr, mat);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MESAS", null));
+		}
+	}
+	
+	public void onChangeMesa() {
+		try {			
+			mesa = new Mesa();
+	    	mesaPaga = false;
+			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0 && idMesa != 0) {				
+				Alumno alum = alumnoDAO.get(idAlumno);
+				mesa = mesaDAO.get(idMesa);
+				PagosMesa pagosMesa = pagoMesaDAO.get(mesa, alum);
+				if (pagosMesa.getId() != 0) {
+					mesaPaga = true;
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MESAS", null));
+		}
+	}
     
 	public void onChangeFechaPago(Cuota cuo) {
 		//Parametro param = parametroDAO.get(1);
@@ -921,6 +1101,47 @@ public class BeanPago implements Serializable {
 					+ "INTÉNTELO NUEVAMENTE", null);
 		}
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void bajaMesa() {
+    	try {
+    		if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0 && idMesa != 0) {
+    			Alumno alum = alumnoDAO.get(idAlumno);
+    			Mesa me = mesaDAO.get(idMesa);
+    			PagosMesa pagosMesa = pagoMesaDAO.get(me, alum);
+				if (pagosMesa.getId() != 0) {
+					CajasMov cajaMov = new CajasMov();
+					pagosMesa.setEnabled(false);
+					pagosMesa.setFechaBaja(new Date());
+					pagosMesa.setUsuario2(usuario);
+					int idPagoMesa = pagoMesaDAO.update(pagosMesa);
+					if (idPagoMesa != 0) {
+						int deleteMov = cajaMov.eliminarMovimiento(idPagoMesa, "PagosMesa", usuario);
+						if (deleteMov != 0) {
+							mesaPaga = false;
+							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+									"BAJA DE PAGO REGISTRADA", null));							
+						} else {
+							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+				    				"OCURRIÓ UN ERROR AL REGISTRAR LA BAJA DEL PAGO DE MESA EN CAJA", null));
+						}
+					} else {
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+			    				"OCURRIÓ UN ERROR AL REGISTRAR LA BAJA DEL PAGO DE MESA", null));
+					}				
+				} else {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+		    				"OCURRIÓ UN ERROR AL OBTENER EL PAGO DE MESA", null));
+				}
+    		} else {
+    			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+        				"TODOS LOS CAMPOS SON OBLIGATORIOS", null));
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+    				"OCURRIÓ UN ERROR AL REGISTRAR LA BAJA DEL PAGO DE MESA. Error: " + e.getMessage(), null));
+    	}
     }
 
     public void pagoMatricula() {
@@ -1088,6 +1309,57 @@ public class BeanPago implements Serializable {
     	}
     	FacesContext.getCurrentInstance().addMessage(null, msg);
     }
+    
+    public void pagarMesa() {
+    	try {
+    		if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0 && idMesa != 0) {
+    			CajasMov cajaMov = new CajasMov();
+    			Alumno alum = alumnoDAO.get(idAlumno);
+    			Mesa me = mesaDAO.get(idMesa);
+    			Curso cur = cursoDAO.get(idCurso);
+    			Materia mat = materiaDAO.get(idMateria);
+    			PagosMesa pagosMesa = new PagosMesa();
+				pagosMesa.setAlumno(alum);
+				pagosMesa.setEnabled(true);
+				pagosMesa.setFecha(new Date());
+				pagosMesa.setFechaAlta(new Date());
+				pagosMesa.setMesa(me);
+				List<MesasAlumno> listAux = mesaAlumnoDAO.getLista(true, alum, me);
+				MesasAlumno mesaAlumno = new MesasAlumno();
+				for (MesasAlumno mAlumno : listAux) {
+					mesaAlumno = mAlumno;
+				}
+				if (mesaAlumno.getId() != 0) {
+					pagosMesa.setMesasAlumno(mesaAlumno);
+				}
+				pagosMesa.setMonto(me.getCosto());
+				pagosMesa.setUsuario1(usuario);
+				int idPagoMesa = pagoMesaDAO.insertar(pagosMesa);
+				if (idPagoMesa != 0) {
+					int insertoCaja = cajaMov.generarMovimiento(new Date(), 1, mesa.getCosto(), idPagoMesa, "PagosMesa", "Pago Mesa", 
+	        				"Pago de Mesa de Curso " + cur.getNombre() + " de Materia " + mat.getNombre() + " de " + alum.getNombreCompleto(), usuario);
+					if (insertoCaja != 0) {
+						mesaPaga = true;
+	        			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+	        					"PAGO DE MESA REGISTRADO", null));
+					} else {
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+		        				"OCURRIÓ UN ERROR AL REGISTRAR EL PAGO DE LA MESA EN LA CAJA.", null));
+					}
+				} else {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+	        				"OCURRIÓ UN ERROR AL REGISTRAR EL PAGO DE LA MESA.", null));
+				}				
+    		} else {
+    			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+        				"TODOS LOS CAMPOS SON OBLIGATORIOS.", null));
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+    				"OCURRIÓ UN ERROR AL REGISTRAR EL PAGO DE LA MESA. Error: " + e.getMessage(), null));
+    	}
+    }   
     
     public void guardarParametro() {
     	try {

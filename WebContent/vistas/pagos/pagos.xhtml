@@ -219,6 +219,40 @@
 				    				</p:panelGrid>
 								</p:outputPanel>
 							</p:dialog>
+							
+							<p:panelGrid columns="1" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.pagoMesa}" > 
+					    		<f:facet name="header">
+							        <h:outputText value="Registrar pago de Mesa" />
+							    </f:facet>
+							    
+							    <p:outputLabel value="Materia: " />
+					    		<p:selectOneMenu value="#{beanPago.idMateria}" filter="true" filterMatchMode="contains" >
+					    			<p:ajax event="change" listener="#{beanPago.onChangeMateria()}" update="panel" />				    					
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanPago.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+			    					itemValue="#{materia.id}"/>
+			    				</p:selectOneMenu>
+			    				
+			    				<p:outputLabel value="Mesa: " />
+					    		<p:selectOneMenu value="#{beanPago.idMesa}" filter="true" filterMatchMode="contains" >			
+					    			<p:ajax event="change" listener="#{beanPago.onChangeMesa()}" update="panel" />		    					
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanPago.listaMesas}" var="mesa" itemLabel="#{mesa.fechaHoraString}"
+			    					itemValue="#{mesa.id}"/>
+			    				</p:selectOneMenu>
+    							
+    							<p:outputLabel value="Costo: " />
+    							<p:inputText value="#{beanPago.mesa.costo}" disabled="true">
+    								<f:convertNumber pattern="$###,##0.00"/>
+    							</p:inputText>	
+    							
+    							<f:facet name="footer">
+							        <p:commandButton value="Pagar" update="messages" action="#{beanPago.pagarMesa()}"
+   												onclick="return confirm('PAGAR MESA?')" disabled="#{beanPago.mesaPaga}"/>
+   									<p:commandButton value="Baja" update="messages" action="#{beanPago.bajaMesa()}"
+   												onclick="return confirm('BAJA DE PAGO?')" disabled="#{!beanPago.mesaPaga}"/>
+		    					</f:facet>
+							</p:panelGrid>
 						</p:panel>
 					</h:form>
 				</div>

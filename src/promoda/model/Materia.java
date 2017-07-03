@@ -93,6 +93,10 @@ public class Materia implements Serializable {
 	//bi-directional many-to-one association to Mesa
 	@OneToMany(mappedBy="materia")
 	private List<Mesa> mesas;
+	
+	//bi-directional many-to-one association to MesasAlumno
+	@OneToMany(mappedBy="materia")
+	private List<MesasAlumno> mesasAlumnos;
 
 	public Materia() {
 	}
@@ -317,6 +321,28 @@ public class Materia implements Serializable {
 		mesa.setMateria(null);
 
 		return mesa;
+	}
+	
+	public List<MesasAlumno> getMesasAlumnos() {
+		return this.mesasAlumnos;
+	}
+
+	public void setMesasAlumnos(List<MesasAlumno> mesasAlumnos) {
+		this.mesasAlumnos = mesasAlumnos;
+	}
+
+	public MesasAlumno addMesasAlumno(MesasAlumno mesasAlumno) {
+		getMesasAlumnos().add(mesasAlumno);
+		mesasAlumno.setMateria(this);
+
+		return mesasAlumno;
+	}
+
+	public MesasAlumno removeMesasAlumno(MesasAlumno mesasAlumno) {
+		getMesasAlumnos().remove(mesasAlumno);
+		mesasAlumno.setMateria(null);
+
+		return mesasAlumno;
 	}
 
 }

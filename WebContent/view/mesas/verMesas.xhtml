@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<title>Ver Mesas</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+							<p:growl id="messages" showDetail="false" />
+							<ui:include src="/includes/menu.xhtml" />
+							<br/>
+			    			<p:panelGrid id="grid" columns="6" style="width:100%;">
+			    				<f:facet name="header">
+			    					<h2><h:outputText value="Inscripciones a Mesas" /></h2>
+			    				</f:facet>
+			    				
+			    				<p:outputLabel value="Curso " />
+					    		<p:selectOneMenu value="#{beanMesaAlum.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;">
+			    					<p:ajax event="change" listener="#{beanMesaAlum.onChangeCurso()}" update="panel" />
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanMesaAlum.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+			    					itemValue="#{curso.id}"/>
+			    				</p:selectOneMenu>		    					
+			    				
+			    				<p:outputLabel value="Materia " />
+					    		<p:selectOneMenu value="#{beanMesaAlum.idMateria}" filter="true" filterMatchMode="contains" >		    					
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanMesaAlum.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+			    					itemValue="#{materia.id}"/>
+			    				</p:selectOneMenu>
+			    				
+			    				<p:outputLabel value="Periodo " rendered="#{beanMesaAlum.verPeriodo || beanMesaAlum.verPeriodos}"/>
+			    				<p:selectOneMenu value="#{beanMesaAlum.idMatricula}" filter="true" filterMatchMode="contains" style="width:250px;"
+			    				rendered="#{beanMesaAlum.verPeriodos}">	    					
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanMesaAlum.listaMatriculaAlums}" var="matr" itemLabel="#{matr.descripcion}"
+			    					itemValue="#{matr.id}"/>
+			    				</p:selectOneMenu>
+			    				<p:outputLabel value="#{beanMesaAlum.matriculaAlum.descripcion}" rendered="#{beanMesaAlum.verPeriodo}" />	
+			    				
+			    				<f:facet name="footer">
+			    					<p:commandButton icon="ui-icon-search" value="Buscar" action="#{beanMesaAlum.buscar()}" update="panel" />
+			    				</f:facet>	    				   				
+			   				</p:panelGrid>
+			   				
+			   				<br/>
+					    	<p:dataTable id="tablaInscripciones" var="mesaAlumno" value="#{beanMesaAlum.listaMesasAlumnos}" 
+					    	widgetVar="cellMesaAlumno" resizableColumns="true" paginator="true" rows="20"
+					    	emptyMessage="No existen inscripciones" style="width:100%;margin-bottom:20px" >
+								<f:facet name="header">									
+									<p:outputLabel value="Mesas" />
+								</f:facet>								
+								
+								<p:column headerText="Baja" style="text-align: center; width:60px;" id="act_desact" exportable="false">						
+									<p:row rendered="#{mesaAlumno.enabled}">
+										<h:commandLink id="desactivar" title="Desactivar"
+											onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA LA INSCRIPCIÓN?')"
+											action="#{beanMesaAlum.bajaInscripcion(mesaAlumno)}">
+										 	<h:graphicImage value="/images/activo.ico" width="20" title="baja" /> 
+										</h:commandLink>
+									</p:row>						
+									<p:row rendered="#{!mesaAlumno.enabled}">
+										<h:graphicImage value="/images/desactivo.ico" width="20" title="Alta" />										
+									</p:row>
+								</p:column>
+								
+								<p:column headerText="Curso" >
+									<h:outputText value="#{mesaAlumno.mesa.curso.nombre}" />
+								</p:column>
+								
+								<p:column headerText="Materia" >
+									<h:outputText value="#{mesaAlumno.mesa.materia.nombre}" />
+								</p:column>
+								
+								<p:column headerText="Fecha y hora" >
+									<h:outputText value="#{mesaAlumno.mesa.fechaHoraString}" />
+								</p:column>
+								
+								<p:column headerText="Calificación" >
+									<h:outputText value="#{mesaAlumno.calificacion}" rendered="#{mesaAlumno.calificacion != 0}"/>
+									<h:outputText value=" - " rendered="#{mesaAlumno.calificacion == 0}"/>
+								</p:column>
+							</p:dataTable>							
+		   				</p:panel>
+			    	</h:form>
+			    </div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>

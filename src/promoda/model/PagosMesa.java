@@ -1,7 +1,9 @@
 package promoda.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -37,6 +39,11 @@ public class PagosMesa implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_mesa")
 	private Mesa mesa;
+	
+	//bi-directional many-to-one association to MesasAlumno
+	@ManyToOne
+	@JoinColumn(name="id_mesas_alumno")
+	private MesasAlumno mesasAlumno;
 
 	//bi-directional many-to-one association to Alumno
 	@ManyToOne
@@ -110,6 +117,14 @@ public class PagosMesa implements Serializable {
 
 	public void setMesa(Mesa mesa) {
 		this.mesa = mesa;
+	}
+	
+	public MesasAlumno getMesasAlumno() {
+		return this.mesasAlumno;
+	}
+
+	public void setMesasAlumno(MesasAlumno mesasAlumno) {
+		this.mesasAlumno = mesasAlumno;
 	}
 
 	public Alumno getAlumno() {

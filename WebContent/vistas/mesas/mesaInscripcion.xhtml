@@ -71,7 +71,10 @@
     							<p:inputText value="#{beanMesaAlumno.cantidad}" disabled="true"/>
     							
     							<p:outputLabel value="Costo: " />
-    							<p:inputText value="#{beanMesaAlumno.costo}" disabled="true"/>			    				   				
+    							<p:inputText value="#{beanMesaAlumno.costo}" disabled="true"/>	
+    							
+    							<p:outputLabel value="Registrar pago: " />
+    							<p:selectBooleanButton value="#{beanMesaAlumno.registrarPago}" onLabel="Si" offLabel="No" style="width:60px" disabled="#{beanMesaAlumno.costo == 0}"/>		    				   				
 			   				</p:panelGrid>	  
 			   				
 			   				<p:panelGrid columns="4" style="width:100%;">

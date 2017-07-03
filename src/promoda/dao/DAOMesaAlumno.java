@@ -3,6 +3,8 @@ package promoda.dao;
 import java.util.List;
 
 import promoda.model.Alumno;
+import promoda.model.Curso;
+import promoda.model.Materia;
 import promoda.model.Mesa;
 import promoda.model.MesasAlumno;
 
@@ -29,5 +31,9 @@ public interface DAOMesaAlumno {
 	public List<MesasAlumno> getLista(boolean estado, Alumno alumno);
 			
 	public List<MesasAlumno> getLista(boolean estado, Alumno alumno, Mesa mesa);
+	
+	public List<MesasAlumno> getLista(boolean estado, Alumno alumno, Curso curso, Materia materia);
+	
+	public List<MesasAlumno> getListaOrderByAlumno(boolean estado, Mesa mesa);
 
 }

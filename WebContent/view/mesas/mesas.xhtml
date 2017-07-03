@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Inscripción a mesa</title>		
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form onkeypress="return event.keyCode != 13">
+				<p:panel style="border:none;">
+					<p:growl id="messages" showDetail="false" />
+					<ui:include src="/includes/menu.xhtml" />
+				</p:panel>
+			</h:form>
+			<h:form id="formulario" onkeypress="return event.keyCode != 13" target="_blank">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+					<p:growl id="messages" showDetail="false" />
+					<h3 align="left" style="color: black;">Listado de cursos a los cuales se encuentra inscripto. 
+					Seleccione un curso, una materia y un periodo.</h3>		
+								
+					<p:panelGrid columns="6" cellpadding="5" style="width:100%;">		
+			    		<f:facet name="header">
+			    			<h:outputText value="Cursos a los cuales se encuentra inscripto" />
+			    		</f:facet>			 
+			    		   	
+			    		<p:outputLabel value="Curso " />
+			    		<p:selectOneMenu value="#{beanMesaAlum.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;">
+	    					<p:ajax event="change" listener="#{beanMesaAlum.onChangeCurso()}" update="panel" />
+	    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+	    					<f:selectItems value="#{beanMesaAlum.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+	    					itemValue="#{curso.id}"/>
+	    				</p:selectOneMenu>		  
+	    				
+	    				<p:outputLabel value="Periodo " rendered="#{beanMesaAlum.verPeriodo || beanMesaAlum.verPeriodos}"/>
+	    				<p:selectOneMenu value="#{beanMesaAlum.idMatricula}" filter="true" filterMatchMode="contains" style="width:250px;"
+	    				rendered="#{beanMesaAlum.verPeriodos}">	
+	    					<p:ajax event="change" listener="#{beanMesaAlum.onChangeMateria()}" update="panel" />	    					
+	    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+	    					<f:selectItems value="#{beanMesaAlum.listaMatriculaAlums}" var="matr" itemLabel="#{matr.descripcion}"
+	    					itemValue="#{matr.id}"/>
+	    				</p:selectOneMenu>
+	    				<p:outputLabel value="#{beanMesaAlum.matriculaAlum.descripcion}" rendered="#{beanMesaAlum.verPeriodo}" />	  					
+	    				
+	    				<p:outputLabel value="Materia " />
+			    		<p:selectOneMenu value="#{beanMesaAlum.idMateria}" filter="true" filterMatchMode="contains" >
+			    			<p:ajax event="change" listener="#{beanMesaAlum.onChangeMateria()}" update="panel" />				    					
+	    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+	    					<f:selectItems value="#{beanMesaAlum.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+	    					itemValue="#{materia.id}"/>
+	    				</p:selectOneMenu>    					    			
+	    			</p:panelGrid>	    			
+	    			<p:panelGrid columns="6" cellpadding="5" style="width:100%;">	    				
+	    				<p:outputLabel value="Mesa " />
+			    		<p:outputLabel value="#{beanMesaAlum.mesa.fechaHoraString}" rendered="#{beanMesaAlum.verMesa}" />
+			    		<p:outputLabel value="No existen mesas para la inscripción." rendered="#{!beanMesaAlum.verMesa}" />
+	    				
+	    				<p:outputLabel value="Cant. inscripciones " />
+						<p:inputText value="#{beanMesaAlum.cantidad}" disabled="true"/>
+						
+						<p:outputLabel value="Costo " />
+						<p:inputText value="#{beanMesaAlum.costo}" disabled="true" >
+							<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+						</p:inputText>		    		
+			    	</p:panelGrid>			    	
+			    	<p:panelGrid columns="4" style="width:100%;">
+	    				<f:facet name="header">
+	    					<p:commandButton id="button" value="Guardar" update="panel" action="#{beanMesaAlum.guardarInscripcion()}"
+	   						disabled="#{beanMesaAlum.panelPago}"/>
+	   						<p:commandButton value="Cancelar"
+	   						action="#{beanMesaAlum.goMesaInscripcion(beanMesaAlum.usuario)}" process="@this" />
+	    				</f:facet>
+	    			</p:panelGrid> 
+	    			
+			    	<p:panelGrid columns="4" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanMesaAlum.panelPago}">
+			    		<f:facet name="header">					    	
+					        <h:outputText value="Debe abonar el derecho a exámen para poder registrar la inscripción a mesa." />
+					    </f:facet>
+					    
+					    <p:outputLabel value="Curso: " />
+			    		<p:outputLabel value="#{beanMesaAlum.mesa.curso.nombre}" />
+			    		
+			    		<p:outputLabel value="Periodo: " />
+			    		<p:outputLabel value="#{beanMesaAlum.mesa.matricula.descripcion}" />
+			    		
+			    		<p:outputLabel value="Materia: " />
+			    		<p:outputLabel value="#{beanMesaAlum.mesa.materia.nombre}" />
+					    
+					    <p:outputLabel value="Mesa: " />
+			    		<p:outputLabel value="#{beanMesaAlum.mesa.fechaHoraString}" />					    					    			
+			    		
+			    		<p:outputLabel value="Costo de derecho a exámen (precio contado efectivo): " />
+			    		<p:outputLabel value="#{beanMesaAlum.costo}" >
+			    			<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+			    		</p:outputLabel>
+	 				</p:panelGrid>
+	 				<p:panelGrid columns="1" style="width:100%;" rendered="#{beanMesaAlum.panelPago}">
+	 					<f:facet name="header">
+	 						<p:commandButton value="Generar Pago de Derecho a Exámen con Mercado Pago" action="#{beanMesaAlum.generarPagoMesa()}" 
+	 						ajax="false"/>
+	 					</f:facet>
+	 				</p:panelGrid>
+	 				<p:panelGrid style="width:100%;" rendered="#{beanMesaAlum.panelPago}">
+	 					<p:outputLabel style="color:black;" value="(*) Recuerde que si la cantidad de inscripciones a las mesas para esta materia supera la cantidad de tres, debe abonar el derecho de exámen para poder registrar la inscripción al mismo. 
+	 					Si desea abonar el derecho de exámen de forma online, tenga en cuenta que el monto se verá afectado por un aumento por costos de pago online. 
+	 					Dependiendo el tipo de pago seleccionado, el mismo puede tardar hasta 72 horas en acreditarse. Preste mucha atención al importe antes de confirmar el pago.-" />
+	 				</p:panelGrid>	  				
+	 				
+				</p:panel> 
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+</html>

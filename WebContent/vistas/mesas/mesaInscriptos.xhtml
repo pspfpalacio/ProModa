@@ -39,7 +39,7 @@
 			    				<p:outputLabel value="Mesa" />
 					    		<h:inputText value="#{beanMesaAlumno.mesa.fechaHoraString}" disabled="true" size="40"/>			    				   				
 			   				</p:panelGrid>
-			   				<p:outputPanel style="float:right;">							
+			   				<p:outputPanel style="float:right;" rendered="false">							
 								<h:commandLink >
 									<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
 									<p:dataExporter type="pdf" target="tablaInscripciones" fileName="Calificaciones" preProcessor="#{beanRecurso.preProcessCalificacionesPDF}"/>
@@ -54,6 +54,19 @@
 								</f:facet>
 								
 								<p:ajax event="cellEdit" listener="#{beanMesaAlumno.onRowEdit(mesaAlumno)}" update=":formulario:tablaInscripciones" />
+								
+								<p:column headerText="Baja" style="text-align: center; width:60px;" id="act_desact" exportable="false">						
+									<p:row rendered="#{mesaAlumno.enabled}">
+										<h:commandLink id="desactivar" title="Desactivar"
+											onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA LA INSCRIPCIÓN?')"
+											action="#{beanMesaAlumno.bajaInscripto(mesaAlumno)}">
+										 	<h:graphicImage value="/images/activo.ico" width="20" title="baja" /> 
+										</h:commandLink>
+									</p:row>						
+									<p:row rendered="#{!mesaAlumno.enabled}">
+										<h:graphicImage value="/images/desactivo.ico" width="20" title="Alta" />										
+									</p:row>
+								</p:column>
 								
 								<p:column headerText="Alumno" >
 									<h:outputText value="#{mesaAlumno.alumno.nombreCompleto}" />
@@ -72,8 +85,8 @@
 							</p:dataTable>	
 							<p:panelGrid columns="1" style="width:100%;">
 								<f:facet name="header">
-									<p:commandButton icon="ui-icon-disk" value="Guardar Cambios" action="#{beanMesaAlumno " update="panel" />									
-									<p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="Cancelar" onclick="return confirm('CANCELAR Y VOLVER?')"
+									<p:commandButton icon="ui-icon-disk" value="Guardar Cambios" action="#{beanMesaAlumno.calificarInscriptos()}" update="panel" />									
+									<p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="Volver" 
 			   						action="#{beanMesa.goMesas(beanMesa.usuario)}" process="@this" ajax="false"/>
 								</f:facet>
 							</p:panelGrid>

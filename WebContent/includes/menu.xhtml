@@ -17,6 +17,11 @@
 			<p:submenu label="Cursos" >
 	            <p:menuitem value="Inscripto" action="#{beanCursoAlum.goInscripto(beanLogueo.usuario)}" process="@this" ajax="false" />
 	        </p:submenu>
+	        
+	        <p:submenu label="Mesas" >
+	            <p:menuitem value="Inscripción" action="#{beanMesaAlum.goMesaInscripcion(beanLogueo.usuario)}" process="@this" ajax="false" />
+	            <p:menuitem value="Ver" action="#{beanMesaAlum.goVerMesas(beanLogueo.usuario)}" process="@this" ajax="false" />
+	        </p:submenu>
 			
 			<f:facet name="options">
 				<p:outputLabel value="Bienvenido #{beanLogueo.usuario.nombreCompleto}" style="font-family:sans-serif;"/>

@@ -1252,6 +1252,12 @@
     ID="realizarpago::#view#pagos#realizarpago.xhtml" NAME="output3"
     PATH="/view/pagos/realizarpago.xhtml"
     TARGET="rules:#view#pagos#realizarpago.xhtml" TITLE="realizarpago" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="mesasAlumno::#view#mesas#mesas.xhtml"
+    NAME="output4" PATH="/view/mesas/mesas.xhtml"
+    TARGET="rules:#view#mesas#mesas.xhtml" TITLE="mesasAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="verMesas::#view#mesas#verMesas.xhtml"
+    NAME="output5" PATH="/view/mesas/verMesas.xhtml"
+    TARGET="rules:#view#mesas#verMesas.xhtml" TITLE="verMesas" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#view#cursos#inscripto.xhtml"
@@ -1272,6 +1278,12 @@
     ID="realizarpago::#view#pagos#realizarpago.xhtml" NAME="output3"
     PATH="/view/pagos/realizarpago.xhtml"
     TARGET="rules:#view#pagos#realizarpago.xhtml" TITLE="realizarpago" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="mesasAlumno::#view#mesas#mesas.xhtml"
+    NAME="output4" PATH="/view/mesas/mesas.xhtml"
+    TARGET="rules:#view#mesas#mesas.xhtml" TITLE="mesasAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="verMesas::#view#mesas#verMesas.xhtml"
+    NAME="output5" PATH="/view/mesas/verMesas.xhtml"
+    TARGET="rules:#view#mesas#verMesas.xhtml" TITLE="verMesas" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#asistencias#asistencia.xhtml"
@@ -1466,6 +1478,12 @@
     ID="realizarpago::#view#pagos#realizarpago.xhtml" NAME="output3"
     PATH="/view/pagos/realizarpago.xhtml"
     TARGET="rules:#view#pagos#realizarpago.xhtml" TITLE="realizarpago" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="mesasAlumno::#view#mesas#mesas.xhtml"
+    NAME="output4" PATH="/view/mesas/mesas.xhtml"
+    TARGET="rules:#view#mesas#mesas.xhtml" TITLE="mesasAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="verMesas::#view#mesas#verMesas.xhtml"
+    NAME="output5" PATH="/view/mesas/verMesas.xhtml"
+    TARGET="rules:#view#mesas#verMesas.xhtml" TITLE="verMesas" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#view#pagos#realizarpago.xhtml"
@@ -1486,6 +1504,12 @@
     NAME="output3" PATH="/view/asistencias/asistencia.xhtml"
     TARGET="rules:#view#asistencias#asistencia.xhtml"
     TITLE="asistenciaAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="mesasAlumno::#view#mesas#mesas.xhtml"
+    NAME="output4" PATH="/view/mesas/mesas.xhtml"
+    TARGET="rules:#view#mesas#mesas.xhtml" TITLE="mesasAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="verMesas::#view#mesas#verMesas.xhtml"
+    NAME="output5" PATH="/view/mesas/verMesas.xhtml"
+    TARGET="rules:#view#mesas#verMesas.xhtml" TITLE="verMesas" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#recursos#recursos.xhtml"
@@ -1658,6 +1682,10 @@
     NAME="output18" PATH="/vistas/pagos/pagosporvencer.xhtml"
     TARGET="rules:#vistas#pagos#pagosporvencer.xhtml"
     TITLE="pagosporvencer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="pagosonline::#vistas#pagos#pagosonline.xhtml" NAME="output19"
+    PATH="/vistas/pagos/pagosonline.xhtml"
+    TARGET="rules:#vistas#pagos#pagosonline.xhtml" TITLE="pagosonline" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
     ID="calificarAlumnos::#vistas#matriculas#calificarAlumnos.xhtml"
     NAME="output20" PATH="/vistas/matriculas/calificarAlumnos.xhtml"
@@ -2196,6 +2224,11 @@
     NAME="output22" PATH="/vistas/mesas/mesaInscripcion.xhtml"
     TARGET="rules:#vistas#mesas#mesaInscripcion.xhtml"
     TITLE="mesaInscripcion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="mesaInscriptos::#vistas#mesas#mesaInscriptos.xhtml"
+    NAME="output23" PATH="/vistas/mesas/mesaInscriptos.xhtml"
+    TARGET="rules:#vistas#mesas#mesaInscriptos.xhtml"
+    TITLE="mesaInscriptos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#mesas#mesa.xhtml"
@@ -2222,6 +2255,69 @@
     NAME="output1" PATH="/vistas/mesas/mesaInscripcion.xhtml"
     TARGET="rules:#vistas#mesas#mesaInscripcion.xhtml"
     TITLE="mesaInscripcion" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#mesas#mesaInscriptos.xhtml"
+  PATH="/vistas/mesas/mesaInscriptos.xhtml" SHAPE="848,4320,50,25" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#mesas#mesaInscriptos.xhtml:0"
+   NAME="item" PATH="/vistas/mesas/mesaInscriptos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="mesas::#vistas#mesas#mesas.xhtml"
+    NAME="output" PATH="/vistas/mesas/mesas.xhtml"
+    TARGET="rules:#vistas#mesas#mesas.xhtml" TITLE="mesas" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="mesaInscriptos::#vistas#mesas#mesaInscriptos.xhtml"
+    NAME="output1" PATH="/vistas/mesas/mesaInscriptos.xhtml"
+    TARGET="rules:#vistas#mesas#mesaInscriptos.xhtml"
+    TITLE="mesaInscriptos" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#view#mesas#mesas.xhtml"
+  PATH="/view/mesas/mesas.xhtml" SHAPE="1320,400,50,105" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#view#mesas#mesas.xhtml:0" NAME="item"
+   PATH="/view/mesas/mesas.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="inicio::#inicio.xhtml" NAME="output"
+    PATH="/inicio.xhtml" TARGET="rules:#inicio.xhtml" TITLE="inicio" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inscripto::#view#cursos#inscripto.xhtml"
+    NAME="output1" PATH="/view/cursos/inscripto.xhtml"
+    TARGET="rules:#view#cursos#inscripto.xhtml" TITLE="inscripto" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistenciaAlumno::#view#asistencias#asistencia.xhtml"
+    NAME="output2" PATH="/view/asistencias/asistencia.xhtml"
+    TARGET="rules:#view#asistencias#asistencia.xhtml"
+    TITLE="asistenciaAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="realizarpago::#view#pagos#realizarpago.xhtml" NAME="output3"
+    PATH="/view/pagos/realizarpago.xhtml"
+    TARGET="rules:#view#pagos#realizarpago.xhtml" TITLE="realizarpago" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="mesasAlumno::#view#mesas#mesas.xhtml"
+    NAME="output4" PATH="/view/mesas/mesas.xhtml"
+    TARGET="rules:#view#mesas#mesas.xhtml" TITLE="mesasAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="verMesas::#view#mesas#verMesas.xhtml"
+    NAME="output5" PATH="/view/mesas/verMesas.xhtml"
+    TARGET="rules:#view#mesas#verMesas.xhtml" TITLE="verMesas" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#view#mesas#verMesas.xhtml"
+  PATH="/view/mesas/verMesas.xhtml" SHAPE="1520,408,50,25" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#view#mesas#verMesas.xhtml:0" NAME="item"
+   PATH="/view/mesas/verMesas.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="inicio::#inicio.xhtml" NAME="output"
+    PATH="/inicio.xhtml" TARGET="rules:#inicio.xhtml" TITLE="inicio" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inscripto::#view#cursos#inscripto.xhtml"
+    NAME="output1" PATH="/view/cursos/inscripto.xhtml"
+    TARGET="rules:#view#cursos#inscripto.xhtml" TITLE="inscripto" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="asistenciaAlumno::#view#asistencias#asistencia.xhtml"
+    NAME="output2" PATH="/view/asistencias/asistencia.xhtml"
+    TARGET="rules:#view#asistencias#asistencia.xhtml"
+    TITLE="asistenciaAlumno" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="realizarpago::#view#pagos#realizarpago.xhtml" NAME="output3"
+    PATH="/view/pagos/realizarpago.xhtml"
+    TARGET="rules:#view#pagos#realizarpago.xhtml" TITLE="realizarpago" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="mesasAlumno::#view#mesas#mesas.xhtml"
+    NAME="output4" PATH="/view/mesas/mesas.xhtml"
+    TARGET="rules:#view#mesas#mesas.xhtml" TITLE="mesasAlumno" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
 </PROCESS>

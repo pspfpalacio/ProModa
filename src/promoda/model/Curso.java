@@ -107,6 +107,10 @@ public class Curso implements Serializable {
 	//bi-directional many-to-one association to Mesa
 	@OneToMany(mappedBy="curso")
 	private List<Mesa> mesas;
+	
+	//bi-directional many-to-one association to MesasAlumno
+	@OneToMany(mappedBy="curso")
+	private List<MesasAlumno> mesasAlumnos;
 
 	public Curso() {
 	}
@@ -413,6 +417,28 @@ public class Curso implements Serializable {
 		mesa.setCurso(null);
 
 		return mesa;
+	}
+	
+	public List<MesasAlumno> getMesasAlumnos() {
+		return this.mesasAlumnos;
+	}
+
+	public void setMesasAlumnos(List<MesasAlumno> mesasAlumnos) {
+		this.mesasAlumnos = mesasAlumnos;
+	}
+
+	public MesasAlumno addMesasAlumno(MesasAlumno mesasAlumno) {
+		getMesasAlumnos().add(mesasAlumno);
+		mesasAlumno.setCurso(this);
+
+		return mesasAlumno;
+	}
+
+	public MesasAlumno removeMesasAlumno(MesasAlumno mesasAlumno) {
+		getMesasAlumnos().remove(mesasAlumno);
+		mesasAlumno.setCurso(null);
+
+		return mesasAlumno;
 	}
 
 }

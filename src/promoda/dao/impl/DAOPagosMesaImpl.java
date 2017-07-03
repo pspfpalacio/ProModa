@@ -9,6 +9,9 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import promoda.dao.DAOPagosMesa;
+import promoda.model.Alumno;
+import promoda.model.Mesa;
+import promoda.model.MesasAlumno;
 import promoda.model.PagosMesa;
 
 public class DAOPagosMesaImpl implements DAOPagosMesa, Serializable {
@@ -49,8 +52,8 @@ public class DAOPagosMesaImpl implements DAOPagosMesa, Serializable {
 		try {
 			inicializar();
 			Query locQuery = em.createQuery("UPDATE PagosMesa p SET p.alumno = :pAlumno, p.enabled = :pEnabled, "
-					+ "p.fecha = :pFecha, p.fechaAlta = :pFechaAlta, p.fechaBaja = :pFechaBaja, "
-					+ "p.mesa = :pMesa, p.monto = :pMonto, p.usuario1 = :pUsuario1, p.usuario2 = :pUsuario2 "
+					+ "p.fecha = :pFecha, p.fechaAlta = :pFechaAlta, p.fechaBaja = :pFechaBaja, p.mesa = :pMesa, "
+					+ "p.mesasAlumno = :pMesasAlumno, p.monto = :pMonto, p.usuario1 = :pUsuario1, p.usuario2 = :pUsuario2 "
 					+ "WHERE p.id = :pId", PagosMesa.class);
 			locQuery.setParameter("pAlumno", pagosMesa.getAlumno());			
 			locQuery.setParameter("pEnabled", pagosMesa.getEnabled());
@@ -58,6 +61,7 @@ public class DAOPagosMesaImpl implements DAOPagosMesa, Serializable {
 			locQuery.setParameter("pFechaAlta", pagosMesa.getFechaAlta());
 			locQuery.setParameter("pFechaBaja", pagosMesa.getFechaBaja());			
 			locQuery.setParameter("pMesa", pagosMesa.getMesa());
+			locQuery.setParameter("pMesasAlumno", pagosMesa.getMesasAlumno());
 			locQuery.setParameter("pMonto", pagosMesa.getMonto());
 			locQuery.setParameter("pUsuario1", pagosMesa.getUsuario1());
 			locQuery.setParameter("pUsuario2", pagosMesa.getUsuario2());
@@ -71,6 +75,37 @@ public class DAOPagosMesaImpl implements DAOPagosMesa, Serializable {
 			e.printStackTrace();
 			return 0;
 		}
+	}
+
+	public PagosMesa get(MesasAlumno mesasAlumno) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT p FROM PagosMesa p WHERE p.mesasAlumno = :pMesasAlumno", PagosMesa.class);
+		locQuery.setParameter("pMesasAlumno", mesasAlumno);		
+		PagosMesa pagosMesa = new PagosMesa();
+		try {
+			pagosMesa = (PagosMesa) locQuery.getSingleResult();
+		} catch (Exception e) {
+			// TODO: handle exception
+			pagosMesa = new PagosMesa();
+		}
+		return pagosMesa;
+	}
+	
+	public PagosMesa get(Mesa mesa, Alumno alumno) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT p FROM PagosMesa p WHERE p.alumno = :pAlumno AND p.enabled = :pEnabled "
+				+ "AND p.mesa = :pMesa", PagosMesa.class);
+		locQuery.setParameter("pAlumno", alumno);
+		locQuery.setParameter("pEnabled", true);	
+		locQuery.setParameter("pMesa", mesa);	
+		PagosMesa pagosMesa = new PagosMesa();
+		try {
+			pagosMesa = (PagosMesa) locQuery.getSingleResult();
+		} catch (Exception e) {
+			// TODO: handle exception
+			pagosMesa = new PagosMesa();
+		}
+		return pagosMesa;
 	}
 
 }

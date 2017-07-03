@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -45,6 +46,16 @@ public class MesasAlumno implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_alumno")
 	private Alumno alumno;
+	
+	//bi-directional many-to-one association to Curso
+	@ManyToOne
+	@JoinColumn(name="id_curso")
+	private Curso curso;
+
+	//bi-directional many-to-one association to Materia
+	@ManyToOne
+	@JoinColumn(name="id_materia")
+	private Materia materia;
 
 	//bi-directional many-to-one association to Mesa
 	@ManyToOne
@@ -65,6 +76,10 @@ public class MesasAlumno implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_usuario_mod")
 	private Usuario usuario3;
+	
+	//bi-directional many-to-one association to PagosMesa
+	@OneToMany(mappedBy="mesasAlumno")
+	private List<PagosMesa> pagosMesas;
 
 	public MesasAlumno() {
 	}
@@ -140,6 +155,22 @@ public class MesasAlumno implements Serializable {
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
 	}
+	
+	public Curso getCurso() {
+		return this.curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+
+	public Materia getMateria() {
+		return this.materia;
+	}
+
+	public void setMateria(Materia materia) {
+		this.materia = materia;
+	}
 
 	public Mesa getMesa() {
 		return this.mesa;
@@ -171,6 +202,28 @@ public class MesasAlumno implements Serializable {
 
 	public void setUsuario3(Usuario usuario3) {
 		this.usuario3 = usuario3;
+	}
+	
+	public List<PagosMesa> getPagosMesas() {
+		return this.pagosMesas;
+	}
+
+	public void setPagosMesas(List<PagosMesa> pagosMesas) {
+		this.pagosMesas = pagosMesas;
+	}
+
+	public PagosMesa addPagosMesa(PagosMesa pagosMesa) {
+		getPagosMesas().add(pagosMesa);
+		pagosMesa.setMesasAlumno(this);
+
+		return pagosMesa;
+	}
+
+	public PagosMesa removePagosMesa(PagosMesa pagosMesa) {
+		getPagosMesas().remove(pagosMesa);
+		pagosMesa.setMesasAlumno(null);
+
+		return pagosMesa;
 	}
 
 }
