@@ -20,6 +20,8 @@ public interface DAOCuota {
 	
 	public List<Cuota> getLista(boolean estado);
 	
+	public List<Cuota> getLista(boolean estado, boolean paga);
+	
 	public List<Cuota> getLista(Alumno alumno);
 	
 	public List<Cuota> getLista(Matricula matricula);

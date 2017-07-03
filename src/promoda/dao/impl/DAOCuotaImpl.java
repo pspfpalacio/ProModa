@@ -119,6 +119,15 @@ public class DAOCuotaImpl implements Serializable, DAOCuota {
 		List<Cuota> lista = locQuery.getResultList();
 		return lista;
 	}
+	
+	public List<Cuota> getLista(boolean estado, boolean paga) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.enabled = :pEnabled AND c.paga = :pPaga", Cuota.class);
+		locQuery.setParameter("pEnabled", estado);
+		locQuery.setParameter("pPaga", paga);
+		List<Cuota> lista = locQuery.getResultList();
+		return lista;
+	}
 
 	public List<Cuota> getLista(Alumno alumno) {
 		inicializar();

@@ -3,9 +3,12 @@ package promoda.managed.beans;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,6 +24,7 @@ import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 
 import promoda.clases.CajasMov;
+import promoda.clases.Reporte;
 import promoda.dao.DAOCaja;
 import promoda.model.Caja;
 import promoda.model.Usuario;
@@ -236,5 +240,19 @@ public class BeanCaja implements Serializable {
          
         pdf.add(Image.getInstance(logo));
     }
+	
+	public void generarXLS() {
+		Reporte reporte = new Reporte();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Map<String, Object> parametros = new HashMap<String, Object>();		
+		if (fechaDesde != null && fechaHasta != null) {
+			parametros.put("fechaDesde", dateFormat.format(fechaDesde));
+			parametros.put("fechaHasta", dateFormat.format(fechaHasta));
+		} else {
+			parametros.put("fechaDesde", "");
+			parametros.put("fechaHasta", "");
+		}		
+		reporte.exportXls(parametros, listaCajas, "cajaExcel", "attachment");
+	}
 
 }

@@ -885,7 +885,8 @@ public class BeanPago implements Serializable {
         		pagosmatricula.setEnabled(true);
         		pagosmatricula.setConcepto(concepto);
         		matalumno.setPago(true);
-        		matalumno.setFechaPago(fecha);    		
+        		matalumno.setFechaPago(fecha);    	
+        		matalumno.setMontoPago(pagosmatricula.getMonto());
         		controlMatAlumno = matriculaAlumnoDAO.update(matalumno);
         		controlPagoMatricula = pagosMatriculaDAO.insertar(pagosmatricula);
         		int idPagoMatricula = controlPagoMatricula;
@@ -949,12 +950,16 @@ public class BeanPago implements Serializable {
     public void pagoCuotas() {
     	FacesMessage msg = null;
     	if(selectedCuota.size() > 0){
+    		boolean pagas = false;
     		for (Cuota cuota : selectedCuota) {
     			if(cuota.getMontoPago() == 0 || cuota.getFechaPago() == null){
     				validacionCoutas = false;
     			}
+    			if (cuota.getPaga()) {
+    				pagas = true;
+    			}
     		}
-    		if(validacionCoutas){
+    		if(validacionCoutas && !pagas){
 		    	for (Cuota cuota : selectedCuota) {
 		    		CajasMov cajaMov = new CajasMov();
 		    		cuota.setPaga(true);
@@ -987,8 +992,14 @@ public class BeanPago implements Serializable {
 		    		FacesContext.getCurrentInstance().addMessage(null, msg);
 		    	}
     		}else{
-    			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "DEBE INGRESAR MONTO Y FECHA PARA LAS CUOTAS SELECCIONADAS", null);
-    			FacesContext.getCurrentInstance().addMessage(null, msg);
+    			if(!validacionCoutas) {
+    				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "DEBE INGRESAR MONTO Y FECHA PARA LAS CUOTAS SELECCIONADAS", null);
+        			FacesContext.getCurrentInstance().addMessage(null, msg);
+    			}
+    			if (pagas) {
+    				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "ALGUNA DE LAS CUOTAS SELECCIONADAS YA POSEE UN PAGO REGISTRADO!", null);
+        			FacesContext.getCurrentInstance().addMessage(null, msg);
+    			}
     		}
     	}else{
     		msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "DEBE SELECCIONAR ALGUNA CUOTA", null);
