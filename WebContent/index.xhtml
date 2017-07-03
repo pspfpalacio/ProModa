@@ -26,7 +26,15 @@
 				<br/>
 		    	<h1 align="center">  <p:outputLabel value="Bienvenido al Sistema de Gestión #{beanLogueo.usuario.nombreCompleto}"/> </h1>		    	
 		    	<h2>  </h2>
+
 		    	<p:commandButton value="Proceso matriculas" action="#{beanLogueo.procesoMatricula()}" ajax="false" rendered="#{beanLogueo.usuario.id == 1}"/>
+		    	
+		    	<p:commandButton value="Proceso Actualiza Pagos Cuotas" action="#{beanLogueo.actualizaPagosCuotas()}" rendered="#{beanLogueo.usuario.id == 1}"
+		    	update="messages" ajax="false" onclick="return confirm('ESTA SEGURO QUE DESEA EJECUTAR EL PROCESO?')"/>
+		    	
+		    	<p:commandButton value="Proceso Actualiza Pagos Matriculas" action="#{beanLogueo.actualizaPagosMatriculas()}" rendered="#{beanLogueo.usuario.id == 1}"
+		    	update="messages" ajax="false" onclick="return confirm('ESTA SEGURO QUE DESEA EJECUTAR EL PROCESO?')"/>
+		    	
 	    	</p:panel>
 		</h:form>
 		</div>
