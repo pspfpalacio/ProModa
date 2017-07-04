@@ -1772,6 +1772,7 @@ public class BeanInscripcion implements Serializable {
 		parametros.put("horario", inscripcionReporte.getHorarioString());
 		parametros.put("localidad", inscripcionReporte.getLocalidad());
 		parametros.put("matricula", inscripcionReporte.getMatriculaString());
+		parametros.put("matriculaDesc", inscripcionReporte.getMatriculaDesc());
 		parametros.put("nombre", inscripcionReporte.getNombre());
 		parametros.put("numero", inscripcionReporte.getNumero());
 		parametros.put("piso", inscripcionReporte.getPiso());

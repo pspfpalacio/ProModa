@@ -15,6 +15,8 @@ public class Inscripto implements Serializable {
 	private String telefonoFijo;
 	private String telefonoCel;
 	private String email;
+	private String condicion;
+	private String calificacion;
 
 	public int getDni() {
 		return dni;
@@ -62,6 +64,22 @@ public class Inscripto implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getCondicion() {
+		return condicion;
+	}
+
+	public void setCondicion(String condicion) {
+		this.condicion = condicion;
+	}
+
+	public String getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(String calificacion) {
+		this.calificacion = calificacion;
 	}
 
 }

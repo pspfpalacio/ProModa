@@ -39,16 +39,14 @@
 			    				<p:outputLabel value="Mesa" />
 					    		<h:inputText value="#{beanMesaAlumno.mesa.fechaHoraString}" disabled="true" size="40"/>			    				   				
 			   				</p:panelGrid>
-			   				<p:outputPanel style="float:right;" rendered="false">							
-								<h:commandLink >
-									<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
-									<p:dataExporter type="pdf" target="tablaInscripciones" fileName="Calificaciones" preProcessor="#{beanRecurso.preProcessCalificacionesPDF}"/>
+			   				<p:outputPanel style="float:right;" >							
+								<h:commandLink action="#{beanMesaAlumno.generarPDF()}" target="_blank" title="PDF Alumnos completos">
+									<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />									
 								</h:commandLink>
 							</p:outputPanel>
 					    	<p:dataTable id="tablaInscripciones" var="mesaAlumno" value="#{beanMesaAlumno.listaMesasAlumnos}" editable="true" 
 					    	widgetVar="cellMesaAlumno" editMode="cell" scrollRows="50" resizableColumns="true" scrollable="true" scrollHeight="600" 
-					    	emptyMessage="No existen Alumnos inscriptos" style="width:100%;margin-bottom:20px" 
-					    	paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+					    	emptyMessage="No existen Alumnos inscriptos" style="width:100%;margin-bottom:20px" >
 								<f:facet name="header">									
 									<p:outputLabel value="Calificar inscriptos" />
 								</f:facet>
@@ -70,7 +68,11 @@
 								
 								<p:column headerText="Alumno" >
 									<h:outputText value="#{mesaAlumno.alumno.nombreCompleto}" />
-								</p:column>						
+								</p:column>		
+								
+								<p:column headerText="Condición" >
+									<h:outputText value="#{mesaAlumno.condicion}" />
+								</p:column>				
 								
 								<p:column headerText="Calificación" style="text-align:center;">
 									<p:cellEditor>

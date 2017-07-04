@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import promoda.dao.DAOMateriasCalificacion;
+import promoda.model.Alumno;
 import promoda.model.Curso;
 import promoda.model.Materia;
 import promoda.model.MateriasCalificacion;
@@ -85,6 +86,24 @@ public class DAOMateriasCalificacionImpl implements Serializable,
 		inicializar();
 		Query locQuery = em.createQuery("SELECT m FROM MateriasCalificacion m WHERE m.id = :pId", MateriasCalificacion.class);
 		locQuery.setParameter("pId", id);
+		MateriasCalificacion matriculaCalifiacion = new MateriasCalificacion();
+		try {
+			matriculaCalifiacion = (MateriasCalificacion) locQuery.getSingleResult();
+		} catch(Exception e) {
+			matriculaCalifiacion = new MateriasCalificacion();
+		}
+		return matriculaCalifiacion;
+	}
+	
+	public MateriasCalificacion get(Alumno alumno, Curso curso, Materia materia, Matricula matricula) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT m FROM MateriasCalificacion m WHERE m.alumno = :pAlumno AND m.curso = :pCurso "
+				+ "AND m.enabled = :pEnabled AND m.materia = :pMateria AND m.matricula = :pMatricula", MateriasCalificacion.class);
+		locQuery.setParameter("pAlumno", alumno);
+		locQuery.setParameter("pCurso", curso);
+		locQuery.setParameter("pEnabled", true);
+		locQuery.setParameter("pMateria", materia);
+		locQuery.setParameter("pMatricula", matricula);
 		MateriasCalificacion matriculaCalifiacion = new MateriasCalificacion();
 		try {
 			matriculaCalifiacion = (MateriasCalificacion) locQuery.getSingleResult();

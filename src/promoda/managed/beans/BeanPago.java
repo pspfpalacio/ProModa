@@ -1610,6 +1610,7 @@ public class BeanPago implements Serializable {
 			 List<Contacto> listaContacto = new ArrayList<Contacto>();
 			 dMatricula.setAlumno(mAlumno.getAlumno().getNombreCompleto());
 			 dMatricula.setCurso(mAlumno.getCurso().getNombre());
+			 dMatricula.setMatricula(mAlumno.getMatricula().getDescripcion());
 			 dMatricula.setFechaInscripcion(formatoFecha.format(mAlumno.getFechaAlta()));
 			 dMatricula.setMontoDeuda(formatoMonto.format(mAlumno.getMatricula().getCosto()));
 			 contacto.setEmail(mAlumno.getAlumno().getEmail());
@@ -1635,6 +1636,7 @@ public class BeanPago implements Serializable {
 			 List<Contacto> listaContacto = new ArrayList<Contacto>();
 			 dCuota.setAlumno(cuo.getAlumno().getNombreCompleto());
 			 dCuota.setCurso(cuo.getCurso().getNombre());
+			 dCuota.setMatricula(cuo.getMatricula().getDescripcion());
 			 dCuota.setDetalle(cuo.getDetalle());
 			 dCuota.setMonto(formatoMonto.format(cuo.getMonto()));
 			 dCuota.setPrimerVencimiento(formatoFecha.format(cuo.getFechaVencimiento()));

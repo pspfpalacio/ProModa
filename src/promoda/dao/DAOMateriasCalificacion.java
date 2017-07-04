@@ -2,6 +2,7 @@ package promoda.dao;
 
 import java.util.List;
 
+import promoda.model.Alumno;
 import promoda.model.Curso;
 import promoda.model.Materia;
 import promoda.model.MateriasCalificacion;
@@ -14,6 +15,8 @@ public interface DAOMateriasCalificacion {
 	public int update(MateriasCalificacion materiasCalificacion);
 	
 	public MateriasCalificacion get(int id);	
+	
+	public MateriasCalificacion get(Alumno alumno, Curso curso, Materia materia, Matricula matricula);
 	
 	public List<MateriasCalificacion> getLista();
 	

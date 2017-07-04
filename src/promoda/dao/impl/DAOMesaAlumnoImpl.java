@@ -54,13 +54,14 @@ public class DAOMesaAlumnoImpl implements DAOMesaAlumno, Serializable {
 		try {
 			inicializar();
 			Query locQuery = em.createQuery("UPDATE MesasAlumno m SET m.alumno = :pAlumno, m.aprobado = :pAprobado, m.calificacion = :pCalificacion, "
-					+ "m.contador = :pContador, m.curso = :pCurso, m.enabled = :pEnabled, m.fechaAlta = :pFechaAlta, m.fechaBaja = :pFechaBaja, "
+					+ "m.condicion = :pCondicion, m.contador = :pContador, m.curso = :pCurso, m.enabled = :pEnabled, m.fechaAlta = :pFechaAlta, m.fechaBaja = :pFechaBaja, "
 					+ "m.fechaMod = :pFechaMod, m.materia = :pMateria, m.mesa = :pMesa, m.usuario1 = :pUsuarioAlta, m.usuario2 = :pUsuarioBaja, "
 					+ "m.usuario3 = :pUsuarioMod "
 					+ "WHERE m.id = :pId", MesasAlumno.class);
 			locQuery.setParameter("pAlumno", mesasAlumno.getAlumno());
 			locQuery.setParameter("pAprobado", mesasAlumno.getAprobado());
-			locQuery.setParameter("pCalificacion", mesasAlumno.getCalificacion());			
+			locQuery.setParameter("pCalificacion", mesasAlumno.getCalificacion());
+			locQuery.setParameter("pCondicion", mesasAlumno.getCondicion());
 			locQuery.setParameter("pContador", mesasAlumno.getContador());
 			locQuery.setParameter("pCurso", mesasAlumno.getCurso());
 			locQuery.setParameter("pEnabled", mesasAlumno.getEnabled());
@@ -183,7 +184,7 @@ public class DAOMesaAlumnoImpl implements DAOMesaAlumno, Serializable {
 	public List<MesasAlumno> getListaOrderByAlumno(boolean estado, Mesa mesa) {
 		inicializar();
 		Query locQuery = em.createQuery("SELECT m FROM MesasAlumno m WHERE m.enabled = :pEnabled AND m.mesa = :pMesa "
-				+ "ORDER BY m.alumno.nombreCompleto DESC", MesasAlumno.class);
+				+ "ORDER BY m.alumno.nombreCompleto", MesasAlumno.class);
 		locQuery.setParameter("pEnabled", estado);
 		locQuery.setParameter("pMesa", mesa);
 		List<MesasAlumno> lista = locQuery.getResultList();

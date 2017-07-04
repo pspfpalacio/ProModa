@@ -25,6 +25,8 @@ public class MesasAlumno implements Serializable {
 	private boolean aprobado;
 
 	private float calificacion;
+	
+	private String condicion;
 
 	private int contador;
 
@@ -106,6 +108,14 @@ public class MesasAlumno implements Serializable {
 
 	public void setCalificacion(float calificacion) {
 		this.calificacion = calificacion;
+	}
+	
+	public String getCondicion() {
+		return this.condicion;
+	}
+
+	public void setCondicion(String condicion) {
+		this.condicion = condicion;
 	}
 
 	public int getContador() {

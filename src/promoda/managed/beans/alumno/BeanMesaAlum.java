@@ -21,6 +21,7 @@ import promoda.clases.MatriculaAlum;
 import promoda.dao.DAOAlumno;
 import promoda.dao.DAOCurso;
 import promoda.dao.DAOMateria;
+import promoda.dao.DAOMateriasCalificacion;
 import promoda.dao.DAOMatricula;
 import promoda.dao.DAOMatriculaAlumno;
 import promoda.dao.DAOMesa;
@@ -31,6 +32,7 @@ import promoda.dao.DAOResgistroOnline;
 import promoda.model.Alumno;
 import promoda.model.Curso;
 import promoda.model.Materia;
+import promoda.model.MateriasCalificacion;
 import promoda.model.Matricula;
 import promoda.model.Mesa;
 import promoda.model.MesasAlumno;
@@ -72,6 +74,9 @@ public class BeanMesaAlum implements Serializable {
 	@ManagedProperty(value = "#{BeanPagosMesaDAO}")
 	private DAOPagosMesa mesaPagoDAO;
 	
+	@ManagedProperty(value = "#{BeanMateriasCalificacionDAO}")
+	private DAOMateriasCalificacion materiaCalificacionDAO;
+	
 	@ManagedProperty(value = "#{BeanParametroDAO}")
 	private DAOParametro parametroDAO;
 	
@@ -92,6 +97,7 @@ public class BeanMesaAlum implements Serializable {
 	private String accesToken;
 	private String jsonId;
 	private String checkoutURL;
+	private String condicion;
 	private int idCurso;
 	private int idMatricula;
 	private int idMateria;
@@ -150,6 +156,13 @@ public class BeanMesaAlum implements Serializable {
 	}
 	public void setMesaPagoDAO(DAOPagosMesa mesaPagoDAO) {
 		this.mesaPagoDAO = mesaPagoDAO;
+	}
+	public DAOMateriasCalificacion getMateriaCalificacionDAO() {
+		return materiaCalificacionDAO;
+	}
+	public void setMateriaCalificacionDAO(
+			DAOMateriasCalificacion materiaCalificacionDAO) {
+		this.materiaCalificacionDAO = materiaCalificacionDAO;
 	}
 	public DAOParametro getParametroDAO() {
 		return parametroDAO;
@@ -247,6 +260,12 @@ public class BeanMesaAlum implements Serializable {
 	public void setCheckoutURL(String checkoutURL) {
 		this.checkoutURL = checkoutURL;
 	}
+	public String getCondicion() {
+		return condicion;
+	}
+	public void setCondicion(String condicion) {
+		this.condicion = condicion;
+	}
 	public int getIdCurso() {
 		return idCurso;
 	}
@@ -325,6 +344,7 @@ public class BeanMesaAlum implements Serializable {
 			idMateria = 0;
 			cantidad = 0;
 			costo = 0;
+			condicion = " - ";
 			usuario = user;
 			alumno = user.getAlumno();
 			listaCursos = matriculaAlumnoDAO.getListaCursoDistinct(alumno);		
@@ -375,6 +395,7 @@ public class BeanMesaAlum implements Serializable {
 			idMateria = 0;			
 			cantidad = 0;
 			costo = 0;
+			condicion = " - ";
 			mesa = new Mesa();
 			if (idCurso != 0) {
 				Curso cur = cursoDAO.get(idCurso);
@@ -415,6 +436,7 @@ public class BeanMesaAlum implements Serializable {
 			actualizaPago = false;
 			cantidad = 0;
 			costo = 0;
+			condicion = " - ";
 			mesa = new Mesa();
 			if (idMatricula != 0 && idCurso != 0 && idMateria != 0) {				
 				Curso cur = cursoDAO.get(idCurso);
@@ -434,6 +456,12 @@ public class BeanMesaAlum implements Serializable {
 						panelPago = true;
 					} else {
 						actualizaPago = true;
+					}
+				}
+				MateriasCalificacion matCalifica = materiaCalificacionDAO.get(alumno, cur, mat, matr);
+				if (matCalifica.getId() != 0) {
+					if (!matCalifica.getEstado().isEmpty() && matCalifica.getEstado() != null) {
+						condicion = matCalifica.getEstado();
 					}
 				}
 			}
@@ -492,48 +520,61 @@ public class BeanMesaAlum implements Serializable {
 				MesasAlumno mesaAlumno = new MesasAlumno();				
 				Curso cur = cursoDAO.get(idCurso);
 				Materia mat = materiaDAO.get(idMateria);
-				List<MesasAlumno> listAux = mesaAlumnoDAO.getLista(true, alumno, mesa);
-				if (listAux.isEmpty()) {
-					mesaAlumno.setAlumno(alumno);
-					mesaAlumno.setAprobado(false);
-					mesaAlumno.setContador(cantidad);
-					mesaAlumno.setCurso(cur);
-					mesaAlumno.setEnabled(true);
-					mesaAlumno.setFechaAlta(new Date());
-					mesaAlumno.setMateria(mat);
-					mesaAlumno.setMesa(mesa);
-					mesaAlumno.setUsuario1(usuario);
-					int idInsert = mesaAlumnoDAO.insertar(mesaAlumno); 
-					if (idInsert != 0) {	
-						if (actualizaPago) {
-							mesaAlumno.setId(idInsert);
-							PagosMesa pagoMesa = mesaPagoDAO.get(mesa, alumno);						
-							pagoMesa.setMesasAlumno(mesaAlumno);						
-							mesaPagoDAO.update(pagoMesa);
+				Matricula matr = matriculaDAO.get(idMatricula);
+				MateriasCalificacion matCalifica = materiaCalificacionDAO.get(alumno, cur, mat, matr);
+				if (matCalifica.getId() != 0) {
+					if (!matCalifica.getEstado().isEmpty() && matCalifica.getEstado() != null) {
+						List<MesasAlumno> listAux = mesaAlumnoDAO.getLista(true, alumno, mesa);
+						if (listAux.isEmpty()) {
+							mesaAlumno.setAlumno(alumno);
+							mesaAlumno.setAprobado(false);
+							mesaAlumno.setCondicion(condicion);
+							mesaAlumno.setContador(cantidad);
+							mesaAlumno.setCurso(cur);
+							mesaAlumno.setEnabled(true);
+							mesaAlumno.setFechaAlta(new Date());
+							mesaAlumno.setMateria(mat);
+							mesaAlumno.setMesa(mesa);
+							mesaAlumno.setUsuario1(usuario);
+							int idInsert = mesaAlumnoDAO.insertar(mesaAlumno); 
+							if (idInsert != 0) {	
+								if (actualizaPago) {
+									mesaAlumno.setId(idInsert);
+									PagosMesa pagoMesa = mesaPagoDAO.get(mesa, alumno);						
+									pagoMesa.setMesasAlumno(mesaAlumno);						
+									mesaPagoDAO.update(pagoMesa);
+								}
+								
+								listaMatriculaAlums = new ArrayList<MatriculaAlum>();
+								mesa = new Mesa();
+								verPeriodo = false;
+								verPeriodos = false;
+								verMesa = false;
+								panelPago = false;
+								actualizaPago = false;
+								idCurso = 0;
+								idMatricula = 0;
+								idMateria = 0;
+								cantidad = 0;
+								costo = 0;	
+								FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+										"Se registró con éxito la inscripción.", null));
+							} else {
+								FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+										"Ocurrió un error al registrar la mesa.", null));
+							}
+						} else {
+							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+									"Ya se encuentra inscripto a la mesa.", null));
 						}
-						
-						listaMatriculaAlums = new ArrayList<MatriculaAlum>();
-						mesa = new Mesa();
-						verPeriodo = false;
-						verPeriodos = false;
-						verMesa = false;
-						panelPago = false;
-						actualizaPago = false;
-						idCurso = 0;
-						idMatricula = 0;
-						idMateria = 0;
-						cantidad = 0;
-						costo = 0;	
-						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-								"Se registró con éxito la inscripción.", null));
 					} else {
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-								"Ocurrió un error al registrar la mesa.", null));
+								"No es posible registrar la inscripción a la mesa. Aún no se encuentra calificado en esa materia.", null));
 					}
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-							"Ya se encuentra inscripto a la mesa.", null));
-				}				
+							"No es posible registrar la inscripción a la mesa. Aún no se encuentra calificado en esa materia.", null));
+				}								
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 						"Todos los campos son obligatorios.", null));

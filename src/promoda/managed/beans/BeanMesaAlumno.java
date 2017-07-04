@@ -3,7 +3,9 @@ package promoda.managed.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,9 +14,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import promoda.clases.CajasMov;
+import promoda.clases.Inscripto;
+import promoda.clases.Reporte;
 import promoda.dao.DAOAlumno;
 import promoda.dao.DAOCurso;
 import promoda.dao.DAOMateria;
+import promoda.dao.DAOMateriasCalificacion;
 import promoda.dao.DAOMatricula;
 import promoda.dao.DAOMatriculaAlumno;
 import promoda.dao.DAOMesa;
@@ -23,6 +28,7 @@ import promoda.dao.DAOPagosMesa;
 import promoda.model.Alumno;
 import promoda.model.Curso;
 import promoda.model.Materia;
+import promoda.model.MateriasCalificacion;
 import promoda.model.Matricula;
 import promoda.model.Mesa;
 import promoda.model.MesasAlumno;
@@ -62,6 +68,9 @@ public class BeanMesaAlumno implements Serializable {
 	@ManagedProperty(value = "#{BeanPagosMesaDAO}")
 	private DAOPagosMesa mesaPagoDAO;
 	
+	@ManagedProperty(value = "#{BeanMateriasCalificacionDAO}")
+	private DAOMateriasCalificacion materiaCalificacionDAO;
+	
 	private List<MesasAlumno> listaMesasAlumnos;
 	private List<Mesa> listaMesas;
 	private List<Alumno> listaAlumnos;
@@ -70,6 +79,7 @@ public class BeanMesaAlumno implements Serializable {
 	private List<Materia> listaMaterias;
 	private Usuario usuario;
 	private Mesa mesa;
+	private String condicion;
 	private int idAlumno;
 	private int idCurso;
 	private int idMatricula;
@@ -127,6 +137,13 @@ public class BeanMesaAlumno implements Serializable {
 	public void setMesaPagoDAO(DAOPagosMesa mesaPagoDAO) {
 		this.mesaPagoDAO = mesaPagoDAO;
 	}
+	public DAOMateriasCalificacion getMateriaCalificacionDAO() {
+		return materiaCalificacionDAO;
+	}
+	public void setMateriaCalificacionDAO(
+			DAOMateriasCalificacion materiaCalificacionDAO) {
+		this.materiaCalificacionDAO = materiaCalificacionDAO;
+	}
 	public List<MesasAlumno> getListaMesasAlumnos() {
 		return listaMesasAlumnos;
 	}
@@ -174,6 +191,12 @@ public class BeanMesaAlumno implements Serializable {
 	}
 	public void setMesa(Mesa mesa) {
 		this.mesa = mesa;
+	}
+	public String getCondicion() {
+		return condicion;
+	}
+	public void setCondicion(String condicion) {
+		this.condicion = condicion;
 	}
 	public int getIdAlumno() {
 		return idAlumno;
@@ -238,6 +261,7 @@ public class BeanMesaAlumno implements Serializable {
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
+			condicion = " - ";
 			registrarPago = true;
 			usuario = new Usuario();
 			usuario = user;
@@ -281,6 +305,7 @@ public class BeanMesaAlumno implements Serializable {
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
+			condicion = " - ";
 			registrarPago = true;
 			if (idAlumno != 0) {
 				Alumno alum = alumnoDAO.get(idAlumno);
@@ -303,6 +328,7 @@ public class BeanMesaAlumno implements Serializable {
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
+			condicion = " - ";
 			registrarPago = true;
 			if (idAlumno != 0 && idCurso != 0) {
 				Curso cur = cursoDAO.get(idCurso);
@@ -322,6 +348,7 @@ public class BeanMesaAlumno implements Serializable {
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
+			condicion = " - ";
 			registrarPago = true;
 			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0) {				
 				Curso cur = cursoDAO.get(idCurso);
@@ -339,12 +366,20 @@ public class BeanMesaAlumno implements Serializable {
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
+			condicion = " - ";
 			registrarPago = true;
 			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0) {				
 				Curso cur = cursoDAO.get(idCurso);
 				Matricula matr = matriculaDAO.get(idMatricula);
-				Materia mat = materiaDAO.get(idMateria);
+				Materia mat = materiaDAO.get(idMateria);				
 				listaMesas = mesaDAO.getLista(cur, matr, mat);
+				Alumno alum = alumnoDAO.get(idAlumno);
+				MateriasCalificacion matCalifica = materiaCalificacionDAO.get(alum, cur, mat, matr);
+				if (matCalifica.getId() != 0) {
+					if (!matCalifica.getEstado().isEmpty() && matCalifica.getEstado() != null) {
+						condicion = matCalifica.getEstado();
+					}
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -396,52 +431,67 @@ public class BeanMesaAlumno implements Serializable {
 				Mesa me = mesaDAO.get(idMesa);
 				Curso cur = cursoDAO.get(idCurso);
 				Materia mat = materiaDAO.get(idMateria);
-				List<MesasAlumno> listAux = mesaAlumnoDAO.getLista(true, alum, me);
-				if (listAux.isEmpty()) {
-					mesaAlumno.setAlumno(alum);
-					mesaAlumno.setAprobado(false);
-					mesaAlumno.setContador(cantidad);
-					mesaAlumno.setCurso(cur);
-					mesaAlumno.setEnabled(true);
-					mesaAlumno.setFechaAlta(new Date());
-					mesaAlumno.setMateria(mat);
-					mesaAlumno.setMesa(me);
-					mesaAlumno.setUsuario1(usuario);
-					int idInsert = mesaAlumnoDAO.insertar(mesaAlumno); 
-					if (idInsert != 0) {	
-						if (cantidad > 3 && registrarPago) {
-							mesaAlumno.setId(idInsert);
-							CajasMov cajaMov = new CajasMov();
-							PagosMesa pagoMesa = mesaPagoDAO.get(me, alum);
-							if (pagoMesa.getId() != 0) {
-								pagoMesa.setMesasAlumno(mesaAlumno);
-								mesaPagoDAO.update(pagoMesa);
+				Matricula matr = matriculaDAO.get(idMatricula);
+				MateriasCalificacion matCalifica = materiaCalificacionDAO.get(alum, cur, mat, matr);
+				if (matCalifica.getId() != 0) {
+					if (!matCalifica.getEstado().isEmpty() && matCalifica.getEstado() != null) {
+						List<MesasAlumno> listAux = mesaAlumnoDAO.getLista(true, alum, me);
+						if (listAux.isEmpty()) {
+							mesaAlumno.setAlumno(alum);
+							mesaAlumno.setAprobado(false);
+							mesaAlumno.setCondicion(condicion);
+							mesaAlumno.setContador(cantidad);
+							mesaAlumno.setCurso(cur);
+							mesaAlumno.setEnabled(true);
+							mesaAlumno.setFechaAlta(new Date());
+							mesaAlumno.setMateria(mat);
+							mesaAlumno.setMesa(me);
+							mesaAlumno.setUsuario1(usuario);
+							int idInsert = mesaAlumnoDAO.insertar(mesaAlumno); 
+							if (idInsert != 0) {	
+								if (cantidad > 3 && registrarPago) {
+									mesaAlumno.setId(idInsert);
+									CajasMov cajaMov = new CajasMov();
+									PagosMesa pagoMesa = mesaPagoDAO.get(me, alum);
+									if (pagoMesa.getId() != 0) {
+										pagoMesa.setMesasAlumno(mesaAlumno);
+										mesaPagoDAO.update(pagoMesa);
+									} else {
+										pagoMesa = new PagosMesa();
+										pagoMesa.setAlumno(alum);
+										pagoMesa.setEnabled(true);
+										pagoMesa.setFecha(new Date());
+										pagoMesa.setFechaAlta(new Date());
+										pagoMesa.setMesa(me);
+										pagoMesa.setMesasAlumno(mesaAlumno);
+										pagoMesa.setMonto(costo);
+										pagoMesa.setUsuario1(usuario);
+										int idPagoMesa = mesaPagoDAO.insertar(pagoMesa);
+										cajaMov.generarMovimiento(new Date(), 1, costo, idPagoMesa, "PagosMesa", "Pago Mesa", 
+						        				"Pago de Mesa de Curso " + cur.getNombre() + " de Materia " + mat.getNombre() + " de " + alum.getNombreCompleto(), usuario);
+									}							
+								}
+								return "mesas";
 							} else {
-								pagoMesa = new PagosMesa();
-								pagoMesa.setAlumno(alum);
-								pagoMesa.setEnabled(true);
-								pagoMesa.setFecha(new Date());
-								pagoMesa.setFechaAlta(new Date());
-								pagoMesa.setMesa(me);
-								pagoMesa.setMesasAlumno(mesaAlumno);
-								pagoMesa.setMonto(costo);
-								pagoMesa.setUsuario1(usuario);
-								int idPagoMesa = mesaPagoDAO.insertar(pagoMesa);
-								cajaMov.generarMovimiento(new Date(), 1, costo, idPagoMesa, "PagosMesa", "Pago Mesa", 
-				        				"Pago de Mesa de Curso " + cur.getNombre() + " de Materia " + mat.getNombre() + " de " + alum.getNombreCompleto(), usuario);
-							}							
+								FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+										"Ocurrió un error al registrar la mesa.", null));
+								return "";
+							}
+						} else {
+							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+									"Ya existe una inscripción vigente de este alumno a esta mesa.", null));
+							return "";
 						}
-						return "mesas";
 					} else {
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-								"Ocurrió un error al registrar la mesa.", null));
+								"No es posible registrar la inscripción a la mesa. El alumno no esta calificado.", null));
 						return "";
 					}
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-							"Ya existe una inscripción vigente de este alumno a esta mesa.", null));
+							"No es posible registrar la inscripción a la mesa. El alumno no esta calificado.", null));
 					return "";
-				}				
+				}								
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 						"Todos los campos son obligatorios.", null));
@@ -511,6 +561,44 @@ public class BeanMesaAlumno implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"Ocurrió un error al registrar los cambios. Error: " + e.getMessage(), null));
 		}
+	}
+	
+	public void generarPDF() {
+		try {
+			Reporte reporte = new Reporte();
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			List<Inscripto> listAux = new ArrayList<Inscripto>();
+			for (MesasAlumno mAlumno : listaMesasAlumnos) {
+				Inscripto inscripto = new Inscripto();
+				inscripto.setNombreCompleto(mAlumno.getAlumno().getNombreCompleto());
+				inscripto.setCondicion(mAlumno.getCondicion());
+				if (mAlumno.getCalificacion() != 0) {
+					inscripto.setCalificacion(Float.toString(mAlumno.getCalificacion()));
+				} else {
+					inscripto.setCalificacion(" - ");
+				}
+				listAux.add(inscripto);
+			}
+			String nombreCurso = " - ";
+			String nombreMatricula = " - ";
+			String nombreMateria = " - ";
+			String nombreMesa = " - ";
+			if (mesa.getId() != 0) {
+				nombreCurso = mesa.getCurso().getNombre();
+				nombreMatricula = mesa.getMatricula().getDescripcion();
+				nombreMateria = mesa.getMateria().getNombre();
+				nombreMesa = mesa.getFechaHoraString();
+			}			
+			parametros.put("curso", nombreCurso);
+			parametros.put("matricula", nombreMatricula);
+			parametros.put("materia", nombreMateria);
+			parametros.put("mesa", nombreMesa);
+			reporte.generar(parametros, listAux, "inscriptosMesa", "inline");
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+					"Ocurrió un error al generar el reporte. Error: " + e.getMessage(), null));
+		}		
 	}
 
 }

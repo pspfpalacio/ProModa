@@ -91,16 +91,15 @@
 					    	</p:panelGrid>
 					    	
 					    	<p:outputPanel style="float:right;">							
-								<h:commandLink >
+								<h:commandLink action="#{beanCalificarAlumno.generarPDF()}" target="_blank" title="PDF Alumnos completos">
 									<p:graphicImage value="../../images/pdf-icon.png" width="30" style="margin-right: 30px; float: left;" />
-									<p:dataExporter type="pdf" target="tablaAsistencia" fileName="Asistencias" preProcessor="#{reporte.preProcessPDFAsist}"/>
 								</h:commandLink>
 							</p:outputPanel>
 							
 					    	<p:dataTable id="tablaCalifica" var="califica" value="#{beanCalificarAlumno.listaCalificaAlumno}" editable="true" widgetVar="cellCalifica"
 					    	editMode="cell" scrollRows="50" resizableColumns="true" scrollable="true" scrollHeight="600" emptyMessage="No existen Alumnos inscriptos" 
 					    	style="width:100%;margin-bottom:20px" rendered="#{beanCalificarAlumno.idMateria != 0}" selection="#{beanCalificarAlumno.selectionCalificaAlumno}" 
-					    	rowKey="#{califica.alumno.id}" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+					    	rowKey="#{califica.alumno.id}" >
 						       <f:facet name="header">
 						           <h:outputText value="Calificaciones" />
 						       </f:facet>

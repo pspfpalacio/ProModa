@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -13,6 +15,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import promoda.clases.Inscripto;
+import promoda.clases.Reporte;
 import promoda.dao.DAOAlumno;
 import promoda.dao.DAOCurso;
 import promoda.dao.DAOMateria;
@@ -408,5 +412,48 @@ public class BeanCalificarAlumno implements Serializable {
     	}
     	FacesContext.getCurrentInstance().addMessage(null, msg);
     }
+	
+	public void generarPDF() {
+		try {
+			Reporte reporte = new Reporte();
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			List<Inscripto> listAux = new ArrayList<Inscripto>();
+			for (MateriasCalificacion mCalificacion : listaCalificaAlumno) {
+				Inscripto inscripto = new Inscripto();
+				inscripto.setNombreCompleto(mCalificacion.getAlumno().getNombreCompleto());
+				inscripto.setDni(mCalificacion.getAlumno().getDni());
+				inscripto.setCondicion(mCalificacion.getEstado());
+				if (mCalificacion.getCalificacion() != 0) {
+					inscripto.setCalificacion(Float.toString(mCalificacion.getCalificacion()));
+				} else {
+					inscripto.setCalificacion(" - ");
+				}
+				listAux.add(inscripto);
+			}
+			String nombreCurso = " - ";
+			String nombreMatricula = " - ";
+			String nombreMateria = " - ";
+			if (idCurso != 0) {
+				Curso cur = cursoDAO.get(idCurso);
+				nombreCurso = cur.getNombre();				
+			}
+			if (idMatricula != 0) {
+				Matricula matr = matriculaDAO.get(idMatricula);
+				nombreMatricula = matr.getDescripcion();
+			}
+			if (idMateria != 0) {
+				Materia mat = materiaDAO.get(idMateria);
+				nombreMateria = mat.getNombre();
+			}
+			parametros.put("curso", nombreCurso);
+			parametros.put("matricula", nombreMatricula);
+			parametros.put("materia", nombreMateria);
+			reporte.generar(parametros, listAux, "calificarMateria", "inline");
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+					"Ocurrió un error al generar el reporte. Error: " + e.getMessage(), null));
+		}		
+	}
 
 }

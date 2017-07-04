@@ -67,11 +67,16 @@
 			    					itemValue="#{mesa.id}"/>
 			    				</p:selectOneMenu>
 			    				
+			    				<p:outputLabel value="Condición: " />
+    							<p:inputText value="#{beanMesaAlumno.condicion}" disabled="true"/>
+			    				
 			    				<p:outputLabel value="Cant. inscripciones: " />
     							<p:inputText value="#{beanMesaAlumno.cantidad}" disabled="true"/>
     							
     							<p:outputLabel value="Costo: " />
-    							<p:inputText value="#{beanMesaAlumno.costo}" disabled="true"/>	
+    							<p:inputText value="#{beanMesaAlumno.costo}" disabled="true" >
+    								<f:convertNumber pattern="$###,##0.00"/>
+    							</p:inputText>	
     							
     							<p:outputLabel value="Registrar pago: " />
     							<p:selectBooleanButton value="#{beanMesaAlumno.registrarPago}" onLabel="Si" offLabel="No" style="width:60px" disabled="#{beanMesaAlumno.costo == 0}"/>		    				   				

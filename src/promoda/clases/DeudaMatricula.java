@@ -12,6 +12,7 @@ public class DeudaMatricula implements Serializable {
 	
 	private String alumno;
 	private String curso;
+	private String matricula;
 	private String fechaInscripcion;
 	private String montoDeuda;
 	private List<Contacto> listaContacto;
@@ -27,6 +28,12 @@ public class DeudaMatricula implements Serializable {
 	}
 	public void setCurso(String curso) {
 		this.curso = curso;
+	}
+	public String getMatricula() {
+		return matricula;
+	}
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 	public String getFechaInscripcion() {
 		return fechaInscripcion;
