@@ -489,25 +489,38 @@ public class BeanMesaAlum implements Serializable {
 	
 	public void bajaInscripcion(MesasAlumno mAlumno) {
 		try {
-			mAlumno.setEnabled(false);
-			mAlumno.setFechaBaja(new Date());
-			mAlumno.setUsuario2(usuario);
-			if (mesaAlumnoDAO.update(mAlumno) != 0) {
-				PagosMesa pagosMesa = mesaPagoDAO.get(mAlumno);
-				if (pagosMesa.getId() != 0) {
-					CajasMov cajaMov = new CajasMov();
-					pagosMesa.setEnabled(false);
-					pagosMesa.setFechaBaja(new Date());
-					pagosMesa.setUsuario2(usuario);
-					int idPagoMesa = mesaPagoDAO.update(pagosMesa);
-					cajaMov.eliminarMovimiento(idPagoMesa, "PagosMesa", usuario);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			String fechaMesa = dateFormat.format(mAlumno.getMesa().getFechaHoraMesa());
+			String fechaHoy = dateFormat.format(new Date());
+			Date fecha1 = dateFormat.parse(fechaMesa);
+			Date fecha2 = dateFormat.parse(fechaHoy);
+			//primera menor a la segunda: -1
+			//primera es mayor a la segunda: 1
+			//iguales: 0
+			if (fecha1.compareTo(fecha2) > 0) {
+				mAlumno.setEnabled(false);
+				mAlumno.setFechaBaja(new Date());
+				mAlumno.setUsuario2(usuario);
+				if (mesaAlumnoDAO.update(mAlumno) != 0) {
+					PagosMesa pagosMesa = mesaPagoDAO.get(mAlumno);
+					if (pagosMesa.getId() != 0) {
+						CajasMov cajaMov = new CajasMov();
+						pagosMesa.setEnabled(false);
+						pagosMesa.setFechaBaja(new Date());
+						pagosMesa.setUsuario2(usuario);
+						int idPagoMesa = mesaPagoDAO.update(pagosMesa);
+						cajaMov.eliminarMovimiento(idPagoMesa, "PagosMesa", usuario);
+					}
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+							"BAJA REGISTRADA CON ÉXITO.", null));
+				} else {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+							"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCIÓN.", null));
 				}
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-						"BAJA REGISTRADA CON ÉXITO.", null));
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-						"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCIÓN.", null));
-			}
+						"NO ES POSIBLE REALIZAR LA BAJA DE LA INSCRIPCIÓN.", null));
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REALIZAR LA BAJA DE INSCRIPCIÓN", null));
