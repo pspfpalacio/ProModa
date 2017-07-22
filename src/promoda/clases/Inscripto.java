@@ -2,6 +2,9 @@ package promoda.clases;
 
 import java.io.Serializable;
 
+import promoda.model.Curso;
+import promoda.model.Matricula;
+
 public class Inscripto implements Serializable {
 
 	/**
@@ -17,6 +20,8 @@ public class Inscripto implements Serializable {
 	private String email;
 	private String condicion;
 	private String calificacion;
+	private Curso curso;
+	private Matricula matricula;
 
 	public int getDni() {
 		return dni;
@@ -81,5 +86,21 @@ public class Inscripto implements Serializable {
 	public void setCalificacion(String calificacion) {
 		this.calificacion = calificacion;
 	}
+	
+	public Curso getCurso() {
+		return curso;
+	}
 
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+
+	public Matricula getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(Matricula matricula) {
+		this.matricula = matricula;
+	}
+	
 }
