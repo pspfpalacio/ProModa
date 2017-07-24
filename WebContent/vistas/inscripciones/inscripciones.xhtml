@@ -144,6 +144,11 @@
 						<p:commandButton icon="ui-icon-newwin" disabled="#{!inscripcion.enabled}" oncomplete="PF('dialogoPlanPago').show()"
 						action="#{beanInscripcion.verPlanPago(inscripcion)}" update=":formulario:outputPlanPago"/>
 					</p:column>
+					<f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanInscripcion.listaInscripciones.size()}" />
+		            	</div>
+			        </f:facet>
 				</p:dataTable>	
 				<p:dialog header="Solicitud de Matrícula - Inscripción" widgetVar="dialogoMovimiento"
 					id="dialogo" modal="true" closeOnEscape="true" responsive="true">

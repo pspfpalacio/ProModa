@@ -49,6 +49,11 @@
 						<p:commandButton icon="ui-icon-comment" title="Ver Cuotas" update=":formulario:outputPanelCuota"
 						action="#{beanCursoAlum.verCuotas(curso)}" oncomplete="PF('dialogoCuota').show()" />
 					</p:column>
+					<f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanCursoAlum.listaCursos.size()}" />
+		            	</div>
+			        </f:facet>
 				</p:dataTable>	
 				<p:dialog header="Matrícula" widgetVar="dialogo"
 					id="dialogo" modal="true" closeOnEscape="true">

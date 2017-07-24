@@ -1843,6 +1843,17 @@ public class BeanInscripcion implements Serializable {
 		parametros.put("curso", nombreCurso);
 		reporte.exportXls(parametros, listaInscriptos, "inscriptosExcel", "attachment");
 	}
+	
+/*	public void generarInscriptos(Object document) throws IOException, BadElementException, DocumentException {
+        Document pdf = (Document) document;
+        pdf.open();
+        pdf.setPageSize(PageSize.A4);
+ 
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        String logo = externalContext.getRealPath("") + File.separator + "images" + File.separator + "pm-curso.jpg";
+         
+        pdf.add(Image.getInstance(logo));
+    }*/
 
 
 }

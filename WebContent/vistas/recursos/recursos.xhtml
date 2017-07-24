@@ -115,6 +115,11 @@
 									<p:commandButton icon="ui-icon-clipboard" title="Calificar" 
 									action="#{beanRecurso.goCalificar(recurso, 'recursos')}" />
 								</p:column>
+								<f:facet name="footer" >
+					            	<div style="text-align:right;">
+					            		<p:outputLabel value="Cantidad:  #{beanRecurso.listaRecursos.size()}" />
+					            	</div>
+						        </f:facet>
 							</p:dataTable>	
 		   				</p:panel>
 			    	</h:form>

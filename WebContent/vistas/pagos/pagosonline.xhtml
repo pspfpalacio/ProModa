@@ -49,7 +49,12 @@
 				    
 				    <p:column headerText="Detalle" >
 				        <h:outputText value="#{pago.detalle}" />
-				    </p:column>		    
+				    </p:column>		  
+				    <f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanPago.listaRegistroOnlines.size()}" />
+		            	</div>
+			        </f:facet>  
 				</p:dataTable>			   				
 				</p:panel> 
 			</h:form>

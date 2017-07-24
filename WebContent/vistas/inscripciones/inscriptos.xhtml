@@ -65,13 +65,11 @@
 							</h:commandLink>
 							<h:commandLink action="#{beanInscripcion.generarInscriptosSCPDF()}" target="_blank" title="PDF Alumnos sin contacto">
 								<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
-							</h:commandLink>
+							</h:commandLink>							
 							<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
         					<p:columnToggler datasource="contenedorInscriptos" trigger="toggler" />
 						</p:outputPanel>
-						
-						
-						
+
 					</f:facet>
 											
 					<p:column headerText="DNI" filterBy="#{inscripto.dni}" sortBy="#{inscripto.dni}"
@@ -112,6 +110,11 @@
 				    		<p:outputLabel value="#{inscripto.email}" />
 				    	</p:panel>
 				    </p:rowExpansion>
+				    <f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanInscripcion.listaInscriptos.size()}" />
+		            	</div>
+			        </f:facet>
 				</p:dataTable>				
 				</p:panel> 
 			</h:form>
