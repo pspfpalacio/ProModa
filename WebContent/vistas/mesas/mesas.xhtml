@@ -34,15 +34,7 @@
 			    					<f:selectItem itemLabel="TODOS" itemValue="0"/>
 			    					<f:selectItems value="#{beanMesa.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
 			    					itemValue="#{curso.id}"/>
-			    				</p:selectOneMenu>	    
-			    				
-			    				<p:outputLabel value="Matrícula " />
-					    		<p:selectOneMenu value="#{beanMesa.idMatricula}" filter="true" filterMatchMode="contains" >
-			    					<p:ajax event="change" listener="#{beanMesa.onChangeMatricula()}" update="panel" />
-			    					<f:selectItem itemLabel="TODAS" itemValue="0"/>
-			    					<f:selectItems value="#{beanMesa.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
-			    					itemValue="#{mat.id}"/>
-			    				</p:selectOneMenu>					
+			    				</p:selectOneMenu>	    				
 			    				
 			    				<p:outputLabel value="Materia " />
 					    		<p:selectOneMenu value="#{beanMesa.idMateria}" filter="true" filterMatchMode="contains" >			    					
@@ -98,10 +90,6 @@
 								
 								<p:column headerText="Curso" rendered="#{beanMesa.idCurso == 0}">
 									<h:outputText value="#{mesa.curso.nombre}" />
-								</p:column>
-								
-								<p:column headerText="Matricula" rendered="#{beanMesa.idMatricula == 0}">
-									<h:outputText value="#{mesa.matricula.descripcion}" />
 								</p:column>
 								
 								<p:column headerText="Materia" rendered="#{beanMesa.idMateria == 0}">

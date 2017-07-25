@@ -58,6 +58,11 @@ public class MesasAlumno implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_materia")
 	private Materia materia;
+	
+	//bi-directional many-to-one association to Matricula
+	@ManyToOne
+	@JoinColumn(name="id_matricula")
+	private Matricula matricula;
 
 	//bi-directional many-to-one association to Mesa
 	@ManyToOne
@@ -180,6 +185,14 @@ public class MesasAlumno implements Serializable {
 
 	public void setMateria(Materia materia) {
 		this.materia = materia;
+	}
+
+	public Matricula getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(Matricula matricula) {
+		this.matricula = matricula;
 	}
 
 	public Mesa getMesa() {

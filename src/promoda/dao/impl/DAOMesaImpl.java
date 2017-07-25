@@ -125,6 +125,16 @@ public class DAOMesaImpl implements Serializable, DAOMesa {
 		List<Mesa> lista = locQuery.getResultList();
 		return lista;
 	}
+	
+	public List<Mesa> getLista(Curso curso, Materia materia) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT m FROM Mesa m WHERE m.curso = :pCurso AND m.materia = :pMateria AND m.enabled = :pEnabled", Mesa.class);
+		locQuery.setParameter("pCurso", curso);
+		locQuery.setParameter("pMateria", materia);
+		locQuery.setParameter("pEnabled", true);
+		List<Mesa> lista = locQuery.getResultList();
+		return lista;
+	}
 
 	public List<Mesa> getLista(Curso curso, Matricula matricula, Materia materia) {
 		inicializar();
@@ -134,6 +144,18 @@ public class DAOMesaImpl implements Serializable, DAOMesa {
 		locQuery.setParameter("pMatricula", matricula);
 		locQuery.setParameter("pMateria", materia);
 		locQuery.setParameter("pEnabled", true);
+		List<Mesa> lista = locQuery.getResultList();
+		return lista;
+	}
+	
+	public List<Mesa> getListaBetweenFecha(Curso curso, Materia materia, Date fecha) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT m FROM Mesa m WHERE m.curso = :pCurso AND m.materia = :pMateria "
+				+ "AND m.enabled = :pEnabled AND m.fechaInicio <= :pFecha AND m.fechaFin >= :pFecha", Mesa.class);
+		locQuery.setParameter("pCurso", curso);		
+		locQuery.setParameter("pMateria", materia);
+		locQuery.setParameter("pEnabled", true);
+		locQuery.setParameter("pFecha", fecha);
 		List<Mesa> lista = locQuery.getResultList();
 		return lista;
 	}

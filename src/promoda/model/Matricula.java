@@ -70,6 +70,10 @@ public class Matricula implements Serializable {
 	//bi-directional many-to-one association to MateriasCalificacion
 	@OneToMany(mappedBy="matricula")
 	private List<MateriasCalificacion> materiasCalificacions;
+	
+	//bi-directional many-to-one association to MateriasCalificacion
+	@OneToMany(mappedBy="matricula")
+	private List<MesasAlumno> mesasAlumnos;
 
 	//bi-directional many-to-one association to Curso
 	@ManyToOne
@@ -296,6 +300,28 @@ public class Matricula implements Serializable {
 		materiasCalificacion.setMatricula(null);
 
 		return materiasCalificacion;
+	}
+
+	public List<MesasAlumno> getMesasAlumnos() {
+		return mesasAlumnos;
+	}
+
+	public void setMesasAlumnos(List<MesasAlumno> mesasAlumnos) {
+		this.mesasAlumnos = mesasAlumnos;
+	}
+	
+	public MesasAlumno addMesasAlumnos(MesasAlumno mesasAlumno) {
+		getMesasAlumnos().add(mesasAlumno);
+		mesasAlumno.setMatricula(this);
+
+		return mesasAlumno;
+	}
+
+	public MesasAlumno removeMesasAlumnos(MesasAlumno mesasAlumno) {
+		getMesasAlumnos().remove(mesasAlumno);
+		mesasAlumno.setMatricula(null);
+
+		return mesasAlumno;
 	}
 
 	public Curso getCurso() {

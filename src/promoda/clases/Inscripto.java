@@ -17,6 +17,7 @@ public class Inscripto implements Serializable {
 	private String email;
 	private String condicion;
 	private String calificacion;
+	private String matricula;
 
 	public int getDni() {
 		return dni;
@@ -80,6 +81,14 @@ public class Inscripto implements Serializable {
 
 	public void setCalificacion(String calificacion) {
 		this.calificacion = calificacion;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 
 }
