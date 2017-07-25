@@ -14,6 +14,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 
 import promoda.clases.CajasMov;
@@ -81,6 +82,8 @@ public class BeanLogueo implements Serializable {
 	private boolean admin;
 	private boolean alum;
 	private boolean prof;
+	
+	private final static Logger log = Logger.getLogger(BeanLogueo.class);	
 
 	public DAOUsuario getUsuarioDAO() {
 		return usuarioDAO;
@@ -259,16 +262,20 @@ public class BeanLogueo implements Serializable {
 	}
 
 	public void login() {
+		log.info("Intento de loguin con usuario: " + nombreLogin + " pass: " + passLogin);
 		RequestContext context = RequestContext.getCurrentInstance();
 		FacesMessage msg = null;
 		usuario = new Usuario();
 		Helper helper = new Helper();
 		String hash = helper.EncodePassword(passLogin);
+		log.info("Hash " + hash);
 		usuario = usuarioDAO.getLogin(nombreLogin, hash);
 		welcomeFile = "login.xhtml";
 		String retorno = "";
+		log.info("Usuario logueado id: " + usuario.getId());
 		if (usuario.getId() != 0) {
 			Role rol = usuario.getRole();
+			log.info("Rol id: " + rol.getId());
 			
 			if (rol.getId() == 1) {
 				admin = true;
@@ -311,13 +318,13 @@ public class BeanLogueo implements Serializable {
 				FacesContext.getCurrentInstance().getExternalContext().redirect(retorno);
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Ocurrio un error al redirigir al inicio. Error: " + e);
 			}
 		}
 	}
 
 	public void logout() {
+		log.info("Intento de logout - usuario id: " + usuario.getId());
 		String host = FacesContext.getCurrentInstance().getExternalContext()
 				.getRequestServerName();
 		int port = FacesContext.getCurrentInstance().getExternalContext()
@@ -331,6 +338,7 @@ public class BeanLogueo implements Serializable {
 		//Produccion
 //		url.append("/login.xhtml");
 		String urlFinal = url.toString();
+		log.info("URL final: " + urlFinal);
 		FacesContext contexto = FacesContext.getCurrentInstance();
 		try {
 			HttpSession session = (HttpSession) FacesContext
@@ -342,8 +350,7 @@ public class BeanLogueo implements Serializable {
 			cambiarEstado(false);
 			contexto.getExternalContext().redirect(urlFinal);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Ocurrio un error al redirigir a login. Error: " + e);
 		}
 	}
 	
@@ -366,9 +373,11 @@ public class BeanLogueo implements Serializable {
 	}
 	
 	public void editarUsuario(){
+		log.info("Intento editar usuario id: " + usuario.getId() + " con nuevo username: " + usuario.getUsername());
 		FacesMessage msg = null;
 		if(!usuario.getUsername().isEmpty()){
 			Usuario user = usuarioDAO.get(usuario.getUsername());
+			log.info("Usuario id: " + usuario.getId() + " - username: " + user.getUsername());
 			if (user.getId() != 0 && user.getId() != usuario.getId()) {
 				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "YA EXISTEN USUARIOS CON ESE USERNAME! MODIFIQUELO POR FAVOR!", null);
 			} else {
@@ -383,14 +392,16 @@ public class BeanLogueo implements Serializable {
 					usuario.setPassword(password);
 				}
 				if(usuarioDAO.update(usuario) != 0){
+					log.info("Usuario modificado - id: " + usuario.getId() + " - " + usuario.getUsername());
 					msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "USUARIO MODIFICADO!", null);
 				}else{
-					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL MODIFICAR EL USUARIO, "
-							+ "INTÉNTELO NUEVAMENTE!", null);
+					log.error("Ocurrio un error al modificar el usuario - id: " + usuario.getId() + " - username: " + usuario.getUsername());
+					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL MODIFICAR EL USUARIO, "
+							+ "INTENTELO NUEVAMENTE!", null);
 				}
 			}
 		}else{
-			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "EL CAMPO USERNAME NO PUEDE ESTAR VACÍO!", null);
+			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "EL CAMPO USERNAME NO PUEDE ESTAR VACï¿½O!", null);
 		}
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
@@ -549,6 +560,7 @@ public class BeanLogueo implements Serializable {
 	}
 	
 	public void postLoad() {
+		log.info("Intento de postLoad - logeado: " + logeado + " - admin: " + admin + " - alum: " + alum);
 		if (logeado) {
 			String retorno = "";
 			if (admin) {
@@ -558,10 +570,11 @@ public class BeanLogueo implements Serializable {
 				retorno = "inicio.xhtml";
 			}
 			try {
+				log.info("Redirect a " + retorno);
 				FacesContext.getCurrentInstance().getExternalContext().redirect(retorno);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Ocurrio un error al redirigir a " + retorno + ". Error: " + e);
 			}
 		}
 	}
@@ -580,7 +593,7 @@ public class BeanLogueo implements Serializable {
 					fecha_fin = dateFormat.format(matricula.getFechaFinCursado());
 				}
 				String descripcion = Integer.toString(matricula.getId()) + " - (" + fecha_inicio + " - " + fecha_fin + ")";
-				System.out.println("Descripción: " + descripcion);
+				System.out.println("Descripciï¿½n: " + descripcion);
 				float costoCurso = matricula.getCurso().getCostoCurso();
 				System.out.println("Costo curso: " + costoCurso);
 				matricula.setDescripcion(descripcion);
@@ -588,7 +601,7 @@ public class BeanLogueo implements Serializable {
 				int updtMatricula = matriculaDAO.update(matricula);
 				System.out.println("Update: " + updtMatricula);
 			}
-			System.out.println("Finalizó");
+			System.out.println("Finalizï¿½");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -679,7 +692,7 @@ public class BeanLogueo implements Serializable {
 				pagosMatricula.setMonto(matriculaAlumno.getMontoPago());				
 				int idPagoMatricula = pagosMatriculaDAO.insertar(pagosMatricula);
 				int actualizoCaja = cajaMov.generarMovimiento(matriculaAlumno.getFechaPago(), 1, pagosMatricula.getMonto(), idPagoMatricula, "PagosMatricula", "Pago Matricula", 
-        				"Pago de Matrícula de Curso " + matriculaAlumno.getCurso().getNombre() + ", de " + matriculaAlumno.getAlumno().getNombreCompleto(), usuario);				
+        				"Pago de Matrï¿½cula de Curso " + matriculaAlumno.getCurso().getNombre() + ", de " + matriculaAlumno.getAlumno().getNombreCompleto(), usuario);				
 				System.out.println("Insert pagos matricula " + idPagoMatricula);
 				System.out.println("Actualizo caja " + actualizoCaja);
 				System.out.println("Movimiento " + cM + " de " + sizeM);

@@ -28,10 +28,7 @@
 			    				</f:facet>
 			    				
 			    				<p:outputLabel value="Curso" />
-					    		<h:inputText value="#{beanMesaAlumno.mesa.curso.nombre}" disabled="true" size="40"/>
-					    		
-					    		<p:outputLabel value="Matrícula" />
-					    		<h:inputText value="#{beanMesaAlumno.mesa.matricula.descripcion}" disabled="true" size="40"/>    				
+					    		<h:inputText value="#{beanMesaAlumno.mesa.curso.nombre}" disabled="true" size="40"/>					    		    				
 			    				
 			    				<p:outputLabel value="Materia" />
 					    		<h:inputText value="#{beanMesaAlumno.mesa.materia.nombre}" disabled="true" size="40"/>		    					
@@ -69,6 +66,10 @@
 								<p:column headerText="Alumno" >
 									<h:outputText value="#{mesaAlumno.alumno.nombreCompleto}" />
 								</p:column>		
+								
+								<p:column headerText="Matrícula" >
+									<h:outputText value="#{mesaAlumno.matricula.descripcion}" />
+								</p:column>
 								
 								<p:column headerText="Condición" >
 									<h:outputText value="#{mesaAlumno.condicion}" />
