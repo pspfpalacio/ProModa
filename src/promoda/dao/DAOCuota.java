@@ -40,6 +40,8 @@ public interface DAOCuota {
 	
 	public List<Cuota> getLista(Curso curso, Matricula matricula, boolean paga);
 	
+	public List<Cuota> getLista(Curso curso, Date fechaInicial, Date fechaFinal);
+	
 	public List<Cuota> getListaPorVencer(Date fecha);
 
 }

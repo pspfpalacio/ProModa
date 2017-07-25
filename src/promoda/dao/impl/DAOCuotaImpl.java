@@ -234,5 +234,17 @@ public class DAOCuotaImpl implements Serializable, DAOCuota {
 		List<Cuota> lista = locQuery.getResultList();
 		return lista;
 	}
+	
+	public List<Cuota> getLista(Curso curso, Date fechaInicial, Date fechaFinal) {
+		inicializar();
+		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.curso = :pCurso "
+				+ "AND c.fechaVencimiento >= :pFechaInicial AND c.fechaVencimiento < :pFechaFinal AND c.enabled = :pEnabled", Cuota.class);
+		locQuery.setParameter("pCurso", curso);
+		locQuery.setParameter("pFechaInicial", fechaInicial);
+		locQuery.setParameter("pFechaFinal", fechaFinal);
+		locQuery.setParameter("pEnabled", true);
+		List<Cuota> lista = locQuery.getResultList();
+		return lista;	
+	}
 
 }

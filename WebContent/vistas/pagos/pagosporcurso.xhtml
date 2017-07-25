@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">  
+
+	<ui:composition>
+		<f:view>
+			<h:head>
+				<link rel="shortcut icon" type="image/x-icon"
+					href="../../images/icono.ico" />
+				<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+				<script type="text/javascript">
+				 PrimeFaces.locales['tr'] = {
+						       closeText: 'Cerrar',
+						       prevText: 'Anterior',
+						       nextText: 'Siguiente',
+						       currentText: 'Hoy',
+						       monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+						           'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+						       monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+						           'Jul','Ago','Sep','Oct','Nov','Dic'],
+						       dayNames: ['Domingos','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'],
+						       dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+						       weekHeader: 'Hf',
+						       firstDay: 1,
+						       isRTL: false,
+						       showMonthAfterYear: false,
+						       yearSuffix: '',
+						       month: 'Mes',
+						       week: 'Semana',
+						       day: 'Día',
+						       allDayText : 'Todos los días'
+	    				};
+				</script>
+				<title>Pagos pro curso</title>
+			</h:head>
+			<h:body>
+				<div class="wrapper">
+					<ui:include src="/includes/header.xhtml" />
+					<h:form id="formulario" onkeypress="return event.keyCode != 13">
+						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+							<p:growl id="messages" showDetail="false" />
+							<ui:include src="/includes/menubar.xhtml" />
+					    	<p:panelGrid columns="5" cellpadding="5" style="width:100%;">		
+					    		<f:facet name="header">
+					    			<h:outputText value="Pagos por curso" />
+					    		</f:facet>			    	
+					    		<p:outputLabel value="Curso" />
+					    		<p:selectOneMenu value="#{beanPagoPorCurso.idCurso}" filter="true" filterMatchMode="contains" style="width:500px;">
+			    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+			    					<f:selectItems value="#{beanPagoPorCurso.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+			    					itemValue="#{curso.id}"/>
+			    				</p:selectOneMenu>	
+			    				
+			    				<p:outputLabel for="mes" value="Mes" />
+						        <p:selectOneMenu id="mes" value="#{beanPagoPorCurso.selectedMes}" style="width:125px">
+						            <f:selectItem itemLabel="Enero" itemValue="01" />
+						            <f:selectItem itemLabel="Febrero" itemValue="02" />
+						            <f:selectItem itemLabel="Marzo" itemValue="03" />
+						            <f:selectItem itemLabel="Abril" itemValue="04" />
+						            <f:selectItem itemLabel="Mayo" itemValue="05" />
+						            <f:selectItem itemLabel="Junio" itemValue="06" />
+						            <f:selectItem itemLabel="Julio" itemValue="07" />
+						            <f:selectItem itemLabel="Agosto" itemValue="08" />
+						            <f:selectItem itemLabel="Septiembre" itemValue="09" />
+						            <f:selectItem itemLabel="Octubre" itemValue="10" />
+						            <f:selectItem itemLabel="Noviembre" itemValue="11" />
+						            <f:selectItem itemLabel="Diciembre" itemValue="12" />
+						        </p:selectOneMenu>	
+						        <p:commandButton icon="ui-icon-search" action="#{beanPagoPorCurso.buscarListado()}" update="panel"/>
+			    			</p:panelGrid>
+			    			
+			    			<p:dataTable id="contenedorCuotas" var="cuota" value="#{beanPagoPorCurso.listaCuotas}" paginator="true" resizableColumns="true" rows="20" 
+						    	 style="width:100%;" emptyMessage="No existen cuotas con los criterios de búsqueda seleccionados" rendered="#{beanPagoPorCurso.existenCuotas}">			    	
+							    	<f:facet name="header"> 
+							            <h:outputText value="Cuotas" />	
+							            <p:outputPanel style="float:right;">	
+											<h:commandLink action="#{beanPagoPorCurso.generarCuotasPorCursoXLS()}" >
+												<p:graphicImage value="../../images/xls-icon.ico" width="25" style="margin-right: 20px; float: left;" />
+											</h:commandLink>												
+											<h:commandLink action="#{beanPagoPorCurso.generarCuotasPorCursoPDF()}" target="_blank" title="PDF Alumnos completos">
+												<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
+											</h:commandLink>
+										</p:outputPanel>	 
+							        </f:facet>
+						    	
+								    <p:column headerText="Curso">
+								        <h:outputText value="#{cuota.curso.nombre}" />
+								    </p:column>
+								    
+								    <p:column headerText="Detalle">
+								        <h:outputText value="#{cuota.detalle}" />
+								    </p:column>
+								 
+								    <p:column headerText="Alumno">
+								        <h:outputText value="#{cuota.alumno.nombreCompleto}" />
+								    </p:column>
+								    
+								    <p:column headerText="Fecha vencimiento">
+								        <h:outputText value="#{cuota.fechaVencimiento}"> 
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+								    </p:column>
+								 
+								    <p:column headerText="Monto">
+								        <h:outputText value="#{cuota.monto}" >
+											<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+										</h:outputText>
+								    </p:column>
+								 
+								    <p:column headerText="Pagada">
+								    	<h:outputText rendered="#{cuota.paga}" value="Si" style="color:green"/>
+								    	<h:outputText rendered="#{!cuota.paga}" value="No" style="color:red"/>
+								    </p:column>
+								    
+								    <p:column headerText="Fecha pago">
+								        <h:outputText value="#{cuota.fechaPago}"> 
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+								    </p:column>
+								    				    
+									<f:facet name="footer" >
+						            	<div style="text-align:right;">
+						            		<p:outputLabel value="Cantidad:  #{beanPagoPorCurso.listaCuotas.size()}" />
+						            	</div>
+							        </f:facet>
+								</p:dataTable>
+			    			
+				    	</p:panel>
+				    </h:form>
+				</div>
+			</h:body>
+		</f:view>
+	</ui:composition>
+</html>
