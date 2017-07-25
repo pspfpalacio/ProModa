@@ -103,7 +103,12 @@
 					 
 					    <p:column headerText="Pago Registrado" style="width:10%;">
 					        <h:outputText value="#{cuota.paga == true? 'SI' : 'NO'}" />
-					    </p:column>						    
+					    </p:column>	
+					    <f:facet name="footer" >
+			            	<div style="text-align:right;">
+			            		<p:outputLabel value="Cantidad:  #{beanPagoAlum.listaCuotas.size()}" />
+			            	</div>
+				        </f:facet>					    
 					</p:dataTable>
 					<p:commandButton value="Click aquí para realizar el Pago de más de una Cuota" action="#{beanPagoAlum.generarListadoMultiple()}" 
 					update="panel, :formulario:outputPanelCuota" oncomplete="PF('dialogoCuota').show()" rendered="#{beanPagoAlum.verCuotas}"/>

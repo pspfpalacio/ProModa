@@ -90,7 +90,12 @@
 				    		<p:outputLabel value="Email: " />				    		
 				    		<p:outputLabel value="#{cuota.alumno.email}" />
 				    	</p:panel>
-				    </p:rowExpansion>	    
+				    </p:rowExpansion>	 
+   					<f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanPago.listaCuota.size()}" />
+		            	</div>
+			        </f:facet>   
 				</p:dataTable>		    	
 				
 				<p:separator />
@@ -150,7 +155,12 @@
 				    		<p:outputLabel value="Email: " />				    		
 				    		<p:outputLabel value="#{matricula.alumno.email}" />
 				    	</p:panel>
-				    </p:rowExpansion>			    
+				    </p:rowExpansion>	
+				    <f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanPago.listaMatriculaAlumno.size()}" />
+		            	</div>
+			        </f:facet>   		    
 				</p:dataTable>
 								
 				</p:panel> 

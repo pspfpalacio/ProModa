@@ -97,6 +97,11 @@
 									<h:outputText value="#{mesaAlumno.calificacion}" rendered="#{mesaAlumno.calificacion != 0}"/>
 									<h:outputText value=" - " rendered="#{mesaAlumno.calificacion == 0}"/>
 								</p:column>
+								<f:facet name="footer" >
+					            	<div style="text-align:right;">
+					            		<p:outputLabel value="Cantidad:  #{beanMesaAlum.listaMesasAlumnos.size()}" />
+					            	</div>
+						        </f:facet>
 							</p:dataTable>							
 		   				</p:panel>
 			    	</h:form>

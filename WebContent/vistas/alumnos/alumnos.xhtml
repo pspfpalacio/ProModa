@@ -47,7 +47,7 @@
 						<p:outputPanel style="float:right;" rendered="false">							
 							<h:commandLink action="#{beanAlumno.generarReporte()}" target="_blank" >
 								<p:graphicImage value="../../images/pdf-icon.png" width="20" style="margin-right: 20px; float: left;" />
-							</h:commandLink>
+							</h:commandLink>	
 						</p:outputPanel>
 					</f:facet>
 					
@@ -107,6 +107,11 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
+					<f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanAlumno.listaAlumnos.size()}" />
+		            	</div>
+			        </f:facet>
 				</p:dataTable>	
 				</p:panel> 
 			</h:form>

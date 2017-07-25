@@ -123,6 +123,11 @@
 						<p:commandButton icon="ui-icon-newwin"  disabled="#{!pm.enabled}" oncomplete="PF('dialogoMovimiento').show()"
 						action="#{beanPago.verPagoMatricula(pm)}" update=":formulario:outputPanel"/>
 					</p:column>					    
+					<f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanPago.listaPagoMatricula.size()}" />
+		            	</div>
+			        </f:facet>
 				</p:dataTable>
 				
 			    <p:outputPanel style="float:right;" rendered="#{beanPago.siListaCuotas}" >							
@@ -170,7 +175,12 @@
 				    <p:column headerText="Ver Pago" style="width:125px;text-align:center;" exportable="false">
 						<p:commandButton icon="ui-icon-newwin"  disabled="#{!pc.enabled}" oncomplete="PF('dialogoMovimiento').show()"
 						action="#{beanPago.verPagoCuota(pc)}" update=":formulario:outputPanel"/>
-					</p:column>					    
+					</p:column>		
+					<f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanPago.listaPagosCuota.size()}" />
+		            	</div>
+			        </f:facet>			    
 				</p:dataTable>	
 				<p:dialog header="#{beanPago.pagoReporte.encabezado}" widgetVar="dialogoMovimiento"
 					id="dialogo" modal="true">

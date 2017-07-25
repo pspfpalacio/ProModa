@@ -102,7 +102,12 @@
 								    
 								    <p:column style="width:40px;">
 								    	<p:commandButton icon="ui-icon-cart" action="#{beanPago.onSelectMatricula(matriculaI)}" update=":formulario:panel" />
-								    </p:column>							    
+								    </p:column>	
+								    <f:facet name="footer" >
+						            	<div style="text-align:right;">
+						            		<p:outputLabel value="Cantidad:  #{beanPago.listaMatriculasImpagas.size()}" />
+						            	</div>
+							        </f:facet>						    
 								</p:dataTable>
 								
 								<p:dataTable id="tablaCuotas" var="cuotaI" value="#{beanPago.listaCuotasImpagas}"  
@@ -162,7 +167,12 @@
 								    
 								    <p:column style="width:40px;">
 								    	<p:commandButton icon="ui-icon-cart" action="#{beanPago.onSelectCuota(cuotaI)}" update=":formulario:panel" />
-								    </p:column>					    
+								    </p:column>			
+								    <f:facet name="footer" >
+						            	<div style="text-align:right;">
+						            		<p:outputLabel value="Cantidad:  #{beanPago.listaCuotasImpagas.size()}" />
+						            	</div>
+							        </f:facet>			    
 								</p:dataTable>
 					    	</p:panelGrid>
 					    	

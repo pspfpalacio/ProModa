@@ -171,6 +171,11 @@
 								    </p:column>
 								    
 								    <p:column headerText="Selec." selectionMode="multiple" style="width:5%;text-align:center" exportable="false"/>
+								    <f:facet name="footer" >
+						            	<div style="text-align:right;">
+						            		<p:outputLabel value="Cantidad:  #{beanPago.listaCuota.size()}" />
+						            	</div>
+							        </f:facet>
 								    
 								</p:dataTable>
 								<f:facet name="footer">

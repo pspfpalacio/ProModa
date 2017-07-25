@@ -102,6 +102,11 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
+					<f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanProfesor.listaProfesores.size()}" />
+		            	</div>
+			        </f:facet>
 				</p:dataTable>	
 				</p:panel> 
 			</h:form>

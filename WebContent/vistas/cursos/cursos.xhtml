@@ -81,6 +81,11 @@
 						<p:commandButton icon="ui-icon-comment" title="Ver Matricula" 
 						action="#{beanMatricula.goEditarMatricula(curso, beanCurso.usuario)}" />
 					</p:column>
+					<f:facet name="footer" >
+		            	<div style="text-align:right;">
+		            		<p:outputLabel value="Cantidad:  #{beanCurso.listaCursos.size()}" />
+		            	</div>
+			        </f:facet>
 				</p:dataTable>	
 				</p:panel> 
 			</h:form>

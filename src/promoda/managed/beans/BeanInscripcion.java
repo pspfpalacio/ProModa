@@ -17,6 +17,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.jfree.util.Log;
+
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -778,6 +780,8 @@ public class BeanInscripcion implements Serializable {
 				inscripto.setTelefonoCel(alum.getTelefonoCel());
 				inscripto.setTelefonoFijo(alum.getTelefonoFijo());
 				inscripto.setFechaNacimiento(formatoFecha.format(alum.getFechaNacimiento()));
+				inscripto.setCurso(inscrip.getCurso());
+				inscripto.setMatricula(inscrip.getMatricula());
 				listaInscriptos.add(inscripto);
 			}			
 		}
@@ -865,12 +869,12 @@ public class BeanInscripcion implements Serializable {
 					montoCuota = montoCurso / cantCuotas;
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, 
-							new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL OBTENER LOS DATOS DE LA MATRICULA.", null));
+							new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR AL OBTENER LOS DATOS DE LA MATRICULA.", null));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				FacesContext.getCurrentInstance().addMessage(null, 
-						new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL OBTENER LOS DATOS DE LA MATRICULA. Error: " + e.getMessage(), null));
+						new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR AL OBTENER LOS DATOS DE LA MATRICULA. Error: " + e.getMessage(), null));
 			}						
 		}
 	}
@@ -942,16 +946,16 @@ public class BeanInscripcion implements Serializable {
 				if (updtInscri != 0 && updtMatrAlumno != 0 && actCuota) {
 					msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "BAJA DE INSCRIPCION EXITOSA!", null);
 				} else {
-					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR EN LA BAJA DE LA INSCRIPCION, "
-							+ "INTÉNTELO NUEVAMENTE", null);
+					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR EN LA BAJA DE LA INSCRIPCION, "
+							+ "INTï¿½NTELO NUEVAMENTE", null);
 				}
 			} else {
-				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "LA INSCRIPCIÓN POSEE PAGOS! NO ES POSIBLE DAR DE BAJA! "
-						+ "CONTÁCTESE CON EL ADMINISTRADOR", null);
+				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "LA INSCRIPCIï¿½N POSEE PAGOS! NO ES POSIBLE DAR DE BAJA! "
+						+ "CONTï¿½CTESE CON EL ADMINISTRADOR", null);
 			}			
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCION! "
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCION! "
 					+ "ERROR ORIGINAL: " + e.getMessage(), null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}		
@@ -1020,12 +1024,12 @@ public class BeanInscripcion implements Serializable {
 			if (updtInscri != 0 && updtMatrAlumno != 0 && actCuota) {
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "BAJA DE INSCRIPCION EXITOSA!", null);
 			} else {
-				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR EN LA BAJA DE LA INSCRIPCION, "
-						+ "INTÉNTELO NUEVAMENTE", null);
+				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR EN LA BAJA DE LA INSCRIPCION, "
+						+ "INTï¿½NTELO NUEVAMENTE", null);
 			}
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCION! "
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCION! "
 					+ "ERROR ORIGINAL: " + e.getMessage(), null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}		
@@ -1040,8 +1044,8 @@ public class BeanInscripcion implements Serializable {
 		if (idInscri != 0) {
 			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ALTA DE INSCRIPCION EXITOSA!", null);
 		} else {
-			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR EN EL ALTA DE LA INSCRIPCION, "
-					+ "INTÉNTELO NUEVAMENTE", null);
+			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR EN EL ALTA DE LA INSCRIPCION, "
+					+ "INTï¿½NTELO NUEVAMENTE", null);
 		}
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
@@ -1293,7 +1297,7 @@ public class BeanInscripcion implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 			} else {
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL EDITAR! "
-						+ "CONTÁCTESE CON EL ADMINISTRADOR!", null);
+						+ "CONTï¿½CTESE CON EL ADMINISTRADOR!", null);
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 			}			
 		} catch (Exception e) {
@@ -1327,7 +1331,7 @@ public class BeanInscripcion implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 			} else {
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL EDITAR! "
-						+ "CONTÁCTESE CON EL ADMINISTRADOR!", null);
+						+ "CONTï¿½CTESE CON EL ADMINISTRADOR!", null);
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 			}
 		} catch (Exception e) {
@@ -1637,13 +1641,13 @@ public class BeanInscripcion implements Serializable {
 					mensaje = mensaje + " LOCALIDAD!";
 				}
 				if (domicilio.getCodigoPostal().isEmpty() || domicilio.getCodigoPostal() == "") {
-					mensaje = mensaje + " CÓDIGO POSTAL!";
+					mensaje = mensaje + " Cï¿½DIGO POSTAL!";
 				}
 				if (domicilio.getCalle().isEmpty() || domicilio.getCalle() == "") {
 					mensaje = mensaje + " CALLE!";
 				}
 				if (domicilio.getNumero().isEmpty() || domicilio.getNumero() == "") {
-					mensaje = mensaje + " NÚMERO DE CALLE!";
+					mensaje = mensaje + " Nï¿½MERO DE CALLE!";
 				}
 				if ((alumno.getTelefonoCel().isEmpty() || alumno.getTelefonoCel() == "") 
 						&& (alumno.getTelefonoFijo().isEmpty() || alumno.getTelefonoFijo() == "")) {
@@ -1657,10 +1661,10 @@ public class BeanInscripcion implements Serializable {
 					mensaje = mensaje + " PRIMER VENCIMIENTO!";
 				}
 				if (existeEmail) {
-					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "YA EXISTE USUARIO CON ESE CORREO ELECTRÓNICO, POR FAVOR COLOQUE UNO DISTINTO!", null);
+					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "YA EXISTE USUARIO CON ESE CORREO ELECTRï¿½NICO, POR FAVOR COLOQUE UNO DISTINTO!", null);
 					FacesContext.getCurrentInstance().addMessage(null, msg);
 				} else {
-					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "LOS PARAMETROS" + mensaje + " SON OBLIGATORIOS PARA UNA INSCRIPCIÓN", null);
+					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "LOS PARAMETROS" + mensaje + " SON OBLIGATORIOS PARA UNA INSCRIPCIï¿½N", null);
 					FacesContext.getCurrentInstance().addMessage(null, msg);
 				}				
 			}		
@@ -1692,6 +1696,8 @@ public class BeanInscripcion implements Serializable {
 					inscripto.setTelefonoCel(alum.getTelefonoCel());
 					inscripto.setTelefonoFijo(alum.getTelefonoFijo());
 					inscripto.setFechaNacimiento(formatoFecha.format(alum.getFechaNacimiento()));
+					inscripto.setCurso(inscrip.getCurso());
+					inscripto.setMatricula(inscrip.getMatricula());
 					listaInscriptos.add(inscripto);
 				}				
 			}
@@ -1709,6 +1715,8 @@ public class BeanInscripcion implements Serializable {
 					inscripto.setTelefonoCel(alum.getTelefonoCel());
 					inscripto.setTelefonoFijo(alum.getTelefonoFijo());
 					inscripto.setFechaNacimiento(formatoFecha.format(alum.getFechaNacimiento()));
+					inscripto.setCurso(inscrip.getCurso());
+					inscripto.setMatricula(inscrip.getMatricula());
 					listaInscriptos.add(inscripto);
 				}				
 			}
@@ -1727,6 +1735,8 @@ public class BeanInscripcion implements Serializable {
 					inscripto.setTelefonoCel(alum.getTelefonoCel());
 					inscripto.setTelefonoFijo(alum.getTelefonoFijo());
 					inscripto.setFechaNacimiento(formatoFecha.format(alum.getFechaNacimiento()));
+					inscripto.setCurso(inscrip.getCurso());
+					inscripto.setMatricula(inscrip.getMatricula());
 					listaInscriptos.add(inscripto);
 				}				
 			}
@@ -1833,6 +1843,17 @@ public class BeanInscripcion implements Serializable {
 		parametros.put("curso", nombreCurso);
 		reporte.exportXls(parametros, listaInscriptos, "inscriptosExcel", "attachment");
 	}
+	
+/*	public void generarInscriptos(Object document) throws IOException, BadElementException, DocumentException {
+        Document pdf = (Document) document;
+        pdf.open();
+        pdf.setPageSize(PageSize.A4);
+ 
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        String logo = externalContext.getRealPath("") + File.separator + "images" + File.separator + "pm-curso.jpg";
+         
+        pdf.add(Image.getInstance(logo));
+    }*/
 
 
 }
