@@ -22,7 +22,11 @@ public interface DAOMesa {
 	
 	public List<Mesa> getLista(Curso curso, Matricula matricula);
 	
+	public List<Mesa> getLista(Curso curso, Materia materia);
+	
 	public List<Mesa> getLista(Curso curso, Matricula matricula, Materia materia);	
+	
+	public List<Mesa> getListaBetweenFecha(Curso curso, Materia materia, Date fecha);
 	
 	public List<Mesa> getListaBetweenFecha(Curso curso, Matricula matricula, Materia materia, Date fecha);
 

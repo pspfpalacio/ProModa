@@ -11,6 +11,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
+
 import promoda.dao.DAOCurso;
 import promoda.dao.DAOMateria;
 import promoda.dao.DAOMatricula;
@@ -31,6 +33,8 @@ public class BeanMesa implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger log = Logger.getLogger(BeanMesa.class);
 	
 	@ManagedProperty(value = "#{BeanMesaDAO}")
 	private DAOMesa mesaDAO;
@@ -150,6 +154,7 @@ public class BeanMesa implements Serializable {
 	}
 	
 	public String goMesas(Usuario user) {
+		log.info("Intento de redireccion a mesas. Usuario: " + user.getUsername());
 		try {
 			listaMesas = new ArrayList<Mesa>();
 			listaCursos = new ArrayList<Curso>();
@@ -164,7 +169,7 @@ public class BeanMesa implements Serializable {
 			listaCursos = cursoDAO.getLista(true);			
 			return "mesas";
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al redirigir a mesas. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"No es posible cargar el formulario! Error: " + e.getMessage(), null));
 			return "";
@@ -172,6 +177,7 @@ public class BeanMesa implements Serializable {
 	}
 	
 	public String goNuevaMesa() {
+		log.info("Intento de redireccion a nueva mesa.");
 		try {
 			listaCursos = new ArrayList<Curso>();
 			listaMaterias = new ArrayList<Materia>();
@@ -184,14 +190,15 @@ public class BeanMesa implements Serializable {
 			listaCursos = cursoDAO.getLista(true);
 			return "mesa";
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al redirigir a nueva mesa. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al cargar el formulario! Error: " + e.getMessage(), null));
+					"Ocurriï¿½ un error al cargar el formulario! Error: " + e.getMessage(), null));
 			return "";
 		}
 	}
 	
 	public String goEditarMesa(Mesa me) {
+		log.info("Intento de redireccion a editar mesa. Mesa: " + me.getId());
 		try {
 			listaCursos = new ArrayList<Curso>();
 			listaMaterias = new ArrayList<Materia>();
@@ -208,108 +215,125 @@ public class BeanMesa implements Serializable {
 			listaMaterias = materiaDAO.getLista(true, cur);
 			return "mesa";
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al redirigir a editar mesa " + me.getId() + ". Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al cargar el formulario! Error: " + e.getMessage(), null));
+					"Ocurriï¿½ un error al cargar el formulario! Error: " + e.getMessage(), null));
 			return "";
 		}
 	}
 	
 	public void onChangeCurso() {
-		try {
-			listaMatriculas = new ArrayList<Matricula>();
-			listaMaterias = new ArrayList<Materia>();			
-			idMatricula = 0;			
-			idMateria = 0;
-			if (idCurso != 0) {
-				Curso cur = cursoDAO.get(idCurso);
-				listaMatriculas = matriculaDAO.getLista(true, cur);
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MATRICULAS", null));
-		}
-	}
-	
-	public void onChangeMatricula() {
+		log.info("onChangeCurso - idCurso " + idCurso);
 		try {
 			listaMaterias = new ArrayList<Materia>();			
 			idMateria = 0;
-			if (idMatricula != 0 && idCurso != 0) {				
+			if (idCurso != 0) {				
 				Curso cur = cursoDAO.get(idCurso);
 				listaMaterias = materiaDAO.getLista(true, cur);
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MATERIAS", null));
+			log.error("Ocurrio un error al cargar las materias. Error: " + e);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MATRICULAS", null));
 		}
 	}
 	
+//	public void onChangeCurso() {
+//		try {
+//			listaMatriculas = new ArrayList<Matricula>();
+//			listaMaterias = new ArrayList<Materia>();			
+//			idMatricula = 0;			
+//			idMateria = 0;
+//			if (idCurso != 0) {
+//				Curso cur = cursoDAO.get(idCurso);
+//				listaMatriculas = matriculaDAO.getLista(true, cur);
+//			}
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MATRICULAS", null));
+//		}
+//	}
+//	
+//	public void onChangeMatricula() {
+//		try {
+//			listaMaterias = new ArrayList<Materia>();			
+//			idMateria = 0;
+//			if (idMatricula != 0 && idCurso != 0) {				
+//				Curso cur = cursoDAO.get(idCurso);
+//				listaMaterias = materiaDAO.getLista(true, cur);
+//			}
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MATERIAS", null));
+//		}
+//	}
+	
 	public void buscar() {
+		log.info("buscar - idCurso: " + idCurso + " - idMateria: " + idMateria);
 		listaMesas = new ArrayList<Mesa>();
 		try {
-			if (idCurso == 0 && idMatricula == 0 && idMateria == 0) {
+			if (idCurso == 0 && idMateria == 0) {
 				listaMesas = mesaDAO.getLista();
 			}
-			if (idCurso != 0 && idMatricula == 0 && idMateria == 0) {
+			if (idCurso != 0 && idMateria == 0) {
 				Curso cur = cursoDAO.get(idCurso);
 				listaMesas = mesaDAO.getLista(cur);
 			}
-			if (idCurso != 0 && idMatricula != 0 && idMateria == 0) {
-				Curso cur = cursoDAO.get(idCurso);
-				Matricula matr = matriculaDAO.get(idMatricula);
-				listaMesas = mesaDAO.getLista(cur, matr);
-			}
-			if (idCurso != 0 && idMatricula != 0 && idMateria != 0) {
-				Curso cur = cursoDAO.get(idCurso);
-				Matricula matr = matriculaDAO.get(idMatricula);
+//			if (idCurso != 0 && idMatricula != 0 && idMateria == 0) {
+//				Curso cur = cursoDAO.get(idCurso);
+//				Matricula matr = matriculaDAO.get(idMatricula);
+//				listaMesas = mesaDAO.getLista(cur, matr);
+//			}
+			if (idCurso != 0 && idMateria != 0) {
+				Curso cur = cursoDAO.get(idCurso);				
 				Materia mat = materiaDAO.get(idMateria);
-				listaMesas = mesaDAO.getLista(cur, matr, mat);
+				listaMesas = mesaDAO.getLista(cur, mat);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al buscar las mesas. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error a cargar las mesas! Error: " + e.getMessage(), null));
+					"Ocurriï¿½ un error a cargar las mesas! Error: " + e.getMessage(), null));
 		}
 	}
 	
 	public String guardar() {
+		log.info("Intento guardar con datos idCurso: " + idCurso + " idMateria: " + idMateria + " fechaHoraMesa: " + mesa.getFechaHoraMesa() + " fechaInicio: " + mesa.getFechaInicio() + " fechaFin: " + mesa.getFechaFin() + " costo: " + mesa.getCosto() + " mesaId: " + mesa.getId());
 		try {
-			if (idCurso != 0 && idMatricula != 0 && idMateria != 0 && mesa.getFechaHoraMesa() != null && mesa.getFechaInicio() != null && mesa.getFechaFin() != null && mesa.getCosto() != 0) {
+			if (idCurso != 0 && idMateria != 0 && mesa.getFechaHoraMesa() != null && mesa.getFechaInicio() != null && mesa.getFechaFin() != null && mesa.getCosto() != 0) {
 				if (mesa.getId() != 0) {
 					mesa.setUsuario3(usuario);
 					mesa.setFechaMod(new Date());
 					if (mesaDAO.update(mesa) != 0) {
-						Curso cur = cursoDAO.get(idCurso);
-						Matricula matr = matriculaDAO.get(idMatricula);
+						log.info("Mesa actualiza. Mesa id: " + mesa.getId());
+						Curso cur = cursoDAO.get(idCurso);						
 						Materia mat = materiaDAO.get(idMateria);
-						listaMesas = mesaDAO.getLista(cur, matr, mat);
+						listaMesas = mesaDAO.getLista(cur, mat);
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-								"Matrícula registrada con éxito.", null));
+								"Mesa registrada con exito.", null));
 						return "mesas";
 					} else {
+						log.error("Ocurrio un error al actualizar la mesa.");
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-								"Ocurrió un error al registrar la matrícula.", null));
+								"Ocurrio un error al registrar la mesa.", null));
 						return "";
 					}
 				} else {
-					Curso cur = cursoDAO.get(idCurso);
-					Matricula matr = matriculaDAO.get(idMatricula);
+					Curso cur = cursoDAO.get(idCurso);					
 					Materia mat = materiaDAO.get(idMateria);
-					mesa.setCurso(cur);
-					mesa.setMatricula(matr);
+					mesa.setCurso(cur);					
 					mesa.setMateria(mat);
 					mesa.setEnabled(true);
 					mesa.setFechaAlta(new Date());
 					mesa.setUsuario1(usuario);
 					if (mesaDAO.insertar(mesa) != 0) {
-						listaMesas = mesaDAO.getLista(cur, matr, mat);
+						log.info("Mesa insertada. Mesa id: " + mesa.getId());
+						listaMesas = mesaDAO.getLista(cur, mat);
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-								"Matrícula registrada con éxito.", null));
+								"Mesa registrada con exito.", null));
 						return "mesas";
 					} else {
+						log.error("Ocurrio un error al insertar la mesa.");
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-								"Ocurrió un error al registrar la matrícula.", null));
+								"Ocurrio un error al registrar la mesa.", null));
 						return "";
 					}
 				}				
@@ -319,14 +343,15 @@ public class BeanMesa implements Serializable {
 				return "";
 			}			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al guardar la mesa. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al registrar la matrícula. Error: " + e.getMessage(), null));
+					"Ocurrio un error al registrar la matricula. Error: " + e.getMessage(), null));
 			return "";
 		}
 	}
 	
 	public void baja(Mesa me) {
+		log.info("Intento dar de baja la mesa: " + me.getId());
 		try {
 			List<MesasAlumno> listaMesasAlumnos = mesaAlumnoDAO.getLista(true, me);
 			if (listaMesasAlumnos.isEmpty()) {
@@ -334,20 +359,22 @@ public class BeanMesa implements Serializable {
 				me.setFechaBaja(new Date());
 				me.setUsuario2(usuario);
 				if (mesaDAO.update(me) != 0) {
+					log.info("Se dio de baja. Mesa id " + me.getId());
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-							"Se registró la baja de matrícula con éxito.", null));
+							"Se registro la baja de la mesa con exito.", null));
 				} else {
+					log.error("Ocurrio un error al dar de baja la mesa " + me.getId());
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-							"Ocurrió un error al registrar la baja.", null));
+							"Ocurrio un error al registrar la baja.", null));
 				}
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 						"La mesa tiene alumnos inscriptos, realice la baja de estos primero.", null));
 			}			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al dar de baja la mesa. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al registrar la baja. Error: " + e.getMessage(), null));
+					"Ocurriï¿½ un error al registrar la baja. Error: " + e.getMessage(), null));
 		}
 	}
 

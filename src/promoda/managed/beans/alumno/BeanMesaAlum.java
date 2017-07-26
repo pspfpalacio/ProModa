@@ -93,7 +93,7 @@ public class BeanMesaAlum implements Serializable {
 	private Mesa mesa;
 	private MatriculaAlum matriculaAlum;
 	private MP mercadoPago;
-	private Parametro parametro;
+	private Parametro parametro;	
 	private String accesToken;
 	private String jsonId;
 	private String checkoutURL;
@@ -328,7 +328,7 @@ public class BeanMesaAlum implements Serializable {
 	}
 	
 	public String goMesaInscripcion(Usuario user) {
-		try {
+		try {			
 			listaCursos = new ArrayList<Curso>();
 			listaMatriculaAlums = new ArrayList<MatriculaAlum>();
 			usuario = new Usuario();
@@ -350,9 +350,9 @@ public class BeanMesaAlum implements Serializable {
 			listaCursos = matriculaAlumnoDAO.getListaCursoDistinct(alumno);		
 			return "mesasAlumno";
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace();			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al cargar el formulario.", null));
+					"Ocurriï¿½ un error al cargar el formulario.", null));
 			return "";			
 		}
 	}
@@ -376,7 +376,7 @@ public class BeanMesaAlum implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al cargar el formulario.", null));
+					"Ocurriï¿½ un error al cargar el formulario.", null));
 			return "";
 		}
 	}
@@ -424,8 +424,8 @@ public class BeanMesaAlum implements Serializable {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurrió un error al generar los periodos para el curso seleccionado, "
-					+ "intenté nuevamente más tarde.", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurriï¿½ un error al generar los periodos para el curso seleccionado, "
+					+ "intentï¿½ nuevamente mï¿½s tarde.", null));
 		}
 	}
 	
@@ -442,7 +442,7 @@ public class BeanMesaAlum implements Serializable {
 				Curso cur = cursoDAO.get(idCurso);
 				Matricula matr = matriculaDAO.get(idMatricula);
 				Materia mat = materiaDAO.get(idMateria);				
-				List<Mesa> listaMesas = mesaDAO.getListaBetweenFecha(cur, matr, mat, new Date());
+				List<Mesa> listaMesas = mesaDAO.getListaBetweenFecha(cur, mat, new Date());
 				for (Mesa me : listaMesas) {
 					mesa = me;		
 					verMesa = true;
@@ -477,7 +477,8 @@ public class BeanMesaAlum implements Serializable {
 				listaMesasAlumnos = new ArrayList<MesasAlumno>();
 				Curso cur = cursoDAO.get(idCurso);
 				Materia mat = materiaDAO.get(idMateria);
-				listaMesasAlumnos = mesaAlumnoDAO.getLista(true, alumno, cur, mat);
+				Matricula matr = matriculaDAO.get(idMatricula);
+				listaMesasAlumnos = mesaAlumnoDAO.getLista(true, alumno, cur, mat, matr);
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "DEBE SELECCIONAR TODOS LOS CAMPOS", null));
 			}
@@ -512,18 +513,18 @@ public class BeanMesaAlum implements Serializable {
 						cajaMov.eliminarMovimiento(idPagoMesa, "PagosMesa", usuario);
 					}
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-							"BAJA REGISTRADA CON ÉXITO.", null));
+							"BAJA REGISTRADA CON ï¿½XITO.", null));
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-							"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCIÓN.", null));
+							"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCIï¿½N.", null));
 				}
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-						"NO ES POSIBLE REALIZAR LA BAJA DE LA INSCRIPCIÓN.", null));
+						"NO ES POSIBLE REALIZAR LA BAJA DE LA INSCRIPCIï¿½N.", null));
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REALIZAR LA BAJA DE INSCRIPCIÓN", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REALIZAR LA BAJA DE INSCRIPCIï¿½N", null));
 		}
 	}
 	
@@ -547,6 +548,7 @@ public class BeanMesaAlum implements Serializable {
 							mesaAlumno.setEnabled(true);
 							mesaAlumno.setFechaAlta(new Date());
 							mesaAlumno.setMateria(mat);
+							mesaAlumno.setMatricula(matr);
 							mesaAlumno.setMesa(mesa);
 							mesaAlumno.setUsuario1(usuario);
 							int idInsert = mesaAlumnoDAO.insertar(mesaAlumno); 
@@ -571,10 +573,10 @@ public class BeanMesaAlum implements Serializable {
 								cantidad = 0;
 								costo = 0;	
 								FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-										"Se registró con éxito la inscripción.", null));
+										"Se registrï¿½ con ï¿½xito la inscripciï¿½n.", null));
 							} else {
 								FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-										"Ocurrió un error al registrar la mesa.", null));
+										"Ocurriï¿½ un error al registrar la mesa.", null));
 							}
 						} else {
 							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
@@ -582,11 +584,11 @@ public class BeanMesaAlum implements Serializable {
 						}
 					} else {
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-								"No es posible registrar la inscripción a la mesa. Aún no se encuentra calificado en esa materia.", null));
+								"No es posible registrar la inscripciï¿½n a la mesa. Aï¿½n no se encuentra calificado en esa materia.", null));
 					}
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-							"No es posible registrar la inscripción a la mesa. Aún no se encuentra calificado en esa materia.", null));
+							"No es posible registrar la inscripciï¿½n a la mesa. Aï¿½n no se encuentra calificado en esa materia.", null));
 				}								
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
@@ -595,7 +597,7 @@ public class BeanMesaAlum implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"OCURRIO UN ERROR AL REGISTRAR LA INSCRIPCIÓN.", null));
+					"OCURRIO UN ERROR AL REGISTRAR LA INSCRIPCIï¿½N.", null));
 		}
 	}
 	

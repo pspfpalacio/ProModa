@@ -270,7 +270,7 @@ public class BeanMesaAlumno implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al cargar el formulario. Error: " + e.getMessage(), null));
+					"Ocurriï¿½ un error al cargar el formulario. Error: " + e.getMessage(), null));
 			return "";
 		}
 	}
@@ -287,7 +287,7 @@ public class BeanMesaAlumno implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al cargar el formulario. Error: " + e.getMessage(), null));
+					"Ocurriï¿½ un error al cargar el formulario. Error: " + e.getMessage(), null));
 			return "";
 		}
 	}
@@ -314,7 +314,7 @@ public class BeanMesaAlumno implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al cargar los cursos. Error: " + e.getMessage(), null));
+					"Ocurriï¿½ un error al cargar los cursos. Error: " + e.getMessage(), null));
 		}    	
     }
 	
@@ -445,7 +445,8 @@ public class BeanMesaAlumno implements Serializable {
 							mesaAlumno.setEnabled(true);
 							mesaAlumno.setFechaAlta(new Date());
 							mesaAlumno.setMateria(mat);
-							mesaAlumno.setMesa(me);
+							mesaAlumno.setMatricula(matr);
+							mesaAlumno.setMesa(me);							
 							mesaAlumno.setUsuario1(usuario);
 							int idInsert = mesaAlumnoDAO.insertar(mesaAlumno); 
 							if (idInsert != 0) {	
@@ -474,22 +475,22 @@ public class BeanMesaAlumno implements Serializable {
 								return "mesas";
 							} else {
 								FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-										"Ocurrió un error al registrar la mesa.", null));
+										"Ocurriï¿½ un error al registrar la mesa.", null));
 								return "";
 							}
 						} else {
 							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-									"Ya existe una inscripción vigente de este alumno a esta mesa.", null));
+									"Ya existe una inscripciï¿½n vigente de este alumno a esta mesa.", null));
 							return "";
 						}
 					} else {
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-								"No es posible registrar la inscripción a la mesa. El alumno no esta calificado.", null));
+								"No es posible registrar la inscripciï¿½n a la mesa. El alumno no esta calificado.", null));
 						return "";
 					}
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-							"No es posible registrar la inscripción a la mesa. El alumno no esta calificado.", null));
+							"No es posible registrar la inscripciï¿½n a la mesa. El alumno no esta calificado.", null));
 					return "";
 				}								
 			} else {
@@ -500,7 +501,7 @@ public class BeanMesaAlumno implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"OCURRIO UN ERROR AL REGISTRAR LA INSCRIPCIÓN. Error: " + e.getMessage(), null));
+					"OCURRIO UN ERROR AL REGISTRAR LA INSCRIPCIï¿½N. Error: " + e.getMessage(), null));
 			return "";
 		}
 	}
@@ -521,15 +522,15 @@ public class BeanMesaAlumno implements Serializable {
 					cajaMov.eliminarMovimiento(idPagoMesa, "PagosMesa", usuario);
 				}
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-						"BAJA REGISTRADA CON ÉXITO.", null));
+						"BAJA REGISTRADA CON ï¿½XITO.", null));
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-						"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCIÓN.", null));
+						"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCIï¿½N.", null));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCIÓN. Error: " + e.getMessage(), null));
+					"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCIï¿½N. Error: " + e.getMessage(), null));
 		}
 	}
 	
@@ -551,15 +552,15 @@ public class BeanMesaAlumno implements Serializable {
 			}
 			if (flagUpdt) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-						"Cambios registrados con éxito!", null));
+						"Cambios registrados con ï¿½xito!", null));
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-						"Ocurrió un error al registrar los cambios. Inténtelo nuevamente.", null));
+						"Ocurriï¿½ un error al registrar los cambios. Intï¿½ntelo nuevamente.", null));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al registrar los cambios. Error: " + e.getMessage(), null));
+					"Ocurriï¿½ un error al registrar los cambios. Error: " + e.getMessage(), null));
 		}
 	}
 	
@@ -571,6 +572,7 @@ public class BeanMesaAlumno implements Serializable {
 			for (MesasAlumno mAlumno : listaMesasAlumnos) {
 				Inscripto inscripto = new Inscripto();
 				inscripto.setNombreCompleto(mAlumno.getAlumno().getNombreCompleto());
+				inscripto.setMatriculaString(mAlumno.getMatricula().getDescripcion());
 				inscripto.setCondicion(mAlumno.getCondicion());
 				if (mAlumno.getCalificacion() != 0) {
 					inscripto.setCalificacion(Float.toString(mAlumno.getCalificacion()));
@@ -584,8 +586,7 @@ public class BeanMesaAlumno implements Serializable {
 			String nombreMateria = " - ";
 			String nombreMesa = " - ";
 			if (mesa.getId() != 0) {
-				nombreCurso = mesa.getCurso().getNombre();
-				nombreMatricula = mesa.getMatricula().getDescripcion();
+				nombreCurso = mesa.getCurso().getNombre();				
 				nombreMateria = mesa.getMateria().getNombre();
 				nombreMesa = mesa.getFechaHoraString();
 			}			
@@ -597,7 +598,7 @@ public class BeanMesaAlumno implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurrió un error al generar el reporte. Error: " + e.getMessage(), null));
+					"Ocurriï¿½ un error al generar el reporte. Error: " + e.getMessage(), null));
 		}		
 	}
 
