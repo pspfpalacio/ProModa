@@ -45,9 +45,11 @@
 						<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
 							<p:growl id="messages" autoUpdate="true" showDetail="false" />
 							<ui:include src="/includes/menubar.xhtml" />
+							<p:separator />
 							<p:commandButton icon="ui-icon-extlink" value="Parámetros" title="Parámetros de cuotas" oncomplete="PF('dialogo').show()" 
 							update=":formulario:outputPanel" />
-							<h3 align="center">PAGOS</h3>							
+							<h3 align="center">PAGOS</h3>	
+							<p:separator />						
 							<p:panelGrid columns="2" cellpadding="5" style="width:100%;">		
 					    		<f:facet name="header">
 					    			<h:outputText value="Pagos" />					    			
@@ -74,6 +76,7 @@
 			    					itemValue="#{mat.id}"/>
 			    				</p:selectOneMenu>
 					    	</p:panelGrid>
+					    	<p:separator />
 					    	<p:panelGrid columns="3" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.siMatAlumno}"> 
 						    	<f:facet name="header">
 							        <p:row>
@@ -109,6 +112,8 @@
    												onclick="return confirm('BAJA DE PAGO?')" disabled="#{!beanPago.siMatPagada}"/>
 		    					</f:facet>
 					    	</p:panelGrid>
+					    	
+					    	<p:separator />
 					    	
 					    	<p:panelGrid columns="1" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.siCuotas}" > 
 					    		<f:facet name="header">
@@ -203,6 +208,9 @@
 				    					
 				    					<p:outputLabel value="Cliente Secret (MP): " />
 				    					<p:inputText value="#{beanPago.parametro.passwordMp}" />
+				    					
+				    					<p:outputLabel value="Porcentaje (MP): " />
+				    					<p:inputText value="#{beanPago.parametro.porcentajeMp}" />
 				    				</p:panelGrid>
 				    				<p:panelGrid columns="1" style="width:100%;">
 				    					<h5>
@@ -219,6 +227,8 @@
 				    				</p:panelGrid>
 								</p:outputPanel>
 							</p:dialog>
+							
+							<p:separator />
 							
 							<p:panelGrid columns="6" cellpadding="5" style="width:100%; margin-top:10px;" rendered="#{beanPago.pagoMesa}" > 
 					    		<f:facet name="header">

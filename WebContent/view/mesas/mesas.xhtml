@@ -27,7 +27,7 @@
 				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
 					<p:growl id="messages" showDetail="false" />
 					<h3 align="left" style="color: black;">Listado de cursos a los cuales se encuentra inscripto. 
-					Seleccione un curso, una materia y un periodo.</h3>		
+					Seleccione un curso, una materia y un periodo de cursado.</h3>		
 								
 					<p:panelGrid columns="6" cellpadding="5" style="width:100%;">		
 			    		<f:facet name="header">
@@ -42,7 +42,7 @@
 	    					itemValue="#{curso.id}"/>
 	    				</p:selectOneMenu>		  
 	    				
-	    				<p:outputLabel value="Periodo " rendered="#{beanMesaAlum.verPeriodo || beanMesaAlum.verPeriodos}"/>
+	    				<p:outputLabel value="Periodo de cursado " rendered="#{beanMesaAlum.verPeriodo || beanMesaAlum.verPeriodos}"/>
 	    				<p:selectOneMenu value="#{beanMesaAlum.idMatricula}" filter="true" filterMatchMode="contains" style="width:250px;"
 	    				rendered="#{beanMesaAlum.verPeriodos}">	
 	    					<p:ajax event="change" listener="#{beanMesaAlum.onChangeMateria()}" update="panel" />	    					
@@ -65,7 +65,7 @@
 			    		<p:outputLabel value="#{beanMesaAlum.mesa.fechaHoraString}" rendered="#{beanMesaAlum.verMesa}" />
 			    		<p:outputLabel value="No existen mesas para la inscripción." rendered="#{!beanMesaAlum.verMesa}" />
 			    		
-			    		<p:outputLabel value="Condición: " />
+			    		<p:outputLabel value="Condición de cursado: " />
     					<p:inputText value="#{beanMesaAlum.condicion}" disabled="true"/>
 	    				
 	    				<p:outputLabel value="Cant. inscripciones " />

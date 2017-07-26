@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.mercadopago.MP;
@@ -49,6 +50,8 @@ public class BeanMesaAlum implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger log = Logger.getLogger(BeanMesaAlum.class);
 	
 	@ManagedProperty(value = "#{BeanMesaDAO}")
 	private DAOMesa mesaDAO;
@@ -328,6 +331,7 @@ public class BeanMesaAlum implements Serializable {
 	}
 	
 	public String goMesaInscripcion(Usuario user) {
+		log.info("Intento redireccionar a mesasAlumno. Usuario id: " + user.getId() + " username: " + user.getUsername());
 		try {			
 			listaCursos = new ArrayList<Curso>();
 			listaMatriculaAlums = new ArrayList<MatriculaAlum>();
@@ -350,14 +354,15 @@ public class BeanMesaAlum implements Serializable {
 			listaCursos = matriculaAlumnoDAO.getListaCursoDistinct(alumno);		
 			return "mesasAlumno";
 		} catch (Exception e) {
-			e.printStackTrace();			
+			log.error("Ocurrio un error al redireccionar a mesasAlumno. Error: " + e);		
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurri� un error al cargar el formulario.", null));
+					"Ocurrio un error al cargar el formulario.", null));
 			return "";			
 		}
 	}
 	
 	public String goVerMesas(Usuario user) {
+		log.info("Intento redireccionar a verMesas. Usuario id: " + user.getId() + " username: " + user.getUsername());
 		try {
 			listaCursos = new ArrayList<Curso>();
 			listaMatriculaAlums = new ArrayList<MatriculaAlum>();
@@ -374,14 +379,15 @@ public class BeanMesaAlum implements Serializable {
 			listaCursos = matriculaAlumnoDAO.getListaCursoDistinct(alumno);		
 			return "verMesas";
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al redireccionar a verMesas. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"Ocurri� un error al cargar el formulario.", null));
+					"Ocurrio un error al cargar el formulario.", null));
 			return "";
 		}
 	}
 	
 	public void onChangeCurso() {
+		log.info("onChangeCurso idCurso: " + idCurso);
 		try {
 			listaMatriculaAlums = new ArrayList<MatriculaAlum>();
 			listaMaterias = new ArrayList<Materia>();
@@ -423,13 +429,14 @@ public class BeanMesaAlum implements Serializable {
 				}				
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurri� un error al generar los periodos para el curso seleccionado, "
-					+ "intent� nuevamente m�s tarde.", null));
+			log.error("Ocurrio un error en onChangeCurso. Error: " + e);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurrio un error al generar los periodos para el curso seleccionado, "
+					+ "intente nuevamente mas tarde.", null));
 		}
 	}
 	
 	public void onChangeMateria() {
+		log.info("onChangeMateria idCurso: " + idCurso + " idMatricula: " + idMatricula + " idMateria: " + idMateria);
 		try {
 			verMesa = false;
 			panelPago = false;
@@ -466,29 +473,31 @@ public class BeanMesaAlum implements Serializable {
 				}
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error onChangeMateria. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LA MESA", null));
 		}
 	}
 	
 	public void buscar() {
+		log.info("Intento buscar idCurso: " + idCurso + " idMateria: " + idMateria);
 		try {
-			if (idCurso != 0 && idMateria != 0 && idMatricula != 0) {
+			if (idCurso != 0 && idMateria != 0) {
 				listaMesasAlumnos = new ArrayList<MesasAlumno>();
 				Curso cur = cursoDAO.get(idCurso);
 				Materia mat = materiaDAO.get(idMateria);
-				Matricula matr = matriculaDAO.get(idMatricula);
-				listaMesasAlumnos = mesaAlumnoDAO.getLista(true, alumno, cur, mat, matr);
+//				Matricula matr = matriculaDAO.get(idMatricula);
+				listaMesasAlumnos = mesaAlumnoDAO.getLista(true, alumno, cur, mat);
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "DEBE SELECCIONAR TODOS LOS CAMPOS", null));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al buscar. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS INSCRIPCIONES", null));
 		}
 	}
 	
 	public void bajaInscripcion(MesasAlumno mAlumno) {
+		log.info("Intento dar de baja la inscripcion a mesa. MesaAlumno id: " + mAlumno.getId());
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 			String fechaMesa = dateFormat.format(mAlumno.getMesa().getFechaHoraMesa());
@@ -504,6 +513,7 @@ public class BeanMesaAlum implements Serializable {
 				mAlumno.setUsuario2(usuario);
 				if (mesaAlumnoDAO.update(mAlumno) != 0) {
 					PagosMesa pagosMesa = mesaPagoDAO.get(mAlumno);
+					log.info("Baja de mesa exitosa. MesaAlumno id: " + mAlumno.getId() + " - PagosMesa id: " + pagosMesa.getId());
 					if (pagosMesa.getId() != 0) {
 						CajasMov cajaMov = new CajasMov();
 						pagosMesa.setEnabled(false);
@@ -513,22 +523,23 @@ public class BeanMesaAlum implements Serializable {
 						cajaMov.eliminarMovimiento(idPagoMesa, "PagosMesa", usuario);
 					}
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-							"BAJA REGISTRADA CON �XITO.", null));
+							"BAJA REGISTRADA CON EXITO.", null));
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-							"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCI�N.", null));
+							"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCION.", null));
 				}
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-						"NO ES POSIBLE REALIZAR LA BAJA DE LA INSCRIPCI�N.", null));
+						"NO ES POSIBLE REALIZAR LA BAJA DE LA INSCRIPCION.", null));
 			}			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al intentar dar de baja. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL REALIZAR LA BAJA DE INSCRIPCI�N", null));
 		}
 	}
 	
 	public void guardarInscripcion() {
+		log.info("Intento guardar inscripcion a mesa. idMatricula: " + idMatricula + " idCurso: " + idCurso + " idMateria: " + idMateria + " Mesa id: " + mesa.getId());
 		try {
 			if (idMatricula != 0 && idCurso != 0 && idMateria != 0 && mesa.getId() != 0) {
 				MesasAlumno mesaAlumno = new MesasAlumno();				
@@ -536,6 +547,7 @@ public class BeanMesaAlum implements Serializable {
 				Materia mat = materiaDAO.get(idMateria);
 				Matricula matr = matriculaDAO.get(idMatricula);
 				MateriasCalificacion matCalifica = materiaCalificacionDAO.get(alumno, cur, mat, matr);
+				log.info("MateriasCalificacion id: " + matCalifica.getId() + " estado: " + matCalifica.getEstado());
 				if (matCalifica.getId() != 0) {
 					if (!matCalifica.getEstado().isEmpty() && matCalifica.getEstado() != null) {
 						List<MesasAlumno> listAux = mesaAlumnoDAO.getLista(true, alumno, mesa);
@@ -552,6 +564,7 @@ public class BeanMesaAlum implements Serializable {
 							mesaAlumno.setMesa(mesa);
 							mesaAlumno.setUsuario1(usuario);
 							int idInsert = mesaAlumnoDAO.insertar(mesaAlumno); 
+							log.info("Inserto mesaAlumno. id: " + idInsert + " - actualizaPago: " + actualizaPago);
 							if (idInsert != 0) {	
 								if (actualizaPago) {
 									mesaAlumno.setId(idInsert);
@@ -573,10 +586,10 @@ public class BeanMesaAlum implements Serializable {
 								cantidad = 0;
 								costo = 0;	
 								FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
-										"Se registr� con �xito la inscripci�n.", null));
+										"Se registro con exito la inscripcion.", null));
 							} else {
 								FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-										"Ocurri� un error al registrar la mesa.", null));
+										"Ocurrio un error al registrar la mesa.", null));
 							}
 						} else {
 							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
@@ -584,30 +597,32 @@ public class BeanMesaAlum implements Serializable {
 						}
 					} else {
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-								"No es posible registrar la inscripci�n a la mesa. A�n no se encuentra calificado en esa materia.", null));
+								"No es posible registrar la inscripcion a la mesa. Aun no se encuentra calificado en esa materia.", null));
 					}
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-							"No es posible registrar la inscripci�n a la mesa. A�n no se encuentra calificado en esa materia.", null));
+							"No es posible registrar la inscripcion a la mesa. Aun no se encuentra calificado en esa materia.", null));
 				}								
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 						"Todos los campos son obligatorios.", null));
 			}			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al guardar la inscripcion a la mesa. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-					"OCURRIO UN ERROR AL REGISTRAR LA INSCRIPCI�N.", null));
+					"OCURRIO UN ERROR AL REGISTRAR LA INSCRIPCION.", null));
 		}
 	}
 	
 	public void generarPagoMesa() {
+		log.info("Intento generarPagoMesa. Mesa id: " + mesa.getId() + " Usuario id: " + usuario.getId() + " username: " + usuario.getUsername());
 		try {
 			parametro = parametroDAO.get(1);
 			
 			mercadoPago = new MP(parametro.getUsuarioMp(), parametro.getPasswordMp());
 			accesToken = mercadoPago.getAccessToken();
-			System.out.println(accesToken);
+			log.info("Usuario MP: " + parametro.getUsuarioMp() + " Password MP: " + parametro.getPasswordMp() 
+				+ " AccesToken: " + accesToken + " Porcentaje MP: " + parametro.getPorcentajeMp() + " CostoMesa: " + mesa.getCosto());
 			
 			float porcentajeMp = parametro.getPorcentajeMp();
 			float montoP = mesa.getCosto();
@@ -617,13 +632,13 @@ public class BeanMesaAlum implements Serializable {
 			JSONObject preference = mercadoPago.createPreference("{'items':[{'title':'" + mesa.getCurso().getNombre() + " - " + mesa.getMateria().getNombre() + " - Mesa " + mesa.getFechaHoraString() + " (" + alumno.getId() + ")','description':'" + mesa.getCurso().getNombre() + " - " + mesa.getMateria().getNombre() + " - Mesa " + mesa.getFechaHoraString() + " (" + alumno.getId() + ")','quantity':1,'currency_id':'ARS','unit_price':" + montoP + "}],"
 					+ "'payer':{'name':'" + alumno.getNombres() + "','surname':'" + alumno.getApellido() + "','email':'" + usuario.getEmail() + "','date_created':'','phone':{'area_code':'','number':''},'identification':{'type':'','number':''},'address':{'street_name':'','street_number':null,'zip_code':''}}}");
 			
-			System.out.println(preference.toString());
+			log.info("Preference " + preference);
 			
-			jsonId = preference.getJSONObject("response").getString("id");
+			jsonId = preference.getJSONObject("response").getString("id");			
 			
 			checkoutURL = preference.getJSONObject("response").getString("init_point");
 			
-			System.out.println(checkoutURL);	
+			log.info("JsonId " + jsonId + " - CheckoutURL " + checkoutURL);
 			
 			RegistroOnline registroOnline = new RegistroOnline();
 			registroOnline.setAccesToken(accesToken);
@@ -637,13 +652,9 @@ public class BeanMesaAlum implements Serializable {
 			registroOnline.setPreference(preference.toString());
 			registroOnlineDAO.insertar(registroOnline);
 			
-//			String sandboxCheckoutURL = preference.getJSONObject("response").getString("sandbox_init_point");
-			
-//			System.out.println(sandboxCheckoutURL);
-			
 			FacesContext.getCurrentInstance().getExternalContext().redirect(checkoutURL);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			log.error("Ocurrio un error al generar el pago de la mesa. Error: " + e);
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "NO ES POSIBLE CARGAR EL FORMULARIO, INTENTELO MAS TARDE!", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}		

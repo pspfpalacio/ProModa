@@ -18,6 +18,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
+
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -72,6 +74,8 @@ public class BeanPago implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger log = Logger.getLogger(BeanPago.class);
 	
 	@ManagedProperty(value = "#{BeanAlumnoDAO}")
     private DAOAlumno alumnoDAO;
@@ -740,6 +744,7 @@ public class BeanPago implements Serializable {
 	}
 
 	public String goPago(Usuario user) {
+		log.info("Intento redireccionar a pagos. Usuario id: " + user.getId() + " username: " + user.getUsername());
 		borrarDatosForm();
 		parametro = new Parametro();
 		listaAlumnos = new ArrayList<Alumno>();
@@ -758,6 +763,7 @@ public class BeanPago implements Serializable {
     }
 	
 	public String goPagoDeuda(Usuario user) {
+		log.info("Intento redireccionar a pagosadeuda. Usuario id: " + user.getId() + " username: " + user.getUsername());
 		listaCuotasImpagas = new ArrayList<CuotaImpaga>();
 		listaMatriculasImpagas = new ArrayList<MatriculaImpaga>();
 		listaAlumnos = new ArrayList<Alumno>();
@@ -775,6 +781,7 @@ public class BeanPago implements Serializable {
 	}
 	
 	public String goPagosNoRealizados(Usuario user) {
+		log.info("Intento redireccionar a pagosporvencer. Usuario id: " + user.getId() + " username: " + user.getUsername());
 		try {
 			usuario = new Usuario();		
 			usuario = user;
@@ -802,14 +809,15 @@ public class BeanPago implements Serializable {
 			filteredCuota = listaCuota;
 			return "pagosporvencer";
 		} catch (Exception e){
-			System.out.println(e.getMessage());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No es posible cargar el formulario, Inténtelo nuevamente!", null);
+			log.error("Error al redireccionar a pagosporvencer. Error: " + e);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No es posible cargar el formulario, Intï¿½ntelo nuevamente!", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return "";
 		}
 	}
 	
 	public String goPagosRealizadosOnline(Usuario user) {
+		log.info("Intento redireccionar a pagosonline. Usuario id: " + user.getId() + " username: " + user.getUsername());
 		try {
 			usuario = new Usuario();		
 			usuario = user;
@@ -833,14 +841,15 @@ public class BeanPago implements Serializable {
 			}
 			return "pagosonline";
 		} catch (Exception e){
-			System.out.println(e.getMessage());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No es posible cargar el formulario, Inténtelo nuevamente!", null);
+			log.error("Ocurrio un error al redireccionar a pagosonline. Error: " + e);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "No es posible cargar el formulario, Intï¿½ntelo nuevamente!", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return "";
 		}
 	}
 	     
     public void onChangeAlumno() {
+    	log.info("onChangeAlumno idAlumno: " + idAlumno);
     	siMatAlumno = false;
     	siMatPagada = true;
     	siCuotas = false;
@@ -867,6 +876,7 @@ public class BeanPago implements Serializable {
     }
     
     public void onChangeAlumnoDeuda() {
+    	log.info("onChangeAlumnoDeuda idAlumno: " + idAlumno);
         alumno = new Alumno();   
         fecha = new Date();
         listaCuotasImpagas = new ArrayList<CuotaImpaga>();
@@ -892,6 +902,7 @@ public class BeanPago implements Serializable {
     }
     
     public void onChangeCurso(){
+    	log.info("onChangeCurso idAlumno: " + idAlumno + " idCurso: " + idCurso);
     	siMatAlumno = false;
     	siMatPagada = true;
     	siCuotas = false;
@@ -917,12 +928,13 @@ public class BeanPago implements Serializable {
         		listaMatriculas = matriculaDAO.getLista(true, curso);
         	}
         } catch (Exception e) {
-        	e.printStackTrace();
+        	log.error("Ocurrio un error al otener los cursos. Error: " + e);
         	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER EL CURSO", null));
         }
     }
     
     public void onChangeMatricula() {
+    	log.info("onChangeMatricula idMatricula: " + idMatricula);
     	siMatAlumno = false;
     	siMatPagada = true;
     	siCuotas = false;
@@ -963,12 +975,13 @@ public class BeanPago implements Serializable {
     	        }
         	}
     	} catch (Exception e) {
-    		e.printStackTrace();
+    		log.error("Ocurrio un error al obtener la matricula. Error: " + e);
         	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LA MATRICULA", null));
     	}    	
     }
     
     public void onChangeMateria() {
+    	log.info("onChangeMateria idAlumno: " + idAlumno + " idMatricula: " + idMatricula + " idCurso: " + idCurso + " idMateria: " + idMateria);
 		try {			
 			listaMesas = new ArrayList<Mesa>();		
 			mesa = new Mesa();
@@ -976,17 +989,18 @@ public class BeanPago implements Serializable {
 			idMesa = 0;
 			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0) {				
 				Curso cur = cursoDAO.get(idCurso);
-				Matricula matr = matriculaDAO.get(idMatricula);
+//				Matricula matr = matriculaDAO.get(idMatricula);
 				Materia mat = materiaDAO.get(idMateria);
-				listaMesas = mesaDAO.getLista(cur, matr, mat);
+				listaMesas = mesaDAO.getLista(cur, mat);
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al obtener las mesas. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MESAS", null));
 		}
 	}
 	
 	public void onChangeMesa() {
+		log.info("onChangeMesa idAlumno: " + idAlumno + " idMatricula: " + idMatricula + " idCurso: " + idCurso + " idMateria: " + idMateria + " idMesa: " + idMesa);
 		try {			
 			mesa = new Mesa();
 	    	mesaPaga = false;
@@ -999,12 +1013,13 @@ public class BeanPago implements Serializable {
 				}
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al obtener la mesa. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MESAS", null));
 		}
 	}
     
 	public void onChangeFechaPago(Cuota cuo) {
+		log.info("onChangeFechaPago Cuota id: " + cuo.getId());
 		//Parametro param = parametroDAO.get(1);
 		float porcentajePV = cuo.getPorcentajePv();
 		float porcentajeSV = cuo.getPorcentajeSv();
@@ -1030,6 +1045,7 @@ public class BeanPago implements Serializable {
 	}
 	
 	public void onSelectMatricula(MatriculaImpaga matriculaI) {
+		log.info("onSelectMatricula MatriculaImpaga id: " + matriculaI.getId());
 		montoImp = 0;
 		concepto = "";
 		pagoMat = true;
@@ -1041,6 +1057,7 @@ public class BeanPago implements Serializable {
 	}
 	
 	public void onSelectCuota(CuotaImpaga cuotaI) {
+		log.info("onSelectCuota CuotaImpaga id: " + cuotaI.getId());
 		montoImp = 0;
 		concepto = "";
 		pagoMat = false;
@@ -1052,10 +1069,12 @@ public class BeanPago implements Serializable {
 	}
 	
     public void bajaMatricula() {
+    	log.info("Intento de bajaMatricula MatriculaAlumno id: " + matalumno.getId());
     	FacesMessage msg = null;
     	PagosMatricula pago = new PagosMatricula();
     	CajasMov cajaMov = new CajasMov();
     	pago = pagosMatriculaDAO.get(alumno, matricula);
+    	log.info("Pago id: " + pago.getId());
     	pago.setEnabled(false);
     	pago.setFechaBaja(new Date());
     	pago.setUsuario2(usuario);
@@ -1065,23 +1084,26 @@ public class BeanPago implements Serializable {
 		int updtMatriAlum = matriculaAlumnoDAO.update(matalumno);
 		int idPagoMatri = pagosMatriculaDAO.update(pago);
 		cajaMov.eliminarMovimiento(idPagoMatri, "PagosMatricula", usuario);
+		log.info("updtMatriculaAlumno " + updtMatriAlum + " updtPagoMatricula " + idPagoMatri);
 		if (updtMatriAlum != 0 && idPagoMatri != 0) {
 			onChangeCurso();
 			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "BAJA DE PAGO REGISTRADA", null);
 		} else {
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "OCURRIÓ UN ERROR EN LA BAJA DE PAGO, "
-					+ "INTÉNTELO NUEVAMENTE", null);
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "OCURRIï¿½ UN ERROR EN LA BAJA DE PAGO, "
+					+ "INTï¿½NTELO NUEVAMENTE", null);
 		}
     	FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     public void bajaCuota(Cuota cuo) {
+    	log.info("Intento de bajaCuota. Cuota id: " + cuo.getId());
     	FacesMessage msg = null;
     	PagosCuota pago = new PagosCuota();
     	Alumno alum = new Alumno();
     	CajasMov cajaMov = new CajasMov();
     	alum = cuo.getAlumno();
     	pago = pagosCuotaDAO.get(alum, cuo);
+    	log.info("Pago id: " + pago.getId());
     	pago.setEnabled(false);
     	pago.setFechaBaja(new Date());
     	pago.setUsuario2(usuario);
@@ -1093,58 +1115,64 @@ public class BeanPago implements Serializable {
     	int idPagoCuo = pagosCuotaDAO.update(pago);
     	int updtCuota = cuotaDAO.update(cuo);
     	cajaMov.eliminarMovimiento(idPagoCuo, "PagosCuota", usuario);
+    	log.info("updtPagoCuota " + idPagoCuo + " updtCuota " + updtCuota);
     	if (idPagoCuo != 0 && updtCuota != 0) {
     		onChangeCurso();
     		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "BAJA DE PAGO REGISTRADA", null);
 		} else {
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "OCURRIÓ UN ERROR EN LA BAJA DE PAGO, "
-					+ "INTÉNTELO NUEVAMENTE", null);
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "OCURRIï¿½ UN ERROR EN LA BAJA DE PAGO, "
+					+ "INTï¿½NTELO NUEVAMENTE", null);
 		}
 		FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     public void bajaMesa() {
+    	log.info("Intento de bajaMesa idAlumno: " + idAlumno + " idMatricula: " + idMatricula + " idCurso: " + idCurso + " idMateria: " + idMateria + " idMesa: " + idMesa);
     	try {
     		if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0 && idMesa != 0) {
     			Alumno alum = alumnoDAO.get(idAlumno);
     			Mesa me = mesaDAO.get(idMesa);
     			PagosMesa pagosMesa = pagoMesaDAO.get(me, alum);
+    			log.info("PagosMesa id: " + pagosMesa.getId());
 				if (pagosMesa.getId() != 0) {
 					CajasMov cajaMov = new CajasMov();
 					pagosMesa.setEnabled(false);
 					pagosMesa.setFechaBaja(new Date());
 					pagosMesa.setUsuario2(usuario);
 					int idPagoMesa = pagoMesaDAO.update(pagosMesa);
+					log.info("updtPagoMesa " + idPagoMesa);
 					if (idPagoMesa != 0) {
 						int deleteMov = cajaMov.eliminarMovimiento(idPagoMesa, "PagosMesa", usuario);
+						log.info("Delete Mov Caja " + deleteMov);
 						if (deleteMov != 0) {
 							mesaPaga = false;
 							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
 									"BAJA DE PAGO REGISTRADA", null));							
 						} else {
 							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-				    				"OCURRIÓ UN ERROR AL REGISTRAR LA BAJA DEL PAGO DE MESA EN CAJA", null));
+				    				"OCURRIï¿½ UN ERROR AL REGISTRAR LA BAJA DEL PAGO DE MESA EN CAJA", null));
 						}
 					} else {
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-			    				"OCURRIÓ UN ERROR AL REGISTRAR LA BAJA DEL PAGO DE MESA", null));
+			    				"OCURRIï¿½ UN ERROR AL REGISTRAR LA BAJA DEL PAGO DE MESA", null));
 					}				
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-		    				"OCURRIÓ UN ERROR AL OBTENER EL PAGO DE MESA", null));
+		    				"OCURRIï¿½ UN ERROR AL OBTENER EL PAGO DE MESA", null));
 				}
     		} else {
     			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
         				"TODOS LOS CAMPOS SON OBLIGATORIOS", null));
     		}
     	} catch (Exception e) {
-    		e.printStackTrace();
+    		log.error("Ocurrio un error al dar de baja la mesa. Error: " + e);
     		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-    				"OCURRIÓ UN ERROR AL REGISTRAR LA BAJA DEL PAGO DE MESA. Error: " + e.getMessage(), null));
+    				"OCURRIï¿½ UN ERROR AL REGISTRAR LA BAJA DEL PAGO DE MESA. Error: " + e.getMessage(), null));
     	}
     }
 
     public void pagoMatricula() {
+    	log.info("Intento de pagoMatricula. PagosMatricula monto: " + pagosmatricula.getMonto() + " MatriculaAlumno id: " + matalumno.getId());
     	FacesMessage msg = null;
     	try {
     		if(pagosmatricula.getMonto() > 0){  
@@ -1161,9 +1189,10 @@ public class BeanPago implements Serializable {
         		matalumno.setMontoPago(pagosmatricula.getMonto());
         		controlMatAlumno = matriculaAlumnoDAO.update(matalumno);
         		controlPagoMatricula = pagosMatriculaDAO.insertar(pagosmatricula);
+        		log.info("updtMatriculaAlumno " + controlMatAlumno + " insertPagoMatricula " + controlPagoMatricula);
         		int idPagoMatricula = controlPagoMatricula;
         		cajaMov.generarMovimiento(fecha, 1, pagosmatricula.getMonto(), idPagoMatricula, "PagosMatricula", "Pago Matricula", 
-        				"Pago de Matrícula de Curso " + matalumno.getCurso().getNombre() + ", de " + matalumno.getAlumno().getNombreCompleto(), usuario);
+        				"Pago de Matrï¿½cula de Curso " + matalumno.getCurso().getNombre() + ", de " + matalumno.getAlumno().getNombreCompleto(), usuario);
         		if (controlMatAlumno != 0 && controlPagoMatricula != 0) {
         		    siMatPagada = true;
         			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "PAGO DE MATRICULA REGISTRADO", null);
@@ -1174,12 +1203,14 @@ public class BeanPago implements Serializable {
         		msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "EL MONTO DEBE SER MAYOR A CERO", null);
         	}
     	} catch (Exception e) {
+    		log.error("Ocurrio un error al pargar la matricula. Error: " + e);
     		msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL RESGISTRAR EL PAGO, ERROR: " + e.getMessage(), null);    		
     	}    	
     	FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     public void pagoMatriculaImpaga() {
+    	log.info("Intento de pagoMatriculaImpaga montoImp: " + montoImp + " fecha " + fecha);
     	FacesMessage msg = null;
     	try {    		
     		CajasMov cajaMov = new CajasMov();
@@ -1198,8 +1229,9 @@ public class BeanPago implements Serializable {
     			matriculaA.setFechaPago(fecha);
     			int idPagoMatricula = pagosMatriculaDAO.insertar(pagosMat);
     			int idMatriculaAlumno = matriculaAlumnoDAO.update(matriculaA);
+    			log.info("insertPagoMatricula " + idPagoMatricula + " updtMatriculaAlumno " + idMatriculaAlumno);
     			cajaMov.generarMovimiento(fecha, 1, montoImp, idPagoMatricula, "PagosMatricula", "Pago Matricula", 
-        				"Pago de Deuda de Matrícula de Curso " + matriculaA.getCurso().getNombre() + ", de " + matriculaA.getAlumno().getNombreCompleto(), usuario);
+        				"Pago de Deuda de Matrï¿½cula de Curso " + matriculaA.getCurso().getNombre() + ", de " + matriculaA.getAlumno().getNombreCompleto(), usuario);
     			matriculaImpagaDAO.delete(matriculaImpaga);
     			if (idPagoMatricula != 0 && idMatriculaAlumno != 0) {
         		    pagoMat = false;
@@ -1213,13 +1245,14 @@ public class BeanPago implements Serializable {
     			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "EL MONTO Y LA FECHA DE PAGO DEBEN SER DISTINTAS DE CERO Y VACIO", null);
     		}
     	} catch (Exception e) {
-    		System.out.println(e.getMessage());
+    		log.error("Ocurrio un error en pagoMatriculaImpaga. Error: " + e);
     		msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "NO SE PUDO REGISTRAR EL PAGO DE MATRICULA, ERROR ORIGINAL: " + e.getMessage(), null);
     	}
     	FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     public void pagoCuotas() {
+    	log.info("Intento de pagoCuotas selectedCuota size " + selectedCuota.size());
     	FacesMessage msg = null;
     	if(selectedCuota.size() > 0){
     		boolean pagas = false;
@@ -1231,6 +1264,7 @@ public class BeanPago implements Serializable {
     				pagas = true;
     			}
     		}
+    		log.info("ValidacionCuotas " + validacionCoutas + " pagas " + pagas);
     		if(validacionCoutas && !pagas){
 		    	for (Cuota cuota : selectedCuota) {
 		    		CajasMov cajaMov = new CajasMov();
@@ -1248,6 +1282,7 @@ public class BeanPago implements Serializable {
 		    		pagoscuota.setEnabled(true);
 		    		controlCuota = cuotaDAO.update(cuota);
 		    		controlPagoCuota = pagosCuotaDAO.insertar(pagoscuota);
+		    		log.info("updtCuota " + controlCuota + " insertPagoCuota " + controlPagoCuota);
 		    		int idPagoCuot = controlPagoCuota;
 		    		cajaMov.generarMovimiento(cuota.getFechaPago(), 1, cuota.getMontoPago(), idPagoCuot, "PagosCuota", "Pago Cuota", 
 		    				"Pago de " + cuota.getDetalle() + " de Curso " + cuota.getCurso().getNombre() + " de " + cuota.getAlumno().getNombreCompleto(), usuario);
@@ -1281,6 +1316,7 @@ public class BeanPago implements Serializable {
     }
     
     public void pagoCuotaImpaga() {
+    	log.info("Intento pagoCuotaImpaga montoImp " + montoImp + " fecha " + fecha);
     	FacesMessage msg = null;
     	try {
     		CajasMov cajaMov = new CajasMov();
@@ -1300,6 +1336,7 @@ public class BeanPago implements Serializable {
     			pagosCuot.setUsuario1(usuario);
     			int idCuota = cuotaDAO.update(cuota);
     			int idPagoCuota = pagosCuotaDAO.insertar(pagosCuot);
+    			log.info("updtCuota " + idCuota + " insertPagoCuota " + idPagoCuota);
     			cajaMov.generarMovimiento(fecha, 1, montoImp, idPagoCuota, "PagosCuota", "Pago Cuota", 
 	    				"Pago de Deuda de " + cuota.getDetalle() + " de Curso " + cuota.getCurso().getNombre() + " de " + cuota.getAlumno().getNombreCompleto(), usuario);
     			cuotaImpagaDAO.delete(cuotaImpaga);
@@ -1315,13 +1352,14 @@ public class BeanPago implements Serializable {
     			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "EL MONTO Y LA FECHA DE PAGO DEBEN SER DISTINTAS DE CERO Y VACIO", null);
     		}    		
     	} catch (Exception e) {
-    		System.out.println(e.getMessage());
-    		msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "NO SE PUDO REGISTRAR EL PAGO DE MATRICULA, ERROR ORIGINAL: " + e.getMessage(), null);
+    		log.error("Ocurrio un error en pagoCuotaImpaga. Error: " + e);
+    		msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "NO SE PUDO REGISTRAR EL PAGO, ERROR ORIGINAL: " + e.getMessage(), null);
     	}
     	FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     public void pagarMesa() {
+    	log.info("Intento pagarMesa idAlumno: " + idAlumno + " idMatricula: " + idMatricula + " idCurso: " + idCurso + " idMateria: " + idMateria + " idMesa: " + idMesa);
     	try {
     		if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0 && idMesa != 0) {
     			CajasMov cajaMov = new CajasMov();
@@ -1346,56 +1384,62 @@ public class BeanPago implements Serializable {
 				pagosMesa.setMonto(me.getCosto());
 				pagosMesa.setUsuario1(usuario);
 				int idPagoMesa = pagoMesaDAO.insertar(pagosMesa);
+				log.info("insertPagoMesa " + idPagoMesa);
 				if (idPagoMesa != 0) {
 					int insertoCaja = cajaMov.generarMovimiento(new Date(), 1, mesa.getCosto(), idPagoMesa, "PagosMesa", "Pago Mesa", 
 	        				"Pago de Mesa de Curso " + cur.getNombre() + " de Materia " + mat.getNombre() + " de " + alum.getNombreCompleto(), usuario);
+					log.info("insertoCaja " + insertoCaja);
 					if (insertoCaja != 0) {
 						mesaPaga = true;
 	        			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
 	        					"PAGO DE MESA REGISTRADO", null));
 					} else {
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-		        				"OCURRIÓ UN ERROR AL REGISTRAR EL PAGO DE LA MESA EN LA CAJA.", null));
+		        				"OCURRIï¿½ UN ERROR AL REGISTRAR EL PAGO DE LA MESA EN LA CAJA.", null));
 					}
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-	        				"OCURRIÓ UN ERROR AL REGISTRAR EL PAGO DE LA MESA.", null));
+	        				"OCURRIï¿½ UN ERROR AL REGISTRAR EL PAGO DE LA MESA.", null));
 				}				
     		} else {
     			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
         				"TODOS LOS CAMPOS SON OBLIGATORIOS.", null));
     		}
     	} catch (Exception e) {
-    		e.printStackTrace();
+    		log.error("Ocurrio un error en pagoMesa. Error: " + e);
     		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-    				"OCURRIÓ UN ERROR AL REGISTRAR EL PAGO DE LA MESA. Error: " + e.getMessage(), null));
+    				"OCURRIï¿½ UN ERROR AL REGISTRAR EL PAGO DE LA MESA. Error: " + e.getMessage(), null));
     	}
     }   
     
     public void guardarParametro() {
+    	log.info("Intento guardarParametro diasPrimerVencimiento: " + parametro.getDiasPrimerVencimiento() + " diasSegundoVencimiento: " + parametro.getDiasSegundoVencimiento() 
+    		+ " porcentajePrimerVencimiento: " + parametro.getPorcentajePrimerVencimiento() + " porcentajeSegundoVencimiento: " + parametro.getPorcentajeSegundoVencimiento());
     	try {
     		FacesMessage msg = null;
     		if(parametro.getDiasPrimerVencimiento() != 0 && parametro.getDiasSegundoVencimiento() != 0 
         			&& parametro.getPorcentajePrimerVencimiento() != 0 && parametro.getPorcentajeSegundoVencimiento() != 0) {
         		parametro.setId(1);
         		int updtParam = parametroDAO.update(parametro);
+        		log.info("updtParam " + updtParam);
         		if (updtParam != 0) {
         			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "DATOS REGISTRADOS!", null);
         		} else {
-        			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL REGISTRAR LOS DATOS! INTÉNTELO NUEVAMENTE!", null);
+        			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR AL REGISTRAR LOS DATOS! INTï¿½NTELO NUEVAMENTE!", null);
         		}
         	} else {
         		msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "TODOS LOS CAMPOS SON OBLIGATORIOS!", null);
         	}
     		FacesContext.getCurrentInstance().addMessage(null, msg);
     	} catch (Exception e) {
-    		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL REGISTRAR LOS DATOS! ERROR ORIGINAL: " 
+    		log.error("Ocurrio un error al guardarParametro. Error: " + e);
+    		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR AL REGISTRAR LOS DATOS! ERROR ORIGINAL: " 
     				+ e.getMessage(), null);
     		FacesContext.getCurrentInstance().addMessage(null, msg);
     	}    	
     }
     
-    private void borrarDatosForm(){
+    private void borrarDatosForm(){    	
     	listaAlumnos = new ArrayList<Alumno>();
     	listaMatriculaAlumno = new ArrayList<MatriculaAlumno>();
     	listaCurso = new ArrayList<Curso>();
@@ -1445,6 +1489,7 @@ public class BeanPago implements Serializable {
     //-------------> METODOS DE LISTADO PAGOS - SE COMPARTEN VARIABLES Y LISTAS Y METODO BORRAR DATOS FORM <------------
     
 	public String goListadoPago(Usuario user) {
+		log.info("Intento redireccionar listadopagos");
 		borrarDatosForm();		
         usuario = user;
         listaAlumnos = alumnoDAO.getLista(true);
@@ -1452,8 +1497,9 @@ public class BeanPago implements Serializable {
     }
 	
 	 public void onChangeAlumnoLista() {
-	        alumno = new Alumno();
-	        alumno = alumnoDAO.get(idAlumno);
+		log.info("onChangeAlumnoLista idAlumno " + idAlumno); 
+        alumno = new Alumno();
+        alumno = alumnoDAO.get(idAlumno);
 	 }
 	
 	 public void onChangeRadio(){		 
@@ -1467,6 +1513,7 @@ public class BeanPago implements Serializable {
 	 }
 	
 	 public void buscarListados(){
+		 log.info("Intento buscarListados TipoListado: " + tipoListado + " Alumno id: " + alumno.getId() + " FechaInicio: " + fechaInicio + " FechaFin: " + fechaFin);
 		 if(tipoListado.equals("M")){
 			 if (alumno.getId() != 0){
 				 if(fechaInicio != null && fechaFin != null){
@@ -1541,6 +1588,7 @@ public class BeanPago implements Serializable {
 	 }
 	 
 	 public void verPagoMatricula(PagosMatricula pagoMatri) {
+		 log.info("Intento verPagoMatricula. PagosMatricula id: " + pagoMatri.getId());
 		 pagoReporte = new PagoReporte();
 		 pagoReporte.setEncabezado("PAGO DE MATRICUlA");
 		 pagoReporte.setAlumno(pagoMatri.getAlumno().getNombreCompleto());
@@ -1552,6 +1600,7 @@ public class BeanPago implements Serializable {
 	 }
 	 
 	 public void verPagoCuota(PagosCuota pagoCuot) {
+		 log.info("Intento verPagoCuota. PagosCuota id: " + pagoCuot.getId());
 		 pagoReporte = new PagoReporte();
 		 pagoReporte.setEncabezado("PAGO DE CUOTA");
 		 pagoReporte.setAlumno(pagoCuot.getAlumno().getNombreCompleto());
@@ -1563,6 +1612,8 @@ public class BeanPago implements Serializable {
 	 }
 	 
 	 public void generarReporte() {
+		 log.info("Intengo generarReporte Alumno: " + pagoReporte.getAlumno() + " Concepto: " + pagoReporte.getConcepto() 
+		 	+ " Curso: " + pagoReporte.getCurso() + " Fecha: " + pagoReporte.getFechaString() + " Monto: " + pagoReporte.getMontoString());	
 		 Reporte reporte = new Reporte();
 		 Map<String, Object> parametros = new HashMap<String, Object>();
 		 List<PagoReporte> lista = new ArrayList<PagoReporte>();
@@ -1599,6 +1650,7 @@ public class BeanPago implements Serializable {
 	 }
 	 
 	 public void reporteDeudaMatricula() {
+		 log.info("Intento de reporteDeudaMatricula");
 		 Reporte reporte = new Reporte();
 		 Map<String, Object> parametros = new HashMap<String, Object>();
 		 DecimalFormat formatoMonto = new DecimalFormat("$###,##0.00");
@@ -1625,6 +1677,7 @@ public class BeanPago implements Serializable {
 	 }
 	 
 	 public void reporteDeudaCuota() {
+		 log.info("Intento de reporteDeudaCuota");
 		 Reporte reporte = new Reporte();
 		 Map<String, Object> parametros = new HashMap<String, Object>();
 		 DecimalFormat formatoMonto = new DecimalFormat("$###,##0.00");
