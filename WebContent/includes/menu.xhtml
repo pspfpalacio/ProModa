@@ -16,6 +16,7 @@
 			
 			<p:submenu label="Cursos" >
 	            <p:menuitem value="Inscripto" action="#{beanCursoAlum.goInscripto(beanLogueo.usuario)}" process="@this" ajax="false" />
+	            <p:menuitem value="Calificaciones" action="#{beanCalificacionesAlum.goCalificaciones(beanLogueo.usuario)}" process="@this" ajax="false" />
 	        </p:submenu>
 	        
 	        <p:submenu label="Mesas" >

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+	<f:view>
+	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="../../images/icono.ico" />
+		<link rel="stylesheet" href="/includes/estilo.css" type="text/css" />
+		<title>Calificaciones</title>
+		<script type="text/javascript" src="//resources.mlstatic.com/mptools/render.js"></script>
+	</h:head>
+	<h:body>
+		<div class="wrapper">
+			<ui:include src="/includes/header.xhtml" />
+			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				<p:panel style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:growl id="messages" showDetail="false" />
+				<ui:include src="/includes/menu.xhtml" />
+				
+					<p:panelGrid columns="2" style="width:100%;">		
+			    		<f:facet name="header">
+			    			<h:outputText value="Curso, período y materia" />
+			    		</f:facet>			    	
+			    		<p:outputLabel value="Cursos" />
+			    		<p:selectOneMenu value="#{beanAsistenciaAlum.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;">
+	    					<p:ajax event="change" listener="#{beanAsistenciaAlum.onChangeCurso()}" update="panel" />
+	    					<f:selectItem itemLabel="Seleccione un curso" itemValue="0"/>
+	    					<f:selectItems value="#{beanAsistenciaAlum.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+	    					itemValue="#{curso.id}"/>
+	    				</p:selectOneMenu>
+	    				<p:outputLabel value="Materias" />
+			    		<p:selectOneMenu value="#{beanAsistenciaAlum.idMateria}" filter="true" filterMatchMode="contains" style="width:250px;">
+	    					<p:ajax event="change" listener="#{beanAsistenciaAlum.onCompleteAsistencia()}" update="panel" />
+	    					<f:selectItem itemLabel="Seleccione una Materia" itemValue="0"/>
+	    					<f:selectItems value="#{beanAsistenciaAlum.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+	    					itemValue="#{materia.id}"/>
+	    				</p:selectOneMenu>					    		
+			    	</p:panelGrid>
+				
+				</p:panel>
+			</h:form>
+		</div>
+	</h:body>
+	</f:view>
+	</ui:composition>
+	
+</html>
