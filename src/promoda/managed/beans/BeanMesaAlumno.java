@@ -591,7 +591,7 @@ public class BeanMesaAlumno implements Serializable {
 			for (MesasAlumno mAlumno : listaMesasAlumnos) {
 				Inscripto inscripto = new Inscripto();
 				inscripto.setNombreCompleto(mAlumno.getAlumno().getNombreCompleto());
-				inscripto.setMatricula(mAlumno.getMatricula().getDescripcion());
+				inscripto.setMatriculaDescripcion(mAlumno.getMatricula().getDescripcion());
 				inscripto.setCondicion(mAlumno.getCondicion());
 				if (mAlumno.getCalificacion() != 0) {
 					inscripto.setCalificacion(Float.toString(mAlumno.getCalificacion()));
