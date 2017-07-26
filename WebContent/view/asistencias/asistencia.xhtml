@@ -22,7 +22,7 @@
 					<p:growl id="messages" showDetail="false" />
 					<ui:include src="/includes/menu.xhtml" />
 					<h3 align="left" style="color: black;">Listado de cursos a los cuales se encuentra inscripto. Seleccione un curso y luego una materia para visualizar las asistencias.</h3>					
-					<p:panelGrid columns="4" cellpadding="5" style="width:100%;">		
+					<p:panelGrid columns="6" cellpadding="5" style="width:100%;">		
 			    		<f:facet name="header">
 			    			<h:outputText value="Asistencias registradas de cursos inscriptos" />
 			    		</f:facet>			    	
@@ -33,17 +33,27 @@
 	    					<f:selectItems value="#{beanAsistenciaAlum.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
 	    					itemValue="#{curso.id}"/>
 	    				</p:selectOneMenu>
+	    				
+	    				<p:outputLabel value="Periodo de cursado " />
+	    				<p:selectOneMenu value="#{beanAsistenciaAlum.idMatricula}" filter="true" filterMatchMode="contains" style="width:250px;"
+	    				rendered="#{!beanAsistenciaAlum.verPeriodo}">	    					
+	    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+	    					<f:selectItems value="#{beanAsistenciaAlum.listaMatriculaAlums}" var="matr" itemLabel="#{matr.descripcion}"
+	    					itemValue="#{matr.id}"/>
+	    				</p:selectOneMenu>	    				
+	    				<p:outputLabel value="#{beanAsistenciaAlum.matriculaAlum.descripcion}" rendered="#{beanAsistenciaAlum.verPeriodo}" />
+	    				
 	    				<p:outputLabel value="Materias" />
 			    		<p:selectOneMenu value="#{beanAsistenciaAlum.idMateria}" filter="true" filterMatchMode="contains" style="width:250px;">
 	    					<p:ajax event="change" listener="#{beanAsistenciaAlum.onCompleteAsistencia()}" update="panel" />
 	    					<f:selectItem itemLabel="Seleccione una Materia" itemValue="0"/>
 	    					<f:selectItems value="#{beanAsistenciaAlum.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
 	    					itemValue="#{materia.id}"/>
-	    				</p:selectOneMenu>					    		
+	    				</p:selectOneMenu>	
 			    	</p:panelGrid>	
 			    	<p:panelGrid columns="4" cellpadding="5" style="width:100%;">
 			    		<p:outputLabel value="Porcentaje de Asistencia: " />
-			    		<h:inputText value="% #{beanAsistenciaAlum.porcentaje}" disabled="true"/>
+			    		<h:inputText value="% #{beanAsistenciaAlum.porcentaje}" disabled="true" />			    		
 			    	</p:panelGrid>		
 					
 				    <p:dataTable var="asistencia" value="#{beanAsistenciaAlum.listaAsistencias}" widgetVar="cellAsistencia"

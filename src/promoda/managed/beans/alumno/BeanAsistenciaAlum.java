@@ -1,6 +1,7 @@
 package promoda.managed.beans.alumno;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +11,11 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
+
 import promoda.clases.AsistenciaReporte;
 import promoda.clases.Clase;
+import promoda.clases.MatriculaAlum;
 import promoda.dao.DAOAlumno;
 import promoda.dao.DAOAsistencia;
 import promoda.dao.DAOCurso;
@@ -33,6 +37,8 @@ public class BeanAsistenciaAlum implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger log = Logger.getLogger(BeanAsistenciaAlum.class);
 	
 	@ManagedProperty(value = "#{BeanCursoDAO}")
 	private DAOCurso cursoDAO;
@@ -57,11 +63,15 @@ public class BeanAsistenciaAlum implements Serializable {
 	private List<Clase> listaClases;
 	private List<Asistencia> listaAsistencias;
 	private List<AsistenciaReporte> listaAsistenciaReporte;
+	private List<MatriculaAlum> listaMatriculaAlums;
 	private Usuario usuario;
 	private Alumno alumno;
+	private MatriculaAlum matriculaAlum;
 	private int idCurso;
 	private int idMateria;
+	private int idMatricula;
 	private float porcentaje;
+	private boolean verPeriodo;
 
 	public DAOCurso getCursoDAO() {
 		return cursoDAO;
@@ -152,6 +162,14 @@ public class BeanAsistenciaAlum implements Serializable {
 		this.listaAsistenciaReporte = listaAsistenciaReporte;
 	}
 
+	public List<MatriculaAlum> getListaMatriculaAlums() {
+		return listaMatriculaAlums;
+	}
+
+	public void setListaMatriculaAlums(List<MatriculaAlum> listaMatriculaAlums) {
+		this.listaMatriculaAlums = listaMatriculaAlums;
+	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -166,6 +184,14 @@ public class BeanAsistenciaAlum implements Serializable {
 
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
+	}
+
+	public MatriculaAlum getMatriculaAlum() {
+		return matriculaAlum;
+	}
+
+	public void setMatriculaAlum(MatriculaAlum matriculaAlum) {
+		this.matriculaAlum = matriculaAlum;
 	}
 
 	public int getIdCurso() {
@@ -184,6 +210,14 @@ public class BeanAsistenciaAlum implements Serializable {
 		this.idMateria = idMateria;
 	}
 
+	public int getIdMatricula() {
+		return idMatricula;
+	}
+
+	public void setIdMatricula(int idMatricula) {
+		this.idMatricula = idMatricula;
+	}
+
 	public float getPorcentaje() {
 		return porcentaje;
 	}
@@ -192,23 +226,35 @@ public class BeanAsistenciaAlum implements Serializable {
 		this.porcentaje = porcentaje;
 	}
 
+	public boolean isVerPeriodo() {
+		return verPeriodo;
+	}
+
+	public void setVerPeriodo(boolean verPeriodo) {
+		this.verPeriodo = verPeriodo;
+	}
+
 	public String goAsistencia(Usuario user) {
+		log.info("Intento redireccionar al formulario de asistencias - Usuario id: " + user.getId() + " username: " + user.getUsername());
 		try {			
 			usuario = new Usuario();
 			alumno = new Alumno();
 			listaCursos = new ArrayList<Curso>();
 			listaMaterias = new ArrayList<Materia>();
+			listaMatriculaAlums = new ArrayList<MatriculaAlum>();
 			listaAsistencias = new ArrayList<Asistencia>();
 			listaClases = new ArrayList<Clase>();
 			idCurso = 0;
 			idMateria = 0;
 			porcentaje = 0;
+			verPeriodo = false;
+			matriculaAlum = new MatriculaAlum();
 			usuario = user;
 			alumno = user.getAlumno();
 			listaCursos = matriculaAlumnoDAO.getListaCurso(alumno);
 			return "asistenciaAlumno";
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			log.error("Ocurrio un error al redireccionar a asistencias. Error: " + e);
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "NO ES POSIBLE CARGAR EL FORMULARIO", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return "";
@@ -216,17 +262,49 @@ public class BeanAsistenciaAlum implements Serializable {
 	}
 	
 	public void onChangeCurso() {
-		listaAsistencias = new ArrayList<Asistencia>();
-		listaMaterias = new ArrayList<Materia>();		
-		idMateria = 0;
-		porcentaje = 0;
-		if (idCurso != 0) {
-			Curso curso = cursoDAO.get(idCurso);
-			listaMaterias = materiaDAO.getLista(true, curso);
+		log.info("onChangeCurso idCurso: " + idCurso);
+		try {
+			listaAsistencias = new ArrayList<Asistencia>();
+			listaMatriculaAlums = new ArrayList<MatriculaAlum>();
+			listaMaterias = new ArrayList<Materia>();			
+			verPeriodo = false;		
+			idMatricula = 0;
+			idMateria = 0;	
+			porcentaje = 0;			
+			if (idCurso != 0) {
+				Curso cur = cursoDAO.get(idCurso);
+				List<Matricula> listaMat = matriculaAlumnoDAO.getListaMatricula(alumno, cur);
+				listaMaterias = materiaDAO.getLista(true, cur);
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				if (listaMat.size() == 1) {
+					for (Matricula mat : listaMat) {
+						matriculaAlum = new MatriculaAlum();						
+						String descripcion = dateFormat.format(mat.getFechaInicio()) + " - " + dateFormat.format(mat.getFechaFinCursado());
+						matriculaAlum.setId(mat.getId());
+						matriculaAlum.setDescripcion(descripcion);		
+						idMatricula = mat.getId();
+					}
+					verPeriodo = true;					
+				} else {
+					verPeriodo = false;
+					for (Matricula mat : listaMat) {
+						MatriculaAlum matrAlum = new MatriculaAlum();						
+						String descripcion = dateFormat.format(mat.getFechaInicio()) + " - " + dateFormat.format(mat.getFechaFinCursado());
+						matrAlum.setId(mat.getId());
+						matrAlum.setDescripcion(descripcion);
+						listaMatriculaAlums.add(matrAlum);
+					}
+				}				
+			}
+		} catch (Exception e) {
+			log.error("Ocurrio un error en onChangeCurso. Error: " + e);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurri� un error al generar los periodos para el curso seleccionado, "
+					+ "intent� nuevamente m�s tarde.", null));
 		}
 	}
 	
 	public void onCompleteAsistencia() {
+		log.info("onCompleteAsistencia idCurso: " + idCurso + " idMatricula: " + idMatricula + " idMateria: " + idMateria);
 		listaClases = new ArrayList<Clase>();
 		listaAsistencias = new ArrayList<Asistencia>();
 		Materia materia = new Materia();
@@ -243,8 +321,7 @@ public class BeanAsistenciaAlum implements Serializable {
 				clase.setNombre("Clase " + i);
 				listaClases.add(clase);
 			}
-			int idMatri = curso.getMatricula().getId();
-			matricula = matriculaDAO.get(idMatri);
+			matricula = matriculaDAO.get(idMatricula);
 			
 			listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia, alumno);			
 			if (listaAsistencias.isEmpty()) {
@@ -277,7 +354,10 @@ public class BeanAsistenciaAlum implements Serializable {
 				float cantPresente = 0;
 				float cantAsistencia = listaAsistencias.size();
 				for (Asistencia asistencia : listaAsistencias) {
-					String presente = asistencia.getPresente().toUpperCase();
+					String presente = "";
+					if (asistencia.getPresente() != null) {
+						presente = asistencia.getPresente().toUpperCase();
+					}
 					if (presente.equals("P")) {
 						cantPresente = cantPresente + 1;
 					}

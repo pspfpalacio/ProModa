@@ -13,6 +13,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
+
 import promoda.clases.CajasMov;
 import promoda.clases.Inscripto;
 import promoda.clases.Reporte;
@@ -43,6 +45,8 @@ public class BeanMesaAlumno implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger log = Logger.getLogger(BeanMesaAlumno.class);
 	
 	@ManagedProperty(value = "#{BeanMesaDAO}")
 	private DAOMesa mesaDAO;
@@ -248,6 +252,7 @@ public class BeanMesaAlumno implements Serializable {
 	}
 	
 	public String goMesaInscripcion(Usuario user) {
+		log.info("Intento redireccionar mesaInscripcion. Usuario id: " + user.getId() + " username: " + user.getUsername());
 		try {
 			listaAlumnos = new ArrayList<Alumno>();
 			listaCursos = new ArrayList<Curso>();
@@ -262,13 +267,13 @@ public class BeanMesaAlumno implements Serializable {
 			cantidad = 0;
 			costo = 0;
 			condicion = " - ";
-			registrarPago = true;
+			registrarPago = false;
 			usuario = new Usuario();
 			usuario = user;
 			listaAlumnos = alumnoDAO.getLista(true);
 			return "mesaInscripcion";
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al redireccionar. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"Ocurri� un error al cargar el formulario. Error: " + e.getMessage(), null));
 			return "";
@@ -276,6 +281,7 @@ public class BeanMesaAlumno implements Serializable {
 	}
 	
 	public String goMesaInscriptos(Usuario user, Mesa me) {
+		log.info("Intento redireccionar a mesaInscriptos. Usuario id: " + user.getId() + " username: " + user.getUsername() + " Mesa id: " + me.getId());
 		try {
 			listaMesasAlumnos = new ArrayList<MesasAlumno>();
 			mesa = new Mesa();
@@ -285,7 +291,7 @@ public class BeanMesaAlumno implements Serializable {
 			listaMesasAlumnos = mesaAlumnoDAO.getListaOrderByAlumno(true, me);
 			return "mesaInscriptos";
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al redireccionar. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"Ocurri� un error al cargar el formulario. Error: " + e.getMessage(), null));
 			return "";
@@ -293,6 +299,7 @@ public class BeanMesaAlumno implements Serializable {
 	}
 	
 	public void onChangeAlumno() {
+		log.info("onChangeAlumno idAlumno: " + idAlumno);
 		try {
 			listaCursos = new ArrayList<Curso>();
 			listaMatriculas = new ArrayList<Matricula>();
@@ -306,19 +313,20 @@ public class BeanMesaAlumno implements Serializable {
 			cantidad = 0;
 			costo = 0;
 			condicion = " - ";
-			registrarPago = true;
+			registrarPago = false;
 			if (idAlumno != 0) {
 				Alumno alum = alumnoDAO.get(idAlumno);
 				listaCursos = matriculaAlumnoDAO.getListaCurso(alum);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al obtener los alumnos. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"Ocurri� un error al cargar los cursos. Error: " + e.getMessage(), null));
 		}    	
     }
 	
 	public void onChangeCurso() {
+		log.info("onChangeCurso idAlumno: " + idAlumno + " idCurso: " + idCurso);
 		try {
 			listaMatriculas = new ArrayList<Matricula>();
 			listaMaterias = new ArrayList<Materia>();	
@@ -329,18 +337,19 @@ public class BeanMesaAlumno implements Serializable {
 			cantidad = 0;
 			costo = 0;
 			condicion = " - ";
-			registrarPago = true;
+			registrarPago = false;
 			if (idAlumno != 0 && idCurso != 0) {
 				Curso cur = cursoDAO.get(idCurso);
 				listaMatriculas = matriculaDAO.getLista(true, cur);
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al obtener los cusos. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MATRICULAS", null));
 		}
 	}
 	
 	public void onChangeMatricula() {
+		log.info("onChangeMatricula idAlumno: " + idAlumno + " idMatricula: " + idMatricula + " idCurso: " + idCurso);
 		try {
 			listaMaterias = new ArrayList<Materia>();	
 			listaMesas = new ArrayList<Mesa>();
@@ -349,30 +358,31 @@ public class BeanMesaAlumno implements Serializable {
 			cantidad = 0;
 			costo = 0;
 			condicion = " - ";
-			registrarPago = true;
+			registrarPago = false;
 			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0) {				
 				Curso cur = cursoDAO.get(idCurso);
 				listaMaterias = materiaDAO.getLista(true, cur);
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al obtener las matriculas. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MATERIAS", null));
 		}
 	}
 	
 	public void onChangeMateria() {
+		log.info("onChangeMateria idAlumno: " + idAlumno + " idMatricula: " + idMatricula + " idCurso: " + idCurso + " idMateria: " + idMateria);
 		try {			
 			listaMesas = new ArrayList<Mesa>();			
 			idMesa = 0;
 			cantidad = 0;
 			costo = 0;
 			condicion = " - ";
-			registrarPago = true;
+			registrarPago = false;
 			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0) {				
 				Curso cur = cursoDAO.get(idCurso);
 				Matricula matr = matriculaDAO.get(idMatricula);
 				Materia mat = materiaDAO.get(idMateria);				
-				listaMesas = mesaDAO.getLista(cur, matr, mat);
+				listaMesas = mesaDAO.getLista(cur, mat);
 				Alumno alum = alumnoDAO.get(idAlumno);
 				MateriasCalificacion matCalifica = materiaCalificacionDAO.get(alum, cur, mat, matr);
 				if (matCalifica.getId() != 0) {
@@ -382,16 +392,17 @@ public class BeanMesaAlumno implements Serializable {
 				}
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al obtener las mesas. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MESAS", null));
 		}
 	}
 	
 	public void onChangeMesa() {
+		log.info("onChangeMesa idAlumno: " + idAlumno + " idMatricula: " + idMatricula + " idCurso: " + idCurso + " idMateria: " + idMateria + " idMesa: " + idMesa);
 		try {			
 			cantidad = 0;			
 			costo = 0;
-			registrarPago = true;
+			registrarPago = false;
 			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0 && idMesa != 0) {				
 				Curso cur = cursoDAO.get(idCurso);
 				Materia mat = materiaDAO.get(idMateria);
@@ -399,17 +410,18 @@ public class BeanMesaAlumno implements Serializable {
 				Mesa me = mesaDAO.get(idMesa);
 				List<MesasAlumno> listaAux = mesaAlumnoDAO.getLista(true, alum, cur, mat);
 				cantidad = listaAux.size() + 1;
-				if (cantidad > 3) {
+//				if (cantidad > 3) {
 					costo = me.getCosto();
-				}
+//				}
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al obtener la mesa. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL OBTENER LAS MESAS", null));
 		}
 	}
 	
 	public void onRowEdit(MesasAlumno mesaAlum) {
+		log.info("onRowEdit MesasAlumno id: " + mesaAlum.getId());
         List<MesasAlumno> listAux = listaMesasAlumnos;
         int dniAlum1 = mesaAlum.getAlumno().getDni();
         listaMesasAlumnos = new ArrayList<MesasAlumno>();
@@ -424,6 +436,7 @@ public class BeanMesaAlumno implements Serializable {
     }
 	
 	public String guardarInscripcion() {
+		log.info("Intento guardarInscripcion idAlumno: " + idAlumno + " idMatricula: " + idMatricula + " idCurso: " + idCurso + " idMateria: " + idMateria + " idMesa: " + idMesa);
 		try {
 			if (idAlumno != 0 && idMatricula != 0 && idCurso != 0 && idMateria != 0 && idMesa != 0) {
 				MesasAlumno mesaAlumno = new MesasAlumno();
@@ -433,6 +446,7 @@ public class BeanMesaAlumno implements Serializable {
 				Materia mat = materiaDAO.get(idMateria);
 				Matricula matr = matriculaDAO.get(idMatricula);
 				MateriasCalificacion matCalifica = materiaCalificacionDAO.get(alum, cur, mat, matr);
+				log.info("MateriasCalificacion id: " + matCalifica.getId() + " estado: " + matCalifica.getEstado());
 				if (matCalifica.getId() != 0) {
 					if (!matCalifica.getEstado().isEmpty() && matCalifica.getEstado() != null) {
 						List<MesasAlumno> listAux = mesaAlumnoDAO.getLista(true, alum, me);
@@ -449,8 +463,10 @@ public class BeanMesaAlumno implements Serializable {
 							mesaAlumno.setMesa(me);							
 							mesaAlumno.setUsuario1(usuario);
 							int idInsert = mesaAlumnoDAO.insertar(mesaAlumno); 
+							log.info("insertMesaAlumno " + idInsert);
 							if (idInsert != 0) {	
-								if (cantidad > 3 && registrarPago) {
+//								if (cantidad > 3 && registrarPago) {
+								if (registrarPago) {
 									mesaAlumno.setId(idInsert);
 									CajasMov cajaMov = new CajasMov();
 									PagosMesa pagoMesa = mesaPagoDAO.get(me, alum);
@@ -499,7 +515,7 @@ public class BeanMesaAlumno implements Serializable {
 				return "";
 			}			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al guardar la inscripcion. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"OCURRIO UN ERROR AL REGISTRAR LA INSCRIPCI�N. Error: " + e.getMessage(), null));
 			return "";
@@ -507,6 +523,7 @@ public class BeanMesaAlumno implements Serializable {
 	}
 	
 	public void bajaInscripto(MesasAlumno mesaAlum) {
+		log.info("Intento bajaInscripto MesasAlumno id: " + mesaAlum.getId());
 		try {
 			mesaAlum.setEnabled(false);
 			mesaAlum.setFechaBaja(new Date());
@@ -528,13 +545,14 @@ public class BeanMesaAlumno implements Serializable {
 						"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCI�N.", null));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al dar de baja la inscripcion. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"OCURRIO UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCI�N. Error: " + e.getMessage(), null));
 		}
 	}
 	
 	public void calificarInscriptos() {
+		log.info("CalificarInscriptos size ListaMesasAlumnos " + listaMesasAlumnos.size());
 		try {
 			boolean flagUpdt = true;
 			for (MesasAlumno mAlumno : listaMesasAlumnos) {				
@@ -558,13 +576,14 @@ public class BeanMesaAlumno implements Serializable {
 						"Ocurri� un error al registrar los cambios. Int�ntelo nuevamente.", null));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al calificar. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"Ocurri� un error al registrar los cambios. Error: " + e.getMessage(), null));
 		}
 	}
 	
 	public void generarPDF() {
+		log.info("Intento generarPDF");
 		try {
 			Reporte reporte = new Reporte();
 			Map<String, Object> parametros = new HashMap<String, Object>();
@@ -596,7 +615,7 @@ public class BeanMesaAlumno implements Serializable {
 			parametros.put("mesa", nombreMesa);
 			reporte.generar(parametros, listAux, "inscriptosMesa", "inline");
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Ocurrio un error al generarPDF. Error: " + e);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"Ocurri� un error al generar el reporte. Error: " + e.getMessage(), null));
 		}		

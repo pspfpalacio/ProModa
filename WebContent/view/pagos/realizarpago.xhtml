@@ -38,7 +38,7 @@
 	    					<f:selectItems value="#{beanPagoAlum.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
 	    					itemValue="#{curso.id}"/>
 	    				</p:selectOneMenu>	
-	    				<p:outputLabel value="Periodo" rendered="#{beanPagoAlum.verPeriodo || beanPagoAlum.verPeriodos}"/>
+	    				<p:outputLabel value="Periodo de cursado" rendered="#{beanPagoAlum.verPeriodo || beanPagoAlum.verPeriodos}"/>
 	    				<p:selectOneMenu value="#{beanPagoAlum.idMatricula}" filter="true" filterMatchMode="contains" style="width:250px;"
 	    				rendered="#{beanPagoAlum.verPeriodos}">
 	    					<p:ajax event="change" listener="#{beanPagoAlum.onChangeMatricula()}" update="panel" />
