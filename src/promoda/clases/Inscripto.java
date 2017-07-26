@@ -20,7 +20,7 @@ public class Inscripto implements Serializable {
 	private String email;
 	private String condicion;
 	private String calificacion;
-	private String matriculaString;
+	private String matriculaDescripcion;
 	private Curso curso;
 	private Matricula matricula;
 
@@ -88,12 +88,12 @@ public class Inscripto implements Serializable {
 		this.calificacion = calificacion;
 	}
 
-	public String getMatriculaString() {
-		return matriculaString;
+	public String getMatriculaDescripcion() {
+		return matriculaDescripcion;
 	}
 
-	public void setMatriculaString(String matriculaString) {
-		this.matriculaString = matriculaString;
+	public void setMatriculaDescripcion(String matriculaDescripcion) {
+		this.matriculaDescripcion = matriculaDescripcion;
 	}
 	
 	public Curso getCurso() {
@@ -106,7 +106,7 @@ public class Inscripto implements Serializable {
 
 	public Matricula getMatricula() {
 		return matricula;
-	}
+	}	
 
 	public void setMatricula(Matricula matricula) {
 		this.matricula = matricula;

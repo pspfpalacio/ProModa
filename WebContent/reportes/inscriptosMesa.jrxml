@@ -24,8 +24,8 @@
 	<field name="calificacion" class="java.lang.String">
 		<fieldDescription><![CDATA[calificacion]]></fieldDescription>
 	</field>
-	<field name="matricula" class="java.lang.String">
-		<fieldDescription><![CDATA[matricula]]></fieldDescription>
+	<field name="matriculaDescripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[matriculaDescripcion]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -106,7 +106,7 @@
 				<textFieldExpression><![CDATA[$P{curso}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="350" y="84" width="100" height="20" forecolor="#F2F1F1" backcolor="#6D767A" uuid="b177adca-9dc2-4077-b11d-6481545a1cf3">
+				<reportElement mode="Opaque" x="400" y="84" width="80" height="20" forecolor="#F2F1F1" backcolor="#6D767A" uuid="b177adca-9dc2-4077-b11d-6481545a1cf3">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
@@ -124,7 +124,7 @@
 				<text><![CDATA[Condición]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="450" y="84" width="105" height="20" forecolor="#F2F1F1" backcolor="#6D767A" uuid="63c78abc-dbb9-4c9e-bee1-7f76732ddd63">
+				<reportElement mode="Opaque" x="480" y="84" width="75" height="20" forecolor="#F2F1F1" backcolor="#6D767A" uuid="63c78abc-dbb9-4c9e-bee1-7f76732ddd63">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -196,7 +196,7 @@
 				<textFieldExpression><![CDATA[$P{mesa}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="240" y="84" width="110" height="20" forecolor="#F2F1F1" backcolor="#6D767A" uuid="fe7ba2ae-1d2f-462f-b522-46575f88b419">
+				<reportElement mode="Opaque" x="240" y="84" width="160" height="20" forecolor="#F2F1F1" backcolor="#6D767A" uuid="fe7ba2ae-1d2f-462f-b522-46575f88b419">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
@@ -239,7 +239,7 @@
 				<textFieldExpression><![CDATA[$F{nombreCompleto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="0" width="100" height="20" uuid="bb3b0722-6b1d-4d2c-a6b2-a28c2f21b91a">
+				<reportElement x="400" y="0" width="80" height="20" uuid="bb3b0722-6b1d-4d2c-a6b2-a28c2f21b91a">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -254,7 +254,7 @@
 				<textFieldExpression><![CDATA[$F{condicion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="450" y="0" width="105" height="20" uuid="a15cb846-b9dd-42c6-8a53-32d9b2d6933f">
+				<reportElement x="480" y="0" width="75" height="20" uuid="a15cb846-b9dd-42c6-8a53-32d9b2d6933f">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -268,7 +268,7 @@
 				<textFieldExpression><![CDATA[$F{calificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="240" y="0" width="110" height="20" uuid="d09d9a1c-7260-45ac-b726-b4c3fc7642a6">
+				<reportElement x="240" y="0" width="160" height="20" uuid="d09d9a1c-7260-45ac-b726-b4c3fc7642a6">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -280,7 +280,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{matricula}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{matriculaDescripcion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
