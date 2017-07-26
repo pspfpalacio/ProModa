@@ -19,29 +19,63 @@
 		<div class="wrapper">
 			<ui:include src="/includes/header.xhtml" />
 			<h:form id="formulario" onkeypress="return event.keyCode != 13">
-				<p:panel style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
+				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
 				<p:growl id="messages" showDetail="false" />
 				<ui:include src="/includes/menu.xhtml" />
 				
 					<p:panelGrid columns="2" style="width:100%;">		
 			    		<f:facet name="header">
 			    			<h:outputText value="Curso, período y materia" />
-			    		</f:facet>			    	
-			    		<p:outputLabel value="Cursos" />
-			    		<p:selectOneMenu value="#{beanAsistenciaAlum.idCurso}" filter="true" filterMatchMode="contains" style="width:250px;">
-	    					<p:ajax event="change" listener="#{beanAsistenciaAlum.onChangeCurso()}" update="panel" />
-	    					<f:selectItem itemLabel="Seleccione un curso" itemValue="0"/>
-	    					<f:selectItems value="#{beanAsistenciaAlum.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
+			    		</f:facet>	   	
+			    		<p:outputLabel value="Curso:"/>
+			    		<p:selectOneMenu value="#{beanCalificacionesAlum.idCurso}" filter="true" filterMatchMode="contains" style="width:500px;">
+	    					<p:ajax event="change" listener="#{beanCalificacionesAlum.onChangeCurso()}" update="panel"/>
+	    					<f:selectItem itemLabel="Seleccione un curso" itemValue="0" />
+	    					<f:selectItems value="#{beanCalificacionesAlum.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
 	    					itemValue="#{curso.id}"/>
 	    				</p:selectOneMenu>
-	    				<p:outputLabel value="Materias" />
-			    		<p:selectOneMenu value="#{beanAsistenciaAlum.idMateria}" filter="true" filterMatchMode="contains" style="width:250px;">
-	    					<p:ajax event="change" listener="#{beanAsistenciaAlum.onCompleteAsistencia()}" update="panel" />
-	    					<f:selectItem itemLabel="Seleccione una Materia" itemValue="0"/>
-	    					<f:selectItems value="#{beanAsistenciaAlum.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
+	    				
+	    				<p:outputLabel value="Periodos de cursado:" />
+			    		<p:selectOneMenu value="#{beanCalificacionesAlum.idMatricula}" filter="true" filterMatchMode="contains" style="width:500px;">
+			    		<p:ajax event="change" listener="#{beanCalificacionesAlum.buscarCalificaciones()}" update="panel"/>
+	    					<f:selectItem itemLabel="Seleccione un periodo" itemValue="0" />
+	    					<f:selectItems value="#{beanCalificacionesAlum.listaMatriculas}" var="mat" itemLabel="#{mat.descripcion}"
+	    					itemValue="#{mat.id}"/>
+	    				</p:selectOneMenu>
+	    				
+	    				<p:outputLabel value="Materia:" />
+			    		<p:selectOneMenu value="#{beanCalificacionesAlum.idMateria}" filter="true" filterMatchMode="contains" style="width:500px;">
+			    		<p:ajax event="change" listener="#{beanCalificacionesAlum.buscarCalificaciones()}" update="panel"/>
+	    					<f:selectItem itemLabel="Seleccione una materia" itemValue="0" />
+	    					<f:selectItems value="#{beanCalificacionesAlum.listaMaterias}" var="materia" itemLabel="#{materia.nombre}"
 	    					itemValue="#{materia.id}"/>
-	    				</p:selectOneMenu>					    		
+	    				</p:selectOneMenu>
 			    	</p:panelGrid>
+			    	
+			    	<p:dataTable id="contenedorCalificaciones" var="cal" style="width:100%;"
+						value="#{beanCalificacionesAlum.listaCalificaciones}" paginator="true" rows="20" resizableColumns="true"
+						emptyMessage="No existen Calificaciones">
+							<f:facet name="header">
+								<p:outputLabel value="Calificaciones" />
+							</f:facet>
+													
+							<p:column headerText="Materia" >
+								<h:outputText value="#{cal.materia}" />
+							</p:column>
+							
+							<p:column headerText="Descripción" >
+								<h:outputText value="#{cal.recurso}" />
+							</p:column>
+							
+							<p:column headerText="Fecha de entrega" >
+								<h:outputText value="#{cal.fechaEntrega}" />
+							</p:column>
+							
+							<p:column headerText="Calificación" >
+								<h:outputText value="#{cal.nota}" />
+							</p:column>
+
+						</p:dataTable>
 				
 				</p:panel>
 			</h:form>
