@@ -593,7 +593,7 @@ public class BeanPagoAlum implements Serializable {
 				float montoP = 0;
 				String detalleCuotas = "Cuotas: ";
 				for (Cuota cuo : selectionCuotas) {
-					detalleCuotas = detalleCuotas + cuo.detalle + "; ";
+					detalleCuotas = detalleCuotas + cuo.getDetalle() + "; ";
 					float porcentajePV = cuo.getPorcentajePv();
 					float porcentajeSV = cuo.getPorcentajeSv();
 					float montoC = cuo.getMonto();					
