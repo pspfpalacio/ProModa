@@ -448,7 +448,7 @@ public class BeanPagoAlum implements Serializable {
 			panelCuota = true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL CARGAR EL FORMULARIO", null);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR AL CARGAR EL FORMULARIO", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
@@ -463,7 +463,7 @@ public class BeanPagoAlum implements Serializable {
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIó UN ERROR AL CARGAR EL FORMULARIO", null);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIï¿½ UN ERROR AL CARGAR EL FORMULARIO", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
@@ -594,7 +594,7 @@ public class BeanPagoAlum implements Serializable {
 				int cant = 1;
 				String detalleCuotas = "Cuotas: ";
 				for (Cuota cuo : selectionCuotas) {
-					detalleCuotas = detalleCuotas + Integer.toString(cant) + "; ";
+					detalleCuotas = detalleCuotas + cuo.detalle + "; ";
 					cant = cant + 1;
 					float porcentajePV = cuo.getPorcentajePv();
 					float porcentajeSV = cuo.getPorcentajeSv();
