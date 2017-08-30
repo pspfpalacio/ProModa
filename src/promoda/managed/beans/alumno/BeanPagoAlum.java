@@ -448,7 +448,7 @@ public class BeanPagoAlum implements Serializable {
 			panelCuota = true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRI� UN ERROR AL CARGAR EL FORMULARIO", null);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL CARGAR EL FORMULARIO", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
@@ -463,7 +463,7 @@ public class BeanPagoAlum implements Serializable {
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRI� UN ERROR AL CARGAR EL FORMULARIO", null);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL CARGAR EL FORMULARIO", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
