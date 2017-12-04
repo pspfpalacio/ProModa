@@ -470,45 +470,49 @@ public class BeanPagoAlum implements Serializable {
 	
 	public void generarPagoMatricula() {
 		try {
-			parametro = parametroDAO.get(1);
+//			parametro = parametroDAO.get(1);
+//			
+//			mercadoPago = new MP(parametro.getUsuarioMp(), parametro.getPasswordMp());
+//			accesToken = mercadoPago.getAccessToken();
+//			System.out.println(accesToken);
+//			
+//			float porcentajeMp = parametro.getPorcentajeMp();
+//			float montoP = matricula.getCosto();
+//			
+//			montoP = montoP + (montoP * (porcentajeMp / 100));
+//						
+//			JSONObject preference = mercadoPago.createPreference("{'items':[{'title':'" + curso.getNombre() + " - Matricula (" + alumno.getId() + ")','description':'" + curso.getNombre() + " - Matricula(" + alumno.getId() + ")','quantity':1,'currency_id':'ARS','unit_price':" + montoP + "}],"
+//					+ "'payer':{'name':'" + alumno.getNombres() + "','surname':'" + alumno.getApellido() + "','email':'" + usuario.getEmail() + "','date_created':'','phone':{'area_code':'','number':''},'identification':{'type':'','number':''},'address':{'street_name':'','street_number':null,'zip_code':''}}}");
+//			
+//			System.out.println(preference.toString());
+//			
+//			jsonId = preference.getJSONObject("response").getString("id");
+//			
+//			checkoutURL = preference.getJSONObject("response").getString("init_point");
+//			
+//			System.out.println(checkoutURL);	
+//			
+//			RegistroOnline registroOnline = new RegistroOnline();
+//			registroOnline.setAccesToken(accesToken);
+//			registroOnline.setCheckOut(checkoutURL);
+//			registroOnline.setDetalle(curso.getNombre() + " - Matricula (" + alumno.getNombreCompleto() + ")");
+//			registroOnline.setFecha(new Date());
+//			registroOnline.setIdAlumno(alumno.getDni());
+//			registroOnline.setIdMatricula(matricula.getId());
+//			registroOnline.setJsonId(jsonId);
+//			registroOnline.setMonto(montoP);
+//			registroOnline.setPreference(preference.toString());
+//			registroOnlineDAO.insertar(registroOnline);
+//			
+////			String sandboxCheckoutURL = preference.getJSONObject("response").getString("sandbox_init_point");
+//			
+////			System.out.println(sandboxCheckoutURL);
+//			
+//			FacesContext.getCurrentInstance().getExternalContext().redirect(checkoutURL);
 			
-			mercadoPago = new MP(parametro.getUsuarioMp(), parametro.getPasswordMp());
-			accesToken = mercadoPago.getAccessToken();
-			System.out.println(accesToken);
-			
-			float porcentajeMp = parametro.getPorcentajeMp();
-			float montoP = matricula.getCosto();
-			
-			montoP = montoP + (montoP * (porcentajeMp / 100));
-						
-			JSONObject preference = mercadoPago.createPreference("{'items':[{'title':'" + curso.getNombre() + " - Matricula (" + alumno.getId() + ")','description':'" + curso.getNombre() + " - Matricula(" + alumno.getId() + ")','quantity':1,'currency_id':'ARS','unit_price':" + montoP + "}],"
-					+ "'payer':{'name':'" + alumno.getNombres() + "','surname':'" + alumno.getApellido() + "','email':'" + usuario.getEmail() + "','date_created':'','phone':{'area_code':'','number':''},'identification':{'type':'','number':''},'address':{'street_name':'','street_number':null,'zip_code':''}}}");
-			
-			System.out.println(preference.toString());
-			
-			jsonId = preference.getJSONObject("response").getString("id");
-			
-			checkoutURL = preference.getJSONObject("response").getString("init_point");
-			
-			System.out.println(checkoutURL);	
-			
-			RegistroOnline registroOnline = new RegistroOnline();
-			registroOnline.setAccesToken(accesToken);
-			registroOnline.setCheckOut(checkoutURL);
-			registroOnline.setDetalle(curso.getNombre() + " - Matricula (" + alumno.getNombreCompleto() + ")");
-			registroOnline.setFecha(new Date());
-			registroOnline.setIdAlumno(alumno.getDni());
-			registroOnline.setIdMatricula(matricula.getId());
-			registroOnline.setJsonId(jsonId);
-			registroOnline.setMonto(montoP);
-			registroOnline.setPreference(preference.toString());
-			registroOnlineDAO.insertar(registroOnline);
-			
-//			String sandboxCheckoutURL = preference.getJSONObject("response").getString("sandbox_init_point");
-			
-//			System.out.println(sandboxCheckoutURL);
-			
-			FacesContext.getCurrentInstance().getExternalContext().redirect(checkoutURL);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "POR PROBLEMAS TECNICOS EN ESTE MOMENTO SE ENCUENTRA DESHABILITADO EL PAGO ONLINE. "
+					+ "POR FAVOR COMUNIQUESE CON LA ADMINISTRACION. DISCULPE LAS MOLESTIAS.", null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "NO ES POSIBLE CARGAR EL FORMULARIO, INTENTELO MAS TARDE!", null);
@@ -518,61 +522,65 @@ public class BeanPagoAlum implements Serializable {
 	
 	public void generarPagoCuota() {
 		try {
-			parametro = parametroDAO.get(1);
+//			parametro = parametroDAO.get(1);
+//			
+//			mercadoPago = new MP(parametro.getUsuarioMp(), parametro.getPasswordMp());
+//			accesToken = mercadoPago.getAccessToken();
+//			System.out.println(accesToken);
+//			
+//			float porcentajePV = cuota.getPorcentajePv();
+//			float porcentajeSV = cuota.getPorcentajeSv();
+//			float porcentajeMp = parametro.getPorcentajeMp();
+//			float montoP = cuota.getMonto();
+//			Date fechaPV = cuota.getFechaVencimiento();
+//			Date fechaSV = cuota.getSegundoVencimiento();
+//			Date fechaP = new Date();
+//			if (fechaP != null) {
+//				int comparacionPV = fechaP.compareTo(fechaPV);
+//				int comparacionSV = fechaP.compareTo(fechaSV);
+//				if (comparacionPV == 1) {
+//					if (comparacionSV == 1) {
+//						montoP = montoP + (montoP * (porcentajeSV / 100));
+//					} else {
+//						montoP = montoP + (montoP * (porcentajePV / 100));
+//					}
+//				} 
+//			}
+//			
+//			montoP = montoP + (montoP * (porcentajeMp / 100));
+//			
+//			JSONObject preference = mercadoPago.createPreference("{'items':[{'title':'" + curso.getNombre() + " - " + cuota.getDetalle() + " (" + alumno.getId() + ")','description':'" + curso.getNombre() + " - " + cuota.getDetalle() + " (" + alumno.getId() + ")','quantity':1,'currency_id':'ARS','unit_price':" + montoP + "}],"
+//					+ "'payer':{'name':'" + alumno.getNombres() + "','surname':'" + alumno.getApellido() + "','email':'" + usuario.getEmail() + "','date_created':'','phone':{'area_code':'','number':''},'identification':{'type':'','number':''},'address':{'street_name':'','street_number':null,'zip_code':''}}}");
+//			
+//			System.out.println(preference.toString());
+//			
+//			jsonId = preference.getJSONObject("response").getString("id");
+//			
+//			checkoutURL = preference.getJSONObject("response").getString("init_point");
+//			
+//			System.out.println(checkoutURL);
+//			
+//			RegistroOnline registroOnline = new RegistroOnline();
+//			registroOnline.setAccesToken(accesToken);
+//			registroOnline.setCheckOut(checkoutURL);
+//			registroOnline.setDetalle(curso.getNombre() + " - " + cuota.getDetalle() + "(" + alumno.getNombreCompleto() + ")");
+//			registroOnline.setFecha(new Date());
+//			registroOnline.setIdAlumno(alumno.getDni());
+//			registroOnline.setIdCuota(cuota.getId());
+//			registroOnline.setJsonId(jsonId);
+//			registroOnline.setMonto(montoP);
+//			registroOnline.setPreference(preference.toString());
+//			registroOnlineDAO.insertar(registroOnline);
+//			
+////			String sandboxCheckoutURL = preference.getJSONObject("response").getString("sandbox_init_point");
+//			
+////			System.out.println(sandboxCheckoutURL);
+//			
+//			FacesContext.getCurrentInstance().getExternalContext().redirect(checkoutURL);
 			
-			mercadoPago = new MP(parametro.getUsuarioMp(), parametro.getPasswordMp());
-			accesToken = mercadoPago.getAccessToken();
-			System.out.println(accesToken);
-			
-			float porcentajePV = cuota.getPorcentajePv();
-			float porcentajeSV = cuota.getPorcentajeSv();
-			float porcentajeMp = parametro.getPorcentajeMp();
-			float montoP = cuota.getMonto();
-			Date fechaPV = cuota.getFechaVencimiento();
-			Date fechaSV = cuota.getSegundoVencimiento();
-			Date fechaP = new Date();
-			if (fechaP != null) {
-				int comparacionPV = fechaP.compareTo(fechaPV);
-				int comparacionSV = fechaP.compareTo(fechaSV);
-				if (comparacionPV == 1) {
-					if (comparacionSV == 1) {
-						montoP = montoP + (montoP * (porcentajeSV / 100));
-					} else {
-						montoP = montoP + (montoP * (porcentajePV / 100));
-					}
-				} 
-			}
-			
-			montoP = montoP + (montoP * (porcentajeMp / 100));
-			
-			JSONObject preference = mercadoPago.createPreference("{'items':[{'title':'" + curso.getNombre() + " - " + cuota.getDetalle() + " (" + alumno.getId() + ")','description':'" + curso.getNombre() + " - " + cuota.getDetalle() + " (" + alumno.getId() + ")','quantity':1,'currency_id':'ARS','unit_price':" + montoP + "}],"
-					+ "'payer':{'name':'" + alumno.getNombres() + "','surname':'" + alumno.getApellido() + "','email':'" + usuario.getEmail() + "','date_created':'','phone':{'area_code':'','number':''},'identification':{'type':'','number':''},'address':{'street_name':'','street_number':null,'zip_code':''}}}");
-			
-			System.out.println(preference.toString());
-			
-			jsonId = preference.getJSONObject("response").getString("id");
-			
-			checkoutURL = preference.getJSONObject("response").getString("init_point");
-			
-			System.out.println(checkoutURL);
-			
-			RegistroOnline registroOnline = new RegistroOnline();
-			registroOnline.setAccesToken(accesToken);
-			registroOnline.setCheckOut(checkoutURL);
-			registroOnline.setDetalle(curso.getNombre() + " - " + cuota.getDetalle() + "(" + alumno.getNombreCompleto() + ")");
-			registroOnline.setFecha(new Date());
-			registroOnline.setIdAlumno(alumno.getDni());
-			registroOnline.setIdCuota(cuota.getId());
-			registroOnline.setJsonId(jsonId);
-			registroOnline.setMonto(montoP);
-			registroOnline.setPreference(preference.toString());
-			registroOnlineDAO.insertar(registroOnline);
-			
-//			String sandboxCheckoutURL = preference.getJSONObject("response").getString("sandbox_init_point");
-			
-//			System.out.println(sandboxCheckoutURL);
-			
-			FacesContext.getCurrentInstance().getExternalContext().redirect(checkoutURL);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "POR PROBLEMAS TECNICOS EN ESTE MOMENTO SE ENCUENTRA DESHABILITADO EL PAGO ONLINE. "
+					+ "POR FAVOR COMUNIQUESE CON LA ADMINISTRACION. DISCULPE LAS MOLESTIAS.", null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "NO ES POSIBLE CARGAR EL FORMULARIO, INTENTELO MAS TARDE!", null);

@@ -15,6 +15,9 @@
 		<title>Realizar Pago</title>		
 	</h:head>
 	<h:body>
+		<p:notificationBar autoDisplay="true" position="top" effect="slide" styleClass="top" widgetVar="bar">			
+		    <h:outputText value="Por problemas técnicos en este momento se encuentra deshabilitado el Pago Online. Por favor comuníquese con la Administración. Disculpe las molestias." style="font-size:24px;" />
+		</p:notificationBar>
 		<div class="wrapper">
 			<ui:include src="/includes/header.xhtml" />
 			<h:form onkeypress="return event.keyCode != 13">
@@ -23,7 +26,7 @@
 					<ui:include src="/includes/menu.xhtml" />
 				</p:panel>
 			</h:form>
-			<h:form id="formulario" onkeypress="return event.keyCode != 13" target="_blank">
+			<h:form id="formulario" onkeypress="return event.keyCode != 13" >
 				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
 					<h3 align="left" style="color: black;">Listado de cursos a los cuales se encuentra inscripto. 
 					Seleccione un curso para visualizar la matricula y las cuotas para generar el pago correpondiente.</h3>					
@@ -60,7 +63,7 @@
 	 					<p:outputLabel style="color:black;" value="(*) Recuerde que para comenzar el cursado necesita tener abonada al menos la matrícula. 
 	 					Si desea abonar la matrícula de forma online, tenga en cuenta que el monto se verá afectado por un aumento por costos de pago online. 
 	 					Dependiendo el tipo de pago seleccionado, el mismo puede tardar hasta 72 horas en acreditarse. Preste mucha atención al importe antes de confirmar el pago.-" />
-	 				</p:panelGrid>	 				
+	 				</p:panelGrid>
 	 				
 	 				<br/>	 				
 				    <p:dataTable id="tablaCuotas" var="cuota" value="#{beanPagoAlum.listaCuotas}" paginator="true" rows="12"
