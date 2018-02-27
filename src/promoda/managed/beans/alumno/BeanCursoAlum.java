@@ -17,7 +17,6 @@ import com.mercadopago.MP;
 
 import promoda.dao.DAOCuota;
 import promoda.dao.DAOCurso;
-import promoda.dao.DAOMatricula;
 import promoda.dao.DAOMatriculaAlumno;
 import promoda.dao.DAOPagosMatricula;
 import promoda.dao.DAOParametro;
@@ -25,7 +24,6 @@ import promoda.dao.DAOUsuario;
 import promoda.model.Alumno;
 import promoda.model.Cuota;
 import promoda.model.Curso;
-import promoda.model.Matricula;
 import promoda.model.MatriculaAlumno;
 import promoda.model.PagosMatricula;
 import promoda.model.Parametro;
@@ -46,9 +44,6 @@ public class BeanCursoAlum implements Serializable {
 	@ManagedProperty(value = "#{BeanUsuarioDAO}")
 	private DAOUsuario usuarioDAO;
 	
-	@ManagedProperty(value = "#{BeanMatriculaDAO}")
-	private DAOMatricula matriculaDAO;
-	
 	@ManagedProperty(value = "#{BeanMatriculaAlmunoDAO}")
     private DAOMatriculaAlumno matriculaAlumnoDAO;
 	
@@ -66,7 +61,6 @@ public class BeanCursoAlum implements Serializable {
 	private List<Cuota> listaCuotas;
 	private List<Cuota> filteredCuotas;
 	private Curso curso;
-	private Matricula matricula;
 	private Usuario usuario;
 	private Alumno alumno;
 	private PagosMatricula pagosMatricula;	
@@ -93,14 +87,6 @@ public class BeanCursoAlum implements Serializable {
 
 	public void setUsuarioDAO(DAOUsuario usuarioDAO) {
 		this.usuarioDAO = usuarioDAO;
-	}
-
-	public DAOMatricula getMatriculaDAO() {
-		return matriculaDAO;
-	}
-
-	public void setMatriculaDAO(DAOMatricula matriculaDAO) {
-		this.matriculaDAO = matriculaDAO;
 	}
 
 	public DAOMatriculaAlumno getMatriculaAlumnoDAO() {
@@ -173,14 +159,6 @@ public class BeanCursoAlum implements Serializable {
 
 	public void setCurso(Curso curso) {
 		this.curso = curso;
-	}
-
-	public Matricula getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 
 	public Usuario getUsuario() {
@@ -293,7 +271,8 @@ public class BeanCursoAlum implements Serializable {
 			}
 			fechaInicio = dia + mes + anio;
 			fechaUno = formatoFecha.parse(fechaInicio);
-			listAuxCursos = cursoDAO.getListaMatVig(fechaUno, fechaDos);
+//			listAuxCursos = cursoDAO.getListaMatVig(fechaUno, fechaDos);
+			listAuxCursos = cursoDAO.getLista(true);
 			return listAuxCursos;
 		} catch (Exception e) {
 			return listAuxCursos;
@@ -353,30 +332,30 @@ public class BeanCursoAlum implements Serializable {
 	}
 	
 	public void verMatricula(Curso cur) {
-		matricula = new Matricula();
+//		matricula = new Matricula();
 		curso = new Curso();
 		matriculaAlumno = new MatriculaAlumno();
-		matricula = cur.getMatricula();
+//		matricula = cur.getMatricula();
 		curso = cur;
-		matriculaAlumno = matriculaAlumnoDAO.get(alumno, cur, matricula);
+//		matriculaAlumno = matriculaAlumnoDAO.get(alumno, cur, matricula);
 		if(matriculaAlumno.getId() != 0){			
     		if(!matriculaAlumno.getPago()){
     			pagosMatricula = new PagosMatricula();    			
     		} else {
-    	    	pagosMatricula = pagosMatriculaDAO.get(alumno, matricula);
+//    	    	pagosMatricula = pagosMatriculaDAO.get(alumno, matricula);
     		}       		
     	}
 	}
 	
 	public void verCuotas(Curso cur) {
-		matricula = new Matricula();
+//		matricula = new Matricula();
 		curso = new Curso();
 		matriculaAlumno = new MatriculaAlumno();
-		matricula = cur.getMatricula();
+//		matricula = cur.getMatricula();
 		curso = cur;
 		listaCuotas = new ArrayList<Cuota>();
 		filteredCuotas = new ArrayList<Cuota>();
-		listaCuotas = cuotaDAO.getLista(alumno, matricula, cur);
+//		listaCuotas = cuotaDAO.getLista(alumno, matricula, cur);
 		filteredCuotas = listaCuotas;
 //		for (Cuota cuota : listaCuotas) {
 //			System.out.println(cuota.getDetalle());

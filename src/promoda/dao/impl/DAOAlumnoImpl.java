@@ -14,7 +14,6 @@ import promoda.dao.DAOAlumno;
 import promoda.model.Alumno;
 import promoda.model.Curso;
 import promoda.model.Inscripcione;
-import promoda.model.Matricula;
 
 public class DAOAlumnoImpl implements Serializable, DAOAlumno {
 
@@ -129,20 +128,20 @@ public class DAOAlumnoImpl implements Serializable, DAOAlumno {
 		return lista;
 	}
 	
-	public List<Alumno> getLista(Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT i FROM Inscripcione i WHERE i.enabled = :pEstado "
-				+ "AND i.matricula = :pMatricula", Inscripcione.class);
-		locQuery.setParameter("pEstado", true);
-		locQuery.setParameter("pMatricula", matricula);
-		List<Inscripcione> lista = locQuery.getResultList();
-		List<Alumno> listAlumnos = new ArrayList<Alumno>();
-		for (Inscripcione inscripcione : lista) {
-			Alumno alumno = new Alumno();
-			alumno = getPorDni(inscripcione.getDni());
-			listAlumnos.add(alumno);
-		}
-		return listAlumnos;
-	}
+//	public List<Alumno> getLista(Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT i FROM Inscripcione i WHERE i.enabled = :pEstado "
+//				+ "AND i.matricula = :pMatricula", Inscripcione.class);
+//		locQuery.setParameter("pEstado", true);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<Inscripcione> lista = locQuery.getResultList();
+//		List<Alumno> listAlumnos = new ArrayList<Alumno>();
+//		for (Inscripcione inscripcione : lista) {
+//			Alumno alumno = new Alumno();
+//			alumno = getPorDni(inscripcione.getDni());
+//			listAlumnos.add(alumno);
+//		}
+//		return listAlumnos;
+//	}
 
 }

@@ -13,7 +13,6 @@ import javax.persistence.Query;
 
 import promoda.dao.DAOPagosMatricula;
 import promoda.model.Alumno;
-import promoda.model.Matricula;
 import promoda.model.PagosMatricula;
 
 public class DAOPagosMatriculaImpl implements Serializable, DAOPagosMatricula {
@@ -55,7 +54,7 @@ public class DAOPagosMatriculaImpl implements Serializable, DAOPagosMatricula {
 			inicializar();
 			Query locQuery = em.createQuery("UPDATE PagosMatricula p SET p.alumno = :pAlumno, p.concepto = :pConcepto, "
 					+ "p.enabled = :pEnabled, p.fecha = :pFecha, p.fechaAlta = :pFechaAlta, p.fechaBaja = :pFechaBaja, "
-					+ "p.fechaMod = :pFechaMod, p.matricula = :pMatricula, p.monto = :pMonto, p.usuario1 = :pUsuario1, "
+					+ "p.fechaMod = :pFechaMod, p.monto = :pMonto, p.usuario1 = :pUsuario1, "
 					+ "p.usuario2 = :pUsuario2, p.usuario3 = :pUsuario3 "
 					+ "WHERE p.id = :pId", PagosMatricula.class);
 			locQuery.setParameter("pAlumno", pagosMatricula.getAlumno());
@@ -65,7 +64,6 @@ public class DAOPagosMatriculaImpl implements Serializable, DAOPagosMatricula {
 			locQuery.setParameter("pFechaAlta", pagosMatricula.getFechaAlta());
 			locQuery.setParameter("pFechaBaja", pagosMatricula.getFechaBaja());
 			locQuery.setParameter("pFechaMod", pagosMatricula.getFechaMod());
-			locQuery.setParameter("pMatricula", pagosMatricula.getMatricula());
 			locQuery.setParameter("pMonto", pagosMatricula.getMonto());
 			locQuery.setParameter("pUsuario1", pagosMatricula.getUsuario1());
 			locQuery.setParameter("pUsuario2", pagosMatricula.getUsuario2());
@@ -96,22 +94,22 @@ public class DAOPagosMatriculaImpl implements Serializable, DAOPagosMatricula {
 		return pagosMatricula;
 	}
 
-	public PagosMatricula get(Alumno alumno, Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT p FROM PagosMatricula p WHERE p.alumno = :pAlumno "
-				+ "AND p.matricula = :pMatricula AND p.enabled = :pEnabled", PagosMatricula.class);
-		locQuery.setParameter("pAlumno", alumno);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pEnabled", true);
-		PagosMatricula pagosMatricula = new PagosMatricula();
-		try {
-			pagosMatricula = (PagosMatricula) locQuery.getSingleResult();
-		} catch (Exception e) {
-			// TODO: handle exception
-			pagosMatricula = new PagosMatricula();
-		}
-		return pagosMatricula;
-	}
+//	public PagosMatricula get(Alumno alumno, Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT p FROM PagosMatricula p WHERE p.alumno = :pAlumno "
+//				+ "AND p.matricula = :pMatricula AND p.enabled = :pEnabled", PagosMatricula.class);
+//		locQuery.setParameter("pAlumno", alumno);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pEnabled", true);
+//		PagosMatricula pagosMatricula = new PagosMatricula();
+//		try {
+//			pagosMatricula = (PagosMatricula) locQuery.getSingleResult();
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			pagosMatricula = new PagosMatricula();
+//		}
+//		return pagosMatricula;
+//	}
 
 	public List<PagosMatricula> getLista() {
 		inicializar();

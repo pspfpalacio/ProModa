@@ -76,11 +76,11 @@ public class Cuota implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_curso")
 	private Curso curso;
-
-	//bi-directional many-to-one association to Matricula
+	
+	//bi-directional many-to-one association to MatriculaAlumno
 	@ManyToOne
-	@JoinColumn(name="id_matricula")
-	private Matricula matricula;
+	@JoinColumn(name="id_matricula_alumno")
+	private MatriculaAlumno matriculaAlumno;
 
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
@@ -253,13 +253,13 @@ public class Cuota implements Serializable {
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
-
-	public Matricula getMatricula() {
-		return this.matricula;
+	
+	public MatriculaAlumno getMatriculaAlumno() {
+		return this.matriculaAlumno;
 	}
 
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
+	public void setMatriculaAlumno(MatriculaAlumno matriculaAlumno) {
+		this.matriculaAlumno = matriculaAlumno;
 	}
 
 	public Usuario getUsuario1() {

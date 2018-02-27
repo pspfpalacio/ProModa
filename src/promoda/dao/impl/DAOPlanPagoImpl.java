@@ -11,7 +11,6 @@ import javax.persistence.Query;
 
 import promoda.dao.DAOPlanPago;
 import promoda.model.Inscripcione;
-import promoda.model.Matricula;
 import promoda.model.MatriculaAlumno;
 import promoda.model.PlanPago;
 
@@ -53,14 +52,13 @@ public class DAOPlanPagoImpl implements Serializable, DAOPlanPago {
 		try {
 			inicializar();
 			Query locQuery = em.createQuery("UPDATE PlanPago p SET p.cantCuotas = :pCantCuotas, p.descuentoCurso = :pDescuentoCurso, "
-					+ "p.descuentoMatricula = :pDescuentoMatricula, p.inscripcione = :pInscripcion, p.matricula = :pMatricula, "
+					+ "p.descuentoMatricula = :pDescuentoMatricula, p.inscripcione = :pInscripcion, "
 					+ "p.montoCuota = :pMontoCuota, p.montoMatricula = :pMontoMatricula, p.primerVencimiento = :pPrimerVencimiento  "
 					+ "WHERE p.id = :pId", MatriculaAlumno.class);
 			locQuery.setParameter("pCantCuotas", planPago.getCantCuotas());
 			locQuery.setParameter("pDescuentoCurso", planPago.getDescuentoCurso());
 			locQuery.setParameter("pDescuentoMatricula", planPago.getDescuentoMatricula());
 			locQuery.setParameter("pInscripcion", planPago.getInscripcione());
-			locQuery.setParameter("pMatricula", planPago.getMatricula());
 			locQuery.setParameter("pMontoCuota", planPago.getMontoCuota());
 			locQuery.setParameter("pMontoMatricula", planPago.getMontoMatricula());
 			locQuery.setParameter("pPrimerVencimiento", planPago.getPrimerVencimiento());
@@ -105,12 +103,10 @@ public class DAOPlanPagoImpl implements Serializable, DAOPlanPago {
 		return planPago;
 	}
 
-	public PlanPago get(Inscripcione inscripcione, Matricula matricula) {
+	public PlanPago get(Inscripcione inscripcione) {
 		inicializar();
-		Query locQuery = em.createQuery("SELECT p FROM PlanPago p WHERE p.inscripcione = :pInscripcion "
-				+ "AND p.matricula = :pMatricula", PlanPago.class);
+		Query locQuery = em.createQuery("SELECT p FROM PlanPago p WHERE p.inscripcione = :pInscripcion", PlanPago.class);
 		locQuery.setParameter("pInscripcion", inscripcione);
-		locQuery.setParameter("pMatricula", matricula);
 		PlanPago planPago = new PlanPago();
 		try {
 			planPago = (PlanPago) locQuery.getSingleResult();
@@ -135,12 +131,12 @@ public class DAOPlanPagoImpl implements Serializable, DAOPlanPago {
 		return lista;
 	}
 
-	public List<PlanPago> getLista(Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT p FROM PlanPago p WHERE p.matricula = :pMatricula", PlanPago.class);
-		locQuery.setParameter("pMatricula", matricula);
-		List<PlanPago> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<PlanPago> getLista(Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT p FROM PlanPago p WHERE p.matricula = :pMatricula", PlanPago.class);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<PlanPago> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
 }

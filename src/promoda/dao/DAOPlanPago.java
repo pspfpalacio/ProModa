@@ -3,7 +3,6 @@ package promoda.dao;
 import java.util.List;
 
 import promoda.model.Inscripcione;
-import promoda.model.Matricula;
 import promoda.model.PlanPago;
 
 public interface DAOPlanPago {
@@ -16,12 +15,12 @@ public interface DAOPlanPago {
 	
 	public PlanPago get(int id);
 	
-	public PlanPago get(Inscripcione inscripcione, Matricula matricula);
+	public PlanPago get(Inscripcione inscripcione);
 	
 	public List<PlanPago> getLista();
 	
 	public List<PlanPago> getLista(Inscripcione inscripcione);
 	
-	public List<PlanPago> getLista(Matricula matricula);
+//	public List<PlanPago> getLista(Matricula matricula);
 
 }

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import promoda.model.Alumno;
-import promoda.model.Matricula;
 import promoda.model.PagosMatricula;
 
 public interface DAOPagosMatricula {
@@ -15,7 +14,7 @@ public interface DAOPagosMatricula {
 	
 	public PagosMatricula get(int id);
 	
-	public PagosMatricula get(Alumno alumno, Matricula matricula);
+//	public PagosMatricula get(Alumno alumno, Matricula matricula);
 	
 	public List<PagosMatricula> getLista();
 	

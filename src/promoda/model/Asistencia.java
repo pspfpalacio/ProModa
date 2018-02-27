@@ -52,11 +52,6 @@ public class Asistencia implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_materia")
 	private Materia materia;
-	
-	//bi-directional many-to-one association to Matricula
-	@ManyToOne
-	@JoinColumn(name="id_matricula")
-	private Matricula matricula;
 
 	public Asistencia() {
 	}
@@ -131,14 +126,6 @@ public class Asistencia implements Serializable {
 
 	public void setMateria(Materia materia) {
 		this.materia = materia;
-	}
-	
-	public Matricula getMatricula() {
-		return this.matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 
 }

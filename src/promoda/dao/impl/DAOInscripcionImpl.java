@@ -13,7 +13,6 @@ import promoda.dao.DAOInscripcion;
 import promoda.model.Alumno;
 import promoda.model.Curso;
 import promoda.model.Inscripcione;
-import promoda.model.Matricula;
 
 public class DAOInscripcionImpl implements DAOInscripcion, Serializable {
 
@@ -56,7 +55,7 @@ public class DAOInscripcionImpl implements DAOInscripcion, Serializable {
 					+ "i.conocimientosPrevios = :pConocimientosPrevios, i.curso = :pCurso, i.dni = :pDni, i.domicilio = :pDomicilio, "
 					+ "i.edad = :pEdad, i.email = :pEmail, i.enabled = :pEnabled, i.fecha = :pFecha, i.fechaAlta = :pFechaAlta, "
 					+ "i.fechaBaja = :pFechaBaja, i.fechaMod = :pFechaMod, i.fechaNacimiento = :pFechaNacimiento, i.horaCursado = :pHoraCursado, "
-					+ "i.horaCursado1 = :pHoraCursado1, i.horaCursado2 = :pHoraCursado2, i.localidade = :pLocalidad, i.matricula = :pMatricula, "
+					+ "i.horaCursado1 = :pHoraCursado1, i.horaCursado2 = :pHoraCursado2, i.localidade = :pLocalidad, "
 					+ "i.nombre = :pNombre, i.nombreCompleto = :pNombreCompleto, i.provincia = :pProvincia, i.telefonoCel = :pTelefonoCel, "
 					+ "i.telefonoFijo = :pTelefonoFijo, i.usuario1 = :pUsuario1, i.usuario2 = :pUsuario2, i.usuario3 = :pUsuario3, i.valida = :pValida "
 					+ "WHERE i.id = :pId", Inscripcione.class);
@@ -78,7 +77,6 @@ public class DAOInscripcionImpl implements DAOInscripcion, Serializable {
 			locQuery.setParameter("pHoraCursado1", inscripcione.getHoraCursado1());
 			locQuery.setParameter("pHoraCursado2", inscripcione.getHoraCursado2());
 			locQuery.setParameter("pLocalidad", inscripcione.getLocalidade());
-			locQuery.setParameter("pMatricula", inscripcione.getMatricula());
 			locQuery.setParameter("pNombre", inscripcione.getNombre());
 			locQuery.setParameter("pNombreCompleto", inscripcione.getNombreCompleto());
 			locQuery.setParameter("pProvincia", inscripcione.getProvincia());
@@ -204,29 +202,29 @@ public class DAOInscripcionImpl implements DAOInscripcion, Serializable {
 		return lista;
 	}
 
-	public List<Inscripcione> getLista(boolean estado, Curso curso,
-			Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT i FROM Inscripcione i WHERE i.enabled = :pEstado AND i.curso = :pCurso "
-				+ "AND i.matricula = :pMatricula", Inscripcione.class);
-		locQuery.setParameter("pEstado", estado);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		List<Inscripcione> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Inscripcione> getLista(boolean estado, Curso curso,
+//			Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT i FROM Inscripcione i WHERE i.enabled = :pEstado AND i.curso = :pCurso "
+//				+ "AND i.matricula = :pMatricula", Inscripcione.class);
+//		locQuery.setParameter("pEstado", estado);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<Inscripcione> lista = locQuery.getResultList();
+//		return lista;
+//	}
 	
-	public List<Inscripcione> getListaOrderByAlumno(boolean estado, Curso curso,
-			Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT i FROM Inscripcione i WHERE i.enabled = :pEstado AND i.curso = :pCurso "
-				+ "AND i.matricula = :pMatricula ORDER BY i.nombreCompleto", Inscripcione.class);
-		locQuery.setParameter("pEstado", estado);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		List<Inscripcione> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Inscripcione> getListaOrderByAlumno(boolean estado, Curso curso,
+//			Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT i FROM Inscripcione i WHERE i.enabled = :pEstado AND i.curso = :pCurso "
+//				+ "AND i.matricula = :pMatricula ORDER BY i.nombreCompleto", Inscripcione.class);
+//		locQuery.setParameter("pEstado", estado);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<Inscripcione> lista = locQuery.getResultList();
+//		return lista;
+//	}
 	
 	public List<Inscripcione> getListaOrderByFechaId(boolean estado, Curso curso) {
 		inicializar();

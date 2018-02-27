@@ -5,7 +5,6 @@ import java.util.Date;
 
 import promoda.model.Alumno;
 import promoda.model.Cuota;
-import promoda.model.Matricula;
 
 public class PagoOnline implements Serializable {
 
@@ -16,7 +15,6 @@ public class PagoOnline implements Serializable {
 	
 	private Alumno alumno;
 	private Cuota cuota;
-	private Matricula matricula;
 	private Date fecha;
 	private String monto;	
 	private String hora;
@@ -33,12 +31,6 @@ public class PagoOnline implements Serializable {
 	}
 	public void setCuota(Cuota cuota) {
 		this.cuota = cuota;
-	}
-	public Matricula getMatricula() {
-		return matricula;
-	}
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 	public Date getFecha() {
 		return fecha;

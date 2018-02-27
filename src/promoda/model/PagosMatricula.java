@@ -45,11 +45,6 @@ public class PagosMatricula implements Serializable {
 	@JoinColumn(name="id_alumno")
 	private Alumno alumno;
 
-	//bi-directional many-to-one association to Matricula
-	@ManyToOne
-	@JoinColumn(name="id_matricula")
-	private Matricula matricula;
-
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="id_usuario_alta")
@@ -138,14 +133,6 @@ public class PagosMatricula implements Serializable {
 
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
-	}
-
-	public Matricula getMatricula() {
-		return this.matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 
 	public Usuario getUsuario1() {

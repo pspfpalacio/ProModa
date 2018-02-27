@@ -40,11 +40,6 @@ public class MatriculaImpaga implements Serializable {
 	@JoinColumn(name="id_matricula_alumno")
 	private MatriculaAlumno matriculaAlumno;
 
-	//bi-directional many-to-one association to Matricula
-	@ManyToOne
-	@JoinColumn(name="id_matricula")
-	private Matricula matricula;
-
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="id_usuario_alta")
@@ -99,14 +94,6 @@ public class MatriculaImpaga implements Serializable {
 
 	public void setMatriculaAlumno(MatriculaAlumno matriculaAlumno) {
 		this.matriculaAlumno = matriculaAlumno;
-	}
-
-	public Matricula getMatricula() {
-		return this.matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 
 	public Usuario getUsuario() {

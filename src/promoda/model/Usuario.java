@@ -157,18 +157,6 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario2")
 	private List<MatriculaAlumno> matriculaAlumnos2;
 
-	//bi-directional many-to-one association to Matricula
-	@OneToMany(mappedBy="usuario1")
-	private List<Matricula> matriculas1;
-
-	//bi-directional many-to-one association to Matricula
-	@OneToMany(mappedBy="usuario2")
-	private List<Matricula> matriculas2;
-
-	//bi-directional many-to-one association to Matricula
-	@OneToMany(mappedBy="usuario3")
-	private List<Matricula> matriculas3;
-
 	//bi-directional many-to-one association to PagosCuota
 	@OneToMany(mappedBy="usuario1")
 	private List<PagosCuota> pagosCuotas1;
@@ -958,72 +946,6 @@ public class Usuario implements Serializable {
 		matriculaAlumnos2.setUsuario2(null);
 
 		return matriculaAlumnos2;
-	}
-
-	public List<Matricula> getMatriculas1() {
-		return this.matriculas1;
-	}
-
-	public void setMatriculas1(List<Matricula> matriculas1) {
-		this.matriculas1 = matriculas1;
-	}
-
-	public Matricula addMatriculas1(Matricula matriculas1) {
-		getMatriculas1().add(matriculas1);
-		matriculas1.setUsuario1(this);
-
-		return matriculas1;
-	}
-
-	public Matricula removeMatriculas1(Matricula matriculas1) {
-		getMatriculas1().remove(matriculas1);
-		matriculas1.setUsuario1(null);
-
-		return matriculas1;
-	}
-
-	public List<Matricula> getMatriculas2() {
-		return this.matriculas2;
-	}
-
-	public void setMatriculas2(List<Matricula> matriculas2) {
-		this.matriculas2 = matriculas2;
-	}
-
-	public Matricula addMatriculas2(Matricula matriculas2) {
-		getMatriculas2().add(matriculas2);
-		matriculas2.setUsuario2(this);
-
-		return matriculas2;
-	}
-
-	public Matricula removeMatriculas2(Matricula matriculas2) {
-		getMatriculas2().remove(matriculas2);
-		matriculas2.setUsuario2(null);
-
-		return matriculas2;
-	}
-
-	public List<Matricula> getMatriculas3() {
-		return this.matriculas3;
-	}
-
-	public void setMatriculas3(List<Matricula> matriculas3) {
-		this.matriculas3 = matriculas3;
-	}
-
-	public Matricula addMatriculas3(Matricula matriculas3) {
-		getMatriculas3().add(matriculas3);
-		matriculas3.setUsuario3(this);
-
-		return matriculas3;
-	}
-
-	public Matricula removeMatriculas3(Matricula matriculas3) {
-		getMatriculas3().remove(matriculas3);
-		matriculas3.setUsuario3(null);
-
-		return matriculas3;
 	}
 
 	public List<PagosCuota> getPagosCuotas1() {

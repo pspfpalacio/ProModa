@@ -21,8 +21,6 @@ public class MatriculaAlumno implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-
-	private boolean eliminado;
 	
 	private boolean enabled;
 
@@ -37,11 +35,17 @@ public class MatriculaAlumno implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_pago")
 	private Date fechaPago;
+	
+	private boolean finalizado;
 
 	@Column(name="monto_pago")
 	private float montoPago;
 
 	private boolean pago;
+	
+	//bi-directional many-to-one association to Cuota
+	@OneToMany(mappedBy="matriculaAlumno")
+	private List<Cuota> cuotas;
 	
 	//bi-directional many-to-one association to CuotaImpaga
 	@OneToMany(mappedBy="matriculaAlumno")
@@ -56,11 +60,11 @@ public class MatriculaAlumno implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_curso")
 	private Curso curso;
-
-	//bi-directional many-to-one association to Matricula
+	
+	//bi-directional many-to-one association to Inscripcione
 	@ManyToOne
-	@JoinColumn(name="id_matricula")
-	private Matricula matricula;
+	@JoinColumn(name="id_inscripcion")
+	private Inscripcione inscripcione;
 
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
@@ -85,15 +89,7 @@ public class MatriculaAlumno implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public boolean getEliminado() {
-		return this.eliminado;
-	}
-
-	public void setEliminado(boolean eliminado) {
-		this.eliminado = eliminado;
-	}
+	}	
 	
 	public boolean getEnabled() {
 		return this.enabled;
@@ -126,6 +122,14 @@ public class MatriculaAlumno implements Serializable {
 	public void setFechaPago(Date fechaPago) {
 		this.fechaPago = fechaPago;
 	}
+	
+	public boolean getFinalizado() {
+		return this.finalizado;
+	}
+
+	public void setFinalizado(boolean finalizado) {
+		this.finalizado = finalizado;
+	}
 
 	public float getMontoPago() {
 		return this.montoPago;
@@ -141,6 +145,28 @@ public class MatriculaAlumno implements Serializable {
 
 	public void setPago(boolean pago) {
 		this.pago = pago;
+	}
+	
+	public List<Cuota> getCuotas() {
+		return this.cuotas;
+	}
+
+	public void setCuotas(List<Cuota> cuotas) {
+		this.cuotas = cuotas;
+	}
+
+	public Cuota addCuota(Cuota cuota) {
+		getCuotas().add(cuota);
+		cuota.setMatriculaAlumno(this);
+
+		return cuota;
+	}
+
+	public Cuota removeCuota(Cuota cuota) {
+		getCuotas().remove(cuota);
+		cuota.setMatriculaAlumno(null);
+
+		return cuota;
 	}
 	
 	public List<CuotaImpaga> getCuotaImpagas() {
@@ -180,13 +206,13 @@ public class MatriculaAlumno implements Serializable {
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
-
-	public Matricula getMatricula() {
-		return this.matricula;
+	
+	public Inscripcione getInscripcione() {
+		return this.inscripcione;
 	}
 
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
+	public void setInscripcione(Inscripcione inscripcione) {
+		this.inscripcione = inscripcione;
 	}
 
 	public Usuario getUsuario1() {

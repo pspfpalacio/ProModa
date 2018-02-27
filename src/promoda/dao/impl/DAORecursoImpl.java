@@ -12,7 +12,6 @@ import javax.persistence.Query;
 import promoda.dao.DAORecurso;
 import promoda.model.Curso;
 import promoda.model.Materia;
-import promoda.model.Matricula;
 import promoda.model.Recurso;
 
 public class DAORecursoImpl implements DAORecurso, Serializable {
@@ -54,7 +53,7 @@ public class DAORecursoImpl implements DAORecurso, Serializable {
 			inicializar();
 			Query locQuery = em.createQuery("UPDATE Recurso r SET r.curso = :pCurso, r.descripcion = :pDescripcion, "
 					+ "r.estado = :pEstado, r.fechaEntrega = :pFechaEntrega, r.fechaAlta = :pFechaAlta, r.fechaBaja = :pFechaBaja, "
-					+ "r.fechaMod = :pFechaMod, r.materia = :pMateria, r.matricula = :pMatricula, r.usuario1 = :pUsuarioAlta, "
+					+ "r.fechaMod = :pFechaMod, r.materia = :pMateria, r.usuario1 = :pUsuarioAlta, "
 					+ "r.usuario2 = :pUsuarioBaja, r.usuario3 = :pUsuarioMod, r.vigente = :pVigente "
 					+ "WHERE r.id = :pId", Recurso.class);			
 			locQuery.setParameter("pCurso", recurso.getCurso());
@@ -65,7 +64,6 @@ public class DAORecursoImpl implements DAORecurso, Serializable {
 			locQuery.setParameter("pFechaBaja", recurso.getFechaBaja());
 			locQuery.setParameter("pFechaMod", recurso.getFechaMod());
 			locQuery.setParameter("pMateria", recurso.getMateria());
-			locQuery.setParameter("pMatricula", recurso.getMatricula());
 			locQuery.setParameter("pUsuarioAlta", recurso.getUsuario1());
 			locQuery.setParameter("pUsuarioBaja", recurso.getUsuario2());
 			locQuery.setParameter("pUsuarioMod", recurso.getUsuario3());
@@ -123,37 +121,37 @@ public class DAORecursoImpl implements DAORecurso, Serializable {
 		return lista;
 	}
 
-	public List<Recurso> getLista(Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT r FROM Recurso r WHERE r.estado = :pEstado "
-				+ "AND r.matricula = :pMatricula", Recurso.class);
-		locQuery.setParameter("pEstado", true);
-		locQuery.setParameter("pMatricula", matricula);
-		List<Recurso> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Recurso> getLista(Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT r FROM Recurso r WHERE r.estado = :pEstado "
+//				+ "AND r.matricula = :pMatricula", Recurso.class);
+//		locQuery.setParameter("pEstado", true);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<Recurso> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
-	public List<Recurso> getLista(Materia materia, Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT r FROM Recurso r WHERE r.estado = :pEstado "
-				+ "AND r.materia = :pMateria AND r.matricula = :pMatricula", Recurso.class);
-		locQuery.setParameter("pEstado", true);
-		locQuery.setParameter("pMateria", materia);
-		locQuery.setParameter("pMatricula", matricula);
-		List<Recurso> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Recurso> getLista(Materia materia, Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT r FROM Recurso r WHERE r.estado = :pEstado "
+//				+ "AND r.materia = :pMateria AND r.matricula = :pMatricula", Recurso.class);
+//		locQuery.setParameter("pEstado", true);
+//		locQuery.setParameter("pMateria", materia);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<Recurso> lista = locQuery.getResultList();
+//		return lista;
+//	}
 	
-	public List<Recurso> getListaHistoricos(Materia materia, Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT r FROM Recurso r WHERE r.estado = :pEstado "
-				+ "AND r.materia = :pMateria AND r.matricula <> :pMatricula", Recurso.class);
-		locQuery.setParameter("pEstado", true);
-		locQuery.setParameter("pMateria", materia);
-		locQuery.setParameter("pMatricula", matricula);
-		List<Recurso> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Recurso> getListaHistoricos(Materia materia, Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT r FROM Recurso r WHERE r.estado = :pEstado "
+//				+ "AND r.materia = :pMateria AND r.matricula <> :pMatricula", Recurso.class);
+//		locQuery.setParameter("pEstado", true);
+//		locQuery.setParameter("pMateria", materia);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<Recurso> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
 
 }

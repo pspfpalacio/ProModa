@@ -16,11 +16,5 @@ public interface DAOCurso {
 	public List<Curso> getLista();
 	
 	public List<Curso> getLista(boolean estado);
-	
-	public List<Curso> getListaMatVig();
-	
-	public List<Curso> getListaMatVig(Date fechaHoy);
-	
-	public List<Curso> getListaMatVig(Date fechaUno, Date fechaDos);
 
 }

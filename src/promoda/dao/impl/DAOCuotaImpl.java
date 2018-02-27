@@ -14,7 +14,8 @@ import promoda.dao.DAOCuota;
 import promoda.model.Alumno;
 import promoda.model.Cuota;
 import promoda.model.Curso;
-import promoda.model.Matricula;
+import promoda.model.MatriculaAlumno;
+import promoda.model.Usuario;
 
 public class DAOCuotaImpl implements Serializable, DAOCuota {
 
@@ -56,7 +57,7 @@ public class DAOCuotaImpl implements Serializable, DAOCuota {
 			Query locQuery = em.createQuery("UPDATE Cuota c SET c.alumno = :pAlumno, c.curso = :pCurso, "
 					+ "c.detalle = :pDetalle, c.enabled = :pEnabled, c.fechaAlta = :pFechaAlta, c.fechaBaja = :pFechaBaja, "
 					+ "c.fechaMod = :pFechaMod, c.fechaPago = :pFechaPago, c.fechaVencimiento = :pFechaVencimiento, "
-					+ "c.matricula = :pMatricula, c.monto = :pMonto, c.montoPago = :pMontoPago, c.paga = :pPaga, "
+					+ "c.monto = :pMonto, c.montoPago = :pMontoPago, c.paga = :pPaga, "
 					+ "c.porcentajePv = :pPorcentajePV, c.porcentajeSv = :pPorcentajeSV, c.segundoVencimiento = :pSegundoVencimiento, "
 					+ "c.usuario1 = :pUsuario1, c.usuario2 = :pUsuario2, c.usuario3 = :pUsuario3 "
 					+ "WHERE c.id = :pId", Cuota.class);
@@ -69,7 +70,6 @@ public class DAOCuotaImpl implements Serializable, DAOCuota {
 			locQuery.setParameter("pFechaMod", cuota.getFechaMod());
 			locQuery.setParameter("pFechaPago", cuota.getFechaPago());
 			locQuery.setParameter("pFechaVencimiento", cuota.getFechaVencimiento());
-			locQuery.setParameter("pMatricula", cuota.getMatricula());
 			locQuery.setParameter("pMonto", cuota.getMonto());
 			locQuery.setParameter("pMontoPago", cuota.getMontoPago());
 			locQuery.setParameter("pPaga", cuota.getPaga());
@@ -85,6 +85,27 @@ public class DAOCuotaImpl implements Serializable, DAOCuota {
 			locQuery.executeUpdate();
 			tx.commit();
 			return cuota.getId();
+		} catch (Exception e) {
+			// TODO: handle exception
+			return 0;
+		}
+	}
+	
+	public int disabled(MatriculaAlumno matriculaAlumno, Usuario usuarioBaja, Date fechaBaja) {
+		try {
+			inicializar();
+			Query locQuery = em.createQuery("UPDATE Cuota c SET c.enabled = :pEnabled, c.fechaBaja = :pFechaBaja, "
+					+ "c.usuario2 = :pUsuario2 "
+					+ "WHERE c.matriculaAlumno = :pMatriculaAlumno", Cuota.class);						
+			locQuery.setParameter("pEnabled", false);
+			locQuery.setParameter("pFechaBaja", fechaBaja);
+			locQuery.setParameter("pUsuario2", usuarioBaja);
+			locQuery.setParameter("pMatriculaAlumno", matriculaAlumno);
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			locQuery.executeUpdate();
+			tx.commit();
+			return 1;
 		} catch (Exception e) {
 			// TODO: handle exception
 			return 0;
@@ -136,14 +157,25 @@ public class DAOCuotaImpl implements Serializable, DAOCuota {
 		List<Cuota> lista = locQuery.getResultList();
 		return lista;
 	}
-
-	public List<Cuota> getLista(Matricula matricula) {
+	
+	public List<Cuota> getLista(MatriculaAlumno matriculaAlumno, boolean paga) {
 		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.matricula = :pMatricula", Cuota.class);
-		locQuery.setParameter("pMatricula", matricula);
+		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.matriculaAlumno = :pMatriculaAlumno "
+				+ "AND c.paga = :pPaga AND c.enabled = :pEnabled", Cuota.class);
+		locQuery.setParameter("pMatriculaAlumno", matriculaAlumno);
+		locQuery.setParameter("pPaga", paga);
+		locQuery.setParameter("pEnabled", true);
 		List<Cuota> lista = locQuery.getResultList();
 		return lista;
 	}
+
+//	public List<Cuota> getLista(Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.matricula = :pMatricula", Cuota.class);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<Cuota> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
 	public List<Cuota> getLista(boolean estado, Alumno alumno) {
 		inicializar();
@@ -155,74 +187,74 @@ public class DAOCuotaImpl implements Serializable, DAOCuota {
 		return lista;
 	}
 
-	public List<Cuota> getLista(boolean estado, Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.enabled = :pEnabled "
-				+ "AND c.matricula = :pMatricula", Cuota.class);
-		locQuery.setParameter("pEnabled", estado);
-		locQuery.setParameter("pMatricula", matricula);
-		List<Cuota> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Cuota> getLista(boolean estado, Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.enabled = :pEnabled "
+//				+ "AND c.matricula = :pMatricula", Cuota.class);
+//		locQuery.setParameter("pEnabled", estado);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<Cuota> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
-	public List<Cuota> getLista(Alumno alumno, Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.alumno = :pAlumno "
-				+ "AND c.matricula = :pMatricula", Cuota.class);
-		locQuery.setParameter("pAlumno", alumno);
-		locQuery.setParameter("pMatricula", matricula);
-		List<Cuota> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Cuota> getLista(Alumno alumno, Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.alumno = :pAlumno "
+//				+ "AND c.matricula = :pMatricula", Cuota.class);
+//		locQuery.setParameter("pAlumno", alumno);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<Cuota> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
-	public List<Cuota> getLista(boolean estado, Alumno alumno,
-			Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.alumno = :pAlumno "
-				+ "AND c.enabled = :pEnabled AND c.matricula = :pMatricula", Cuota.class);
-		locQuery.setParameter("pAlumno", alumno);
-		locQuery.setParameter("pEnabled", estado);
-		locQuery.setParameter("pMatricula", matricula);
-		List<Cuota> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Cuota> getLista(boolean estado, Alumno alumno,
+//			Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.alumno = :pAlumno "
+//				+ "AND c.enabled = :pEnabled AND c.matricula = :pMatricula", Cuota.class);
+//		locQuery.setParameter("pAlumno", alumno);
+//		locQuery.setParameter("pEnabled", estado);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<Cuota> lista = locQuery.getResultList();
+//		return lista;
+//	}
 	
-	public List<Cuota> getLista(Alumno alumno, Matricula matricula, Curso curso) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.alumno = :pAlumno AND c.curso = :pCurso "
-				+ "AND c.matricula = :pMatricula AND c.enabled = :pEnabled", Cuota.class);
-		locQuery.setParameter("pAlumno", alumno);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pEnabled", true);
-		List<Cuota> lista = locQuery.getResultList();
-		return lista;		
-	}
+//	public List<Cuota> getLista(Alumno alumno, Matricula matricula, Curso curso) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.alumno = :pAlumno AND c.curso = :pCurso "
+//				+ "AND c.matricula = :pMatricula AND c.enabled = :pEnabled", Cuota.class);
+//		locQuery.setParameter("pAlumno", alumno);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pEnabled", true);
+//		List<Cuota> lista = locQuery.getResultList();
+//		return lista;		
+//	}
 	
-	public List<Cuota> getLista(Alumno alumno, Matricula matricula, Curso curso, boolean paga) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.alumno = :pAlumno AND c.curso = :pCurso "
-				+ "AND c.matricula = :pMatricula AND c.paga = :pPaga AND c.enabled = :pEnabled", Cuota.class);
-		locQuery.setParameter("pAlumno", alumno);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pPaga", paga);
-		locQuery.setParameter("pEnabled", true);
-		List<Cuota> lista = locQuery.getResultList();
-		return lista;		
-	}
+//	public List<Cuota> getLista(Alumno alumno, Matricula matricula, Curso curso, boolean paga) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.alumno = :pAlumno AND c.curso = :pCurso "
+//				+ "AND c.matricula = :pMatricula AND c.paga = :pPaga AND c.enabled = :pEnabled", Cuota.class);
+//		locQuery.setParameter("pAlumno", alumno);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pPaga", paga);
+//		locQuery.setParameter("pEnabled", true);
+//		List<Cuota> lista = locQuery.getResultList();
+//		return lista;		
+//	}
 	
-	public List<Cuota> getLista(Curso curso, Matricula matricula, boolean paga) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.curso = :pCurso "
-				+ "AND c.matricula = :pMatricula AND c.paga = :pPaga AND c.enabled = :pEnabled", Cuota.class);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pPaga", paga);
-		locQuery.setParameter("pEnabled", true);
-		List<Cuota> lista = locQuery.getResultList();
-		return lista;		
-	}
+//	public List<Cuota> getLista(Curso curso, Matricula matricula, boolean paga) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM Cuota c WHERE c.curso = :pCurso "
+//				+ "AND c.matricula = :pMatricula AND c.paga = :pPaga AND c.enabled = :pEnabled", Cuota.class);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pPaga", paga);
+//		locQuery.setParameter("pEnabled", true);
+//		List<Cuota> lista = locQuery.getResultList();
+//		return lista;		
+//	}
 	
 	public List<Cuota> getListaPorVencer(Date fecha) {
 		inicializar();

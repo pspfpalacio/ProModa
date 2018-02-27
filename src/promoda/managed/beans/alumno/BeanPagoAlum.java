@@ -17,7 +17,6 @@ import com.mercadopago.MP;
 
 import promoda.dao.DAOCuota;
 import promoda.dao.DAOCurso;
-import promoda.dao.DAOMatricula;
 import promoda.dao.DAOMatriculaAlumno;
 import promoda.dao.DAOPagosMatricula;
 import promoda.dao.DAOParametro;
@@ -26,7 +25,6 @@ import promoda.dao.DAOUsuario;
 import promoda.model.Alumno;
 import promoda.model.Cuota;
 import promoda.model.Curso;
-import promoda.model.Matricula;
 import promoda.model.MatriculaAlumno;
 import promoda.model.PagosMatricula;
 import promoda.model.Parametro;
@@ -48,9 +46,6 @@ public class BeanPagoAlum implements Serializable {
 	@ManagedProperty(value = "#{BeanUsuarioDAO}")
 	private DAOUsuario usuarioDAO;
 	
-	@ManagedProperty(value = "#{BeanMatriculaDAO}")
-	private DAOMatricula matriculaDAO;
-	
 	@ManagedProperty(value = "#{BeanMatriculaAlmunoDAO}")
     private DAOMatriculaAlumno matriculaAlumnoDAO;
 	
@@ -71,7 +66,6 @@ public class BeanPagoAlum implements Serializable {
 	private List<Cuota> listaCuotasCheck;
 	private List<Cuota> selectionCuotas;
 	private Curso curso;
-	private Matricula matricula;
 	private Usuario usuario;
 	private Alumno alumno;
 	private PagosMatricula pagosMatricula;	
@@ -104,14 +98,6 @@ public class BeanPagoAlum implements Serializable {
 
 	public void setUsuarioDAO(DAOUsuario usuarioDAO) {
 		this.usuarioDAO = usuarioDAO;
-	}
-
-	public DAOMatricula getMatriculaDAO() {
-		return matriculaDAO;
-	}
-
-	public void setMatriculaDAO(DAOMatricula matriculaDAO) {
-		this.matriculaDAO = matriculaDAO;
 	}
 
 	public DAOMatriculaAlumno getMatriculaAlumnoDAO() {
@@ -192,14 +178,6 @@ public class BeanPagoAlum implements Serializable {
 
 	public void setCurso(Curso curso) {
 		this.curso = curso;
-	}
-
-	public Matricula getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 
 	public Usuario getUsuario() {
@@ -346,7 +324,7 @@ public class BeanPagoAlum implements Serializable {
 			selectionCuotas = new ArrayList<Cuota>();
 			usuario = new Usuario();
 			alumno = new Alumno();
-			matricula = new Matricula();
+//			matricula = new Matricula();
 			matriculaAlumno = new MatriculaAlumno();
 			cuota = new Cuota();		
 			parametro = new Parametro();
@@ -375,7 +353,7 @@ public class BeanPagoAlum implements Serializable {
 			selectionCuotas = new ArrayList<Cuota>();
 			usuario = new Usuario();
 			alumno = new Alumno();
-			matricula = new Matricula();
+//			matricula = new Matricula();
 			matriculaAlumno = new MatriculaAlumno();
 			cuota = new Cuota();		
 			parametro = new Parametro();
@@ -391,11 +369,11 @@ public class BeanPagoAlum implements Serializable {
 			idCurso = cur.getId();
 			if (idCurso != 0) {
 				curso = cursoDAO.get(idCurso);
-				matricula = curso.getMatricula();
-				matriculaAlumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
+//				matricula = curso.getMatricula();
+//				matriculaAlumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
 				if (matriculaAlumno.getId() != 0) {
 					panelMatricula = true;
-					listaCuotas = cuotaDAO.getLista(alumno, matricula, curso);
+//					listaCuotas = cuotaDAO.getLista(alumno, matricula, curso);
 					if(!listaCuotas.isEmpty()){
 	        			verCuotas = true;	        			
 	        		}
@@ -417,7 +395,7 @@ public class BeanPagoAlum implements Serializable {
 			listaCuotasCheck = new ArrayList<Cuota>();
 			selectionCuotas = new ArrayList<Cuota>();
 			matriculaAlumno = new MatriculaAlumno();
-			matricula = new Matricula();
+//			matricula = new Matricula();
 			cuota = new Cuota();
 			panelCuota = false;
 			panelMatricula = false;
@@ -425,11 +403,11 @@ public class BeanPagoAlum implements Serializable {
 			pagoMultiple = false;
 			if (idCurso != 0) {
 				curso = cursoDAO.get(idCurso);
-				matricula = curso.getMatricula();
-				matriculaAlumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
+//				matricula = curso.getMatricula();
+//				matriculaAlumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
 				if (matriculaAlumno.getId() != 0) {
 					panelMatricula = true;
-					listaCuotas = cuotaDAO.getLista(alumno, matricula, curso);
+//					listaCuotas = cuotaDAO.getLista(alumno, matricula, curso);
 					if(!listaCuotas.isEmpty()){
 	        			verCuotas = true;	        			
 	        		}
@@ -457,7 +435,7 @@ public class BeanPagoAlum implements Serializable {
 		try {
 			listaCuotasCheck = new ArrayList<Cuota>();
 			selectionCuotas = new ArrayList<Cuota>();
-			listaCuotasCheck = cuotaDAO.getLista(alumno, matricula, curso, false);
+//			listaCuotasCheck = cuotaDAO.getLista(alumno, matricula, curso, false);
 			if (!listaCuotasCheck.isEmpty()) {
 				pagoMultiple = true;
 			}

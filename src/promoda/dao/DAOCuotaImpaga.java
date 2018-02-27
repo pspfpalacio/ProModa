@@ -6,7 +6,6 @@ import promoda.model.Alumno;
 import promoda.model.Cuota;
 import promoda.model.CuotaImpaga;
 import promoda.model.Curso;
-import promoda.model.Matricula;
 
 public interface DAOCuotaImpaga {
 	
@@ -24,16 +23,16 @@ public interface DAOCuotaImpaga {
 	
 	public List<CuotaImpaga> getLista(Alumno alumno);
 	
-	public List<CuotaImpaga> getLista(Matricula matricula);
+//	public List<CuotaImpaga> getLista(Matricula matricula);
 	
 	public List<CuotaImpaga> getLista(Curso curso);
 	
-	public List<CuotaImpaga> getLista(Alumno alumno, Matricula matricula);
-	
-	public List<CuotaImpaga> getLista(Curso curso, Matricula matricula);
+//	public List<CuotaImpaga> getLista(Alumno alumno, Matricula matricula);
+//	
+//	public List<CuotaImpaga> getLista(Curso curso, Matricula matricula);
 	
 	public List<CuotaImpaga> getLista(Alumno alumno, Curso curso);
 	
-	public List<CuotaImpaga> getLista(Alumno alumno, Curso curso, Matricula matricula);
+//	public List<CuotaImpaga> getLista(Alumno alumno, Curso curso, Matricula matricula);
 
 }

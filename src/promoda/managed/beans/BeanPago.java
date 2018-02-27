@@ -35,7 +35,6 @@ import promoda.dao.DAOAlumno;
 import promoda.dao.DAOCuota;
 import promoda.dao.DAOCuotaImpaga;
 import promoda.dao.DAOCurso;
-import promoda.dao.DAOMatricula;
 import promoda.dao.DAOMatriculaAlumno;
 import promoda.dao.DAOMatriculaImpaga;
 import promoda.dao.DAOPagosCuota;
@@ -47,7 +46,6 @@ import promoda.model.Alumno;
 import promoda.model.Cuota;
 import promoda.model.CuotaImpaga;
 import promoda.model.Curso;
-import promoda.model.Matricula;
 import promoda.model.MatriculaAlumno;
 import promoda.model.MatriculaImpaga;
 import promoda.model.PagosCuota;
@@ -73,9 +71,6 @@ public class BeanPago implements Serializable {
      
     @ManagedProperty(value = "#{BeanCursoDAO}")
     private DAOCurso cursoDAO;
-    
-    @ManagedProperty(value = "#{BeanMatriculaDAO}")
-    private DAOMatricula matriculaDAO;
     
     @ManagedProperty(value = "#{BeanCuotaDAO}")
     private DAOCuota cuotaDAO;
@@ -116,7 +111,6 @@ public class BeanPago implements Serializable {
     private Usuario usuario;
     private Alumno alumno;
     private Curso curso;
-    private Matricula matricula;
     private MatriculaAlumno matalumno;
     private PagosMatricula pagosmatricula;
     private PagosCuota pagoscuota;
@@ -169,14 +163,6 @@ public class BeanPago implements Serializable {
 
 	public void setCursoDAO(DAOCurso cursoDAO) {
 		this.cursoDAO = cursoDAO;
-	}
-	
-	public DAOMatricula getMatriculaDAO() {
-		return matriculaDAO;
-	}
-
-	public void setMatriculaDAO(DAOMatricula matriculaDAO) {
-		this.matriculaDAO = matriculaDAO;
 	}
 	
 	public DAOCuota getCuotaDAO() {
@@ -363,14 +349,6 @@ public class BeanPago implements Serializable {
 
 	public void setCurso(Curso curso) {
 		this.curso = curso;
-	}
-
-	public Matricula getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 
 	public MatriculaAlumno getMatalumno() {
@@ -681,13 +659,13 @@ public class BeanPago implements Serializable {
 				PagoOnline pagoOnline = new PagoOnline();
 				Alumno alum = alumnoDAO.getPorDni(registroOnline.getIdAlumno());
 				Cuota cuo = cuotaDAO.get(registroOnline.getIdCuota());
-				Matricula mat = matriculaDAO.get(registroOnline.getIdMatricula());
+//				Matricula mat = matriculaDAO.get(registroOnline.getIdMatricula());
 				pagoOnline.setAlumno(alum);
 				pagoOnline.setCuota(cuo);
 				pagoOnline.setDetalle(registroOnline.getDetalle());
 				pagoOnline.setFecha(registroOnline.getFecha());
 				pagoOnline.setHora(formatoHora.format(registroOnline.getFecha()));
-				pagoOnline.setMatricula(mat);
+//				pagoOnline.setMatricula(mat);
 				pagoOnline.setMonto(formatoMonto.format(registroOnline.getMonto()));
 				listaRegistroOnlines.add(pagoOnline);
 			}
@@ -747,30 +725,30 @@ public class BeanPago implements Serializable {
         curso = new Curso();
         concepto = "";
         curso = cursoDAO.get(idCurso);
-        matricula = new Matricula();
-        matricula = curso.getMatricula();
+//        matricula = new Matricula();
+//        matricula = curso.getMatricula();
         matalumno = new MatriculaAlumno();
-        if (alumno.getId() != 0 && curso.getId() != 0 && matricula.getId() != 0){
-        	matalumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
-        	if(matalumno.getId() != 0){
-        		siMatAlumno = true;
-        		if(!matalumno.getPago()){
-        			pagosmatricula = new PagosMatricula();
-        			siMatPagada = matalumno.getPago();
-        		} else {
-        			fecha = matalumno.getFechaPago();
-        	    	pagosmatricula = pagosMatriculaDAO.get(alumno, matricula);
-        	    	fecha = pagosmatricula.getFecha();
-        	    	concepto = pagosmatricula.getConcepto();
-        		}
-        		
-        		listaCuota = new ArrayList<Cuota>();
-        		listaCuota = cuotaDAO.getLista(alumno, matricula, curso);
-        		if(listaCuota.size() > 0){
-        			siCuotas = true;
-        		}        		
-        	}
-        }
+//        if (alumno.getId() != 0 && curso.getId() != 0 && matricula.getId() != 0){
+//        	matalumno = matriculaAlumnoDAO.get(alumno, curso, matricula);
+//        	if(matalumno.getId() != 0){
+//        		siMatAlumno = true;
+//        		if(!matalumno.getPago()){
+//        			pagosmatricula = new PagosMatricula();
+//        			siMatPagada = matalumno.getPago();
+//        		} else {
+//        			fecha = matalumno.getFechaPago();
+//        	    	pagosmatricula = pagosMatriculaDAO.get(alumno, matricula);
+//        	    	fecha = pagosmatricula.getFecha();
+//        	    	concepto = pagosmatricula.getConcepto();
+//        		}
+//        		
+//        		listaCuota = new ArrayList<Cuota>();
+//        		listaCuota = cuotaDAO.getLista(alumno, matricula, curso);
+//        		if(listaCuota.size() > 0){
+//        			siCuotas = true;
+//        		}        		
+//        	}
+//        }
     }
     
 	public void onChangeFechaPago(Cuota cuo) {
@@ -824,7 +802,7 @@ public class BeanPago implements Serializable {
     	FacesMessage msg = null;
     	PagosMatricula pago = new PagosMatricula();
     	CajasMov cajaMov = new CajasMov();
-    	pago = pagosMatriculaDAO.get(alumno, matricula);
+//    	pago = pagosMatriculaDAO.get(alumno, matricula);
     	pago.setEnabled(false);
     	pago.setFechaBaja(new Date());
     	pago.setUsuario2(usuario);
@@ -878,7 +856,7 @@ public class BeanPago implements Serializable {
     		if(pagosmatricula.getMonto() > 0){  
         		CajasMov cajaMov = new CajasMov();
         		pagosmatricula.setFecha(fecha);
-        		pagosmatricula.setMatricula(matricula);
+//        		pagosmatricula.setMatricula(matricula);
         		pagosmatricula.setAlumno(alumno);
         		pagosmatricula.setUsuario1(usuario);
         		pagosmatricula.setFechaAlta(new Date());
@@ -919,7 +897,7 @@ public class BeanPago implements Serializable {
     			pagosMat.setEnabled(true);
     			pagosMat.setFecha(fecha);
     			pagosMat.setFechaAlta(new Date());
-    			pagosMat.setMatricula(matriculaImpaga.getMatricula());
+//    			pagosMat.setMatricula(matriculaImpaga.getMatricula());
     			pagosMat.setMonto(montoImp);
     			pagosMat.setUsuario1(usuario);
     			matriculaA.setPago(true);
@@ -981,7 +959,7 @@ public class BeanPago implements Serializable {
 		    				"Pago de " + cuota.getDetalle() + " de Curso " + cuota.getCurso().getNombre() + " de " + cuota.getAlumno().getNombreCompleto(), usuario);
 		    		if (controlCuota != 0 && controlPagoCuota != 0) {
 		    			listaCuota = new ArrayList<Cuota>();
-		        		listaCuota = cuotaDAO.getLista(alumno, matricula, curso);
+//		        		listaCuota = cuotaDAO.getLista(alumno, matricula, curso);
 		        		if(listaCuota.size() > 0){
 		        			siCuotas = true;
 		        		}
@@ -1083,7 +1061,7 @@ public class BeanPago implements Serializable {
     	usuario = new Usuario();
     	alumno = new Alumno();
     	curso = new Curso();
-    	matricula = new Matricula();
+//    	matricula = new Matricula();
     	matalumno = new MatriculaAlumno();
     	pagosmatricula = new PagosMatricula();
     	pagoscuota = new PagosCuota();
@@ -1222,7 +1200,7 @@ public class BeanPago implements Serializable {
 		 pagoReporte.setEncabezado("PAGO DE MATRICUlA");
 		 pagoReporte.setAlumno(pagoMatri.getAlumno().getNombreCompleto());
 		 pagoReporte.setConcepto(pagoMatri.getConcepto());
-		 pagoReporte.setCurso(pagoMatri.getMatricula().getCurso().getNombre());
+//		 pagoReporte.setCurso(pagoMatri.getMatricula().getCurso().getNombre());
 		 pagoReporte.setFecha(pagoMatri.getFecha());
 		 pagoReporte.setMonto(pagoMatri.getMonto());
 	 }
@@ -1286,7 +1264,7 @@ public class BeanPago implements Serializable {
 			 dMatricula.setAlumno(mAlumno.getAlumno().getNombreCompleto());
 			 dMatricula.setCurso(mAlumno.getCurso().getNombre());
 			 dMatricula.setFechaInscripcion(formatoFecha.format(mAlumno.getFechaAlta()));
-			 dMatricula.setMontoDeuda(formatoMonto.format(mAlumno.getMatricula().getCosto()));
+//			 dMatricula.setMontoDeuda(formatoMonto.format(mAlumno.getMatricula().getCosto()));
 			 contacto.setEmail(mAlumno.getAlumno().getEmail());
 			 contacto.setTelCel(mAlumno.getAlumno().getTelefonoCel());
 			 contacto.setTelFijo(mAlumno.getAlumno().getTelefonoFijo());

@@ -28,13 +28,11 @@ import promoda.dao.DAOAsistencia;
 import promoda.dao.DAOCurso;
 import promoda.dao.DAOInscripcion;
 import promoda.dao.DAOMateria;
-import promoda.dao.DAOMatricula;
 import promoda.model.Alumno;
 import promoda.model.Asistencia;
 import promoda.model.Curso;
 import promoda.model.Inscripcione;
 import promoda.model.Materia;
-import promoda.model.Matricula;
 import promoda.model.Usuario;
 
 @ManagedBean
@@ -55,9 +53,6 @@ public class BeanAsistencia implements Serializable {
 	@ManagedProperty(value = "#{BeanMateriaDAO}")
 	private DAOMateria materiaDAO;
 	
-	@ManagedProperty(value = "#{BeanMatriculaDAO}")
-	private DAOMatricula matriculaDAO;
-	
 	@ManagedProperty(value = "#{BeanInscripcionDAO}")
 	private DAOInscripcion inscripcionDAO;
 	
@@ -74,7 +69,6 @@ public class BeanAsistencia implements Serializable {
 	private List<AsistenciaReporte> selectionAsistenciaPlanilla;
 	private Curso curso;
 	private Materia materia;
-	private Matricula matricula;
 	private Usuario usuario;
 	private Date fecha;
 	private Date fechaDesde;
@@ -111,14 +105,6 @@ public class BeanAsistencia implements Serializable {
 
 	public void setMateriaDAO(DAOMateria materiaDAO) {
 		this.materiaDAO = materiaDAO;
-	}
-
-	public DAOMatricula getMatriculaDAO() {
-		return matriculaDAO;
-	}
-
-	public void setMatriculaDAO(DAOMatricula matriculaDAO) {
-		this.matriculaDAO = matriculaDAO;
 	}
 
 	public DAOInscripcion getInscripcionDAO() {
@@ -218,14 +204,6 @@ public class BeanAsistencia implements Serializable {
 
 	public void setMateria(Materia materia) {
 		this.materia = materia;
-	}
-
-	public Matricula getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 
 	public Usuario getUsuario() {
@@ -336,14 +314,14 @@ public class BeanAsistencia implements Serializable {
 		usuario = new Usuario();
 		curso = new Curso();
 		materia = new Materia();
-		matricula = new Matricula();
 		usuario = user;
 		listaCursos = new ArrayList<Curso>();
 		listaMaterias = new ArrayList<Materia>();
 		listaClases = new ArrayList<Clase>();
 		listaAsistencias = new ArrayList<Asistencia>();
 		selectionAsistencias = new ArrayList<Asistencia>();
-		listaCursos = cursoDAO.getListaMatVig();
+//		listaCursos = cursoDAO.getListaMatVig();
+		listaCursos = cursoDAO.getLista(true);
 		idCurso = 0;
 		idMateria = 0;
 		idClase = 0;
@@ -355,7 +333,6 @@ public class BeanAsistencia implements Serializable {
 		usuario = new Usuario();
 		curso = new Curso();
 		materia = new Materia();
-		matricula = new Matricula();
 		fechaDesde = null;
 		fechaHasta = null;
 		usuario = user;
@@ -366,7 +343,8 @@ public class BeanAsistencia implements Serializable {
 		listaAsistenciaReporte = new ArrayList<AsistenciaReporte>();
 		listaAsistenciaPlanilla = new ArrayList<AsistenciaReporte>();
 		selectionAsistenciaPlanilla = new ArrayList<AsistenciaReporte>();
-		listaCursos = cursoDAO.getListaMatVig();
+//		listaCursos = cursoDAO.getListaMatVig();
+		listaCursos = cursoDAO.getLista(true);
 		idCurso = 0;
 		idMateria = 0;
 		idClase = 0;
@@ -382,7 +360,6 @@ public class BeanAsistencia implements Serializable {
 		listaMaterias = new ArrayList<Materia>();
 		curso = new Curso();
 		materia = new Materia();
-		matricula = new Matricula();
 		intervalo = false;
 		reporte = false;
 		idMateria = 0;
@@ -399,7 +376,6 @@ public class BeanAsistencia implements Serializable {
 	public void onChangeMateria() {
 		listaClases = new ArrayList<Clase>();
 		materia = new Materia();
-		matricula = new Matricula();
 		idClase = 0;
 		if (idMateria != 0) {
 			materia = materiaDAO.get(idMateria);
@@ -416,7 +392,6 @@ public class BeanAsistencia implements Serializable {
 	public void onCompleteAsistencia() {
 		listaClases = new ArrayList<Clase>();
 		materia = new Materia();
-		matricula = new Matricula();
 		cantClases = 0;
 		if (idMateria != 0) {
 			materia = materiaDAO.get(idMateria);
@@ -452,50 +427,50 @@ public class BeanAsistencia implements Serializable {
 					}
 				}
 				
-				int idMatri = curso.getMatricula().getId();
-				matricula = matriculaDAO.get(idMatri);
+//				int idMatri = curso.getMatricula().getId();
+//				matricula = matriculaDAO.get(idMatri);
 				listaAsistenciaReporte = new ArrayList<AsistenciaReporte>();
-				if (fechaDesde != null && fechaHasta != null) {
-					listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia, fechaDesde, fechaHasta);
-				} else {
-					listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia);
-				}			
-				if (listaAsistencias.isEmpty()) {
-					List<Inscripcione> listaInscripciones = inscripcionDAO.getListaOrderByAlumno(true, curso, matricula);
-					for (Inscripcione inscripcione : listaInscripciones) {
-						Asistencia asistencia = new Asistencia();
-						int dni = inscripcione.getDni();
-						Alumno alum = alumnoDAO.getPorDni(dni);
-						if (alum.getId() != 0) {
-							asistencia.setAlumno(alum);
-							asistencia.setNroClase(idClase);
-							asistencia.setNombreClase("Clase " + idClase);
-							listaAsistencias.add(asistencia);
-						}						
-					}
+//				if (fechaDesde != null && fechaHasta != null) {
+//					listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia, fechaDesde, fechaHasta);
+//				} else {
+//					listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia);
+//				}			
+				if (listaAsistencias.isEmpty()) {				
+//					List<Inscripcione> listaInscripciones = inscripcionDAO.getListaOrderByAlumno(true, curso, matricula);
+//					for (Inscripcione inscripcione : listaInscripciones) {
+//						Asistencia asistencia = new Asistencia();
+//						int dni = inscripcione.getDni();
+//						Alumno alum = alumnoDAO.getPorDni(dni);
+//						if (alum.getId() != 0) {
+//							asistencia.setAlumno(alum);
+//							asistencia.setNroClase(idClase);
+//							asistencia.setNombreClase("Clase " + idClase);
+//							listaAsistencias.add(asistencia);
+//						}						
+//					}
 				} else {
 					List<Asistencia> listAux = listaAsistencias;
-					List<Inscripcione> listaInscripciones = inscripcionDAO.getListaOrderByAlumno(true, curso, matricula);				
-					for (Inscripcione inscripcione : listaInscripciones) {
-						Asistencia asist = new Asistencia();
-						int dni = inscripcione.getDni();
-						Alumno alum = alumnoDAO.getPorDni(dni);
-						if (alum.getId() != 0) {
-							boolean noExiste = true;
-							for (Asistencia asistencia : listAux) {
-								Alumno alu = asistencia.getAlumno();
-								if (alum.getId() == alu.getId()) {
-									noExiste = false;
-								}
-							}
-							if (noExiste) {
-								asist.setAlumno(alum);
-								asist.setNroClase(idClase);
-								asist.setNombreClase("Clase " + idClase);
-								listaAsistencias.add(asist);
-							}
-						}						
-					}
+//					List<Inscripcione> listaInscripciones = inscripcionDAO.getListaOrderByAlumno(true, curso, matricula);				
+//					for (Inscripcione inscripcione : listaInscripciones) {
+//						Asistencia asist = new Asistencia();
+//						int dni = inscripcione.getDni();
+//						Alumno alum = alumnoDAO.getPorDni(dni);
+//						if (alum.getId() != 0) {
+//							boolean noExiste = true;
+//							for (Asistencia asistencia : listAux) {
+//								Alumno alu = asistencia.getAlumno();
+//								if (alum.getId() == alu.getId()) {
+//									noExiste = false;
+//								}
+//							}
+//							if (noExiste) {
+//								asist.setAlumno(alum);
+//								asist.setNroClase(idClase);
+//								asist.setNombreClase("Clase " + idClase);
+//								listaAsistencias.add(asist);
+//							}
+//						}						
+//					}
 					for (Asistencia asistencia : listaAsistencias) {
 						fecha = asistencia.getFechaAlta();
 					}
@@ -511,11 +486,11 @@ public class BeanAsistencia implements Serializable {
 							int key = clase.getId();
 							String valor = " - ";
 							Asistencia asisten = new Asistencia();
-							if (fechaDesde != null && fechaHasta != null) {
-								asisten = asistenciaDAO.get(curso, matricula, materia, asist.getAlumno(), key, fechaDesde, fechaHasta);
-							} else {
-								asisten = asistenciaDAO.get(curso, matricula, materia, asist.getAlumno(), key);
-							}					
+//							if (fechaDesde != null && fechaHasta != null) {
+//								asisten = asistenciaDAO.get(curso, matricula, materia, asist.getAlumno(), key, fechaDesde, fechaHasta);
+//							} else {
+//								asisten = asistenciaDAO.get(curso, matricula, materia, asist.getAlumno(), key);
+//							}					
 							if (asisten.getId() != 0) {						
 								if (asisten.getFechaAlta() != null && !asisten.getPresente().isEmpty()) {
 									valor = asisten.getPresente();
@@ -541,48 +516,48 @@ public class BeanAsistencia implements Serializable {
 	public void onChangeClase() {
 		listaAsistencias = new ArrayList<Asistencia>();
 		selectionAsistencias = new ArrayList<Asistencia>();
-		matricula = new Matricula();
+//		matricula = new Matricula();
 		asistenciaMasiva = "-";
 		if (idClase != 0) {			
-			int idMatri = curso.getMatricula().getId();
-			matricula = matriculaDAO.get(idMatri);
-			listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia, idClase);
+//			int idMatri = curso.getMatricula().getId();
+//			matricula = matriculaDAO.get(idMatri);
+//			listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia, idClase);
 			if (listaAsistencias.isEmpty()) {
-				List<Inscripcione> listaInscripciones = inscripcionDAO.getLista(true, curso, matricula);
-				for (Inscripcione inscripcione : listaInscripciones) {
-					Asistencia asistencia = new Asistencia();
-					int dni = inscripcione.getDni();
-					Alumno alum = alumnoDAO.getPorDni(dni);
-					if (alum.getId() != 0) {
-						asistencia.setAlumno(alum);
-						asistencia.setNroClase(idClase);
-						asistencia.setNombreClase("Clase " + idClase);
-						listaAsistencias.add(asistencia);
-					}					
-				}
+//				List<Inscripcione> listaInscripciones = inscripcionDAO.getLista(true, curso, matricula);
+//				for (Inscripcione inscripcione : listaInscripciones) {
+//					Asistencia asistencia = new Asistencia();
+//					int dni = inscripcione.getDni();
+//					Alumno alum = alumnoDAO.getPorDni(dni);
+//					if (alum.getId() != 0) {
+//						asistencia.setAlumno(alum);
+//						asistencia.setNroClase(idClase);
+//						asistencia.setNombreClase("Clase " + idClase);
+//						listaAsistencias.add(asistencia);
+//					}					
+//				}
 			} else {
 				List<Asistencia> listAux = listaAsistencias;
-				List<Inscripcione> listaInscripciones = inscripcionDAO.getLista(true, curso, matricula);				
-				for (Inscripcione inscripcione : listaInscripciones) {
-					Asistencia asist = new Asistencia();
-					int dni = inscripcione.getDni();
-					Alumno alum = alumnoDAO.getPorDni(dni);
-					if (alum.getId() != 0) {
-						boolean noExiste = true;
-						for (Asistencia asistencia : listAux) {
-							Alumno alu = asistencia.getAlumno();
-							if (alum.getId() == alu.getId()) {
-								noExiste = false;
-							}
-						}
-						if (noExiste) {
-							asist.setAlumno(alum);
-							asist.setNroClase(idClase);
-							asist.setNombreClase("Clase " + idClase);
-							listaAsistencias.add(asist);
-						}
-					}					
-				}
+//				List<Inscripcione> listaInscripciones = inscripcionDAO.getLista(true, curso, matricula);				
+//				for (Inscripcione inscripcione : listaInscripciones) {
+//					Asistencia asist = new Asistencia();
+//					int dni = inscripcione.getDni();
+//					Alumno alum = alumnoDAO.getPorDni(dni);
+//					if (alum.getId() != 0) {
+//						boolean noExiste = true;
+//						for (Asistencia asistencia : listAux) {
+//							Alumno alu = asistencia.getAlumno();
+//							if (alum.getId() == alu.getId()) {
+//								noExiste = false;
+//							}
+//						}
+//						if (noExiste) {
+//							asist.setAlumno(alum);
+//							asist.setNroClase(idClase);
+//							asist.setNombreClase("Clase " + idClase);
+//							listaAsistencias.add(asist);
+//						}
+//					}					
+//				}
 				for (Asistencia asistencia : listaAsistencias) {
 					fecha = asistencia.getFechaAlta();
 				}
@@ -645,7 +620,7 @@ public class BeanAsistencia implements Serializable {
 					asistencia.setCurso(curso);
 					//asistencia.setFechaAlta(fecha);					
 					asistencia.setMateria(materia);
-					asistencia.setMatricula(matricula);
+//					asistencia.setMatricula(matricula);
 					asistencia.setNombreClase("Clase " + idClase);
 					asistencia.setNroClase(idClase);
 					asistencia.setUsuario(usuario);
@@ -657,7 +632,7 @@ public class BeanAsistencia implements Serializable {
 					asistencia.setCurso(curso);
 					//asistencia.setFechaAlta(fecha);
 					asistencia.setMateria(materia);
-					asistencia.setMatricula(matricula);
+//					asistencia.setMatricula(matricula);
 					asistencia.setNombreClase("Clase " + idClase);
 					asistencia.setNroClase(idClase);
 					asistencia.setUsuario(usuario);

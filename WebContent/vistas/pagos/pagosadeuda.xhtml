@@ -82,11 +82,11 @@
 								        </h:outputText>
 								    </p:column>
 								    
-								    <p:column headerText="Fecha Finalización de Curso" >
+								    <!-- <p:column headerText="Fecha Finalización de Curso" >
 								        <h:outputText value="#{matriculaI.matricula.fechaFinCursado}">
 								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
 								        </h:outputText>
-								    </p:column>
+								    </p:column> -->
 								 
 								    <p:column headerText="Monto" >
 								        <h:outputText value="#{matriculaI.monto}" >
@@ -137,11 +137,11 @@
 								        </h:outputText>
 								    </p:column>
 								    
-								    <p:column headerText="Fecha Finalización de Curso">
+								    <!-- <p:column headerText="Fecha Finalización de Curso">
 								        <h:outputText value="#{cuotaI.matricula.fechaFinCursado}">
 								        	<f:convertDateTime pattern="dd/MM/yyyy"/>
 								        </h:outputText>
-								    </p:column>
+								    </p:column> -->
 								 
 								    <p:column headerText="Monto">
 								        <h:outputText value="#{cuotaI.monto}" >
@@ -173,15 +173,15 @@
 					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
 					    		</p:outputLabel>
 					    		
-					    		<p:outputLabel value="Fecha Finalización de Curso: " />
+					    		<!-- <p:outputLabel value="Fecha Finalización de Curso: " />
 					    		<p:outputLabel value="#{beanPago.matriculaImpaga.matricula.fechaFinCursado}" >
 					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
-					    		</p:outputLabel>		    
+					    		</p:outputLabel>	 -->	    
 							    
-					    		<p:outputLabel value="Costo de matricula: $ " />
+					    		<!-- <p:outputLabel value="Costo de matricula: $ " />
 					    		<p:outputLabel value="#{beanPago.matriculaImpaga.matricula.costo}">
 					    			<f:convertNumber pattern="$###,##0.00"/>
-					    		</p:outputLabel>					    		
+					    		</p:outputLabel> -->					    		
 					    		
 								<p:outputLabel value="Fecha de pago: " />
     							<p:calendar value="#{beanPago.fecha}" pattern="dd/MM/yyyy" locale="tr"/>    							
@@ -219,10 +219,10 @@
 					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
 					    		</p:outputLabel>
 					    		
-					    		<p:outputLabel value="Fecha Finalización de Curso: " />
+					    		<!-- <p:outputLabel value="Fecha Finalización de Curso: " />
 					    		<p:outputLabel value="#{beanPago.cuotaImpaga.matricula.fechaFinCursado}" >
 					    			<f:convertDateTime pattern="dd/MM/yyyy"/>
-					    		</p:outputLabel>
+					    		</p:outputLabel> -->
 					    		
 					    		<p:outputLabel value="Detalle: " />
 					    		<p:outputLabel value="#{beanPago.cuotaImpaga.cuota.detalle}" />

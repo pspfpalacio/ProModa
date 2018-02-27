@@ -24,8 +24,7 @@
 	<bean id="BeanMateriasProfesorDAO" class="promoda.dao.impl.DAOMateriasProfesorImpl" />
 	<bean id="BeanMatriculaAlmunoDAO" class="promoda.dao.impl.DAOMatriculaAlumnoImpl" />
 	<bean id="BeanMatriculaImpagaDAO" class="promoda.dao.impl.DAOMatriculaImpagaImpl" />
-	<bean id="BeanMotivoDAO" class="promoda.dao.impl.DAOMotivoImpl" />
-	<bean id="BeanMatriculaDAO" class="promoda.dao.impl.DAOMatriculaImpl" />
+	<bean id="BeanMotivoDAO" class="promoda.dao.impl.DAOMotivoImpl" />	
 	<bean id="BeanPagosCuotaDAO" class="promoda.dao.impl.DAOPagosCuotaImpl" />
 	<bean id="BeanPagosMatriculaDAO" class="promoda.dao.impl.DAOPagosMatriculaImpl" />
 	<bean id="BeanParametroDAO" class="promoda.dao.impl.DAOParametroImpl" />

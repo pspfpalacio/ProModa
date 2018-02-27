@@ -3,7 +3,6 @@ package promoda.dao;
 import java.util.List;
 
 import promoda.model.Alumno;
-import promoda.model.Matricula;
 
 public interface DAOAlumno {
 	
@@ -19,6 +18,6 @@ public interface DAOAlumno {
 	
 	public List<Alumno> getLista(boolean estado);
 	
-	public List<Alumno> getLista(Matricula matricula);
+//	public List<Alumno> getLista(Matricula matricula);
 
 }

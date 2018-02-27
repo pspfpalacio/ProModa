@@ -21,10 +21,8 @@ import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 
 import promoda.dao.DAOCurso;
-import promoda.dao.DAOMatricula;
 import promoda.dao.DAOUsuario;
 import promoda.model.Curso;
-import promoda.model.Matricula;
 import promoda.model.Usuario;
 
 @ManagedBean
@@ -42,13 +40,9 @@ public class BeanCurso implements Serializable {
 	@ManagedProperty(value = "#{BeanUsuarioDAO}")
 	private DAOUsuario usuarioDAO;
 	
-	@ManagedProperty(value = "#{BeanMatriculaDAO}")
-	private DAOMatricula matriculaDAO;
-	
 	private List<Curso> listaCursos;
 	private List<Curso> filteredCursos;
 	private Curso curso;
-	private Matricula matricula;
 	private Usuario usuario;
 	private String headerText;
 	private boolean nuevo;
@@ -59,14 +53,6 @@ public class BeanCurso implements Serializable {
 
 	public void setCursoDAO(DAOCurso cursoDAO) {
 		this.cursoDAO = cursoDAO;
-	}
-
-	public DAOMatricula getMatriculaDAO() {
-		return matriculaDAO;
-	}
-
-	public void setMatriculaDAO(DAOMatricula matriculaDAO) {
-		this.matriculaDAO = matriculaDAO;
 	}
 
 	public DAOUsuario getUsuarioDAO() {
@@ -99,14 +85,6 @@ public class BeanCurso implements Serializable {
 
 	public void setCurso(Curso curso) {
 		this.curso = curso;
-	}
-
-	public Matricula getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 
 	public Usuario getUsuario() {
@@ -160,18 +138,18 @@ public class BeanCurso implements Serializable {
 	
 	public void baja(Curso cur) {
 		FacesMessage msg = null;
-		Matricula matr = new Matricula();
+//		Matricula matr = new Matricula();
 		cur.setEnabled(false);
 		cur.setFechaBaja(new Date());
 		cur.setUsuario2(usuario);
 		int bajaMatricula = 1;
-		if (cur.getMatricula() != null) {
-			matr = cur.getMatricula();
-			matr.setEnabled(false);
-			matr.setFechaBaja(new Date());
-			matr.setUsuario2(usuario);
-			bajaMatricula = matriculaDAO.update(matr);
-		}
+//		if (cur.getMatricula() != null) {
+//			matr = cur.getMatricula();
+//			matr.setEnabled(false);
+//			matr.setFechaBaja(new Date());
+//			matr.setUsuario2(usuario);
+//			bajaMatricula = matriculaDAO.update(matr);
+//		}
 		int bajaCurso = cursoDAO.update(cur); 
 		if (bajaCurso != 0 && bajaMatricula != 0) {
 			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "BAJA DE CURSO EXITOSA!", null);
@@ -184,18 +162,18 @@ public class BeanCurso implements Serializable {
 	
 	public void alta(Curso cur) {
 		FacesMessage msg = null;
-		Matricula matri = new Matricula();
+//		Matricula matri = new Matricula();
 		cur.setEnabled(true);
 		cur.setFechaAlta(new Date());
 		cur.setUsuario1(usuario);
 		int altaMatricula = 1;
-		if (cur.getMatricula() != null) {
-			matri = cur.getMatricula();
-			matri.setEnabled(true);
-			matri.setFechaAlta(new Date());
-			matri.setUsuario1(usuario);
-			altaMatricula = matriculaDAO.update(matri);
-		}		
+//		if (cur.getMatricula() != null) {
+//			matri = cur.getMatricula();
+//			matri.setEnabled(true);
+//			matri.setFechaAlta(new Date());
+//			matri.setUsuario1(usuario);
+//			altaMatricula = matriculaDAO.update(matri);
+//		}		
 		int altaCurso = cursoDAO.update(cur); 
 		if (altaCurso != 0 && altaMatricula != 0) {
 			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ALTA DE CURSO EXITOSA!", null);

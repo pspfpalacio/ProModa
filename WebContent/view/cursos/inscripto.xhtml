@@ -40,12 +40,12 @@
 						<h:outputText value="#{curso.nombre}" />
 					</p:column>
 					
-					<p:column headerText="Fecha Fin de Cursado" filterBy="#{curso.matricula.fechaFinCursado}"
+					<!-- <p:column headerText="Fecha Fin de Cursado" filterBy="#{curso.matricula.fechaFinCursado}"
 					filterStyle="display:none;">
 						<h:outputText value="#{curso.matricula.fechaFinCursado}" >
 							<f:convertDateTime pattern="dd/MM/yyyy"/>
 						</h:outputText>
-					</p:column>
+					</p:column> -->
 					
 					<p:column headerText="Ver Matricula" style="text-align: center; width:120px;" exportable="false">
 						<p:commandButton icon="ui-icon-comment" title="Ver Matricula" update=":formulario:outputPanel"

@@ -14,7 +14,6 @@ import promoda.model.Alumno;
 import promoda.model.Cuota;
 import promoda.model.CuotaImpaga;
 import promoda.model.Curso;
-import promoda.model.Matricula;
 
 public class DAOCuotaImpagaImpl implements DAOCuotaImpaga, Serializable {
 
@@ -55,7 +54,7 @@ public class DAOCuotaImpagaImpl implements DAOCuotaImpaga, Serializable {
 			inicializar();
 			Query locQuery = em.createQuery("UPDATE CuotaImpaga c SET c.alumno = :pAlumno, c.cuota = :pCuota, "
 					+ "c.curso = :pCurso, c.detalle = :pDetalle, c.fechaAlta = :pFechaAlta, "
-					+ "c.fechaVencimiento = :pFechaVencimiento, c.matricula = :pMatricula, c.matriculaAlumno = :pMatriculaAlumno, "
+					+ "c.fechaVencimiento = :pFechaVencimiento, c.matriculaAlumno = :pMatriculaAlumno, "
 					+ "c.monto = :pMonto, c.segundoVencimiento = :pSegundoVencimiento, c.usuario = :pUsuario "
 					+ "WHERE c.id = :pId", CuotaImpaga.class);
 			locQuery.setParameter("pAlumno", cuotaImpaga.getAlumno());
@@ -64,7 +63,6 @@ public class DAOCuotaImpagaImpl implements DAOCuotaImpaga, Serializable {
 			locQuery.setParameter("pDetalle", cuotaImpaga.getDetalle());
 			locQuery.setParameter("pFechaAlta", cuotaImpaga.getFechaAlta());
 			locQuery.setParameter("pFechaVencimiento", cuotaImpaga.getFechaVencimiento());
-			locQuery.setParameter("pMatricula", cuotaImpaga.getMatricula());
 			locQuery.setParameter("pMatriculaAlumno", cuotaImpaga.getMatriculaAlumno());
 			locQuery.setParameter("pMonto", cuotaImpaga.getMonto());
 			locQuery.setParameter("pSegundoVencimiento", cuotaImpaga.getSegundoVencimiento());
@@ -140,13 +138,13 @@ public class DAOCuotaImpagaImpl implements DAOCuotaImpaga, Serializable {
 		return lista;
 	}
 
-	public List<CuotaImpaga> getLista(Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM CuotaImpaga c WHERE c.matricula = :pMatricula", CuotaImpaga.class);
-		locQuery.setParameter("pMatricula", matricula);
-		List<CuotaImpaga> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<CuotaImpaga> getLista(Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM CuotaImpaga c WHERE c.matricula = :pMatricula", CuotaImpaga.class);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<CuotaImpaga> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
 	public List<CuotaImpaga> getLista(Curso curso) {
 		inicializar();
@@ -156,23 +154,23 @@ public class DAOCuotaImpagaImpl implements DAOCuotaImpaga, Serializable {
 		return lista;
 	}
 
-	public List<CuotaImpaga> getLista(Alumno alumno, Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM CuotaImpaga c WHERE c.alumno = :pAlumno AND c.matricula = :pMatricula", CuotaImpaga.class);
-		locQuery.setParameter("pAlumno", alumno);
-		locQuery.setParameter("pMatricula", matricula);
-		List<CuotaImpaga> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<CuotaImpaga> getLista(Alumno alumno, Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM CuotaImpaga c WHERE c.alumno = :pAlumno AND c.matricula = :pMatricula", CuotaImpaga.class);
+//		locQuery.setParameter("pAlumno", alumno);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<CuotaImpaga> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
-	public List<CuotaImpaga> getLista(Curso curso, Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM CuotaImpaga c WHERE c.curso = :pCurso AND c.matricula = :pMatricula", CuotaImpaga.class);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		List<CuotaImpaga> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<CuotaImpaga> getLista(Curso curso, Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM CuotaImpaga c WHERE c.curso = :pCurso AND c.matricula = :pMatricula", CuotaImpaga.class);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<CuotaImpaga> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
 	public List<CuotaImpaga> getLista(Alumno alumno, Curso curso) {
 		inicializar();
@@ -183,16 +181,16 @@ public class DAOCuotaImpagaImpl implements DAOCuotaImpaga, Serializable {
 		return lista;
 	}
 
-	public List<CuotaImpaga> getLista(Alumno alumno, Curso curso,
-			Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM CuotaImpaga c WHERE  c.alumno = :pAlumno AND c.curso = :pCurso "
-				+ "AND c.matricula = :pMatricula", CuotaImpaga.class);
-		locQuery.setParameter("pAlumno", alumno);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		List<CuotaImpaga> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<CuotaImpaga> getLista(Alumno alumno, Curso curso,
+//			Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT c FROM CuotaImpaga c WHERE  c.alumno = :pAlumno AND c.curso = :pCurso "
+//				+ "AND c.matricula = :pMatricula", CuotaImpaga.class);
+//		locQuery.setParameter("pAlumno", alumno);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		List<CuotaImpaga> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
 }

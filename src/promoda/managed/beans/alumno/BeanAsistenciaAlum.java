@@ -16,13 +16,11 @@ import promoda.dao.DAOAlumno;
 import promoda.dao.DAOAsistencia;
 import promoda.dao.DAOCurso;
 import promoda.dao.DAOMateria;
-import promoda.dao.DAOMatricula;
 import promoda.dao.DAOMatriculaAlumno;
 import promoda.model.Alumno;
 import promoda.model.Asistencia;
 import promoda.model.Curso;
 import promoda.model.Materia;
-import promoda.model.Matricula;
 import promoda.model.Usuario;
 
 @ManagedBean
@@ -36,9 +34,6 @@ public class BeanAsistenciaAlum implements Serializable {
 	
 	@ManagedProperty(value = "#{BeanCursoDAO}")
 	private DAOCurso cursoDAO;
-	
-	@ManagedProperty(value = "#{BeanMatriculaDAO}")
-	private DAOMatricula matriculaDAO;
 	
 	@ManagedProperty(value = "#{BeanMatriculaAlmunoDAO}")
     private DAOMatriculaAlumno matriculaAlumnoDAO;
@@ -69,14 +64,6 @@ public class BeanAsistenciaAlum implements Serializable {
 
 	public void setCursoDAO(DAOCurso cursoDAO) {
 		this.cursoDAO = cursoDAO;
-	}
-
-	public DAOMatricula getMatriculaDAO() {
-		return matriculaDAO;
-	}
-
-	public void setMatriculaDAO(DAOMatricula matriculaDAO) {
-		this.matriculaDAO = matriculaDAO;
 	}
 
 	public DAOMatriculaAlumno getMatriculaAlumnoDAO() {
@@ -230,7 +217,7 @@ public class BeanAsistenciaAlum implements Serializable {
 		listaClases = new ArrayList<Clase>();
 		listaAsistencias = new ArrayList<Asistencia>();
 		Materia materia = new Materia();
-		Matricula matricula = new Matricula();		
+//		Matricula matricula = new Matricula();		
 		Curso curso = new Curso();		
 		porcentaje = 0;
 		if (idMateria != 0) {
@@ -243,10 +230,10 @@ public class BeanAsistenciaAlum implements Serializable {
 				clase.setNombre("Clase " + i);
 				listaClases.add(clase);
 			}
-			int idMatri = curso.getMatricula().getId();
-			matricula = matriculaDAO.get(idMatri);
+//			int idMatri = curso.getMatricula().getId();
+//			matricula = matriculaDAO.get(idMatri);
 			
-			listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia, alumno);			
+//			listaAsistencias = asistenciaDAO.getLista(curso, matricula, materia, alumno);			
 			if (listaAsistencias.isEmpty()) {
 				porcentaje = 0;
 				List<Asistencia> listAux = new ArrayList<Asistencia>();
@@ -262,7 +249,7 @@ public class BeanAsistenciaAlum implements Serializable {
 						asist.setAlumno(alumno);
 						asist.setCurso(curso);
 						asist.setMateria(materia);
-						asist.setMatricula(matricula);
+//						asist.setMatricula(matricula);
 						asist.setNombreClase("Clase " + clas.getId());
 						asist.setNroClase(clas.getId());
 						asist.setPresente(" - ");
@@ -297,7 +284,7 @@ public class BeanAsistenciaAlum implements Serializable {
 						asist.setAlumno(alumno);
 						asist.setCurso(curso);
 						asist.setMateria(materia);
-						asist.setMatricula(matricula);
+//						asist.setMatricula(matricula);
 						asist.setNombreClase("Clase " + clas.getId());
 						asist.setNroClase(clas.getId());
 						asist.setPresente(" - ");

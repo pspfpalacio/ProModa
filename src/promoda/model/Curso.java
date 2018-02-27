@@ -60,11 +60,6 @@ public class Curso implements Serializable {
 	@OneToMany(mappedBy="curso")
 	private List<Cuota> cuotas;
 
-	//bi-directional many-to-one association to Matricula
-	@ManyToOne
-	@JoinColumn(name="matricula_vigente")
-	private Matricula matricula;
-
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="id_usuario_alta")
@@ -83,10 +78,6 @@ public class Curso implements Serializable {
 	//bi-directional many-to-one association to Materia
 	@OneToMany(mappedBy="curso")
 	private List<Materia> materias;
-
-	//bi-directional many-to-one association to Matricula
-	@OneToMany(mappedBy="curso")
-	private List<Matricula> matriculas;
 	
 	//bi-directional many-to-one association to CuotaImpaga
 	@OneToMany(mappedBy="curso")
@@ -221,14 +212,6 @@ public class Curso implements Serializable {
 		return cuota;
 	}
 
-	public Matricula getMatricula() {
-		return this.matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
-	}
-
 	public Usuario getUsuario1() {
 		return this.usuario1;
 	}
@@ -273,28 +256,6 @@ public class Curso implements Serializable {
 		materia.setCurso(null);
 
 		return materia;
-	}
-
-	public List<Matricula> getMatriculas() {
-		return this.matriculas;
-	}
-
-	public void setMatriculas(List<Matricula> matriculas) {
-		this.matriculas = matriculas;
-	}
-
-	public Matricula addMatricula(Matricula matricula) {
-		getMatriculas().add(matricula);
-		matricula.setCurso(this);
-
-		return matricula;
-	}
-
-	public Matricula removeMatricula(Matricula matricula) {
-		getMatriculas().remove(matricula);
-		matricula.setCurso(null);
-
-		return matricula;
 	}
 	
 	public List<CuotaImpaga> getCuotaImpagas() {

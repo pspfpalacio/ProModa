@@ -12,7 +12,6 @@ import javax.persistence.Query;
 import promoda.dao.DAOMatriculaImpaga;
 import promoda.model.Alumno;
 import promoda.model.Curso;
-import promoda.model.Matricula;
 import promoda.model.MatriculaAlumno;
 import promoda.model.MatriculaImpaga;
 
@@ -54,12 +53,11 @@ public class DAOMatriculaImpagaImpl implements Serializable, DAOMatriculaImpaga 
 		try {
 			inicializar();
 			Query locQuery = em.createQuery("UPDATE MatriculaImpaga m SET m.alumno = :pAlumno, m.curso = :pCurso, m.fechaAlta = :pFechaAlta, "
-					+ "m.matricula = :pMatricula, m.matriculaAlumno = :pMatriculaAlumno, m.monto = :pMonto, m.usuario = :pUsuario "
+					+ "m.matriculaAlumno = :pMatriculaAlumno, m.monto = :pMonto, m.usuario = :pUsuario "
 					+ "WHERE m.id = :pId", MatriculaImpaga.class);
 			locQuery.setParameter("pAlumno", matriculaImpaga.getAlumno());
 			locQuery.setParameter("pCurso", matriculaImpaga.getCurso());
 			locQuery.setParameter("pFechaAlta", matriculaImpaga.getFechaAlta());
-			locQuery.setParameter("pMatricula", matriculaImpaga.getMatricula());
 			locQuery.setParameter("pMatriculaAlumno", matriculaImpaga.getMatriculaAlumno());
 			locQuery.setParameter("pMonto", matriculaImpaga.getMonto());
 			locQuery.setParameter("pUsuario", matriculaImpaga.getUsuario());
@@ -117,21 +115,21 @@ public class DAOMatriculaImpagaImpl implements Serializable, DAOMatriculaImpaga 
 		return matriculaImpaga;
 	}
 
-	public MatriculaImpaga get(Alumno alumno, Curso curso, Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT m FROM MatriculaImpaga m WHERE m.alumno = :pAlumno AND m.curso = :pCurso "
-				+ "AND m.matricula = :pMatricula", MatriculaImpaga.class);
-		locQuery.setParameter("pAlumno", alumno);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		MatriculaImpaga matriculaImpaga = new MatriculaImpaga();
-		try {
-			matriculaImpaga = (MatriculaImpaga) locQuery.getSingleResult();
-		} catch(Exception e) {
-			matriculaImpaga = new MatriculaImpaga();
-		}
-		return matriculaImpaga;
-	}
+//	public MatriculaImpaga get(Alumno alumno, Curso curso, Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT m FROM MatriculaImpaga m WHERE m.alumno = :pAlumno AND m.curso = :pCurso "
+//				+ "AND m.matricula = :pMatricula", MatriculaImpaga.class);
+//		locQuery.setParameter("pAlumno", alumno);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		MatriculaImpaga matriculaImpaga = new MatriculaImpaga();
+//		try {
+//			matriculaImpaga = (MatriculaImpaga) locQuery.getSingleResult();
+//		} catch(Exception e) {
+//			matriculaImpaga = new MatriculaImpaga();
+//		}
+//		return matriculaImpaga;
+//	}
 
 	public List<MatriculaImpaga> getLista() {
 		inicializar();
@@ -157,13 +155,13 @@ public class DAOMatriculaImpagaImpl implements Serializable, DAOMatriculaImpaga 
 		return lista;
 	}
 
-	public List<MatriculaImpaga> getLista(Curso curso, Matricula matricula) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT m FROM MatriculaImpaga m WHERE m.curso = :pCurso AND m.matricula = :pMatricula", MatriculaImpaga.class);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pCurso", curso);
-		List<MatriculaImpaga> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<MatriculaImpaga> getLista(Curso curso, Matricula matricula) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT m FROM MatriculaImpaga m WHERE m.curso = :pCurso AND m.matricula = :pMatricula", MatriculaImpaga.class);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pCurso", curso);
+//		List<MatriculaImpaga> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
 }

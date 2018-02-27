@@ -897,6 +897,11 @@
    <to-view-id>/vistas/pagos/pagosonline.xhtml</to-view-id>
    <redirect/>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>editarInscripcion</from-outcome>
+   <to-view-id>/vistas/inscripciones/editarInscripcion.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
  </navigation-rule>
  <navigation-rule>
   <from-view-id>/vistas/asistencias/asistencias.xhtml</from-view-id>
@@ -2260,6 +2265,109 @@
   <navigation-case>
    <from-outcome>pagosonline</from-outcome>
    <to-view-id>/vistas/pagos/pagosonline.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/vistas/inscripciones/editarInscripcion.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>alumnos</from-outcome>
+   <to-view-id>/vistas/alumnos/alumnos.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>cursos</from-outcome>
+   <to-view-id>/vistas/cursos/cursos.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>index</from-outcome>
+   <to-view-id>/index.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>materias</from-outcome>
+   <to-view-id>/vistas/materias/materias.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>profesores</from-outcome>
+   <to-view-id>/vistas/profesores/profesores.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>usuarios</from-outcome>
+   <to-view-id>/vistas/usuarios/usuarios.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>inscripcion</from-outcome>
+   <to-view-id>/vistas/inscripciones/inscripcion.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>inscripciones</from-outcome>
+   <to-view-id>/vistas/inscripciones/inscripciones.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>asistencias</from-outcome>
+   <to-view-id>/vistas/asistencias/asistencias.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>pagos</from-outcome>
+   <to-view-id>/vistas/pagos/pagos.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>listadopagos</from-outcome>
+   <to-view-id>/vistas/pagos/listadopagos.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>caja</from-outcome>
+   <to-view-id>/vistas/caja/caja.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>asistencia</from-outcome>
+   <to-view-id>/vistas/asistencias/asistencia.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>pagosadeuda</from-outcome>
+   <to-view-id>/vistas/pagos/pagosadeuda.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>recursos</from-outcome>
+   <to-view-id>/vistas/recursos/recursos.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>recurso</from-outcome>
+   <to-view-id>/vistas/recursos/recurso.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>inscriptos</from-outcome>
+   <to-view-id>/vistas/inscripciones/inscriptos.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>pagosporvencer</from-outcome>
+   <to-view-id>/vistas/pagos/pagosporvencer.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>pagosonline</from-outcome>
+   <to-view-id>/vistas/pagos/pagosonline.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>editarInscripcion</from-outcome>
+   <to-view-id>/vistas/inscripciones/editarInscripcion.xhtml</to-view-id>
    <redirect/>
   </navigation-case>
  </navigation-rule>

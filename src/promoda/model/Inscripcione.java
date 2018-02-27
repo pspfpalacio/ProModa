@@ -99,11 +99,6 @@ public class Inscripcione implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_localidad")
 	private Localidade localidade;
-	
-	//bi-directional many-to-one association to Matricula
-	@ManyToOne
-	@JoinColumn(name="id_matricula")
-	private Matricula matricula;
 
 	//bi-directional many-to-one association to Provincia
 	@ManyToOne
@@ -124,6 +119,10 @@ public class Inscripcione implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_usuario_mod")
 	private Usuario usuario3;
+	
+	//bi-directional many-to-one association to MatriculaAlumno
+	@OneToMany(mappedBy="inscripcione")
+	private List<MatriculaAlumno> matriculaAlumnos;
 
 	//bi-directional many-to-one association to PlanPago
 	@OneToMany(mappedBy="inscripcione")
@@ -349,14 +348,6 @@ public class Inscripcione implements Serializable {
 	public void setLocalidade(Localidade localidade) {
 		this.localidade = localidade;
 	}
-	
-	public Matricula getMatricula() {
-		return this.matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
-	}
 
 	public Provincia getProvincia() {
 		return this.provincia;
@@ -388,6 +379,28 @@ public class Inscripcione implements Serializable {
 
 	public void setUsuario3(Usuario usuario3) {
 		this.usuario3 = usuario3;
+	}
+	
+	public List<MatriculaAlumno> getMatriculaAlumnos() {
+		return this.matriculaAlumnos;
+	}
+
+	public void setMatriculaAlumnos(List<MatriculaAlumno> matriculaAlumnos) {
+		this.matriculaAlumnos = matriculaAlumnos;
+	}
+
+	public MatriculaAlumno addMatriculaAlumno(MatriculaAlumno matriculaAlumno) {
+		getMatriculaAlumnos().add(matriculaAlumno);
+		matriculaAlumno.setInscripcione(this);
+
+		return matriculaAlumno;
+	}
+
+	public MatriculaAlumno removeMatriculaAlumno(MatriculaAlumno matriculaAlumno) {
+		getMatriculaAlumnos().remove(matriculaAlumno);
+		matriculaAlumno.setInscripcione(null);
+
+		return matriculaAlumno;
 	}
 
 	public List<PlanPago> getPlanPagos() {

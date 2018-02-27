@@ -15,7 +15,6 @@ import promoda.model.Alumno;
 import promoda.model.Asistencia;
 import promoda.model.Curso;
 import promoda.model.Materia;
-import promoda.model.Matricula;
 
 public class DAOAsistenciaImpl implements Serializable, DAOAsistencia {
 
@@ -54,14 +53,13 @@ public class DAOAsistenciaImpl implements Serializable, DAOAsistencia {
 		try {
 			inicializar();
 			Query locQuery = em.createQuery("UPDATE Asistencia a SET a.alumno = :pAlumno, a.curso = :pCurso, a.fechaAlta = :pFechaAlta, "
-					+ "a.materia = :pMateria, a.matricula = :pMatricula, a.nombreClase = :pNombreClase, a.nroClase = :pNroClase, "
+					+ "a.materia = :pMateria, a.nombreClase = :pNombreClase, a.nroClase = :pNroClase, "
 					+ "a.presente = :pPresente, a.usuario = :pUsuario "
 					+ "WHERE a.id = :pId", Asistencia.class);
 			locQuery.setParameter("pAlumno", asistencia.getAlumno());
 			locQuery.setParameter("pCurso", asistencia.getCurso());
 			locQuery.setParameter("pFechaAlta", asistencia.getFechaAlta());
 			locQuery.setParameter("pMateria", asistencia.getMateria());
-			locQuery.setParameter("pMatricula", asistencia.getMatricula());
 			locQuery.setParameter("pNombreClase", asistencia.getNombreClase());
 			locQuery.setParameter("pNroClase", asistencia.getNroClase());
 			locQuery.setParameter("pPresente", asistencia.getPresente());
@@ -90,46 +88,46 @@ public class DAOAsistenciaImpl implements Serializable, DAOAsistencia {
 		return asistencia;
 	}
 	
-	public Asistencia get(Curso curso, Matricula matricula,
-			Materia materia, Alumno alumno, int nroClase) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
-				+ "AND a.materia = :pMateria AND a.alumno = :pAlumno AND a.nroClase = :pNroClase ORDER BY a.alumno", Asistencia.class);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pMateria", materia);
-		locQuery.setParameter("pAlumno", alumno);
-		locQuery.setParameter("pNroClase", nroClase);
-		Asistencia asistencia = new Asistencia();
-		try {
-			asistencia = (Asistencia) locQuery.getSingleResult();
-		} catch (Exception e) {
-			asistencia = new Asistencia();
-		}
-		return asistencia;
-	}
+//	public Asistencia get(Curso curso, Matricula matricula,
+//			Materia materia, Alumno alumno, int nroClase) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
+//				+ "AND a.materia = :pMateria AND a.alumno = :pAlumno AND a.nroClase = :pNroClase ORDER BY a.alumno", Asistencia.class);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pMateria", materia);
+//		locQuery.setParameter("pAlumno", alumno);
+//		locQuery.setParameter("pNroClase", nroClase);
+//		Asistencia asistencia = new Asistencia();
+//		try {
+//			asistencia = (Asistencia) locQuery.getSingleResult();
+//		} catch (Exception e) {
+//			asistencia = new Asistencia();
+//		}
+//		return asistencia;
+//	}
 	
-	public Asistencia get(Curso curso, Matricula matricula,
-			Materia materia, Alumno alumno, int nroClase, Date fechaInicio, Date fechaFin) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
-				+ "AND a.materia = :pMateria AND a.alumno = :pAlumno AND a.nroClase = :pNroClase AND a.fechaAlta BETWEEN :pInicio AND :pFin "
-				+ "ORDER BY a.alumno", Asistencia.class);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pMateria", materia);
-		locQuery.setParameter("pAlumno", alumno);
-		locQuery.setParameter("pNroClase", nroClase);
-		locQuery.setParameter("pInicio", fechaInicio);
-		locQuery.setParameter("pFin", fechaFin);
-		Asistencia asistencia = new Asistencia();
-		try {
-			asistencia = (Asistencia) locQuery.getSingleResult();
-		} catch (Exception e) {
-			asistencia = new Asistencia();
-		}
-		return asistencia;
-	}
+//	public Asistencia get(Curso curso, Matricula matricula,
+//			Materia materia, Alumno alumno, int nroClase, Date fechaInicio, Date fechaFin) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
+//				+ "AND a.materia = :pMateria AND a.alumno = :pAlumno AND a.nroClase = :pNroClase AND a.fechaAlta BETWEEN :pInicio AND :pFin "
+//				+ "ORDER BY a.alumno", Asistencia.class);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pMateria", materia);
+//		locQuery.setParameter("pAlumno", alumno);
+//		locQuery.setParameter("pNroClase", nroClase);
+//		locQuery.setParameter("pInicio", fechaInicio);
+//		locQuery.setParameter("pFin", fechaFin);
+//		Asistencia asistencia = new Asistencia();
+//		try {
+//			asistencia = (Asistencia) locQuery.getSingleResult();
+//		} catch (Exception e) {
+//			asistencia = new Asistencia();
+//		}
+//		return asistencia;
+//	}
 
 	public List<Asistencia> getLista() {
 		inicializar();
@@ -164,72 +162,72 @@ public class DAOAsistenciaImpl implements Serializable, DAOAsistencia {
 		return lista;
 	}
 	
-	public List<Asistencia> getLista(Curso curso, Matricula matricula,
-			Materia materia) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
-				+ "AND a.materia = :pMateria ORDER BY a.alumno.nombreCompleto", Asistencia.class);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pMateria", materia);
-		List<Asistencia> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Asistencia> getLista(Curso curso, Matricula matricula,
+//			Materia materia) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
+//				+ "AND a.materia = :pMateria ORDER BY a.alumno.nombreCompleto", Asistencia.class);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pMateria", materia);
+//		List<Asistencia> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
-	public List<Asistencia> getLista(Curso curso, Matricula matricula,
-			Materia materia, int nroClase) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
-				+ "AND a.materia = :pMateria AND a.nroClase = :pNroClase ORDER BY a.alumno", Asistencia.class);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pMateria", materia);
-		locQuery.setParameter("pNroClase", nroClase);
-		List<Asistencia> lista = locQuery.getResultList();
-		return lista;
-	}	
+//	public List<Asistencia> getLista(Curso curso, Matricula matricula,
+//			Materia materia, int nroClase) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
+//				+ "AND a.materia = :pMateria AND a.nroClase = :pNroClase ORDER BY a.alumno", Asistencia.class);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pMateria", materia);
+//		locQuery.setParameter("pNroClase", nroClase);
+//		List<Asistencia> lista = locQuery.getResultList();
+//		return lista;
+//	}	
 	
-	public List<Asistencia> getLista(Curso curso, Matricula matricula,
-			Materia materia, Date fechaInicio, Date fechaFin) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
-				+ "AND a.materia = :pMateria AND a.fechaAlta BETWEEN :pInicio AND :pFin ORDER BY a.alumno.nombreCompleto", Asistencia.class);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pMateria", materia);
-		locQuery.setParameter("pInicio", fechaInicio);
-		locQuery.setParameter("pFin", fechaFin);
-		List<Asistencia> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Asistencia> getLista(Curso curso, Matricula matricula,
+//			Materia materia, Date fechaInicio, Date fechaFin) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
+//				+ "AND a.materia = :pMateria AND a.fechaAlta BETWEEN :pInicio AND :pFin ORDER BY a.alumno.nombreCompleto", Asistencia.class);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pMateria", materia);
+//		locQuery.setParameter("pInicio", fechaInicio);
+//		locQuery.setParameter("pFin", fechaFin);
+//		List<Asistencia> lista = locQuery.getResultList();
+//		return lista;
+//	}
 	
-	public List<Asistencia> getLista(Curso curso, Matricula matricula,
-			Materia materia, int nroClase, Date fechaInicio, Date fechaFin) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
-				+ "AND a.materia = :pMateria AND a.nroClase = :pNroClase AND a.fechaAlta BETWEEN :pInicio AND :pFin "
-				+ "ORDER BY a.alumno.nombreCompleto", Asistencia.class);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pMateria", materia);
-		locQuery.setParameter("pNroClase", nroClase);
-		locQuery.setParameter("pInicio", fechaInicio);
-		locQuery.setParameter("pFin", fechaFin);
-		List<Asistencia> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Asistencia> getLista(Curso curso, Matricula matricula,
+//			Materia materia, int nroClase, Date fechaInicio, Date fechaFin) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
+//				+ "AND a.materia = :pMateria AND a.nroClase = :pNroClase AND a.fechaAlta BETWEEN :pInicio AND :pFin "
+//				+ "ORDER BY a.alumno.nombreCompleto", Asistencia.class);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pMateria", materia);
+//		locQuery.setParameter("pNroClase", nroClase);
+//		locQuery.setParameter("pInicio", fechaInicio);
+//		locQuery.setParameter("pFin", fechaFin);
+//		List<Asistencia> lista = locQuery.getResultList();
+//		return lista;
+//	}
 	
-	public List<Asistencia> getLista(Curso curso, Matricula matricula,
-			Materia materia, Alumno alumno) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
-				+ "AND a.materia = :pMateria AND a.alumno = :pAlumno", Asistencia.class);
-		locQuery.setParameter("pCurso", curso);
-		locQuery.setParameter("pMatricula", matricula);
-		locQuery.setParameter("pMateria", materia);
-		locQuery.setParameter("pAlumno", alumno);
-		List<Asistencia> lista = locQuery.getResultList();
-		return lista;
-	}
+//	public List<Asistencia> getLista(Curso curso, Matricula matricula,
+//			Materia materia, Alumno alumno) {
+//		inicializar();
+//		Query locQuery = em.createQuery("SELECT a FROM Asistencia a WHERE a.curso = :pCurso AND a.matricula = :pMatricula "
+//				+ "AND a.materia = :pMateria AND a.alumno = :pAlumno", Asistencia.class);
+//		locQuery.setParameter("pCurso", curso);
+//		locQuery.setParameter("pMatricula", matricula);
+//		locQuery.setParameter("pMateria", materia);
+//		locQuery.setParameter("pAlumno", alumno);
+//		List<Asistencia> lista = locQuery.getResultList();
+//		return lista;
+//	}
 
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import promoda.model.Alumno;
 import promoda.model.Curso;
-import promoda.model.Matricula;
+import promoda.model.Inscripcione;
 import promoda.model.MatriculaAlumno;
 
 public interface DAOMatriculaAlumno {
@@ -15,7 +15,9 @@ public interface DAOMatriculaAlumno {
 	
 	public MatriculaAlumno get(int id);
 	
-	public MatriculaAlumno get(Alumno alumno, Curso curso, Matricula matricula);
+	public MatriculaAlumno get(Inscripcione inscripcione);
+	
+	public MatriculaAlumno get(Alumno alumno, Curso curso, boolean finalizado);
 	
 	public List<MatriculaAlumno> getLista();
 	
@@ -25,7 +27,7 @@ public interface DAOMatriculaAlumno {
 	
 	public List<Curso> getListaCurso(Alumno alumno);
 	
-	public List<MatriculaAlumno> getLista(Curso curso, Matricula matricula, boolean pago);
+//	public List<MatriculaAlumno> getLista(Curso curso, Matricula matricula, boolean pago);
 	
 	public List<MatriculaAlumno> getLista(boolean pago);
 

@@ -44,11 +44,6 @@ public class PlanPago implements Serializable {
 	@JoinColumn(name="id_inscripcion")
 	private Inscripcione inscripcione;
 
-	//bi-directional many-to-one association to Matricula
-	@ManyToOne
-	@JoinColumn(name="id_matricula")
-	private Matricula matricula;
-
 	public PlanPago() {
 	}
 
@@ -114,14 +109,6 @@ public class PlanPago implements Serializable {
 
 	public void setInscripcione(Inscripcione inscripcione) {
 		this.inscripcione = inscripcione;
-	}
-
-	public Matricula getMatricula() {
-		return this.matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 
 }

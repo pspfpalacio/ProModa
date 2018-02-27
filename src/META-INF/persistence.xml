@@ -15,7 +15,6 @@
 		<class>promoda.model.Localidade</class>
 		<class>promoda.model.Materia</class>
 		<class>promoda.model.MateriasProfesor</class>
-		<class>promoda.model.Matricula</class>
 		<class>promoda.model.MatriculaAlumno</class>
 		<class>promoda.model.MatriculaImpaga</class>
 		<class>promoda.model.Motivo</class>
@@ -38,9 +37,9 @@
 		<properties>			
 			<property name="eclipselink.cache.shared.default" value="false" />	
 			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="37zoBUsupo" />
+			<property name="javax.persistence.jdbc.password" value="root" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/promodadb" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/promodadb_desa" />
 			<property name="javax.persistence.logging.level" value="ALL" />
 		</properties>
 	</persistence-unit>

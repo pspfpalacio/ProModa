@@ -5,7 +5,6 @@ import java.util.List;
 import promoda.model.Alumno;
 import promoda.model.Curso;
 import promoda.model.Inscripcione;
-import promoda.model.Matricula;
 
 public interface DAOInscripcion {
 	
@@ -35,9 +34,9 @@ public interface DAOInscripcion {
 	
 	public List<Inscripcione> getList(boolean valida, boolean estado);
 	
-	public List<Inscripcione> getLista(boolean estado, Curso curso, Matricula matricula);
-	
-	public List<Inscripcione> getListaOrderByAlumno(boolean estado, Curso curso, Matricula matricula);
+//	public List<Inscripcione> getLista(boolean estado, Curso curso, Matricula matricula);
+//	
+//	public List<Inscripcione> getListaOrderByAlumno(boolean estado, Curso curso, Matricula matricula);
 	
 	public List<Inscripcione> getListaOrderByFechaId(boolean estado, Curso curso);
 	

@@ -42,23 +42,24 @@
 		<div class="wrapper">
 			<ui:include src="/includes/header.xhtml" />
 			<h:form id="formulario" onkeypress="return event.keyCode != 13">
+				
 				<p:panel id="panel" style="background-image: url(../../images/principal.jpg);min-height:1200px;height:auto;border:none;">
 				<p:growl id="messages" showDetail="false" />
 				<ui:include src="/includes/menubar.xhtml" />
 				<h3 align="center">INSCRIPCIONES</h3>
-		    	<p:panelGrid columns="2" cellpadding="5" style="width:80%;" >
+		    	<p:panelGrid columns="2" cellpadding="5" style="width:100%;" >
 		    		<f:facet name="header">
 		    			<h:outputText value="Filtros" />
 		    		</f:facet>
 		    		<h:outputText value="Curso: " />
-		    		<p:selectOneMenu value="#{beanInscripcion.idCurso}" filter="true" filterMatchMode="contains"
-    				style="width:250px;">
-    					<f:selectItem itemLabel="Seleccione.." itemValue="0"/>
+		    		<p:selectOneMenu value="#{beanInscripcion.idCurso}" filter="true" filterMatchMode="contains">
+    					<f:selectItem itemLabel="Todos..." itemValue="0"/>
     					<f:selectItems value="#{beanInscripcion.listaCursos}" var="curso" itemLabel="#{curso.nombre}"
     					itemValue="#{curso.id}"/>
     				</p:selectOneMenu>
     				<f:facet name="footer">
-						<p:commandButton icon="ui-icon-search" value="Buscar" update="panel" action="#{beanInscripcion.filtroInscripciones()}"/>
+						<p:commandButton icon="ui-icon-search" value="Buscar" 
+							update="contenedorInscripciones" action="#{beanInscripcion.filtroInscripciones()}" ajax="true"/>
 					</f:facet>
 				</p:panelGrid>
 				<p:outputPanel style="float:right;">							
@@ -86,31 +87,14 @@
 					<p:column headerText="Baja Inscr." style="text-align: center; width:70px;" id="act_desact_i" exportable="false">						
 						<p:row rendered="#{inscripcion.enabled}">
 							<h:commandLink id="desactivar_i" title="Baja de inscripción del alumno (sin registro de deuda)." 
-								onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA LA INSCRIPCIÓN (SIN REGISTRO DE DEUDAS)?')"
+								onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA LA INSCRIPCIÓN?')"
 								action="#{beanInscripcion.bajaInscripcion(inscripcion)}">
-							 	<h:graphicImage value="/images/activo.ico" width="20" title="Baja de inscripción del alumno (Sin registro de deuda)." /> 
+							 	<h:graphicImage value="/images/activo.ico" width="20" title="Baja de inscripción del alumno." /> 
 							</h:commandLink>
 						</p:row>						
 						<p:row rendered="#{!inscripcion.enabled}">
 							<h:graphicImage value="/images/desactivo.ico" width="20" title="Ya se registro la baja de la inscripción" />
 						</p:row>
-					</p:column>
-					
-					<p:column headerText="Baja Cur." style="text-align: center; width:70px;" id="act_desact" exportable="false">						
-						<p:row rendered="#{inscripcion.enabled}">
-							<h:commandLink id="desactivar" title="Baja del alumno al curso (registro de deuda)." 
-								onclick="return confirm('ESTA SEGURO QUE DESEA DAR DE BAJA EL ALUMNO DEL CURSO (REGISTRA DEUDAS)?')"
-								action="#{beanInscripcion.bajaCurso(inscripcion)}">
-							 	<h:graphicImage value="/images/activo.ico" width="20" title="Baja del alumno al curso (registro de deuda)." /> 
-							</h:commandLink>
-						</p:row>						
-						<p:row rendered="#{!inscripcion.enabled}">
-							<h:graphicImage value="/images/desactivo.ico" width="20" title="Ya se registró la baja de alumno al curso" />
-						</p:row>
-					</p:column>
-					
-					<p:column headerText="Nro" style="width:30px;">
-						<h:outputText value="#{inscripcion.id}" />
 					</p:column>
 					
 					<p:column headerText="Fecha" style="width:90px;">
@@ -134,11 +118,99 @@
 						action="#{beanInscripcion.verInscripcion(inscripcion)}" update=":formulario:outputPanel"/>
 					</p:column>
 					
-					<p:column headerText="Ver P.P./D.C." style="width:120px;text-align:center;" exportable="false">
-						<p:commandButton icon="ui-icon-newwin" disabled="#{!inscripcion.enabled}" oncomplete="PF('dialogoPlanPago').show()"
-						action="#{beanInscripcion.verPlanPago(inscripcion)}" update=":formulario:outputPlanPago"/>
+					<p:column headerText="Editar" style="width:100px;text-align:center;" exportable="false">
+						<p:commandButton icon="ui-icon-pencil" disabled="#{!inscripcion.enabled}" 
+						action="#{beanInscripcion.goEditInscripcion(inscripcion)}" />
 					</p:column>
-				</p:dataTable>	
+				</p:dataTable>
+				<p:dialog header="Plan de Pago - Dias y Horario de Cursado" widgetVar="dialogoPlanPago"
+					id="dialogoPP" modal="true" responsive="true">
+					<p:outputPanel id="outputPlanPago">
+						<p:growl id="msg" showDetail="false" />
+						<p:panelGrid id="panelPlan" columns="2" style="width:100%;">	
+		    				<p:outputLabel value="Descuento: " />
+		    				<p:column>
+		    					<p:outputLabel value="%" />
+			    				<p:inputText id="descuentoM" value="#{beanInscripcion.descuentoMatricula}" 
+			    				disabled="#{!beanInscripcion.editPPM}" style="width:70px;">
+			    					<p:ajax event="blur" listener="#{beanInscripcion.onBlurDescuentoMatricula()}" update="monto" />
+			    				</p:inputText>
+		    				</p:column>
+		    				
+		    				<p:outputLabel value="Monto Matricula: " />
+			    			<h:inputText id="monto" value="#{beanInscripcion.montoMatricula}" disabled="true" style="width:80px;">
+			    				<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+			    			</h:inputText>	    					
+		    				
+		    				<p:outputLabel value="Cant. Cuotas: " />
+		    				<p:column>
+		    					<p:inputText id="cantidad" mask="9?9" value="#{beanInscripcion.cantCuotas}" 
+		    					disabled="#{!beanInscripcion.editPPC}" style="width:86px;" >
+		    						<p:ajax event="blur" listener="#{beanInscripcion.onBlurDescuentoCurso()}" update="costo_curso, costo_cuota" />
+		    					</p:inputText>
+		    					
+		    					<p:outputLabel value=" Primer Vencimieto: " />
+		    					<p:calendar value="#{beanInscripcion.primerVencimiento}" pattern="dd/MM/yyyy" disabled="#{!beanInscripcion.editPPC}" locale="tr"/>
+		    				</p:column>    				
+		    				
+		    				<p:outputLabel value="Descuento: " />
+		    				<p:column>
+		    					<p:outputLabel value="%" />
+			    				<p:inputText id="descuento" value="#{beanInscripcion.descuentoCurso}" 
+			    				disabled="#{!beanInscripcion.editPPC}" style="width:70px;">
+			    					<p:ajax event="blur" listener="#{beanInscripcion.onBlurDescuentoCurso()}" update="costo_curso, costo_cuota" />
+			    				</p:inputText>
+			    			</p:column>
+		    				
+		    				<p:outputLabel value="Costo Total de Curso: " />
+		    				<h:inputText id="costo_curso" value="#{beanInscripcion.montoCurso}" disabled="true" style="width:80px;">
+			    				<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+			    			</h:inputText>	    			
+		    				
+		    				<p:outputLabel value="Monto de Cuota: " />
+		    				<h:inputText id="costo_cuota" value="#{beanInscripcion.montoCuota}" disabled="true" style="width:80px;">
+			    				<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
+			    			</h:inputText>
+			    			
+			    			<p:outputLabel value="Días preferidos de cursado: " />
+							<p:column>
+								 <p:selectManyCheckbox id="dias" value="#{beanInscripcion.selectedDias}" filter="true" disabled="#{!beanInscripcion.editPDC}">
+									<f:selectItem itemLabel="LUNES" itemValue="LUNES"/>
+									<f:selectItem itemLabel="MARTES" itemValue="MARTES"/>
+									<f:selectItem itemLabel="MIERCOLES" itemValue="MIERCOLES"/>
+									<f:selectItem itemLabel="JUEVES" itemValue="JUEVES"/>
+									<f:selectItem itemLabel="VIERNES" itemValue="VIERNES"/>
+									<f:selectItem itemLabel="SABADOS" itemValue="SABADOS"/>
+									<f:selectItem itemLabel="DOMINGOS" itemValue="DOMINGOS"/>
+								 </p:selectManyCheckbox>						
+							</p:column>
+							<p:outputLabel value="Horario preferido de cursado: " />
+		    				<p:column>						
+		    					<p:outputLabel value="Entre: " />
+		    					<p:calendar disabled="#{!beanInscripcion.editPDC}" value="#{beanInscripcion.horaCursado1}" pattern="HH:mm" timeOnly="true" style="width:40px;" locale="tr"/>
+		    					<p:outputLabel value=" y " />
+		    					<p:calendar disabled="#{!beanInscripcion.editPDC}" value="#{beanInscripcion.horaCursado2}" pattern="HH:mm" timeOnly="true" style="width:40px;" locale="tr"/>
+		    				</p:column>
+	    				</p:panelGrid>
+		    			<p:panelGrid id="panelPlanDos" columns="1" style="width:100%;">
+		    				<f:facet name="header">
+		    					<!-- <p:commandButton value="Editar Plan Pago" action="#{beanInscripcion.editarPlanPago()}" 
+		    						update="panelPlan, panelPlanDos, msg" rendered="#{!beanInscripcion.editPP}" />	 -->	    					
+		    					<p:commandButton value="Guardar Plan Pago" action="#{beanInscripcion.guardarEdicionPlanPago()}" 
+		    						update="panelPlan, panelPlanDos, msg" rendered="#{beanInscripcion.guardarPP}" oncomplete="PF('dialogoPlanPago').hide()"/>
+		    					<!-- <p:commandButton value="Cancelar Cambios" action="#{beanInscripcion.cancelarEdicionPlanPago()}" 
+		    						update="panelPlan, panelPlanDos" rendered="#{beanInscripcion.guardarPP}" /> -->
+		    					
+		    					<!-- <p:commandButton value="Editar Horarios" action="#{beanInscripcion.editarHorarios()}" 
+		    						update="panelPlan, panelPlanDos, msg" rendered="#{!beanInscripcion.editPD}" /> -->
+		    					<p:commandButton value="Guardar Horarios" action="#{beanInscripcion.guardarEdicionHorarios()}" 
+		    						update="panelPlan, panelPlanDos, msg" rendered="#{beanInscripcion.guardarPD}" oncomplete="PF('dialogoPlanPago').hide()"/>
+		    						<!-- <p:commandButton value="Cancelar Cambios" action="#{beanInscripcion.cancelarEdicionHorarios()}" 
+		    						update="panelPlan, panelPlanDos" rendered="#{beanInscripcion.guardarPD}" /> -->
+		    				</f:facet>
+		    			</p:panelGrid>
+					</p:outputPanel>
+				</p:dialog>	
 				<p:dialog header="Solicitud de Matrícula - Inscripción" widgetVar="dialogoMovimiento"
 					id="dialogo" modal="true" closeOnEscape="true" responsive="true">
 					<p:outputPanel id="outputPanel">
@@ -241,95 +313,7 @@
 		    				<h:inputText value="#{beanInscripcion.inscripcionReporte.horarioString}" disabled="true" />
 		    			</p:panelGrid>
 					</p:outputPanel>
-				</p:dialog>
-				<p:dialog header="Plan de Pago - Dias y Horario de Cursado" widgetVar="dialogoPlanPago"
-					id="dialogoPP" modal="true" responsive="true">
-					<p:outputPanel id="outputPlanPago">
-						<p:growl id="msg" showDetail="false" />
-						<p:panelGrid id="panelPlan" columns="2" style="width:100%;">	
-		    				<p:outputLabel value="Descuento: " />
-		    				<p:column>
-		    					<p:outputLabel value="%" />
-			    				<p:inputText id="descuentoM" value="#{beanInscripcion.descuentoMatricula}" 
-			    				disabled="#{!beanInscripcion.editPPM}" style="width:70px;">
-			    					<p:ajax event="blur" listener="#{beanInscripcion.onBlurDescuentoMatricula()}" update="monto" />
-			    				</p:inputText>
-		    				</p:column>
-		    				
-		    				<p:outputLabel value="Monto Matricula: " />
-			    			<h:inputText id="monto" value="#{beanInscripcion.montoMatricula}" disabled="true" style="width:80px;">
-			    				<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
-			    			</h:inputText>	    					
-		    				
-		    				<p:outputLabel value="Cant. Cuotas: " />
-		    				<p:column>
-		    					<p:inputText id="cantidad" mask="9?9" value="#{beanInscripcion.cantCuotas}" 
-		    					disabled="#{!beanInscripcion.editPPC}" style="width:86px;" >
-		    						<p:ajax event="blur" listener="#{beanInscripcion.onBlurDescuentoCurso()}" update="costo_curso, costo_cuota" />
-		    					</p:inputText>
-		    					
-		    					<p:outputLabel value=" Primer Vencimieto: " />
-		    					<p:calendar value="#{beanInscripcion.primerVencimiento}" pattern="dd/MM/yyyy" disabled="#{!beanInscripcion.editPPC}" locale="tr"/>
-		    				</p:column>    				
-		    				
-		    				<p:outputLabel value="Descuento: " />
-		    				<p:column>
-		    					<p:outputLabel value="%" />
-			    				<p:inputText id="descuento" value="#{beanInscripcion.descuentoCurso}" 
-			    				disabled="#{!beanInscripcion.editPPC}" style="width:70px;">
-			    					<p:ajax event="blur" listener="#{beanInscripcion.onBlurDescuentoCurso()}" update="costo_curso, costo_cuota" />
-			    				</p:inputText>
-			    			</p:column>
-		    				
-		    				<p:outputLabel value="Costo Total de Curso: " />
-		    				<h:inputText id="costo_curso" value="#{beanInscripcion.montoCurso}" disabled="true" style="width:80px;">
-			    				<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
-			    			</h:inputText>	    			
-		    				
-		    				<p:outputLabel value="Monto de Cuota: " />
-		    				<h:inputText id="costo_cuota" value="#{beanInscripcion.montoCuota}" disabled="true" style="width:80px;">
-			    				<f:convertNumber maxFractionDigits="2" pattern="$###,##0.00"/>
-			    			</h:inputText>
-			    			
-			    			<p:outputLabel value="Días preferidos de cursado: " />
-							<p:column>
-								 <p:selectManyCheckbox id="dias" value="#{beanInscripcion.selectedDias}" filter="true" disabled="#{!beanInscripcion.editPDC}">
-									<f:selectItem itemLabel="LUNES" itemValue="LUNES"/>
-									<f:selectItem itemLabel="MARTES" itemValue="MARTES"/>
-									<f:selectItem itemLabel="MIERCOLES" itemValue="MIERCOLES"/>
-									<f:selectItem itemLabel="JUEVES" itemValue="JUEVES"/>
-									<f:selectItem itemLabel="VIERNES" itemValue="VIERNES"/>
-									<f:selectItem itemLabel="SABADOS" itemValue="SABADOS"/>
-									<f:selectItem itemLabel="DOMINGOS" itemValue="DOMINGOS"/>
-								 </p:selectManyCheckbox>						
-							</p:column>
-							<p:outputLabel value="Horario preferido de cursado: " />
-		    				<p:column>						
-		    					<p:outputLabel value="Entre: " />
-		    					<p:calendar disabled="#{!beanInscripcion.editPDC}" value="#{beanInscripcion.horaCursado1}" pattern="HH:mm" timeOnly="true" style="width:40px;" locale="tr"/>
-		    					<p:outputLabel value=" y " />
-		    					<p:calendar disabled="#{!beanInscripcion.editPDC}" value="#{beanInscripcion.horaCursado2}" pattern="HH:mm" timeOnly="true" style="width:40px;" locale="tr"/>
-		    				</p:column>
-	    				</p:panelGrid>
-		    			<p:panelGrid id="panelPlanDos" columns="1" style="width:100%;">
-		    				<f:facet name="header">
-		    					<p:commandButton value="Editar Plan Pago" action="#{beanInscripcion.editarPlanPago()}" 
-		    						update="panelPlan, panelPlanDos, msg" rendered="#{!beanInscripcion.editPP}" />		    					
-		    					<p:commandButton value="Guardar Plan Pago" action="#{beanInscripcion.guardarEdicionPlanPago()}" 
-		    						update="panelPlan, panelPlanDos, msg" rendered="#{beanInscripcion.guardarPP}" oncomplete="PF('dialogoPlanPago').hide()"/>
-		    					<p:commandButton value="Cancelar Cambios" action="#{beanInscripcion.cancelarEdicionPlanPago()}" 
-		    						update="panelPlan, panelPlanDos" rendered="#{beanInscripcion.guardarPP}" />
-		    					
-		    					<p:commandButton value="Editar Horarios" action="#{beanInscripcion.editarHorarios()}" 
-		    						update="panelPlan, panelPlanDos, msg" rendered="#{!beanInscripcion.editPD}" />
-		    					<p:commandButton value="Guardar Horarios" action="#{beanInscripcion.guardarEdicionHorarios()}" 
-		    						update="panelPlan, panelPlanDos, msg" rendered="#{beanInscripcion.guardarPD}" oncomplete="PF('dialogoPlanPago').hide()"/>
-		    						<p:commandButton value="Cancelar Cambios" action="#{beanInscripcion.cancelarEdicionHorarios()}" 
-		    						update="panelPlan, panelPlanDos" rendered="#{beanInscripcion.guardarPD}" />
-		    				</f:facet>
-		    			</p:panelGrid>
-					</p:outputPanel>
-				</p:dialog>
+				</p:dialog>				
 				</p:panel> 
 			</h:form>
 		</div>

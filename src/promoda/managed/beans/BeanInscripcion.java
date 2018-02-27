@@ -37,7 +37,6 @@ import promoda.dao.DAOInscripcionDia;
 import promoda.dao.DAOInscripcionMotivo;
 import promoda.dao.DAOLocalidad;
 import promoda.dao.DAOMateria;
-import promoda.dao.DAOMatricula;
 import promoda.dao.DAOMatriculaAlumno;
 import promoda.dao.DAOMatriculaImpaga;
 import promoda.dao.DAOMotivo;
@@ -56,7 +55,6 @@ import promoda.model.InscripcionDia;
 import promoda.model.InscripcionMotivo;
 import promoda.model.Inscripcione;
 import promoda.model.Localidade;
-import promoda.model.Matricula;
 import promoda.model.MatriculaAlumno;
 import promoda.model.MatriculaImpaga;
 import promoda.model.Motivo;
@@ -98,9 +96,6 @@ public class BeanInscripcion implements Serializable {
 	
 	@ManagedProperty(value = "#{BeanPlanPagoDAO}")
 	private DAOPlanPago planPagoDAO;
-	
-	@ManagedProperty(value = "#{BeanMatriculaDAO}")
-	private DAOMatricula matriculaDAO;
 	
 	@ManagedProperty(value = "#{BeanMateriaDAO}")
 	private DAOMateria materiaDAO;
@@ -151,12 +146,12 @@ public class BeanInscripcion implements Serializable {
 	private List<String> selectedDias;
 	private Inscripcione inscripcion;
 	private Alumno alumno;
-	private Domicilio domicilio;
-	private Matricula matricula;
+	private Domicilio domicilio;	
 	private Curso curso;
 	private PlanPago planPago;
 	private Usuario usuario;
 	private InscripcionReporte inscripcionReporte;
+	private MatriculaAlumno matriculaAlumno;
 	private Date primerVencimiento;
 	private Date horaCursado1;
 	private Date horaCursado2;
@@ -246,14 +241,6 @@ public class BeanInscripcion implements Serializable {
 
 	public void setPlanPagoDAO(DAOPlanPago planPagoDAO) {
 		this.planPagoDAO = planPagoDAO;
-	}
-
-	public DAOMatricula getMatriculaDAO() {
-		return matriculaDAO;
-	}
-
-	public void setMatriculaDAO(DAOMatricula matriculaDAO) {
-		this.matriculaDAO = matriculaDAO;
 	}
 
 	public DAOMateria getMateriaDAO() {
@@ -465,14 +452,6 @@ public class BeanInscripcion implements Serializable {
 		this.domicilio = domicilio;
 	}
 
-	public Matricula getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
-	}
-
 	public Curso getCurso() {
 		return curso;
 	}
@@ -503,6 +482,14 @@ public class BeanInscripcion implements Serializable {
 
 	public void setInscripcionReporte(InscripcionReporte inscripcionReporte) {
 		this.inscripcionReporte = inscripcionReporte;
+	}
+
+	public MatriculaAlumno getMatriculaAlumno() {
+		return matriculaAlumno;
+	}
+
+	public void setMatriculaAlumno(MatriculaAlumno matriculaAlumno) {
+		this.matriculaAlumno = matriculaAlumno;
 	}
 
 	public Date getPrimerVencimiento() {
@@ -694,7 +681,6 @@ public class BeanInscripcion implements Serializable {
 		inscripcion = new Inscripcione();
 		alumno = new Alumno();
 		domicilio = new Domicilio();
-		matricula = new Matricula();
 		curso = new Curso();
 		planPago = new PlanPago();	
 		primerVencimiento = new Date();
@@ -720,11 +706,7 @@ public class BeanInscripcion implements Serializable {
 		listaMotivos = new ArrayList<Motivo>();
 		selectedMotivos = new ArrayList<String>();
 		selectedDias = new ArrayList<String>();
-		listaCursos = cursoDAO.getListaMatVig(new Date());
-//		for (Curso cur : listaCursos) {
-//			System.out.println(cur.getNombre());
-//			System.out.println(cur.getMatricula().getFechaAlta());
-//		}
+		listaCursos = cursoDAO.getLista(true);
 		listaProvincias = provinciaDAO.getLista();
 		listaMotivos = motivoDAO.getLista();
 		return "inscripcion";
@@ -739,8 +721,81 @@ public class BeanInscripcion implements Serializable {
 		filteredInscripciones = new ArrayList<Inscripcione>();
 		listaInscripciones = inscripcionDAO.getLista(true);
 		filteredInscripciones = listaInscripciones;
-		listaCursos = cursoDAO.getListaMatVig();
+		listaCursos = cursoDAO.getLista(true);
 		return "inscripciones";
+	}
+	
+	public String goEditInscripcion(Inscripcione inscri) {
+		try {
+			planPago = new PlanPago();
+			inscripcion = new Inscripcione();
+//			curso = new Curso();
+			editPPM = false;
+			editPPC = false;
+			
+			descuentoMatricula = 0;
+			montoMatricula = 0;
+			cantCuotas = 0;
+			primerVencimiento = null;
+			descuentoCurso = 0;
+			montoCurso = 0;
+			montoCuota = 0;
+			horaCursado1 = null;
+			horaCursado2 = null;
+			selectedDias = new ArrayList<String>();
+			
+			planPago = planPagoDAO.get(inscri);
+//			matricula = inscri.getMatricula();
+//			curso = inscri.getCurso();
+			inscripcion = inscri;
+			
+			descuentoMatricula = planPago.getDescuentoMatricula();
+			montoMatricula = planPago.getMontoMatricula();
+			cantCuotas = planPago.getCantCuotas();
+			primerVencimiento = planPago.getPrimerVencimiento();
+			descuentoCurso = planPago.getDescuentoCurso();
+			montoCurso = planPago.getCantCuotas() * planPago.getMontoCuota();
+			montoCuota = planPago.getMontoCuota();
+			
+			horaCursado1 = inscri.getHoraCursado1();
+			horaCursado2 = inscri.getHoraCursado2();
+			List<InscripcionDia> listaInscripcionDias = inscripcionDiaDAO.getLista(inscri);
+			for (InscripcionDia inscripcionDia : listaInscripcionDias) {
+				String dia = inscripcionDia.getDia();
+				selectedDias.add(dia);
+			}
+			
+//			Alumno alum = alumnoDAO.getPorDni(inscri.getDni());
+			
+			MatriculaAlumno mAlumno = matriculaAlumnoDAO.get(inscri);
+			editPPM = !mAlumno.getPago();
+//			if (!mAlumno.getPago()) {
+//				editPPM = true;
+//			}
+//			editPPC = true;
+//			List<Cuota> listCuots = cuotaDAO.getLista(mAlumno, true);
+			editPPC = cuotaDAO.getLista(mAlumno, true).isEmpty();
+//			for (Cuota cuot : listCuots) {	
+//				if (cuot.getPaga()) {
+//					editPPC = false;
+//				}
+//			}
+//			if (!editPPM && !editPPC) {
+//				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "NO ES POSIBLE EDITAR EL PLAN DE PAGO!"
+//						+ " POSEE MATRICULA PAGA Y CUOTAS!", null);
+//				FacesContext.getCurrentInstance().addMessage(null, msg);
+//			} else {
+//				editPP = true;
+//				editPD = true;
+//				guardarPP = true;
+//			}	
+			
+			
+			return "editarInscripcion";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";			
+		}
 	}
 	
 	public String goInscriptos(Usuario user) {
@@ -764,7 +819,7 @@ public class BeanInscripcion implements Serializable {
 		}
 		idCurso = 0;
 		usuario = user;
-		listaCursos = cursoDAO.getListaMatVig();
+		listaCursos = cursoDAO.getLista(true);
 		return "inscriptos";
 	}
 	
@@ -814,14 +869,13 @@ public class BeanInscripcion implements Serializable {
 		}
 	}
 	
-	public void onChangeCurso() {
-		matricula = new Matricula();
+	public void onChangeCurso() {		
 		if (idCurso != 0) {
 			curso = new Curso();
-			curso = cursoDAO.get(idCurso);
-			matricula = curso.getMatricula();
+			curso = cursoDAO.get(idCurso);			
 			montoCurso = curso.getCostoCurso();
-			montoMatricula = matricula.getCosto();
+//			montoMatricula = matricula.getCosto();
+			montoMatricula = curso.getCostoMatricula();
 			cantCuotas = 0 + curso.getDuracionMeses();
 			montoCuota = montoCurso / cantCuotas;
 		}
@@ -840,8 +894,8 @@ public class BeanInscripcion implements Serializable {
 	
 	public void onBlurDescuentoMatricula() {
 		if (descuentoMatricula != 0) {
-			float monto = (matricula.getCosto() * descuentoMatricula) / 100;
-			float montoC = matricula.getCosto();
+			float monto = (curso.getCostoMatricula() * descuentoMatricula) / 100;
+			float montoC = curso.getCostoMatricula();
 			montoC = montoC - monto;
 			montoMatricula = montoC;
 		}
@@ -850,24 +904,19 @@ public class BeanInscripcion implements Serializable {
 	public void bajaInscripcion(Inscripcione inscri) {
 		try {
 			FacesMessage msg = null;
-			Matricula matr = matriculaDAO.get(inscri.getMatricula().getId());
-			Alumno alum = alumnoDAO.getPorDni(inscri.getDni());
-			Curso cur = cursoDAO.get(inscri.getCurso().getId());
-											
-			MatriculaAlumno matrAlumno = matriculaAlumnoDAO.get(alum, cur, matr);
+//			Matricula matr = matriculaDAO.get(inscri.getMatricula().getId());
+			MatriculaAlumno matriAlumno = matriculaAlumnoDAO.get(inscri);
+//			Alumno alum = alumnoDAO.getPorDni(inscri.getDni());
+//			Curso cur = cursoDAO.get(inscri.getCurso().getId());
+			
 			//Valido si Existen Pagos
 			boolean validaPago = true;
-			List<Cuota> listCuots = cuotaDAO.getLista(alum, matr, cur);
-			for (Cuota cuot : listCuots) {
-				if (cuot.getPaga()) {
-					validaPago = false;
-				}
-			}
-						
-			if (matrAlumno.getPago()) {
+			List<Cuota> listCuots = cuotaDAO.getLista(matriAlumno, true);
+			validaPago = listCuots.isEmpty();						
+			if (matriAlumno.getPago()) {
 				validaPago = false;
 			}
-			
+			//Por el momento se podra dar de baja la inscripcion cuando no se haya realizado ningun pago
 			if (validaPago) {
 				boolean actCuota = true;
 				//Baja Cuota
@@ -882,10 +931,10 @@ public class BeanInscripcion implements Serializable {
 				}
 				
 				//Baja MatriculaAlumno						
-				matrAlumno.setEliminado(true);
-				matrAlumno.setFechaBaja(new Date());			
-				matrAlumno.setUsuario2(usuario);			
-				int updtMatrAlumno = matriculaAlumnoDAO.update(matrAlumno);			
+				matriAlumno.setEnabled(false);
+				matriAlumno.setFechaBaja(new Date());			
+				matriAlumno.setUsuario2(usuario);			
+				int updtMatrAlumno = matriculaAlumnoDAO.update(matriAlumno);			
 						
 				inscri.setEnabled(false);
 				inscri.setUsuario2(usuario);
@@ -911,71 +960,71 @@ public class BeanInscripcion implements Serializable {
 	
 	public void bajaCurso(Inscripcione inscri) {
 		try {
-			FacesMessage msg = null;
-			Matricula matr = matriculaDAO.get(inscri.getMatricula().getId());
-			Alumno alum = alumnoDAO.getPorDni(inscri.getDni());
-			Curso cur = cursoDAO.get(inscri.getCurso().getId());
-											
-			MatriculaAlumno matrAlumno = matriculaAlumnoDAO.get(alum, cur, matr);
-			
-			//Baja Cuota
-			boolean actCuota = true;
-			List<Cuota> listCuots = cuotaDAO.getLista(alum, matr, cur);
-			for (Cuota cuot : listCuots) {
-				if (!cuot.getPaga()) {
-					CuotaImpaga cuotaImpaga = new CuotaImpaga();
-					cuotaImpaga.setAlumno(alum);
-					cuotaImpaga.setCuota(cuot);
-					cuotaImpaga.setCurso(cur);
-					cuotaImpaga.setDetalle(cuot.getDetalle());
-					cuotaImpaga.setFechaAlta(new Date());
-					cuotaImpaga.setFechaVencimiento(cuot.getFechaVencimiento());
-					cuotaImpaga.setMatricula(matr);
-					cuotaImpaga.setMatriculaAlumno(matrAlumno);
-					cuotaImpaga.setMonto(cuot.getMonto());
-					cuotaImpaga.setSegundoVencimiento(cuot.getSegundoVencimiento());
-					cuotaImpaga.setUsuario(usuario);
-					cuotaImpagaDAO.insertar(cuotaImpaga);
-				}
-				cuot.setEnabled(false);
-				cuot.setFechaBaja(new Date());
-				cuot.setUsuario2(usuario);
-				int updtCuot = cuotaDAO.update(cuot);
-				
-				if (updtCuot == 0) {
-					actCuota = false;
-				}
-			}
-			
-			//Baja MatriculaAlumno
-			if (!matrAlumno.getPago()) {
-				MatriculaImpaga matriculaImpaga = new MatriculaImpaga();
-				matriculaImpaga.setAlumno(alum);
-				matriculaImpaga.setCurso(cur);
-				matriculaImpaga.setFechaAlta(new Date());
-				matriculaImpaga.setMatricula(matr);
-				matriculaImpaga.setMatriculaAlumno(matrAlumno);
-				matriculaImpaga.setMonto(matr.getCosto());
-				matriculaImpaga.setUsuario(usuario);
-				matriculaImpagaDAO.insertar(matriculaImpaga);
-			}			
-			matrAlumno.setEliminado(true);
-			matrAlumno.setFechaBaja(new Date());			
-			matrAlumno.setUsuario2(usuario);			
-			int updtMatrAlumno = matriculaAlumnoDAO.update(matrAlumno);			
-			
-			//Baja Inscripcion		
-			inscri.setEnabled(false);
-			inscri.setUsuario2(usuario);
-			inscri.setFechaBaja(new Date());
-			int updtInscri = inscripcionDAO.update(inscri);
-			if (updtInscri != 0 && updtMatrAlumno != 0 && actCuota) {
-				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "BAJA DE INSCRIPCION EXITOSA!", null);
-			} else {
-				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR EN LA BAJA DE LA INSCRIPCION, "
-						+ "INTÉNTELO NUEVAMENTE", null);
-			}
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+//			FacesMessage msg = null;
+//			Matricula matr = matriculaDAO.get(inscri.getMatricula().getId());
+//			Alumno alum = alumnoDAO.getPorDni(inscri.getDni());
+//			Curso cur = cursoDAO.get(inscri.getCurso().getId());
+//											
+//			MatriculaAlumno matrAlumno = matriculaAlumnoDAO.get(alum, cur, matr);
+//			
+//			//Baja Cuota
+//			boolean actCuota = true;
+//			List<Cuota> listCuots = cuotaDAO.getLista(alum, matr, cur);
+//			for (Cuota cuot : listCuots) {
+//				if (!cuot.getPaga()) {
+//					CuotaImpaga cuotaImpaga = new CuotaImpaga();
+//					cuotaImpaga.setAlumno(alum);
+//					cuotaImpaga.setCuota(cuot);
+//					cuotaImpaga.setCurso(cur);
+//					cuotaImpaga.setDetalle(cuot.getDetalle());
+//					cuotaImpaga.setFechaAlta(new Date());
+//					cuotaImpaga.setFechaVencimiento(cuot.getFechaVencimiento());
+//					cuotaImpaga.setMatricula(matr);
+//					cuotaImpaga.setMatriculaAlumno(matrAlumno);
+//					cuotaImpaga.setMonto(cuot.getMonto());
+//					cuotaImpaga.setSegundoVencimiento(cuot.getSegundoVencimiento());
+//					cuotaImpaga.setUsuario(usuario);
+//					cuotaImpagaDAO.insertar(cuotaImpaga);
+//				}
+//				cuot.setEnabled(false);
+//				cuot.setFechaBaja(new Date());
+//				cuot.setUsuario2(usuario);
+//				int updtCuot = cuotaDAO.update(cuot);
+//				
+//				if (updtCuot == 0) {
+//					actCuota = false;
+//				}
+//			}
+//			
+//			//Baja MatriculaAlumno
+//			if (!matrAlumno.getPago()) {
+//				MatriculaImpaga matriculaImpaga = new MatriculaImpaga();
+//				matriculaImpaga.setAlumno(alum);
+//				matriculaImpaga.setCurso(cur);
+//				matriculaImpaga.setFechaAlta(new Date());
+//				matriculaImpaga.setMatricula(matr);
+//				matriculaImpaga.setMatriculaAlumno(matrAlumno);
+//				matriculaImpaga.setMonto(matr.getCosto());
+//				matriculaImpaga.setUsuario(usuario);
+//				matriculaImpagaDAO.insertar(matriculaImpaga);
+//			}			
+//			matrAlumno.setEliminado(true);
+//			matrAlumno.setFechaBaja(new Date());			
+//			matrAlumno.setUsuario2(usuario);			
+//			int updtMatrAlumno = matriculaAlumnoDAO.update(matrAlumno);			
+//			
+//			//Baja Inscripcion		
+//			inscri.setEnabled(false);
+//			inscri.setUsuario2(usuario);
+//			inscri.setFechaBaja(new Date());
+//			int updtInscri = inscripcionDAO.update(inscri);
+//			if (updtInscri != 0 && updtMatrAlumno != 0 && actCuota) {
+//				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "BAJA DE INSCRIPCION EXITOSA!", null);
+//			} else {
+//				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR EN LA BAJA DE LA INSCRIPCION, "
+//						+ "INTÉNTELO NUEVAMENTE", null);
+//			}
+//			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIÓ UN ERROR AL REGISTRAR LA BAJA DE LA INSCRIPCION! "
 					+ "ERROR ORIGINAL: " + e.getMessage(), null);
@@ -1002,8 +1051,8 @@ public class BeanInscripcion implements Serializable {
 		inscripcion = new Inscripcione();
 		inscripcionReporte = new InscripcionReporte();
 		inscripcion = inscri;
-		Matricula matri = inscri.getMatricula();
-		PlanPago planP = planPagoDAO.get(inscri, matri);
+//		Matricula matri = inscri.getMatricula();
+		PlanPago planP = planPagoDAO.get(inscri);
 		List<InscripcionDia> listaInscripcionDias = inscripcionDiaDAO.getLista(inscri);
 		inscripcionReporte.setProvincia(inscri.getProvincia().getNombre());
 		inscripcionReporte.setLocalidad(inscri.getLocalidade().getNombre());
@@ -1032,225 +1081,148 @@ public class BeanInscripcion implements Serializable {
 		inscripcionReporte.setListaInscripcionDias(listaInscripcionDias);
 	}
 	
-	public void verPlanPago(Inscripcione inscri) {
-		planPago = new PlanPago();
-		matricula = new Matricula();
-		inscripcion = new Inscripcione();
-		curso = new Curso();		
-		editPP = false;
-		editPD = false;
-		guardarPP = false;
-		guardarPD = false;
-		editPPM = false;
-		editPPC = false;
-		editPDC = false;
-		descuentoMatricula = 0;
-		montoMatricula = 0;
-		cantCuotas = 0;
-		primerVencimiento = null;
-		descuentoCurso = 0;
-		montoCurso = 0;
-		montoCuota = 0;
-		horaCursado1 = null;
-		horaCursado2 = null;
-		selectedDias = new ArrayList<String>();
-		
-		planPago = planPagoDAO.get(inscri, inscri.getMatricula());
-		matricula = inscri.getMatricula();
-		curso = inscri.getCurso();		
-		inscripcion = inscri;		
-		
-		descuentoMatricula = planPago.getDescuentoMatricula();
-		montoMatricula = planPago.getMontoMatricula();
-		cantCuotas = planPago.getCantCuotas();
-		primerVencimiento = planPago.getPrimerVencimiento();
-		descuentoCurso = planPago.getDescuentoCurso();
-		montoCurso = planPago.getCantCuotas() * planPago.getMontoCuota();
-		montoCuota = planPago.getMontoCuota();
-		
-		horaCursado1 = inscri.getHoraCursado1();
-		horaCursado2 = inscri.getHoraCursado2();
-		List<InscripcionDia> listaInscripcionDias = inscripcionDiaDAO.getLista(inscri);
-		for (InscripcionDia inscripcionDia : listaInscripcionDias) {
-			String dia = inscripcionDia.getDia();
-			selectedDias.add(dia);
-		}
-	}
-	
-	public void editarPlanPago() {
-		Alumno alum = alumnoDAO.getPorDni(inscripcion.getDni());
-		
-		MatriculaAlumno matriculaAlumno = matriculaAlumnoDAO.get(alum, curso, matricula);	
-		if (!matriculaAlumno.getPago()) {
-			editPPM = true;
-		}		
-		editPPC = true;
-		List<Cuota> listCuots = cuotaDAO.getLista(alum, matricula, curso);
-		for (Cuota cuot : listCuots) {	
-			if (cuot.getPaga()) {
-				editPPC = false;
-			}
-		}
-		if (!editPPM && !editPPC) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "NO ES POSIBLE EDITAR EL PLAN DE PAGO!"
-					+ " POSEE MATRICULA PAGA Y CUOTAS!", null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		} else {
-			editPP = true;
-			editPD = true;
-			guardarPP = true;
-		}		
-	}
-	
-	public void editarHorarios() {
-		editPDC = true;
-		editPD = true;
-		editPP = true;
-		guardarPD = true;
-	}
-	
 	public void guardarEdicionPlanPago() {
-		try {
-			//Baja de actual
-			planPagoDAO.delete(planPago);		
-			Alumno alum = alumnoDAO.getPorDni(inscripcion.getDni());		
-			MatriculaAlumno matriculaAlumno = matriculaAlumnoDAO.get(alum, curso, matricula);				
-			boolean actCuota = true;
-			if (editPPC) {				
-				List<Cuota> listCuots = cuotaDAO.getLista(alum, matricula, curso);
-				for (Cuota cuot : listCuots) {			
-					cuot.setEnabled(false);
-					cuot.setFechaBaja(new Date());
-					cuot.setUsuario2(usuario);
-					int updtCuot = cuotaDAO.update(cuot);
-					if (updtCuot == 0) {
-						actCuota = false;
-					}
-				}
-			}
-			
-			int updtMatrAlumno = 1;
-			if (editPPM) {
-				matriculaAlumno.setEliminado(true);
-				matriculaAlumno.setFechaBaja(new Date());			
-				matriculaAlumno.setUsuario2(usuario);			
-				updtMatrAlumno = matriculaAlumnoDAO.update(matriculaAlumno);
-			}		
-			
-			//Alta de nuevo			
-			PlanPago planP = new PlanPago();
-			MatriculaAlumno matriculaA = new MatriculaAlumno();
-			
-			planP.setCantCuotas(cantCuotas);
-			planP.setDescuentoCurso(descuentoCurso);
-			planP.setDescuentoMatricula(descuentoMatricula);
-			planP.setInscripcione(inscripcion);
-			planP.setMatricula(matricula);
-			planP.setMontoCuota(montoCuota);
-			planP.setMontoMatricula(montoMatricula);
-			planP.setPrimerVencimiento(primerVencimiento);
-			int idPlanPago = planPagoDAO.insertar(planP);
-			
-			int idMatriculaAlum = 1;
-			if (editPPM) {
-				matriculaA.setAlumno(alum);
-				matriculaA.setCurso(curso);
-				matriculaA.setEliminado(false);
-				matriculaA.setEnabled(true);
-				matriculaA.setFechaAlta(inscripcion.getFecha());
-				matriculaA.setMatricula(matricula);
-				matriculaA.setMontoPago(montoMatricula);
-				matriculaA.setPago(false);
-				matriculaA.setUsuario1(usuario);
-				idMatriculaAlum = matriculaAlumnoDAO.insertar(matriculaA);			
-			}
-			
-			boolean insertCuota = true;
-			if (editPPC) {
-				Parametro param = parametroDAO.get(1);
-				float porcentajePV = param.getPorcentajePrimerVencimiento();
-				float porcentajeSV = param.getPorcentajeSegundoVencimiento();
-				String diasPrimerV = "";
-				String diasSegundV = "";
-				if (param.getDiasPrimerVencimiento() >= 10) {
-					diasPrimerV = Integer.toString(param.getDiasPrimerVencimiento());
-				} else {
-					diasPrimerV = "0" + Integer.toString(param.getDiasPrimerVencimiento());
-				}
-				if (param.getDiasSegundoVencimiento() >= 10) {
-					diasSegundV = Integer.toString(param.getDiasSegundoVencimiento());
-				} else {
-					diasSegundV = "0" + Integer.toString(param.getDiasSegundoVencimiento());
-				}
-				SimpleDateFormat formatoInicio = new SimpleDateFormat("MMyyyy");
-				String mesanio = formatoInicio.format(primerVencimiento);						
-				SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy");
-				String priVencimiento = diasPrimerV + mesanio;
-				String segVencimiento = diasSegundV + mesanio;						
-				for (int i = 1; i <= cantCuotas; i++) {
-					Date fechaVenc;
-					Date segunVenc;
-					fechaVenc = formato.parse(priVencimiento);
-					segunVenc = formato.parse(segVencimiento);
-					Cuota cuota = new Cuota();
-					cuota.setAlumno(alum);
-					cuota.setCurso(curso);
-					cuota.setDetalle("Cuota " + i);
-					cuota.setEnabled(true);
-					cuota.setFechaAlta(new Date());
-					cuota.setFechaVencimiento(fechaVenc);
-					cuota.setMatricula(matricula);
-					cuota.setMonto(montoCuota);
-					cuota.setPaga(false);
-					cuota.setPorcentajePv(porcentajePV);
-					cuota.setPorcentajeSv(porcentajeSV);
-					cuota.setSegundoVencimiento(segunVenc);
-					cuota.setUsuario1(usuario);
-					int idCuot = cuotaDAO.insertar(cuota);
-					if (idCuot == 0) {
-						insertCuota = false;
-					}
-					if (i < cantCuotas) {
-						SimpleDateFormat formatoDiaSig = new SimpleDateFormat("dd");
-						SimpleDateFormat formatoMesSig = new SimpleDateFormat("MM");
-						SimpleDateFormat formatoAnioSig = new SimpleDateFormat("yyyy");
-						int diaSig = Integer.parseInt(formatoDiaSig.format(fechaVenc));
-						int mesSig = Integer.parseInt(formatoMesSig.format(fechaVenc));
-						String daySig = "";
-						String monthSig = "";
-						String anioSig = formatoAnioSig.format(fechaVenc);
-						mesSig = mesSig + 1;
-						if (diaSig < 10) {
-							daySig = "0" + Integer.toString(diaSig);
-						} else {
-							daySig = Integer.toString(diaSig);
-						}
-						if (mesSig < 10) {
-							monthSig = "0" + Integer.toString(mesSig);
-						} else {
-							monthSig = Integer.toString(mesSig);
-						}
-						priVencimiento = daySig + monthSig + anioSig;
-						segVencimiento = diasSegundV + monthSig + anioSig;
-					}
-				}
-			}
-			if (actCuota && updtMatrAlumno != 0 && idPlanPago != 0 && idMatriculaAlum != 0 && insertCuota) {
-				listaInscripciones = new ArrayList<Inscripcione>();
-				filteredInscripciones = new ArrayList<Inscripcione>();
-				listaInscripciones = inscripcionDAO.getLista(true);
-				filteredInscripciones = listaInscripciones;
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "SE REGISTRARON LOS CAMBIOS CON EXITO!", null);
-				FacesContext.getCurrentInstance().addMessage(null, msg);
-			} else {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL EDITAR! "
-						+ "CONTÁCTESE CON EL ADMINISTRADOR!", null);
-				FacesContext.getCurrentInstance().addMessage(null, msg);
-			}			
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL EDITAR! ERROR: " + e.getMessage(), null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		}		
+//		try {
+//			//Baja de actual
+//			planPagoDAO.delete(planPago);		
+//			Alumno alum = alumnoDAO.getPorDni(inscripcion.getDni());		
+////			MatriculaAlumno matriculaAlumno = matriculaAlumnoDAO.get(alum, curso, matricula);				
+//			boolean actCuota = true;
+//			if (editPPC) {				
+////				List<Cuota> listCuots = cuotaDAO.getLista(alum, matricula, curso);
+////				for (Cuota cuot : listCuots) {			
+////					cuot.setEnabled(false);
+////					cuot.setFechaBaja(new Date());
+////					cuot.setUsuario2(usuario);
+////					int updtCuot = cuotaDAO.update(cuot);
+////					if (updtCuot == 0) {
+////						actCuota = false;
+////					}
+////				}
+//			}
+//			
+//			int updtMatrAlumno = 1;
+//			if (editPPM) {
+////				matriculaAlumno.setEliminado(true);
+////				matriculaAlumno.setFechaBaja(new Date());			
+////				matriculaAlumno.setUsuario2(usuario);			
+////				updtMatrAlumno = matriculaAlumnoDAO.update(matriculaAlumno);
+//			}		
+//			
+//			//Alta de nuevo			
+//			PlanPago planP = new PlanPago();
+//			MatriculaAlumno matriculaA = new MatriculaAlumno();
+//			
+//			planP.setCantCuotas(cantCuotas);
+//			planP.setDescuentoCurso(descuentoCurso);
+//			planP.setDescuentoMatricula(descuentoMatricula);
+//			planP.setInscripcione(inscripcion);
+////			planP.setMatricula(matricula);
+//			planP.setMontoCuota(montoCuota);
+//			planP.setMontoMatricula(montoMatricula);
+//			planP.setPrimerVencimiento(primerVencimiento);
+//			int idPlanPago = planPagoDAO.insertar(planP);
+//			
+//			int idMatriculaAlum = 1;
+//			if (editPPM) {
+//				matriculaA.setAlumno(alum);
+//				matriculaA.setCurso(curso);
+//				matriculaA.setFinalizado(false);
+//				matriculaA.setEnabled(true);
+//				matriculaA.setFechaAlta(inscripcion.getFecha());
+////				matriculaA.setMatricula(matricula);
+//				matriculaA.setMontoPago(montoMatricula);
+//				matriculaA.setPago(false);
+//				matriculaA.setUsuario1(usuario);
+//				idMatriculaAlum = matriculaAlumnoDAO.insertar(matriculaA);			
+//			}
+//			
+//			boolean insertCuota = true;
+//			if (editPPC) {
+//				Parametro param = parametroDAO.get(1);
+//				float porcentajePV = param.getPorcentajePrimerVencimiento();
+//				float porcentajeSV = param.getPorcentajeSegundoVencimiento();
+//				String diasPrimerV = "";
+//				String diasSegundV = "";
+//				if (param.getDiasPrimerVencimiento() >= 10) {
+//					diasPrimerV = Integer.toString(param.getDiasPrimerVencimiento());
+//				} else {
+//					diasPrimerV = "0" + Integer.toString(param.getDiasPrimerVencimiento());
+//				}
+//				if (param.getDiasSegundoVencimiento() >= 10) {
+//					diasSegundV = Integer.toString(param.getDiasSegundoVencimiento());
+//				} else {
+//					diasSegundV = "0" + Integer.toString(param.getDiasSegundoVencimiento());
+//				}
+//				SimpleDateFormat formatoInicio = new SimpleDateFormat("MMyyyy");
+//				String mesanio = formatoInicio.format(primerVencimiento);						
+//				SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy");
+//				String priVencimiento = diasPrimerV + mesanio;
+//				String segVencimiento = diasSegundV + mesanio;						
+//				for (int i = 1; i <= cantCuotas; i++) {
+//					Date fechaVenc;
+//					Date segunVenc;
+//					fechaVenc = formato.parse(priVencimiento);
+//					segunVenc = formato.parse(segVencimiento);
+//					Cuota cuota = new Cuota();
+//					cuota.setAlumno(alum);
+//					cuota.setCurso(curso);
+//					cuota.setDetalle("Cuota " + i);
+//					cuota.setEnabled(true);
+//					cuota.setFechaAlta(new Date());
+//					cuota.setFechaVencimiento(fechaVenc);
+////					cuota.setMatricula(matricula);
+//					cuota.setMonto(montoCuota);
+//					cuota.setPaga(false);
+//					cuota.setPorcentajePv(porcentajePV);
+//					cuota.setPorcentajeSv(porcentajeSV);
+//					cuota.setSegundoVencimiento(segunVenc);
+//					cuota.setUsuario1(usuario);
+//					int idCuot = cuotaDAO.insertar(cuota);
+//					if (idCuot == 0) {
+//						insertCuota = false;
+//					}
+//					if (i < cantCuotas) {
+//						SimpleDateFormat formatoDiaSig = new SimpleDateFormat("dd");
+//						SimpleDateFormat formatoMesSig = new SimpleDateFormat("MM");
+//						SimpleDateFormat formatoAnioSig = new SimpleDateFormat("yyyy");
+//						int diaSig = Integer.parseInt(formatoDiaSig.format(fechaVenc));
+//						int mesSig = Integer.parseInt(formatoMesSig.format(fechaVenc));
+//						String daySig = "";
+//						String monthSig = "";
+//						String anioSig = formatoAnioSig.format(fechaVenc);
+//						mesSig = mesSig + 1;
+//						if (diaSig < 10) {
+//							daySig = "0" + Integer.toString(diaSig);
+//						} else {
+//							daySig = Integer.toString(diaSig);
+//						}
+//						if (mesSig < 10) {
+//							monthSig = "0" + Integer.toString(mesSig);
+//						} else {
+//							monthSig = Integer.toString(mesSig);
+//						}
+//						priVencimiento = daySig + monthSig + anioSig;
+//						segVencimiento = diasSegundV + monthSig + anioSig;
+//					}
+//				}
+//			}
+//			if (actCuota && updtMatrAlumno != 0 && idPlanPago != 0 && idMatriculaAlum != 0 && insertCuota) {
+//				listaInscripciones = new ArrayList<Inscripcione>();
+//				filteredInscripciones = new ArrayList<Inscripcione>();
+//				listaInscripciones = inscripcionDAO.getLista(true);
+//				filteredInscripciones = listaInscripciones;
+//				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "SE REGISTRARON LOS CAMBIOS CON EXITO!", null);
+//				FacesContext.getCurrentInstance().addMessage(null, msg);
+//			} else {
+//				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL EDITAR! "
+//						+ "CONTÁCTESE CON EL ADMINISTRADOR!", null);
+//				FacesContext.getCurrentInstance().addMessage(null, msg);
+//			}			
+//		} catch (Exception e) {
+//			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL EDITAR! ERROR: " + e.getMessage(), null);
+//			FacesContext.getCurrentInstance().addMessage(null, msg);
+//		}		
 	}
 	
 	public void guardarEdicionHorarios() {
@@ -1287,29 +1259,13 @@ public class BeanInscripcion implements Serializable {
 		}
 	}
 	
-	public void cancelarEdicionPlanPago() {
-		editPP = false;
-		editPD = false;
-		editPPM = false;
-		editPPC = false;
-		guardarPP = false;
-		guardarPD = false;
-	}
-	
-	public void cancelarEdicionHorarios() {
-		editPDC = false;
-		editPD = false;
-		editPP = false;
-		guardarPP = false;
-		guardarPD = false;
-	}
-	
 	public String guardar() {
 		try {
 			FacesMessage msg = null;
 			String retorno = "";
 			String nombreCompleto = "";
-			boolean existeEmail = true;
+//			boolean existeEmail = true;
+			boolean existeEmail = false;
 			if (alumno.getId() == 0 && (!alumno.getEmail().isEmpty() || alumno.getEmail() != "")) {
 				Usuario u = usuarioDAO.get(alumno.getEmail());
 				if (u.getId() != 0) {
@@ -1325,11 +1281,13 @@ public class BeanInscripcion implements Serializable {
 					&& idProvincia != 0 && idLocalidad != 0	&& (!domicilio.getCodigoPostal().isEmpty() || domicilio.getCodigoPostal() != "") 
 					&& (!domicilio.getCalle().isEmpty() || domicilio.getCalle() != "") && (!domicilio.getNumero().isEmpty() || domicilio.getNumero() != "")
 					&& (!alumno.getTelefonoCel().isEmpty() || !alumno.getTelefonoFijo().isEmpty()) && !existeEmail) {
+				//Inicializo objects
 				Localidade loc = new Localidade();
 				Provincia prov = new Provincia();
 				Curso cur = new Curso();		
 				inscripcionReporte = new InscripcionReporte();
-				if (alumno.getId() != 0) {	
+				//Verifico si es un alumno existente
+				if (alumno.getId() != 0) {
 					loc = localidadDAO.get(idLocalidad);
 					prov = provinciaDAO.get(idProvincia);
 					domicilio.setLocalidade(loc);
@@ -1344,7 +1302,7 @@ public class BeanInscripcion implements Serializable {
 					alumno.setFechaMod(new Date());
 					int updateAlum = alumnoDAO.update(alumno);
 					alumno.setId(updateAlum);
-				} else {					
+				} else {
 					Role rol = new Role();
 					rol.setId(_ROL);
 					loc = localidadDAO.get(idLocalidad);
@@ -1363,15 +1321,11 @@ public class BeanInscripcion implements Serializable {
 					alumno.setUsuario2(usuario);					
 					int idAlumno = alumnoDAO.insertar(alumno);
 					if (idAlumno != 0) {
-						alumno.setId(idAlumno);
-						
+						alumno.setId(idAlumno);						
 					}
 					if (!alumno.getEmail().isEmpty() || alumno.getEmail() != ""){
 						Usuario user = new Usuario();
 						user.setNombreCompleto(nombreCompleto);
-//						String username = alumno.getNombres().substring(0,1) + alumno.getApellido().substring(0,1);
-//						username = username.toLowerCase() + Integer.toString(alumno.getDni());
-//						System.out.println(username);
 						user.setUsername(alumno.getEmail());
 						user.setPassword(_PASSWORD);
 						user.setNombre(alumno.getNombres());
@@ -1386,12 +1340,11 @@ public class BeanInscripcion implements Serializable {
 						user.setId(idUser);
 					}
 				}
-				cur = cursoDAO.get(idCurso);
-				Matricula matri = matriculaDAO.get(cur.getMatricula().getId());
-				MatriculaAlumno matriAlum = matriculaAlumnoDAO.get(alumno, cur, matri);
+				cur = cursoDAO.get(idCurso);			
+				//Verifico que no posea una inscripción activa al curso
+				MatriculaAlumno matriAlum = matriculaAlumnoDAO.get(alumno, cur, false);
 				if (matriAlum.getId() == 0) {
 					inscripcion.setCurso(cur);
-					inscripcion.setMatricula(matri);
 					inscripcion.setApellido(alumno.getApellido());
 					inscripcion.setNombre(alumno.getNombres());
 					inscripcion.setNombreCompleto(nombreCompleto); 
@@ -1414,7 +1367,7 @@ public class BeanInscripcion implements Serializable {
 						planPago.setDescuentoCurso(descuentoCurso);
 						planPago.setDescuentoMatricula(descuentoMatricula);
 						planPago.setInscripcione(inscripcion);
-						planPago.setMatricula(matricula);
+//						planPago.setMatricula(matricula);
 						planPago.setMontoCuota(montoCuota);
 						planPago.setMontoMatricula(montoMatricula);
 						planPago.setPrimerVencimiento(primerVencimiento);
@@ -1422,139 +1375,141 @@ public class BeanInscripcion implements Serializable {
 						MatriculaAlumno matriculaAlumno = new MatriculaAlumno();
 						matriculaAlumno.setAlumno(alumno);
 						matriculaAlumno.setCurso(cur);
-						matriculaAlumno.setEliminado(false);
-						matriculaAlumno.setEnabled(true);
+						matriculaAlumno.setFinalizado(false);
+						matriculaAlumno.setInscripcione(inscripcion);
+						matriculaAlumno.setEnabled(true);						
 						matriculaAlumno.setFechaAlta(inscripcion.getFecha());
-						matriculaAlumno.setMatricula(matri);
 						matriculaAlumno.setMontoPago(montoMatricula);
 						matriculaAlumno.setPago(false);
 						matriculaAlumno.setUsuario1(usuario);
-						int idMatriculaAlum = matriculaAlumnoDAO.insertar(matriculaAlumno);
-						boolean insertCuota = true;
-						
-//						Date inicioMatri = matri.getFechaAlta();
-						Parametro param = parametroDAO.get(1);
-						float porcentajePV = param.getPorcentajePrimerVencimiento();
-						float porcentajeSV = param.getPorcentajeSegundoVencimiento();
-						String diasPrimerV = "";
-						String diasSegundV = "";
-						if (param.getDiasPrimerVencimiento() >= 10) {
-							diasPrimerV = Integer.toString(param.getDiasPrimerVencimiento());
-						} else {
-							diasPrimerV = "0" + Integer.toString(param.getDiasPrimerVencimiento());
-						}
-						if (param.getDiasSegundoVencimiento() >= 10) {
-							diasSegundV = Integer.toString(param.getDiasSegundoVencimiento());
-						} else {
-							diasSegundV = "0" + Integer.toString(param.getDiasSegundoVencimiento());
-						}
-						SimpleDateFormat formatoInicio = new SimpleDateFormat("MMyyyy");
-						String mesanio = formatoInicio.format(primerVencimiento);
-//						System.out.println(mesanio);						
-						SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy");
-//						String priVencimiento = formato.format(primerVencimiento);
-						String priVencimiento = diasPrimerV + mesanio;
-						String segVencimiento = diasSegundV + mesanio;						
-						for (int i = 1; i <= cantCuotas; i++) {
-							Date fechaVenc;
-							Date segunVenc;
-							fechaVenc = formato.parse(priVencimiento);
-							segunVenc = formato.parse(segVencimiento);
-							Cuota cuota = new Cuota();
-							cuota.setAlumno(alumno);
-							cuota.setCurso(cur);
-							cuota.setDetalle("Cuota " + i);
-							cuota.setEnabled(true);
-							cuota.setFechaAlta(new Date());
-							cuota.setFechaVencimiento(fechaVenc);
-							cuota.setMatricula(matri);
-							cuota.setMonto(montoCuota);
-							cuota.setPaga(false);
-							cuota.setPorcentajePv(porcentajePV);
-							cuota.setPorcentajeSv(porcentajeSV);
-							cuota.setSegundoVencimiento(segunVenc);
-							cuota.setUsuario1(usuario);
-							int idCuot = cuotaDAO.insertar(cuota);
-							if (idCuot == 0) {
-								insertCuota = false;
+						int idMatriculaAlum = matriculaAlumnoDAO.insertar(matriculaAlumno);						
+						if (idMatriculaAlum != 0) {
+							matriculaAlumno.setId(idMatriculaAlum);
+							boolean insertCuota = true;
+							
+							Parametro param = parametroDAO.get(1);
+							float porcentajePV = param.getPorcentajePrimerVencimiento();
+							float porcentajeSV = param.getPorcentajeSegundoVencimiento();
+							String diasPrimerV = "";
+							String diasSegundV = "";
+							if (param.getDiasPrimerVencimiento() >= 10) {
+								diasPrimerV = Integer.toString(param.getDiasPrimerVencimiento());
+							} else {
+								diasPrimerV = "0" + Integer.toString(param.getDiasPrimerVencimiento());
 							}
-							if (i < cantCuotas) {
-								SimpleDateFormat formatoDiaSig = new SimpleDateFormat("dd");
-								SimpleDateFormat formatoMesSig = new SimpleDateFormat("MM");
-								SimpleDateFormat formatoAnioSig = new SimpleDateFormat("yyyy");
-								int diaSig = Integer.parseInt(formatoDiaSig.format(fechaVenc));
-								int mesSig = Integer.parseInt(formatoMesSig.format(fechaVenc));
-								String daySig = "";
-								String monthSig = "";
-								String anioSig = formatoAnioSig.format(fechaVenc);
-								mesSig = mesSig + 1;
-								if (diaSig < 10) {
-									daySig = "0" + Integer.toString(diaSig);
-								} else {
-									daySig = Integer.toString(diaSig);
-								}
-								if (mesSig < 10) {
-									monthSig = "0" + Integer.toString(mesSig);
-								} else {
-									monthSig = Integer.toString(mesSig);
-								}
-								priVencimiento = daySig + monthSig + anioSig;
-								segVencimiento = diasSegundV + monthSig + anioSig;
+							if (param.getDiasSegundoVencimiento() >= 10) {
+								diasSegundV = Integer.toString(param.getDiasSegundoVencimiento());
+							} else {
+								diasSegundV = "0" + Integer.toString(param.getDiasSegundoVencimiento());
 							}
-						}
-						for (String idMotivo : selectedMotivos) {
-							Motivo motivo = motivoDAO.get(Integer.parseInt(idMotivo));
-							InscripcionMotivo inscripcionMotivo = new InscripcionMotivo();
-							inscripcionMotivo.setMotivo(motivo);
-							inscripcionMotivo.setInscripcione(inscripcion);
-							inscripcionMotivoDAO.insertar(inscripcionMotivo);
-						}
-						for (String dia : selectedDias) {
-							InscripcionDia inscripcionDia = new InscripcionDia();
-							inscripcionDia.setDia(dia);
-							inscripcionDia.setInscripcione(inscripcion);
-							inscripcionDiaDAO.insertar(inscripcionDia);
-						}
-						//Paso de valores para reporte
-						inscripcionReporte.setProvincia(prov.getNombre());
-						inscripcionReporte.setLocalidad(loc.getNombre());
-						inscripcionReporte.setCalle(domicilio.getCalle());
-						inscripcionReporte.setCod_postal(domicilio.getCodigoPostal());
-						inscripcionReporte.setDepartamento(domicilio.getDepartamento());
-						inscripcionReporte.setNumero(domicilio.getNumero());
-						inscripcionReporte.setPiso(domicilio.getPiso());
-						inscripcionReporte.setApellido(alumno.getApellido());
-						inscripcionReporte.setDni(Integer.toString(alumno.getDni()));
-						inscripcionReporte.setFecha_nacimiento(alumno.getFechaNacimiento());
-						inscripcionReporte.setNombre(alumno.getNombres());
-						inscripcionReporte.setTelcel(alumno.getTelefonoCel());
-						inscripcionReporte.setTelfijo(alumno.getTelefonoFijo());
-						inscripcionReporte.setEmail(alumno.getEmail());
-						inscripcionReporte.setCant_cuotas(Integer.toString(cantCuotas));
-						inscripcionReporte.setCosto_cuota(montoCuota);
-						inscripcionReporte.setCosto_curso(montoCurso);
-						inscripcionReporte.setCurso(cur.getNombre());
-						inscripcionReporte.setFecha(inscripcion.getFecha());
-						inscripcionReporte.setHorario1(inscripcion.getHoraCursado1());
-						inscripcionReporte.setHorario2(inscripcion.getHoraCursado2());
-						inscripcionReporte.setMatricula(montoMatricula);
-						String formatoPV = diasPrimerV + mesanio;
-						Date primerV = formato.parse(formatoPV);
-						inscripcionReporte.setPrimerVencimiento(primerV);
-						inscripcionReporte.setListaDias(selectedDias);
-						if (idPlanPago != 0 && insertCuota && idMatriculaAlum != 0) {
-							msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "LA INSCRIPCION SE REGISTRO CORRECTAMENTE", null);
-							goInscripcion(usuario);
-							retorno = "inscripcioncomprob";
+							SimpleDateFormat formatoInicio = new SimpleDateFormat("MMyyyy");
+							String mesanio = formatoInicio.format(primerVencimiento);
+							SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy");
+							String priVencimiento = diasPrimerV + mesanio;
+							String segVencimiento = diasSegundV + mesanio;						
+							for (int i = 1; i <= cantCuotas; i++) {
+								Date fechaVenc;
+								Date segunVenc;
+								fechaVenc = formato.parse(priVencimiento);
+								segunVenc = formato.parse(segVencimiento);
+								Cuota cuota = new Cuota();
+								cuota.setAlumno(alumno);
+								cuota.setCurso(cur);
+								cuota.setDetalle("Cuota " + i);
+								cuota.setEnabled(true);
+								cuota.setFechaAlta(new Date());
+								cuota.setFechaVencimiento(fechaVenc);
+								cuota.setMatriculaAlumno(matriculaAlumno);
+								cuota.setMonto(montoCuota);
+								cuota.setPaga(false);
+								cuota.setPorcentajePv(porcentajePV);
+								cuota.setPorcentajeSv(porcentajeSV);
+								cuota.setSegundoVencimiento(segunVenc);
+								cuota.setUsuario1(usuario);
+								int idCuot = cuotaDAO.insertar(cuota);
+								if (idCuot == 0) {
+									insertCuota = false;
+								}
+								if (i < cantCuotas) {
+									SimpleDateFormat formatoDiaSig = new SimpleDateFormat("dd");
+									SimpleDateFormat formatoMesSig = new SimpleDateFormat("MM");
+									SimpleDateFormat formatoAnioSig = new SimpleDateFormat("yyyy");
+									int diaSig = Integer.parseInt(formatoDiaSig.format(fechaVenc));
+									int mesSig = Integer.parseInt(formatoMesSig.format(fechaVenc));
+									String daySig = "";
+									String monthSig = "";
+									String anioSig = formatoAnioSig.format(fechaVenc);
+									mesSig = mesSig + 1;
+									if (diaSig < 10) {
+										daySig = "0" + Integer.toString(diaSig);
+									} else {
+										daySig = Integer.toString(diaSig);
+									}
+									if (mesSig < 10) {
+										monthSig = "0" + Integer.toString(mesSig);
+									} else {
+										monthSig = Integer.toString(mesSig);
+									}
+									priVencimiento = daySig + monthSig + anioSig;
+									segVencimiento = diasSegundV + monthSig + anioSig;
+								}
+							}
+							for (String idMotivo : selectedMotivos) {
+								Motivo motivo = motivoDAO.get(Integer.parseInt(idMotivo));
+								InscripcionMotivo inscripcionMotivo = new InscripcionMotivo();
+								inscripcionMotivo.setMotivo(motivo);
+								inscripcionMotivo.setInscripcione(inscripcion);
+								inscripcionMotivoDAO.insertar(inscripcionMotivo);
+							}
+							for (String dia : selectedDias) {
+								InscripcionDia inscripcionDia = new InscripcionDia();
+								inscripcionDia.setDia(dia);
+								inscripcionDia.setInscripcione(inscripcion);
+								inscripcionDiaDAO.insertar(inscripcionDia);
+							}
+							//Paso de valores para reporte
+							inscripcionReporte.setProvincia(prov.getNombre());
+							inscripcionReporte.setLocalidad(loc.getNombre());
+							inscripcionReporte.setCalle(domicilio.getCalle());
+							inscripcionReporte.setCod_postal(domicilio.getCodigoPostal());
+							inscripcionReporte.setDepartamento(domicilio.getDepartamento());
+							inscripcionReporte.setNumero(domicilio.getNumero());
+							inscripcionReporte.setPiso(domicilio.getPiso());
+							inscripcionReporte.setApellido(alumno.getApellido());
+							inscripcionReporte.setDni(Integer.toString(alumno.getDni()));
+							inscripcionReporte.setFecha_nacimiento(alumno.getFechaNacimiento());
+							inscripcionReporte.setNombre(alumno.getNombres());
+							inscripcionReporte.setTelcel(alumno.getTelefonoCel());
+							inscripcionReporte.setTelfijo(alumno.getTelefonoFijo());
+							inscripcionReporte.setEmail(alumno.getEmail());
+							inscripcionReporte.setCant_cuotas(Integer.toString(cantCuotas));
+							inscripcionReporte.setCosto_cuota(montoCuota);
+							inscripcionReporte.setCosto_curso(montoCurso);
+							inscripcionReporte.setCurso(cur.getNombre());
+							inscripcionReporte.setFecha(inscripcion.getFecha());
+							inscripcionReporte.setHorario1(inscripcion.getHoraCursado1());
+							inscripcionReporte.setHorario2(inscripcion.getHoraCursado2());
+							inscripcionReporte.setMatricula(montoMatricula);
+							String formatoPV = diasPrimerV + mesanio;
+							Date primerV = formato.parse(formatoPV);
+							inscripcionReporte.setPrimerVencimiento(primerV);
+							inscripcionReporte.setListaDias(selectedDias);
+							if (idPlanPago != 0 && insertCuota) {
+								msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "LA INSCRIPCION SE REGISTRO CORRECTAMENTE", null);
+								goInscripcion(usuario);
+								retorno = "inscripcioncomprob";
+							} else {
+								msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "LA INSCRIPCION Y LAS ASISTENCIAS SE REGISTRARON CORRECTAMENTE, "
+										+ "OCURRIO UN ERROR AL REGISTRAR EL PLAN DE PAGO", null);
+							}							
 						} else {
-							msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "LA INSCRIPCION Y LAS ASISTENCIAS SE REGISTRARON CORRECTAMENTE, "
-									+ "OCURRIO UN ERROR AL REGISTRAR EL PLAN DE PAGO", null);
-						}
+							msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "OCURRIO UN ERROR AL REGISTRAR LA INSCRIPCION", null);
+						}						
 					} else {
 						msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "OCURRIO UN ERROR AL REGISTRAR LA INSCRIPCION", null);
 					}				
 				} else {
-					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "EL ALUMNO YA SE ENCUENTRA REGISTRADO EN EL CURSO!", null);
+					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "EL ALUMNO YA SE ENCUENTRA REGISTRADO EN EL CURSO! DEBE FINALIZAR EL CURSO PARA VOLVER A INSCRIBIRLO", null);
 				}	
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 			} else {
@@ -1622,6 +1577,195 @@ public class BeanInscripcion implements Serializable {
 	public String cancelar() {
 		goInscripcion(usuario);
 		return "inscripcion";
+	}
+	
+	public String guardarEdicion() {
+		try {
+			if (editPPC || editPPM) {
+				//Edito plan de pago
+				PlanPago planP = planPagoDAO.get(inscripcion);
+				
+				planP.setCantCuotas(cantCuotas);
+				planP.setDescuentoCurso(descuentoCurso);
+				planP.setDescuentoMatricula(descuentoMatricula);				
+				planP.setMontoCuota(montoCuota);
+				planP.setMontoMatricula(montoMatricula);
+				planP.setPrimerVencimiento(primerVencimiento);				
+				int updatePlanPago = planPagoDAO.update(planP);
+				
+				int updateMatriculaAlum = 1;
+				if (editPPM) {
+					matriculaAlumno.setFinalizado(false);
+					matriculaAlumno.setEnabled(true);
+					matriculaAlumno.setMontoPago(montoMatricula);
+					matriculaAlumno.setPago(false);
+					matriculaAlumno.setUsuario1(usuario);
+					updateMatriculaAlum = matriculaAlumnoDAO.update(matriculaAlumno);			
+				}
+				
+				if (editPPC) {
+					int disabledCuotas = cuotaDAO.disabled(matriculaAlumno, usuario, new Date());
+					if (disabledCuotas != 0) {
+						//FALTA EL METODO QUE DA DE ALTA LAS CUOTAS NUEVAS
+					}
+				}
+			}
+			
+			//FALTA LA PARTE QUE MODIFICA DIAS Y HORARIOS DE CURSADO
+			
+			
+			
+			//************ESTO ES VIEJO*******************
+			//Baja de actual
+//			planPagoDAO.delete(planPago);
+			Alumno alum = alumnoDAO.getPorDni(inscripcion.getDni());		
+//				MatriculaAlumno matriculaAlumno = matriculaAlumnoDAO.get(alum, curso, matricula);				
+			boolean actCuota = true;
+			if (editPPC) {				
+//					List<Cuota> listCuots = cuotaDAO.getLista(alum, matricula, curso);
+//					for (Cuota cuot : listCuots) {			
+//						cuot.setEnabled(false);
+//						cuot.setFechaBaja(new Date());
+//						cuot.setUsuario2(usuario);
+//						int updtCuot = cuotaDAO.update(cuot);
+//						if (updtCuot == 0) {
+//							actCuota = false;
+//						}
+//					}
+			}
+			
+			int updtMatrAlumno = 1;
+			if (editPPM) {
+//					matriculaAlumno.setEliminado(true);
+//					matriculaAlumno.setFechaBaja(new Date());			
+//					matriculaAlumno.setUsuario2(usuario);			
+//					updtMatrAlumno = matriculaAlumnoDAO.update(matriculaAlumno);
+			}		
+			
+			//Alta de nuevo			
+			PlanPago planP = planPagoDAO.get(inscripcion);			
+			MatriculaAlumno matriculaA = new MatriculaAlumno();
+			
+			planP.setCantCuotas(cantCuotas);
+			planP.setDescuentoCurso(descuentoCurso);
+			planP.setDescuentoMatricula(descuentoMatricula);
+			planP.setInscripcione(inscripcion);
+//				planP.setMatricula(matricula);
+			planP.setMontoCuota(montoCuota);
+			planP.setMontoMatricula(montoMatricula);
+			planP.setPrimerVencimiento(primerVencimiento);
+			int idPlanPago = planPagoDAO.insertar(planP);
+			
+			int idMatriculaAlum = 1;
+			if (editPPM) {
+				matriculaA.setAlumno(alum);
+				matriculaA.setCurso(curso);
+				matriculaA.setFinalizado(false);
+				matriculaA.setEnabled(true);
+				matriculaA.setFechaAlta(inscripcion.getFecha());
+//					matriculaA.setMatricula(matricula);
+				matriculaA.setMontoPago(montoMatricula);
+				matriculaA.setPago(false);
+				matriculaA.setUsuario1(usuario);
+				idMatriculaAlum = matriculaAlumnoDAO.insertar(matriculaA);			
+			}
+			
+			boolean insertCuota = true;
+			if (editPPC) {
+				Parametro param = parametroDAO.get(1);
+				float porcentajePV = param.getPorcentajePrimerVencimiento();
+				float porcentajeSV = param.getPorcentajeSegundoVencimiento();
+				String diasPrimerV = "";
+				String diasSegundV = "";
+				if (param.getDiasPrimerVencimiento() >= 10) {
+					diasPrimerV = Integer.toString(param.getDiasPrimerVencimiento());
+				} else {
+					diasPrimerV = "0" + Integer.toString(param.getDiasPrimerVencimiento());
+				}
+				if (param.getDiasSegundoVencimiento() >= 10) {
+					diasSegundV = Integer.toString(param.getDiasSegundoVencimiento());
+				} else {
+					diasSegundV = "0" + Integer.toString(param.getDiasSegundoVencimiento());
+				}
+				SimpleDateFormat formatoInicio = new SimpleDateFormat("MMyyyy");
+				String mesanio = formatoInicio.format(primerVencimiento);						
+				SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy");
+				String priVencimiento = diasPrimerV + mesanio;
+				String segVencimiento = diasSegundV + mesanio;						
+				for (int i = 1; i <= cantCuotas; i++) {
+					Date fechaVenc;
+					Date segunVenc;
+					fechaVenc = formato.parse(priVencimiento);
+					segunVenc = formato.parse(segVencimiento);
+					Cuota cuota = new Cuota();
+					cuota.setAlumno(alum);
+					cuota.setCurso(curso);
+					cuota.setDetalle("Cuota " + i);
+					cuota.setEnabled(true);
+					cuota.setFechaAlta(new Date());
+					cuota.setFechaVencimiento(fechaVenc);
+//						cuota.setMatricula(matricula);
+					cuota.setMonto(montoCuota);
+					cuota.setPaga(false);
+					cuota.setPorcentajePv(porcentajePV);
+					cuota.setPorcentajeSv(porcentajeSV);
+					cuota.setSegundoVencimiento(segunVenc);
+					cuota.setUsuario1(usuario);
+					int idCuot = cuotaDAO.insertar(cuota);
+					if (idCuot == 0) {
+						insertCuota = false;
+					}
+					if (i < cantCuotas) {
+						SimpleDateFormat formatoDiaSig = new SimpleDateFormat("dd");
+						SimpleDateFormat formatoMesSig = new SimpleDateFormat("MM");
+						SimpleDateFormat formatoAnioSig = new SimpleDateFormat("yyyy");
+						int diaSig = Integer.parseInt(formatoDiaSig.format(fechaVenc));
+						int mesSig = Integer.parseInt(formatoMesSig.format(fechaVenc));
+						String daySig = "";
+						String monthSig = "";
+						String anioSig = formatoAnioSig.format(fechaVenc);
+						mesSig = mesSig + 1;
+						if (diaSig < 10) {
+							daySig = "0" + Integer.toString(diaSig);
+						} else {
+							daySig = Integer.toString(diaSig);
+						}
+						if (mesSig < 10) {
+							monthSig = "0" + Integer.toString(mesSig);
+						} else {
+							monthSig = Integer.toString(mesSig);
+						}
+						priVencimiento = daySig + monthSig + anioSig;
+						segVencimiento = diasSegundV + monthSig + anioSig;
+					}
+				}
+			}
+			if (actCuota && updtMatrAlumno != 0 && idPlanPago != 0 && idMatriculaAlum != 0 && insertCuota) {
+				listaInscripciones = new ArrayList<Inscripcione>();
+				filteredInscripciones = new ArrayList<Inscripcione>();
+				listaInscripciones = inscripcionDAO.getLista(true);
+				filteredInscripciones = listaInscripciones;
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "SE REGISTRARON LOS CAMBIOS CON EXITO!", null);
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			} else {
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "OCURRIO UN ERROR AL EDITAR! "
+						+ "CONTÁCTESE CON EL ADMINISTRADOR!", null);
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			}
+			
+			
+			
+			
+			
+			return "inscripciones";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
+	public String cancelarEdicion() {
+		return "inscripciones";
 	}
 	
 	public void filtroInscriptos() {

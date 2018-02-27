@@ -52,7 +52,7 @@ public class DAOCursoImpl implements Serializable, DAOCurso {
 			Query locQuery = em.createQuery("UPDATE Curso c SET c.cantHoras = :pCantHoras, c.costoCurso = :pCostoCurso, "
 					+ "c.costoMatricula = :pCostoMatricula, c.costoTotal = :pCostoTotal, c.diasCursado = :pDiasCursado, "
 					+ "c.duracionMeses = :pDuracionMeses, c.enabled = :pEnabled, c.fechaAlta = :pFechaAlta, c.fechaBaja = :pFechaBaja, "
-					+ "c.fechaMod = :pFechaMod, c.matricula = :pMatriculaVigente, c.nombre = :pNombre, c.usuario1 = :pUsuario1, "
+					+ "c.fechaMod = :pFechaMod, c.nombre = :pNombre, c.usuario1 = :pUsuario1, "
 					+ "c.usuario2 = :pUsuario2, c.usuario3 = :pUsuario3 "
 					+ "WHERE c.id = :pId", Curso.class);
 			locQuery.setParameter("pCantHoras", curso.getCantHoras());
@@ -65,7 +65,6 @@ public class DAOCursoImpl implements Serializable, DAOCurso {
 			locQuery.setParameter("pFechaAlta", curso.getFechaAlta());
 			locQuery.setParameter("pFechaBaja", curso.getFechaBaja());
 			locQuery.setParameter("pFechaMod", curso.getFechaMod());
-			locQuery.setParameter("pMatriculaVigente", curso.getMatricula());
 			locQuery.setParameter("pNombre", curso.getNombre());
 			locQuery.setParameter("pUsuario1", curso.getUsuario1());
 			locQuery.setParameter("pUsuario2", curso.getUsuario2());
@@ -109,37 +108,6 @@ public class DAOCursoImpl implements Serializable, DAOCurso {
 		locQuery.setParameter("pEnabled", estado);
 		List<Curso> lista = locQuery.getResultList();
 		return lista;
-	}
-	
-	public List<Curso> getListaMatVig() {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM Curso c WHERE c.matricula <> NULL "
-				+ "AND c.enabled = :pEnabled", Curso.class);
-		locQuery.setParameter("pEnabled", true);
-		List<Curso> lista = locQuery.getResultList();
-		return lista;
-	}
-	
-	public List<Curso> getListaMatVig(Date fechaHoy) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM Curso c WHERE c.matricula <> NULL "
-				+ "AND c.enabled = :pEnabled AND c.matricula.fechaAlta <= :pFecha AND c.matricula.fechaFinalizacion >= :pFecha", Curso.class);
-		locQuery.setParameter("pEnabled", true);
-		locQuery.setParameter("pFecha", fechaHoy);
-		List<Curso> lista = locQuery.getResultList();
-		return lista;
-	}
-	
-	public List<Curso> getListaMatVig(Date fechaUno, Date fechaDos) {
-		inicializar();
-		Query locQuery = em.createQuery("SELECT c FROM Curso c WHERE c.matricula <> NULL "
-				+ "AND c.enabled = :pEnabled AND c.matricula.fechaAlta <= :pFechaUno AND c.matricula.fechaFinalizacion >= :pFechaDos "
-				+ "ORDER BY c.matricula.fechaAlta DESC", Curso.class);
-		locQuery.setParameter("pEnabled", true);
-		locQuery.setParameter("pFechaUno", fechaUno);
-		locQuery.setParameter("pFechaDos", fechaDos);
-		List<Curso> lista = locQuery.getResultList();
-		return lista;
-	}
+	}	
 
 }
